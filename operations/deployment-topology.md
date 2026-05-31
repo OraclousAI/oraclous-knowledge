@@ -1,4 +1,8 @@
-<!-- source page id: 720961 | title: Deployment Topology -->
+---
+confluence_id: "720961"
+title: "Deployment Topology"
+---
+
 # Deployment Topology
 
 This page describes how the eight services in the target architecture are deployed in both self-hosted and cloud-hosted modes. The topology is the same in both modes; only the operator and the compliance posture differ (ADR-008).

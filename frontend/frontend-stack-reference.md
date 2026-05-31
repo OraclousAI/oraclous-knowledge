@@ -1,5 +1,5 @@
 ---
-source_page_id: 852051
+confluence_id: "852051"
 title: "Frontend Stack Reference"
 ---
 

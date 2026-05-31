@@ -1,5 +1,5 @@
 ---
-confluence_page_id: "1277953"
+confluence_id: "1277953"
 title: "Interface Contracts"
 ---
 

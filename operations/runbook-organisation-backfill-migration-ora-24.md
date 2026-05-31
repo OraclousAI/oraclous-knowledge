@@ -1,4 +1,8 @@
-<!-- source page id: 2260996 | title: Runbook — Organisation Backfill Migration (ORA-24) -->
+---
+confluence_id: "2260996"
+title: "Runbook — Organisation Backfill Migration (ORA-24)"
+---
+
 **What this is.** The one-time migration that scopes an existing (pre-A1) deployment's substrate data to an organisation. It adds and backfills `organisation_id` across Postgres, Neo4j and Redis, seeding the well-known single organisation so a single-tenant deployment keeps behaving exactly as before. Shipped in ORA-24; code lives in `oraclous_substrate.migrations.org_backfill`.
 
 ## When to run

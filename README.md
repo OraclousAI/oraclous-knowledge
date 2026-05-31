@@ -1,6 +1,6 @@
 ---
-source_page_id: 688237
-title: Oraclous Platform
+confluence_id: "688237"
+title: "Oraclous Platform"
 ---
 
 # Oraclous Platform

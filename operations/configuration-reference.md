@@ -1,4 +1,8 @@
-<!-- source page id: 131144 | title: Configuration Reference -->
+---
+confluence_id: "131144"
+title: "Configuration Reference"
+---
+
 # Configuration Reference
 
 The canonical reference for every environment variable, config flag, and tunable setting the platform exposes. Operators consult this page to understand what they can configure and what each setting does.

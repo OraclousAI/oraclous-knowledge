@@ -1,9 +1,9 @@
 ---
-confluence_page_id: "1245185"
+confluence_id: "1245185"
 title: "Cross-cutting agreement protocol"
 ---
 
-**Document status:** Active · **Parent:** [10. Engineering Flows](https://oraclous.atlassian.net/wiki/spaces/OP/pages/1212418) · **Owned by:** [solution-architect](https://oraclous.atlassian.net/wiki/spaces/OP/pages/164068)
+**Document status:** <custom data-type="status" data-id="id-0">Active</custom> · **Parent:** [10. Engineering Flows](https://oraclous.atlassian.net/wiki/spaces/OP/pages/1212418) · **Owned by:** [solution-architect](https://oraclous.atlassian.net/wiki/spaces/OP/pages/164068)
 
 This page documents how two or more team members agree on a **shared shape** — a data structure, an API response, an OHM field, a ReBAC relation, an error envelope — and how that agreement is recorded so it cannot drift. It is the flow that prevents the failure mode where the frontend session and the backend session each invent their own incompatible version of the same thing.
 

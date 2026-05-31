@@ -1,4 +1,8 @@
-<!-- source page id: 589868 | title: Deployment — Cloud-hosted -->
+---
+confluence_id: "589868"
+title: "Deployment — Cloud-hosted"
+---
+
 # Deployment — Cloud-hosted
 
 Operational stance for the Oraclous-the-company cloud-hosted deployment. This page describes how Oraclous-the-company operates the platform on behalf of cloud-hosted customers, with equivalent data-sovereignty guarantees backed by formal compliance.

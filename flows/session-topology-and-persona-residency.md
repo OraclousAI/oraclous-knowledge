@@ -1,9 +1,9 @@
 ---
-confluence_page_id: "1736705"
+confluence_id: "1736705"
 title: "Session topology and persona residency"
 ---
 
-**Document status:** Active · **Parent:** [10. Engineering Flows](https://oraclous.atlassian.net/wiki/spaces/OP/pages/1212418) · **Owned by:** [tech-lead](https://oraclous.atlassian.net/wiki/spaces/OP/pages/983101)
+**Document status:** <custom data-type="status" data-id="id-0">Active</custom> · **Parent:** [10. Engineering Flows](https://oraclous.atlassian.net/wiki/spaces/OP/pages/1212418) · **Owned by:** [tech-lead](https://oraclous.atlassian.net/wiki/spaces/OP/pages/983101)
 
 This page is the canonical record of **which Claude Code session runs where, and which agent personas each session may load**. It is the structure that makes the work-breakdown flow conflict-free: every persona lives in exactly one session, so two sessions can never act as the same `Agent Owner` on the same ticket.
 

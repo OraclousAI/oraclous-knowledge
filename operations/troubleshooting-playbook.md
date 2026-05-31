@@ -1,4 +1,8 @@
-<!-- source page id: 557099 | title: Troubleshooting Playbook -->
+---
+confluence_id: "557099"
+title: "Troubleshooting Playbook"
+---
+
 # Troubleshooting Playbook
 
 The operator's reference for diagnosing common problems. Each entry follows a symptom → diagnostic-steps → resolution structure so an on-call operator can move from "something is wrong" to "fixed" without spelunking through code.

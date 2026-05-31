@@ -1,4 +1,8 @@
-<!-- source page id: 983041 | title: Incident Response -->
+---
+confluence_id: "983041"
+title: "Incident Response"
+---
+
 # Incident Response
 
 How the team responds when something breaks. The process is the same in self-hosted and cloud-hosted modes — only the operator differs. For cloud-hosted, the operator is Oraclous-the-company; for self-hosted, the customer.

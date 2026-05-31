@@ -1,5 +1,5 @@
 ---
-source_page_id: 720981
+confluence_id: "720981"
 title: "Glossary"
 ---
 
@@ -119,3 +119,4 @@ The principle that Oraclous-the-company staff cannot decrypt or access customer 
 * **Section 2 of Architecture v1.1** — full conceptual model with detail
 * **02. ADRs** — decisions referenced by glossary entries
 * **Documentation Conventions** — when to define a term inline vs. add it here
+

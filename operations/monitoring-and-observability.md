@@ -1,4 +1,8 @@
-<!-- source page id: 852031 | title: Monitoring and Observability -->
+---
+confluence_id: "852031"
+title: "Monitoring and Observability"
+---
+
 # Monitoring and Observability
 
 What the platform emits, what to monitor, and how to interpret what you see. The observability contract is platform-wide: every service follows the same conventions so dashboards and alerts compose across services.

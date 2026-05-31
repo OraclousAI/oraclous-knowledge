@@ -1,9 +1,9 @@
 ---
-confluence_page_id: "1671170"
+confluence_id: "1671170"
 title: "Jira board and workflow mapping"
 ---
 
-**Document status:** Active · **Parent:** [10. Engineering Flows](https://oraclous.atlassian.net/wiki/spaces/OP/pages/1212418) · **Owned by:** [product-planner](https://oraclous.atlassian.net/wiki/spaces/OP/pages/884840) with [tech-lead](https://oraclous.atlassian.net/wiki/spaces/OP/pages/983101) sign-off
+**Document status:** <custom data-type="status" data-id="id-0">Active</custom> · **Parent:** [10. Engineering Flows](https://oraclous.atlassian.net/wiki/spaces/OP/pages/1212418) · **Owned by:** [product-planner](https://oraclous.atlassian.net/wiki/spaces/OP/pages/884840) with [tech-lead](https://oraclous.atlassian.net/wiki/spaces/OP/pages/983101) sign-off
 
 This page is the canonical mapping between the work-breakdown flow ([10. Engineering Flows](https://oraclous.atlassian.net/wiki/spaces/OP/pages/1212418)) and the actual ORA Jira board. It records the eight columns, which workflow status each represents, which agent owns a ticket sitting in each column, and how the orthogonal signals (`needs-human`, issue type) surface on the board.
 

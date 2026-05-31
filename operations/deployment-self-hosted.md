@@ -1,4 +1,8 @@
-<!-- source page id: 164022 | title: Deployment — Self-hosted -->
+---
+confluence_id: "164022"
+title: "Deployment — Self-hosted"
+---
+
 # Deployment — Self-hosted
 
 Operational guide for customers running Oraclous on their own infrastructure. This page tells a self-hosting operator what they need to install, configure, and run the platform.

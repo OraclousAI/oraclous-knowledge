@@ -1,5 +1,5 @@
 ---
-source_page_id: 884757
+confluence_id: "884757"
 title: "capability-registry-service"
 ---
 

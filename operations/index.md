@@ -1,4 +1,8 @@
-<!-- source page id: 753686 | title: 05. Operations -->
+---
+confluence_id: "753686"
+title: "05. Operations"
+---
+
 # 05. Operations
 
 How the platform is deployed, operated, monitored, and maintained. This section is the operator's reference.
