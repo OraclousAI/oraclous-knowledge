@@ -1,37 +1,84 @@
+---
+confluence_id: "66010"
+title: "Definition of Done"
+---
+
 # Definition of Done
+
+This page enumerates the gates a story must clear before it can move to **Done** on the Kanban board. Sign-off gates are owned by specific agent roles (see Agent Team Roster). A story that fails any gate stays in its current column until the gate clears.
+
+## The Definition of Done checklist
 
 A story is Done when **all** of these are true:
 
-## Brief and tests
+### Brief and tests
 
-- [ ] The product-planner's brief is linked and references the relevant architecture section(s) and ADR(s)
+- [ ] The product-planner's brief is linked to the story and references the relevant architecture section(s) and ADR(s)
 - [ ] The test-author PR has merged, and its tests describe the brief's acceptance criteria
 - [ ] All tests in the test PR were previously failing (red) and now pass (green) after implementation
 
-## Implementation
+### Implementation
 
 - [ ] Implementation PR references the merged test PR
 - [ ] Implementation PR squash-merged to `main` with a Conventional Commit message
-- [ ] All CI checks passed: unit, integration, security, isolation, organization_isolation, type checking, lint
+- [ ] All CI checks passed at merge time: unit, integration, security, isolation, organization_isolation, type checking, lint
 - [ ] No new TODOs without a linked Jira ticket
+- [ ] No new dead code or commented-out blocks
 
-## Review sign-offs
+### Review sign-offs
 
 - [ ] code-reviewer approved
-- [ ] qa-engineer validated and approved
-- [ ] security-architect approved (if security/isolation/organization_isolation story)
-- [ ] solution-architect approved (if architectural boundary touched)
+- [ ] qa-engineer validated the tests against the brief and approved
+- [ ] security-architect approved (if the story is marked `security`, `isolation`, or `organization_isolation`)
+- [ ] solution-architect approved (if the story touches an architectural boundary — layer interfaces, service boundaries, OHM shape)
 - [ ] tech-lead final sign-off recorded
 
-## Documentation
+### Documentation
 
-- [ ] Confluence documentation updated where platform behaviour changed
-- [ ] In-repo documentation updated where developer-facing behaviour changed
-- [ ] If a new ADR was needed, the ADR is merged before story closure
+- [ ] Confluence documentation updated where platform behaviour changed (docs-writer)
+- [ ] In-repo documentation updated where developer-facing behaviour changed (READMEs, [CLAUDE.md](http://CLAUDE.md), in-repo ADRs)
+- [ ] If a new ADR was needed, the ADR is merged in Confluence before story closure
 
-## Security posture
+### Operational
+
+- [ ] No new uncovered code paths in observability (logs, traces, metrics where applicable for the service)
+- [ ] Migration scripts (if any) ran successfully in the staging environment
+- [ ] Feature flags (if any) documented in the deployment notes
+- [ ] Rollback plan documented if the change is risky
+
+### Security posture
 
 - [ ] No new query path missing `organization_id` or `graph_id` filter
 - [ ] No new credential handling that bypasses the credential broker
 - [ ] No new logging that could leak secrets (detect-secrets clean)
 - [ ] No new threat surface unaccounted for in Section 6.5
+
+## What "Done" does NOT mean
+
+Done does not mean:
+
+* The feature is exposed to customers (that requires a separate deployment decision)
+* The work is final (subsequent stories may build on or refactor it)
+* All possible edge cases are handled (only those the brief named)
+* Performance is optimised (unless performance is part of the brief's acceptance criteria)
+
+The bar is **the story does what the brief said it would do, with the platform's guarantees intact, in a form the team can review and maintain**. It is not perfection.
+
+## Story closure procedure
+
+1. The implementing agent moves the story to **Code Review** when the implementation PR is ready
+2. Reviewers add sign-offs as they complete their reviews
+3. When code-reviewer approves and CI is green, the PR merges
+4. The implementing agent moves the story to **Done**, with all sign-offs recorded in the story's comments
+5. The docs-writer takes the story handoff and updates Confluence as needed
+6. tech-lead records final sign-off on the story; the story closes
+
+## When a story cannot be Done
+
+If a story turns out to be larger or different than expected:
+
+* **Split:** create new stories for the unfinished work, link them as related, and close the current story with what's actually complete
+* **Replan:** if the brief itself was wrong, return the story to **Ready** with an updated brief and re-run the workflow from test-author
+* **Block:** if external blockers prevent completion, move the story to **Blocked** with the blocker linked
+
+The anti-pattern is closing a story as "Done with caveats." A story is Done or it is not. Caveats become their own stories.
