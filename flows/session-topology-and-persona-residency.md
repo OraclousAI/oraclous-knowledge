@@ -9,11 +9,13 @@ This page is the canonical record of **which Claude Code session runs where, and
 
 ## 1. Three sessions
 
-| Session | Working directory | Role |
+| Session | Base repo | Role |
 | --- | --- | --- |
 | **Coordinator** | `/Users/reza/workspace/OraclousAI/` (workspace root) | Planning, architecture, cross-cutting agreement, infra, documentation. Produces Confluence pages and Jira tickets; never application code. |
 | **Backend** | `/Users/reza/workspace/OraclousAI/oraclous-backend/` | Backend execution: tests, implementation, review, QA. |
 | **Frontend** | `/Users/reza/workspace/OraclousAI/oraclous-frontend/` | Frontend execution: implementation. Tests deferred; review is manual by the human. |
+
+Each run executes in its own git worktree at `<base-repo>/.worktrees/<run-id>/`; runs within the same session do not share a working tree.
 
 The human `tech-lead` (Reza) operates across all three and is the final sign-off on every human gate.
 
@@ -63,7 +65,20 @@ The coordinator **never** loads test-author, be-test-reviewer, backend-implement
 
 The frontend session currently loads only `frontend-implementer`. FE tests, test review, and code review are deferred; FE craft review is manual by the human `tech-lead`. FE invariants (gateway-only API, no token in `localStorage`, WCAG AA) are enforced by CI, not by a review agent. Re-evaluate at R-Frontend Phase B. See [Jira board and workflow mapping](https://oraclous.atlassian.net/wiki/spaces/OP/pages/1671170) Section 4.
 
-## 7. Related references
+## 11. Session residency — AGENTS.md §11 template
+
+The following block is the canonical §11 injected into every persona's AGENTS.md bundle during assembly. The `<session>` and `<base-repo>` placeholders are substituted from the persona's row in Section 1 and Section 2.
+
+```
+- Resides in the **<session>** session. Base repo: `<base-repo>`.
+- Each run is isolated in its own git worktree at `<base-repo>/.worktrees/<run-id>/`; runs do not share a working tree.
+- Every persona lives in exactly one session; two sessions never act as the same Agent Owner.
+- Single source of coordination state is Jira. Check the `Agent Owner` field before claiming any ticket; if another session's persona owns it, do not claim.
+- Handoffs cross sessions through the `Agent Owner` field, not direct messaging — the board is the channel.
+- Escalations travel up to the coordinator personas (solution-architect / security-architect / product-planner). Human escalations go to BLOCKED with `Agent Owner = human` and the `needs-human` tag.
+```
+
+## 12. Related references
 
 * [10. Engineering Flows](https://oraclous.atlassian.net/wiki/spaces/OP/pages/1212418) — the work-breakdown hierarchy
 * [Jira board and workflow mapping](https://oraclous.atlassian.net/wiki/spaces/OP/pages/1671170) — columns, owners, BLOCKED semantics
