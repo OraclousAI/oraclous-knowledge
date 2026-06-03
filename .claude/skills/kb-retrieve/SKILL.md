@@ -51,6 +51,27 @@ Question: "What is the commit message convention?"
 
 Total: 3 files opened, not 100.
 
+## Graph queries — relationships & cross-cutting questions
+
+The index protocol above is the free, fast path for "where is X documented?".
+For **relationship** questions — "how does X connect to Y?", "what depends on
+Z?", "what is the rationale behind decision D?", or "what am I missing?" — use
+the graphify knowledge graph instead of reading files:
+
+- A graph + an agent-crawlable wiki live at `graphify-out/` (built by graphify).
+  Start at `graphify-out/wiki/index.md` (communities → god nodes), or
+- Query it directly, token-budgeted:
+  - `graphify query "<question>"` — broad context (BFS)
+  - `graphify query "<question>" --dfs` — trace a specific chain
+  - `graphify path "A" "B"` — shortest path between two concepts
+  - `graphify explain "X"` — a node and its neighbours
+
+A graph query costs ~3k tokens versus ~230k to read the corpus naively (~80×
+reduction). Keep the graph current after KB edits with `graphify <repo>
+--update` (incremental — re-extracts only changed files). The graph is the
+relationship map; the section indexes remain the fastest path to the one page
+that states a fact.
+
 ## Anti-patterns
 
 - Reading every file in a section to "be thorough".
