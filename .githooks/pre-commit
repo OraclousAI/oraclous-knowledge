@@ -1,0 +1,57 @@
+#!/bin/sh
+# Oraclous Knowledge Base pre-commit hook.
+#
+# When a commit touches a tracked .md file under a content section, regenerate
+# the root index.md and llms.txt so every commit carries a current index.
+#
+# Safe and fast: no network. If python3 is unavailable, warn and exit 0 rather
+# than blocking the commit.
+#
+# Enable with: sh scripts/setup-hooks.sh   (sets core.hooksPath to .githooks)
+
+set -e
+
+# Content sections whose .md files drive index regeneration.
+SECTIONS='adr architecture compliance contracts engineering flows frontend meta operations releases services-reference'
+
+# Staged files in this commit (added/copied/modified/renamed).
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR)
+
+# Does any staged file live under a content section AND end in .md?
+needs_index=0
+for f in $STAGED; do
+	case "$f" in
+		*.md)
+			top=${f%%/*}
+			for s in $SECTIONS; do
+				if [ "$top" = "$s" ]; then
+					needs_index=1
+					break
+				fi
+			done
+			;;
+	esac
+	[ "$needs_index" -eq 1 ] && break
+done
+
+if [ "$needs_index" -eq 0 ]; then
+	exit 0
+fi
+
+if ! command -v python3 >/dev/null 2>&1; then
+	echo "pre-commit: python3 not found; skipping KB index regeneration." >&2
+	echo "pre-commit: run 'python3 scripts/build_kb_index.py' manually when available." >&2
+	exit 0
+fi
+
+# Regenerate from the repo root so relative paths resolve.
+REPO_ROOT=$(git rev-parse --show-toplevel)
+python3 "$REPO_ROOT/scripts/build_kb_index.py" || {
+	echo "pre-commit: KB index generation failed." >&2
+	exit 1
+}
+
+# Stage the regenerated files so the commit carries a current index.
+git add "$REPO_ROOT/index.md" "$REPO_ROOT/llms.txt"
+
+exit 0
