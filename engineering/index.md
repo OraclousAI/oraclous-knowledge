@@ -37,3 +37,19 @@ A new contributor reading these in order should be able to pick up and execute t
 These pages are the engineering team's contract. They override ad-hoc decisions; when reality and these pages disagree, the resolution is to either update the page or change reality. Silent drift is the failure mode the documentation exists to prevent.
 
 When a story or PR proposes something these pages don't cover, the response is to either (a) add a section to the relevant page, or (b) write an ADR if the addition is architectural. Inline interpretation across a PR thread does not establish policy.
+
+## Agent-governance gates are enforced in ORAA-4
+
+The mechanical governance gates that agents run on — the pre-push gate, one-commit-per-concern, the mergeability gate, dedup-before-fix-ticket, the fail-closed unblock rule, branch-from-merged-tests, rebase-on-merge, the release-seam retrospective, and the destructive-change protocol — are **enforced** in the operating contract (ORAA-4). The pages in this hub **restate those rules for humans**, in each page's own voice. They are not the enforcement surface; ORAA-4 is.
+
+Because the rule lives in two places by design (enforced in ORAA-4, restated here), the two **must be kept in sync**. These KB pages are not a place to quietly diverge from the contract: when they disagree with ORAA-4, ORAA-4 wins, and the divergence is a docs bug to fix.
+
+### Governance-change checklist
+
+Any change to a mechanical agent-governance rule must update **all three** surfaces together, in the same change set:
+
+1. **ORAA-4** — the operating contract (the enforcement surface).
+2. **The agent bundles** — both the live instances **and** the roster templates they are cloned from. (Updating instances without templates means the next clone regresses.)
+3. **These KB pages** — the human-facing restatement in this hub.
+
+A governance change that touches only one or two of these is incomplete and leaves the surfaces inconsistent. Record the change in the [Agent and Skill Change Log](https://oraclous.atlassian.net/wiki/spaces/OP/pages/426078).

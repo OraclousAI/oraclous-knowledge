@@ -49,6 +49,18 @@ and the migration script for existing data.
 Closes: ORA-123
 ```
 
+### One commit per concern
+
+Each commit is a **single logical change**. Mixed work is split into separate commits — a refactor and the feature it enables are two commits, not one; a lint cleanup and a behaviour change are two commits, not one. If you find yourself writing "and" in the imperative subject, that is a signal to split.
+
+Commits carry **no attribution trailers**. Do not append `Co-Authored-By:`, `Generated-with:`, robot-emoji lines, or any similar trailer. For agent work the operating contract mandates the commit subject form:
+
+```
+[ORAA-xx] [agent:NAME] <imperative>
+```
+
+where `ORAA-xx` is the issue key, `NAME` is the persona acting, and the imperative is present-tense ("add", not "added"). This is enforced by a commit-msg hook. (This agent form coexists with Conventional Commits for the squashed merge record; the per-commit agent form is what the implementer writes locally.)
+
 ## Pull requests
 
 Every PR description includes:
@@ -74,6 +86,33 @@ Exceptions:
 Branches rebase onto `main` rather than merging `main` into them. Force-push to the branch is fine (and expected after rebase). Force-push to `main` is impossible (protected branch rule).
 
 When a rebase produces conflicts, the branch author resolves them on their branch and re-runs the test suite locally before pushing again.
+
+## Pre-push gate
+
+Before **any** `git push`, run locally the same cheap checks that CI's `quality` job runs, and push only if they are clean. This catches the failures that otherwise burn a CI round-trip and an `[agent:NAME]` re-push.
+
+* **Backend:** `uv run ruff check . && uv run ruff format --check . && uv run pytest --collect-only`
+* **Frontend:** the `package.json` lint, type-check, and format-check scripts.
+
+`pytest --collect-only` is part of the gate deliberately: it imports every test module, which surfaces function-local-import violations and collection-time errors before they reach CI.
+
+A failure found by the pre-push gate is the **implementer's to fix before re-pushing** — it does not become a new `[fix]` issue. The gate exists precisely so the push is clean the first time.
+
+## Branch from merged tests (impl PRs)
+
+Per ADR-010 the `[tests]` PR for a story is authored first, by a different agent, and merges before implementation begins (see Test Strategy). To keep the two PRs independent **and** conflict-free, an `[impl]` PR MUST branch from — or be rebased onto — the **exact `main` commit where its `[tests]` PR merged**, *before* the impl PR opens.
+
+* The test-author records that merge SHA on the story when the `[tests]` PR merges.
+* The implementer asserts their branch base is **at or after** that SHA before opening the impl PR.
+* The be-test-reviewer / code-reviewer **reject** an impl PR whose base predates the recorded merge SHA.
+
+This sequencing rule does not collapse the two PRs into one — ADR-010's two-PR independence (tests written first, by a different agent, untouched by the implementer) stays intact. It only fixes the base-commit sequencing that previously produced add/add conflicts between the tests and the implementation. **Do not "fix" this by combining tests and implementation into a single PR.**
+
+## Rebase on merge
+
+When any PR merges to `main`, open PRs whose changes **overlap the same files** get a rebase task before they are reviewed. The merged change has moved their base; reviewing or merging them against a stale base risks silent conflicts and re-introduced regressions. The implementer of the overlapping PR owns the rebase (see the mergeability gate in the Definition of Done — `DIRTY`/`BEHIND` is exactly this situation).
+
+> **See also:** the **mergeability gate** in the [Definition of Done](https://oraclous.atlassian.net/wiki/spaces/OP/pages/66010). A green CI run is necessary but not sufficient to merge; the PR must also be GitHub-`MERGEABLE` with a clean merge state.
 
 ## Protected branches
 

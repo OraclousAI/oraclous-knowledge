@@ -60,6 +60,34 @@ A change can be rolled back at any sprint boundary. Rollback creates a new entry
 
 ## Change log
 
+### 4 June 2026 — R2→R3 seam hardening: anti-churn made fail-closed + sequencing, retro, and destructive-change protocols added
+
+| Field | Value |
+| --- | --- |
+| Type | Skill change / gate change — team-wide governance, all personas |
+| Agents affected | All personas (the rules are enforced for every agent via the operating contract and the bundles) |
+| What changed | At the R2→R3 release seam the operating contract (ORAA-4) was hardened in several ways. **§13.3** (no stranded issues) was made **fail-closed**: on closing an issue, dependents are unblocked and assigned only after reading their description for prose dependencies ("salvage before", "hard-sequenced after", "after ORAA-NN"), back-filling `blockedByIssueIds`, and verifying *every* predecessor is `done`; destructive/irreversible work is never auto-unblocked; ambiguous cases stay blocked; a blocked issue with no live path is escalated, not retried. **§13.4 branch-from-merged-tests** was added: an `[impl]` PR must branch from / rebase onto the exact `main` commit where its `[tests]` PR merged before opening; the test-author records the merge SHA, implementers assert base ≥ it, reviewers reject impl PRs whose base predates it — preserving ADR-010's two-PR independence while fixing the add/add-conflict sequencing. **§13.5 rebase-on-merge** was added: when any PR merges, open PRs with overlapping files get a rebase task before review. **§14 release-seam retrospective** was added: at each release gate the CTO runs a retrospective that must output concrete deltas (ORAA-4 / bundles / KB) or a logged "won't fix"; the gate issue cannot close until deltas are applied or waived (generalises the hotfix-retrospective hook). **§15 destructive-change protocol** was added: deletes / DB migrations / archival / retirements require predecessor-salvage `done` and verified, explicit human sign-off before leaving `blocked` (the CTO sequences but never self-approves), and a forward-only plan; reversible (archival behind a flag) is preferred over hard deletion. |
+| Why | The R2 delivery surfaced recurring churn at issue and release seams: stranded dependents auto-unblocked past incomplete predecessors, add/add conflicts between tests and implementation branches, stale-base PRs reviewed against moved bases, process friction noticed but never converted into fixes, and destructive work sequenced without explicit human approval. Hardening the contract at the R2→R3 seam closes these at the source rather than via per-incident remediation. |
+| Approved by | tech-lead (Reza Jahankohan) |
+| Effective from | 4 June 2026 |
+| Rollback considered | No — these tighten existing gates and add protocols with no behaviour they remove; rollback would re-open the churn paths they close. Synced surfaces (below) keep instances and templates consistent. |
+
+Surfaces updated together for this change: **ORAA-4** (the contract), **12 agent bundles** (live instances), **11 roster templates** (the clone sources), and **these KB engineering docs** (`git-workflow.md`, `definition-of-done.md`, `pr-conventions.md`, `test-strategy.md`, `release-process.md`, `index.md`).
+
+### 3 June 2026 — Bucket A: pre-push gate + ORAA-4 §13 anti-churn (mergeability / dedup / no-stranded)
+
+| Field | Value |
+| --- | --- |
+| Type | Skill change / gate change — team-wide governance, all personas |
+| Agents affected | All personas (enforced via the operating contract and the bundles) |
+| What changed | The **pre-push gate** was established: before any `git push`, an agent runs locally the same cheap checks CI's `quality` job runs (backend: `uv run ruff check . && uv run ruff format --check . && uv run pytest --collect-only`; frontend: the `package.json` lint + type-check + format-check scripts) and pushes only if clean — a failure is the implementer's to fix before re-pushing, not a new `[fix]` issue. The **ORAA-4 §13 anti-churn** rules were added: the **mergeability gate** (§13.1 — a PR/issue is not ready on CI-green alone; before the `in_review` handoff and before merge, check `gh pr view <n> --json mergeable,mergeStateStatus`, require `mergeable=MERGEABLE` and `mergeStateStatus ∈ {CLEAN, HAS_HOOKS}`, poll past `UNKNOWN`, rebase on `DIRTY`/`BEHIND`, satisfy required reviews/checks on `BLOCKED`); **dedup-before-fix-ticket** (§13.2 — search open issues for the same PR + problem and extend rather than duplicate before opening a `[fix]`/`[fix-lint]`/`[regression]`/`[rebase]` issue); and the first form of **no-stranded-issues** (§13.3). |
+| Why | Round-trip churn from avoidable CI failures, PRs treated as ready on a green run that were not actually mergeable, and duplicate fix tickets were measurably inflating the board and the CI queue. Bucket A moved these checks left (to the local push) and into the contract (the mergeability and dedup rules). |
+| Approved by | tech-lead (Reza Jahankohan) |
+| Effective from | 3 June 2026 |
+| Rollback considered | No — these add pre-push and pre-merge checks with no removed behaviour; the 4 June entry above supersedes §13.3 by making it fail-closed. |
+
+Surfaces updated together for this change: **ORAA-4** (the contract), the **agent bundles**, and **these KB engineering docs**.
+
 ### 28 May 2026 — Agent added: be-test-reviewer (narrow BE Tests Review persona)
 
 | Field | Value |

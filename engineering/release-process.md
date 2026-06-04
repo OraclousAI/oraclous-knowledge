@@ -54,6 +54,19 @@ Hotfixes are patches that bypass the normal staging soak because the issue is se
 
 Hotfixes are a last resort. Frequent hotfixes signal a problem with the staging environment, the test coverage, or the release gating.
 
+## Release-seam retrospective
+
+The hotfix step above mandates a post-deployment retrospective whenever a hotfix ships. That same discipline applies, generalised, at **every release seam** — not only after a hotfix.
+
+At each release gate the CTO runs a retrospective on the release just completed. The retrospective must produce **concrete deltas**, not just discussion:
+
+* edits to the operating contract (ORAA-4), the agent bundles, or the knowledge base, **or**
+* a logged "won't fix" for each candidate change that was considered and deliberately declined.
+
+The release-gate issue **cannot close** until every surfaced delta has either been applied or explicitly waived. A retrospective that ends with "we noticed some friction" and no recorded action is not complete.
+
+This generalises the hotfix-retrospective hook: where the hotfix retro asks "what failed, and how do we stop it recurring?" after an emergency, the release-seam retrospective asks the same question routinely, at the planned boundary between releases, so process drift is corrected at the seam rather than accumulating until it forces a hotfix.
+
 ## Compatibility commitments
 
 Between **minor** releases:
