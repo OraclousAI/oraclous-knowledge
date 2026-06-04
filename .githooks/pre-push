@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# .githooks/pre-push — KB currency gate (ORAA-4 §5/§16), enacted 2026-06-04 (ORAA-250).
+# Ensures the generated index.md/llms.txt are current before pushing KB changes.
+set -uo pipefail
+if command -v python3 >/dev/null 2>&1 && [ -f scripts/build_kb_index.py ]; then
+  python3 scripts/build_kb_index.py --check || {
+    echo "[pre-push] ❌ BLOCKED: KB index/llms.txt are stale — run: python3 scripts/build_kb_index.py, then commit (§16)." >&2
+    exit 1
+  }
+fi
+echo "[pre-push] ✅ KB currency gate passed." >&2
