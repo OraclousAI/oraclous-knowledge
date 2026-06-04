@@ -5,7 +5,7 @@ title: "Structured Threat Catalogue"
 
 # Structured Threat Catalogue
 
-**Document status:** <custom data-type="status" data-id="id-0">Accepted</custom> · **Version:** 1.1 · **Anchored by:** [Section 6.5 — Security Threats and Mitigations](https://oraclous.atlassian.net/wiki/spaces/OP/pages/851990)
+**Document status:** <custom data-type="status" data-id="id-0">Accepted</custom> · **Version:** 1.2 · **Anchored by:** [Section 6.5 — Security Threats and Mitigations](https://oraclous.atlassian.net/wiki/spaces/OP/pages/851990)
 
 This page is the authoritative, structured catalogue of platform threats. Section 6.5 of Platform Architecture v1.1 describes the threat model in prose; this page encodes the same threats in a machine-readable shape that [security-architect](https://oraclous.atlassian.net/wiki/spaces/OP/pages/557195) resolves against during threat-driven review. When the two disagree, the architecture document is authoritative for taxonomy and risk framing; this page is authoritative for the concrete mitigation, test, and detection contracts.
 
@@ -26,11 +26,11 @@ The canonical, machine-readable threat catalogue:
 
 ```yaml
 # oraclous-threat-catalogue
-# version: 1.1
+# version: 1.2
 # anchored: Section 6.5 of Platform Architecture v1.1
-# updated: 2026-05-31
+# updated: 2026-06-04
 
-catalogue_version: "1.1"
+catalogue_version: "1.2"
 
 threats:
 
@@ -78,7 +78,8 @@ threats:
     one_line: >
       A principal performs an action that their granted ReBAC relations
       do not permit, via a policy-evaluation bug, role-assignment race,
-      or capability-permission mismatch.
+      or capability-permission mismatch; or a compromised container
+      process escalates to root at the OS layer.
     attack_chain:
       - "Attacker has a low-privilege principal in their target organisation"
       - "Attacker invokes a capability that does not recheck the principal's relations at invocation time"
@@ -96,6 +97,9 @@ threats:
       - id: "T2-M3"
         description: "Capability descriptors declare required relations; runtime refuses to invoke a capability against a principal lacking them"
         enforcement_point: "capability registry + harness runtime"
+      - id: "T2-M4"
+        description: "Service containers run as non-root system user `svc` in the runtime stage; root is unavailable at container runtime, limiting OS-layer privilege escalation if a container process is compromised (ORAA-234, PR #125)"
+        enforcement_point: "container runtime (all service Dockerfiles)"
     required_tests:
       - markers: ["security", "rebac"]
         scope: "every capability invocation"
@@ -374,5 +378,6 @@ The threat catalogue is amended through the threat-catalogue maintenance skill (
 | 1.0 | 27 May 2026 | Initial catalogue. Seven founding threats codified: T1 data exfiltration, T2 privilege escalation, T3 model-provider compromise, T4 capability poisoning, T5 manifest tampering, T6 operator-separation breach, T7 audit-log gap. |
 | 1.0 | 27 May 2026 | Cosmetic revision: sibling Governance Taxonomy (688439) and ADR-008 (753792) references upgraded to hyperlinks. No semantic change to the catalogue or YAML. |
 | 1.1 | 31 May 2026 | **T6-M5 added — Accepted by tech-lead (Reza Jahankohan).** Codifies the structural constraint that makes ADR-009's "metering events are operator-readable metadata" safe across implementation drift: usage-event `dimensions` is bounded scalar metering metadata — bounded key length (64), value length (256), cardinality (16), key character-class restriction. T6's `required_tests` gains an entry pinning the ORA-21 implementation tests (`test_dimensions_rejects_nested_customer_payload`, `test_dimension_value_length_is_bounded`, `test_dimension_key_length_is_bounded`, `test_dimension_key_rejects_whitespace_and_control_characters`, `test_dimensions_entry_count_is_capped`). T6's existing "plaintext customer payload in any log/metric/trace output" detection signal was clarified to name the usage stream explicitly. Driving artifact: [ORA-42](https://oraclous.atlassian.net/browse/ORA-42). |
+| 1.2 | 04 Jun 2026 | **T2-M4 added — docs-writer (ORAA-241).** T2-M4 codifies the non-root container mitigation shipped in [ORAA-234](https://oraclous.atlassian.net/browse/ORAA-234) (PR #125): service containers run as system user `svc` in the runtime stage, making root unavailable at container runtime and limiting OS-layer privilege escalation if a container process is compromised. T2's `one_line` scope extended to cover OS-layer escalation alongside the existing ReBAC application-layer. Driving artifacts: [ORAA-234](https://oraclous.atlassian.net/browse/ORAA-234), PR #125. |
 
 Subsequent changes appear here and in the Architecture Revision History.
