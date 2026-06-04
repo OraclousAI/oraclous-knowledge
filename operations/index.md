@@ -18,6 +18,7 @@ This section fills in as the platform reaches operational maturity. Most pages s
 * [Troubleshooting Playbook](https://oraclous.atlassian.net/wiki/spaces/OP/pages/557099) — common problems, diagnostic steps, resolutions
 * [Monitoring and Observability](https://oraclous.atlassian.net/wiki/spaces/OP/pages/852031) — what to monitor, dashboards, alerting, log shapes
 * [Incident Response](https://oraclous.atlassian.net/wiki/spaces/OP/pages/983041) — escalation paths, communication templates, post-mortem process
+* [Fleet-keeper](./fleet-keeper.md) — intake & anti-stall automation for the agent fleet (ORAA-250): auto-unblock + auto-assign + stall digest. Local script `operations/fleet_keeper.py`.
 
 ## Status
 

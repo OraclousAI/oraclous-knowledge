@@ -90,6 +90,8 @@ Exceptions:
 * Multi-commit PRs with logically separable commits (e.g., refactor commit + feature commit) can merge with **rebase-merge** to preserve the granularity. The PR description must explicitly request this.
 * Merge commits (`merge --no-ff`) are never used. The history stays linear.
 
+The mandated merge command is `oraclous-knowledge/operations/gated_merge.sh <backend|frontend|knowledge> <pr#>` — it re-checks CI-green + a non-author approval + an up-to-date base, then calls `gh pr merge --delete-branch`. It is the client-side companion to the `main` ruleset (see Protected branches): the ruleset blocks a bad merge server-side, `gated_merge.sh` refuses to attempt one and reports the reason.
+
 ## Rebasing onto main
 
 Branches rebase onto `main` rather than merging `main` into them. Force-push to the branch is fine (and expected after rebase). Force-push to `main` is impossible (protected branch rule).
@@ -100,10 +102,13 @@ When a rebase produces conflicts, the branch author resolves them on their branc
 
 Before **any** `git push`, run locally the same cheap checks that CI's `quality` job runs, and push only if they are clean. This catches the failures that otherwise burn a CI round-trip and an `[agent:NAME]` re-push.
 
-* **Backend:** `uv run ruff check . && uv run ruff format --check . && uv run pytest --collect-only`
-* **Frontend:** the `package.json` lint, type-check, and format-check scripts.
+As of ORAA-250 (2026-06-04) this gate is an **enforced git hook**, not a manual step: each repo ships `.githooks/pre-push` and sets `core.hooksPath=.githooks`, so a push that fails the checks is **blocked locally**. The backend hook mirrors the **full CI `quality` job** (not just a subset):
 
-`pytest --collect-only` is part of the gate deliberately: it imports every test module, which surfaces function-local-import violations and collection-time errors before they reach CI.
+* **Backend:** `ruff check`, `ruff format --check`, `mypy tools`, `lint-imports` (import contracts), org-scoping + org-scoped-labels-schema linters, test-import hygiene, neo4j write-role check, and contract-fixture checksum verification — the same nine checks CI runs.
+* **Frontend:** `lint`, `typecheck`, `format:check` (the `package.json` scripts that exist).
+* **Knowledge:** `build_kb_index.py --check` (KB index/llms.txt currency).
+
+The hook imports every test module on the backend path too, surfacing function-local-import violations and collection-time errors before they reach CI.
 
 A failure found by the pre-push gate is the **implementer's to fix before re-pushing** — it does not become a new `[fix]` issue. The gate exists precisely so the push is clean the first time.
 
@@ -137,7 +142,7 @@ When any PR merges to `main`, open PRs whose changes **overlap the same files** 
 
 ## Protected branches
 
-`main` has the following protection rules:
+`main` is protected by an **active GitHub ruleset** on each repo (ORAA-250, 2026-06-04). The repos are public, so rulesets are enforced server-side with an empty `bypass_actors` list — the rules apply to **everyone, including org admins**. There is no manual-discipline gap; a red, unreviewed, or stale PR **cannot** be merged. Required CI contexts: backend `quality`/`integration`/`security-tests`; frontend `Lint / Type-check / Format` + the five gate jobs (`oraclous-knowledge` has no CI workflow — its quality is covered by the `pre-push` hook + review). The legacy bullet list below describes the same intent the ruleset now enforces:
 
 * Direct pushes blocked
 * PRs require at least one approving review (more depending on sign-off gates)
