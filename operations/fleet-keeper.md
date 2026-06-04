@@ -10,10 +10,11 @@ Two external enforcement **mechanisms** (not rules) live in `operations/`:
 > **Non-author review requires a second identity.** All agents act as one GitHub user, which cannot approve its own PRs. The CTO approves under a second identity whose token lives in `~/.config/oraclous/reviewer-gh-token` (chmod 600). Run `operations/setup-reviewer-identity.sh` to provision/verify it. Without it, the `main` ruleset's non-author-review rule deadlocks all merges.
 
 
-The org is on GitHub **free tier**, where server-side branch protection and rulesets are
-unavailable for private repos. `gated_merge.sh` is the client-side enforcement of the Definition
-of Done at the merge point: it refuses to merge a PR unless **CI is green** AND there is an
-**approving review by a non-author** AND the **branch is up to date with base** (not behind/dirty).
+The three repos are **public**, and each `main` has an **active GitHub ruleset** (empty `bypass_actors`)
+enforcing CI-green + a non-author approving review + up-to-date base, server-side. `gated_merge.sh` is
+the **defense-in-depth client companion** to that ruleset and the rebase-aware merge convenience: it
+refuses to *attempt* a merge unless **CI is green** AND there is an **approving review by a non-author**
+AND the **branch is up to date with base** (not behind/dirty), reporting the exact reason on refusal.
 
 ```sh
 operations/gated_merge.sh <backend|frontend|knowledge> <pr#> [--squash|--merge|--rebase]
@@ -22,9 +23,9 @@ operations/gated_merge.sh <backend|frontend|knowledge> <pr#> [--squash|--merge|-
 The CTO (and any merger) MUST merge via this script instead of raw `gh pr merge`. Knowledge has no
 CI workflow, so its status-check gate is skipped (the pre-push hook covers quality there).
 
-> If the org later upgrades to GitHub Team or makes repos public, add server-side rulesets
-> (`required_status_checks` + `pull_request` + empty `bypass_actors`) as the primary gate and keep
-> this script as defense-in-depth / the rebase-aware convenience path.
+> The server-side rulesets are the primary gate (live as of 2026-06-04, ORAA-250); this script is the
+> defense-in-depth / rebase-aware convenience path. If the repos ever return to private on the free
+> tier, rulesets become unavailable and this script becomes the *only* gate again.
 
 ---
 
