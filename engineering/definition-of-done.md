@@ -23,6 +23,9 @@ A story is Done when **all** of these are true:
 - [ ] Implementation PR squash-merged to `main` with a Conventional Commit message
 - [ ] All CI checks passed at merge time: unit, integration, security, isolation, organization_isolation, type checking, lint
 - [ ] The PR cleared the **mergeability gate** (see below) before the `in_review` handoff and again before merge
+- [ ] The PR was **mergeable** (`mergeable = MERGEABLE`, clean merge state) — a green CI run alone is not enough
+- [ ] On completing each stage, the issue was **handed off to its next named owner** (see "The flow is part of Done") — no stage ended with the issue left parked
+- [ ] **`docker-required` integration tests ran on Docker** where the functionality is multi-service/integration (see "Docker-tested functionality") — never skipped
 - [ ] No new TODOs without a linked Jira ticket
 - [ ] No new dead code or commented-out blocks
 
@@ -47,6 +50,35 @@ Handling the other states:
 
 * `DIRTY` / `BEHIND` ⇒ the branch has conflicts or has fallen behind base. **Rebase onto the current base and re-run CI**, then re-check the gate.
 * `BLOCKED` ⇒ required reviews or required checks are unsatisfied. Satisfy them, then re-check.
+
+## The flow is part of Done — the handoff chain
+
+A story is not Done when the *code* is finished; it is Done when it has travelled the full handoff chain and reached merge. The flow itself is a Done criterion. Every story moves through this sequence of named owners:
+
+1. **product-planner / architects** — brief, decomposition, architecture review to Ready.
+2. **test-author** — writes the `[tests]` PR (ADR-010), which merges first.
+3. **be-test-reviewer** (and **security-architect** if the CTO flagged the story security-touching) — reviews the `[tests]` PR at the Tests Review gate.
+4. **backend-implementer / frontend-implementer** — writes the `[impl]` PR against the merged tests.
+5. **code-reviewer + qa-engineer** (and **solution-architect / security-architect** if the change touches an architectural or threat surface) — review the implementation.
+6. **CTO** — merges.
+
+**At each stage, the acting agent MUST reassign the issue to the next named owner on completion.** Finishing your part is not the end of your obligation; *handing off* is. An agent that finishes its part — **or that wakes, picks up an issue, and finds nothing for it to do** — MUST either hand the issue to its next owner or escalate it. It must **never** end its run leaving the issue parked on itself with no owner advancing it.
+
+A **parked, fully-worked issue** — work complete, nobody assigned to carry it forward — is the **single biggest cause of stalls** on the board. The whole chain can be green and the story still never ships because no one was told it was their turn. Treat "did I hand this off?" as the last question of every run.
+
+## Conflicts and misalignments — fold, don't spawn
+
+When work surfaces a **small conflict or misalignment** with the brief or the tests — a minor mismatch, an off-by-one in an assertion's expectation, a brief detail that doesn't quite line up — the fix belongs **in the current PR / current run**, not in a new `[fix]` ticket. Fold it in and keep moving.
+
+A new (and deduped — see PR Conventions) issue is created **only for genuinely new scope**: work that is materially beyond what the current story set out to do. The test is "is this the same piece of work, or a different one?" — not "is this annoying to fix here?"
+
+The one exception: a **wrong test** does not get quietly patched by the implementer. Per ADR-010 the tests are authored first, by a different agent; if a test is wrong, it goes **back to test-author** to correct, preserving the two-PR independence. The implementer folds in alignment fixes to *their own* code, not to the test contract.
+
+## Docker-tested functionality
+
+Multi-service and integration functionality is flagged **`docker-required`** — by the task creator at decomposition time, or by the CTO when the cross-service nature surfaces later. For a `docker-required` task, the integration tests **run on Docker**; that is how the functionality is actually exercised.
+
+If the Docker daemon is **not running** when such a task needs its integration tests, the agent does **not** skip the tests and does **not** mark the task done on the strength of the unit tests alone. It **raises an error and BLOCKS the task `needs-human`** so the environment can be fixed. Silently skipping Docker-gated tests — or declaring Done without them — is forbidden: it ships untested integration paths under a green-looking board.
 
 ### Review sign-offs
 

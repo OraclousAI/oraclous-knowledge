@@ -38,6 +38,20 @@ Every PR has a description following this structure:
 
 **Deployment notes** — anything special the devops-implementer needs to know (migration scripts, feature flags, ordering constraints).
 
+## Open the PR ready — pre-open readiness
+
+A PR is opened **ready for review**, not opened so a reviewer can find what's wrong with it. Before the author marks a PR ready, the branch MUST satisfy all three of:
+
+* **Clean on the local pre-push gate** — the cheap `quality`-job checks pass locally.
+* **Green on CI** — the branch's CI run is passing, not pending or red.
+* **Rebased onto current `main`** — neither `BEHIND` nor `DIRTY` (and, for `[impl]` PRs, base at or after the recorded `[tests]` merge SHA).
+
+The **opening author owns all three.** A reviewer must never be the first to discover red CI or a needed rebase; if they do, that is an author failure, fixed **in place** on the same branch — not a `[fix]`/`[rebase]` ticket and not the reviewer's job. See the Git Workflow page's "Pre-open readiness" section and the mergeability gate in the Definition of Done; pre-open readiness is the same discipline applied at the moment the PR first becomes reviewable.
+
+## No attribution anywhere in a PR
+
+Attribution — `Co-Authored-By:`, `Generated-with:`, robot-emoji lines, tool credit, or any equivalent — is **forbidden in the PR title, the PR description, and PR comments**, exactly as it is forbidden in commit messages (see the Git Workflow page). There is no PR surface on which it is acceptable. The CTO greps both the commit range **and** the PR body before merge; a match blocks the merge until the author strips it and re-pushes.
+
 ## Review expectations
 
 The code-reviewer (always) reviews for:

@@ -38,9 +38,29 @@ These pages are the engineering team's contract. They override ad-hoc decisions;
 
 When a story or PR proposes something these pages don't cover, the response is to either (a) add a section to the relevant page, or (b) write an ADR if the addition is architectural. Inline interpretation across a PR thread does not establish policy.
 
+## Cross-cutting engineering policies
+
+Two contract rules are engineering policy without a single natural home among the process pages above; they are stated here and apply across all the work those pages govern.
+
+### Knowledge-base currency
+
+Any agent that writes the knowledge base keeps the docs **current in the same change** that motivates them — documentation is not a follow-up ticket. In the same change, the agent also **refreshes graphify** so the knowledge graph reflects the new docs:
+
+```
+graphify oraclous-knowledge --update
+```
+
+The **docs-writer owns this end-to-end.** A KB or docs story is **not Done** until both halves are complete: the docs are updated **and** the graph is refreshed. A docs change that updates prose but leaves the graph stale is incomplete by definition.
+
+### Repository structure discipline
+
+* **New code lives under `services/<service>/`** (ADR-001's service-oriented layout). New surfaces get their own service directory.
+* **Never extend the legacy `oraclous-core-service`.** It is **retiring** (per ADR-005); its relocation is tracked as separate work. Adding to it deepens the very dependency the retirement exists to remove.
+* **Never commit `__pycache__/` or `*.pyc`.** Compiled-Python artifacts do not belong in version control; they are ignored, and a PR that introduces them is fixed in place before review.
+
 ## Agent-governance gates are enforced in ORAA-4
 
-The mechanical governance gates that agents run on — the pre-push gate, one-commit-per-concern, the mergeability gate, dedup-before-fix-ticket, the fail-closed unblock rule, branch-from-merged-tests, rebase-on-merge, the release-seam retrospective, and the destructive-change protocol — are **enforced** in the operating contract (ORAA-4). The pages in this hub **restate those rules for humans**, in each page's own voice. They are not the enforcement surface; ORAA-4 is.
+The mechanical governance gates that agents run on — the pre-push gate, **pre-open PR readiness**, one-commit-per-concern, **attribution-forbidden-everywhere (enforced by wired `commit-msg` hooks)**, the mergeability gate, dedup-before-fix-ticket, **fold-don't-spawn**, the **handoff-chain / no-parked-issue** rule, **docker-required integration testing**, the fail-closed unblock rule, branch-from-merged-tests, rebase-on-merge, the release-seam retrospective, **goal/project status hygiene at the seam**, and the destructive-change protocol — are **enforced** in the operating contract (ORAA-4). The pages in this hub **restate those rules for humans**, in each page's own voice. They are not the enforcement surface; ORAA-4 is.
 
 Because the rule lives in two places by design (enforced in ORAA-4, restated here), the two **must be kept in sync**. These KB pages are not a place to quietly diverge from the contract: when they disagree with ORAA-4, ORAA-4 wins, and the divergence is a docs bug to fix.
 
