@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # gated_merge.sh — the ONLY sanctioned merge path for OraclousAI repos (ORAA-250 / T1.2).
 #
-# Why this exists: the org is on GitHub free tier, where server-side branch protection and
-# rulesets are unavailable for private repos. This script is the client-side enforcement of
-# the Definition of Done at the merge point: it refuses to merge unless CI is green AND there
-# is an approving review by a non-author AND the branch is up to date with base. The CTO (and
-# any merger) MUST merge via this script instead of raw `gh pr merge`.
+# Why this exists: the repos are public with active `main` rulesets enforcing this server-side;
+# this script is the rebase-aware client companion + the mandated merge command. It refuses to
+# merge unless the required (gate-able) CI checks are green AND there is an approving review by a
+# non-author AND the branch is up to date with base. The CTO (and any merger) MUST merge via this
+# script instead of raw `gh pr merge`.
 #
 # Usage:  operations/gated_merge.sh <repo-short> <pr-number> [--squash|--merge|--rebase]
 #   repo-short ∈ {backend, frontend, knowledge}   (maps to OraclousAI/oraclous-<repo-short>)
@@ -27,7 +27,7 @@ NWO="OraclousAI/oraclous-${REPO_SHORT}"
 required_checks_for() {
   case "$1" in
     backend)  printf '%s\n' "lint" ;;
-    frontend) printf '%s\n' "Lint / Type-check / Format" "Gate 1: api-client-boundary" "Gate 2: no-token-in-storage" "Gate 3: axe-core AA" "Gate 4: bundle-budget" "Gate 5: no-dangerouslySetInnerHTML" ;;
+    frontend) ;;  # FE CI workflow (ORAA-216) not yet on main — no requireable checks; restore the lint+5 gate contexts once it merges
     knowledge) ;;  # no CI workflow — pre-push hook + review cover it
   esac
 }

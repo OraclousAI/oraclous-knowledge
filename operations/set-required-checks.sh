@@ -34,16 +34,22 @@ cat <<JSON
 JSON
 }
 
-declare -A CHECKS
-CHECKS[backend]='[{"context":"lint"}]'
-CHECKS[frontend]='[{"context":"Lint / Type-check / Format"},{"context":"Gate 1: api-client-boundary"},{"context":"Gate 2: no-token-in-storage"},{"context":"Gate 3: axe-core AA"},{"context":"Gate 4: bundle-budget"},{"context":"Gate 5: no-dangerouslySetInnerHTML"}]'
-CHECKS[knowledge]=''   # no CI workflow
+# Required gate-able checks per repo (bash 3.2: function, not associative array).
+# backend: lint (always-green). frontend: none yet (CI workflow ORAA-216 not on main).
+# knowledge: none (no CI workflow). Keep in sync with required_checks_for() in gated_merge.sh.
+checks_for_repo() {
+  case "$1" in
+    backend) echo '[{"context":"lint"}]' ;;
+    frontend|knowledge) echo '' ;;
+  esac
+}
 
 for r in backend frontend knowledge; do
   rid=$(gh api "/repos/$ORG/oraclous-$r/rulesets" --jq '.[] | select(.name=="main-protection") | .id' 2>/dev/null)
   [ -n "$rid" ] || { echo "❌ oraclous-$r: no main-protection ruleset"; continue; }
-  if [ -n "${CHECKS[$r]}" ]; then
-    body=$(ruleset_body ",$(checks_rule "${CHECKS[$r]}")")
+  checks="$(checks_for_repo "$r")"
+  if [ -n "$checks" ]; then
+    body=$(ruleset_body ",$(checks_rule "$checks")")
   else
     body=$(ruleset_body "")
   fi
