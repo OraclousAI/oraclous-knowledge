@@ -18,7 +18,7 @@ This file follows the llms.txt convention, adapted for a repository (relative li
 - [08. Meta](meta/index.md): Documentation about the documentation. This hub captures how the knowledge base is structured, written, maintained, and changed; it also captures the integration boundaries between Confluence, Jira, GitHub, Claude Code, and the various model providers the platform depends on.
 - [05. Operations](operations/index.md): How the platform is deployed, operated, monitored, and maintained. This section is the operator's reference.
 - [09. Releases](releases/index.md): This is the home of release-level planning. Each child page is the execution contract for one release — what it delivers, what success looks like, which architectural commitments it implements, and how it relates to the Jira tickets that execute it. Release pages are the input to ticket creation, not the output.
-- [04. Services Reference](services-reference/index.md): This hub indexes one reference page per target service. Each page documents purpose, responsibilities, dependencies, and status against the migration plan. These are stable reference documents that update as services evolve through the migration phases.
+- [04. Services Reference](services-reference/index.md): This hub indexes one reference page per target service. Each page documents purpose, responsibilities, dependencies, and status against the migration plan. These are stable reference documents that update as services evolve.
 
 ## Key entry points
 

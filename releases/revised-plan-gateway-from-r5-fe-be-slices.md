@@ -7,6 +7,8 @@ date: "2026-06-01"
 
 # Revised Release Plan: Gateway-from-R5 + FE/BE Vertical Slices
 
+> **SUPERSEDED by [R3.5 — Make every service real](r3.5-make-every-service-real.md) (2026-06-04).** This gateway-from-R5 vertical-slice plan is discarded. R2/R3 shipped hollow; the platform is being rebuilt real, per service, in the graph-first sequence (1) ingest → (2) retrieve → (3) identity/org → (4) credential-broker → (5) capability-registry (then salvage-delete `oraclous-core-service`) → (6) gateway. Content below is retained for reference only.
+
 > **Status:** Draft — see [ORAA-28](/ORAA/issues/ORAA-28) for board approval.  
 > This page supersedes the per-release FE notes in r5–r8 once approved.
 

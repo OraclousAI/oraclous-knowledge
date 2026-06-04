@@ -112,3 +112,23 @@ Draft PRs are encouraged for early feedback or for parking work-in-progress that
 For changes that genuinely cannot be split into independent PRs (rare), stacked PRs are acceptable: PR B branches off PR A, PR C branches off PR B, etc. Each PR in the stack is reviewed independently. The stack merges bottom-up; each merge triggers a rebase of the PR above.
 
 Stacked PRs are an advanced pattern and should be rare. Prefer splitting work to be genuinely independent where possible.
+
+## R3.5 PR & decomposition conventions
+
+R3.5 rebuilds every service **real, end-to-end, per service** (ORAA-4 §23). The decomposition rules below override the generic PR-sizing guidance above for R3.5 service work: a vertical slice that genuinely cuts all layers will routinely exceed 300 lines, and that is correct — reviewability comes from the slice being _cohesive_ (one concern through every layer), not from a line ceiling.
+
+**One service = one deliverable, in ≤ 6 coarse vertical slices.** A service is decomposed into at most six slices. Each slice:
+
+* **Cuts all layers** — `routes/` → `services/` → `repositories/`/`domain/` → `schema/`, per the [Service Architecture Standard](service-architecture-standard.md) (ORAA-4 §21). A slice is a working end-to-end path, not a single layer.
+* **Ends in a passing smoke** — the slice is not complete until `services/<svc>/tests/smoke/smoke.sh` exercises the new path against real substrate (testcontainers / docker compose) and passes in the `r3_5_gate` CI job.
+* **Is a single `[tests]` + `[impl]` PR pair** — the test-author authors and merges the `[tests]` PR first, the implementer branches from that merge SHA (ADR-010; see the **Base-commit assertion** above), and the pair lands the whole slice. No third PR to "finish" a slice.
+
+**Micro-tickets are forbidden** (ORAA-4 §23). Do **not** open:
+
+* a PR per file or per import,
+* a PR for a single endpoint _shell_ (a route with no service logic behind it),
+* a giant interlocked task graph of one-layer tickets that only integrates at the end.
+
+These produce hollow, stub-shaped increments — exactly the failure R3.5 exists to undo. If a slice feels too large for one pair, the service likely needs fewer, better-drawn slices, not more tickets.
+
+**A service PR set is not done until the §22 per-service DoD passes.** Merging the six slices' PRs green is **not** completion. The service is done only when all eight gates of the [hardened per-service Definition of Done](definition-of-done.md) (ORAA-4 §22) pass: structurally conformant; not hollow (`check_no_stubs` zero findings, `claimed_done` flipped in `tools/lint/service_status.yaml`); it runs (docker compose healthy, `GET /health` → 200); real endpoints (integration vs real substrate, no stub/501); end-to-end smoke vs real substrate; and **Reza personally tests it and signs off**. The service's issue carries `needs-human` until Reza accepts — no service is done while `needs-human` is set, and the next dependent service does not start until the prior one is signed off.

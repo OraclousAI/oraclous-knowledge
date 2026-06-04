@@ -5,6 +5,8 @@ title: "R2 — Phase 2: Capability registry consolidation"
 
 # R2 — Phase 2: Capability registry consolidation
 
+> **Shipped HOLLOW — re-done under [R3.5](r3.5-make-every-service-real.md).** What merged for R2 was scaffolding, not the real capability registry: stub endpoints, the real registry/tool/connector logic left **undeleted and dead** (~6,300 LOC) in `oraclous-backend/oraclous-core-service/`, and "done" stories that passed only stub-tests. The real logic is ported out of `oraclous-core-service` into a real `capability-registry-service` as **step 5** of R3.5, after which `oraclous-core-service` is salvaged-then-deleted under human sign-off. The plan below is retained as the original intent; the realness bar is now ORAA-4 §22 (8 gates + Reza sign-off).
+
 | Release ID | R2 |
 | --- | --- |
 | Status | <custom data-type="status" data-id="id-0">Planned</custom> |

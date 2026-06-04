@@ -112,6 +112,35 @@ The hook imports every test module on the backend path too, surfacing function-l
 
 A failure found by the pre-push gate is the **implementer's to fix before re-pushing** — it does not become a new `[fix]` issue. The gate exists precisely so the push is clean the first time.
 
+## R3.5 enforcement: structure, no-stubs, and import contracts at push and merge
+
+The R3.5 release (ORAA-4 §21–§23) exists because R2/R3 shipped **hollow** — stub endpoints, `raise NotImplementedError`, a service class defined inside a route file, and ~6,300 LOC of real logic left dead in `oraclous-core-service/`. To make "merged PR + green tests" no longer satisfy a hollow service, R3.5 adds two enforcement surfaces — one cheap, one docker-required — on top of the existing pre-push gate and `main` ruleset.
+
+### The `lint` job (cheap; mirrored in `pre-push`)
+
+A CI `lint` job — also mirrored in `.githooks/pre-push` so it blocks locally before a push — runs three checks that enforce the [canonical service architecture standard](service-architecture-standard.md) (ORAA-4 §21):
+
+* **`tools/lint/check_service_structure.py` (STR001–005)** — asserts the layered package shape: `main.py` is `app = create_app()` only, `app/factory.py` wires with no handlers/logic, no business logic in route handlers, no non-`BaseModel` class defs or DB drivers in `routes/`, and repositories are the only DB/Neo4j/Redis access.
+* **`tools/lint/check_no_stubs.py` (HOL001–005)** — fails on stub endpoints, `NotImplementedError`, `501`/`pass`-body handlers, and other hollowness markers. It is **gated on `tools/lint/service_status.yaml`**: a service's no-stub findings become blocking once its `claimed_done` flag flips, so a service is held to the no-hollowness bar exactly when it claims to be finished.
+* **Per-service import contracts** — each service declares `[tool.importlinter]` contracts in its `pyproject.toml` enforcing the one-way layer dependency `routes → services → domain → repositories → core`, checked by `lint-imports` (the same tool the backend pre-push already runs).
+
+These are the three non-negotiable rules of §21, mechanized: no business logic in routes, no non-`BaseModel`/DB-driver code in `routes/`, repositories as the sole data-access layer.
+
+### The `r3_5_gate` job (docker-required)
+
+R3.5's hardened per-service Definition of Done (ORAA-4 §22) has eight gates, and "merged PR + green stub-tests" satisfies **none** of gates 2–6. The first three (structure, no-stubs, import contracts) are covered by the `lint` job above; the runtime gates are covered by a new **docker-required `r3_5_gate` CI job**, modelled on the existing `r2-gate`. It runs:
+
+* **structure + no-stub + import** (the `lint` checks, re-asserted in the gate),
+* **docker-up** — `docker compose up` healthy, `GET /health` returns 200,
+* **integration** — real endpoints exercised against real substrate via testcontainers (no stub/`501`),
+* **smoke** — `services/<svc>/tests/smoke/smoke.sh`, an end-to-end pass against the real substrate.
+
+Because it requires Docker, the §9.3 docker-required / block-if-Docker-down rule applies: if Docker is unavailable the gate blocks rather than passing vacuously. The two human-facing gates of §22 sit outside CI: the service stays `claimed_done: false` in `service_status.yaml` until it is genuinely not hollow, and the issue carries `needs-human` until **Reza personally tests and signs off** — no service is done while `needs-human` is set.
+
+### R3.5 work ships as coarse vertical slices, not micro-tickets
+
+Per ORAA-4 §23, one service is **one deliverable**, decomposed into **at most six coarse vertical slices**. Each slice cuts through all layers (`routes → services → repositories`), ends in a passing smoke, and is a single `[tests]` + `[impl]` pair — the same two-PR shape ADR-010 mandates elsewhere. There is **no ticket per file, per import, or per endpoint-shell**, and no giant interlocked task graph. This keeps the §21/§22 gates above attached to a slice that actually runs end-to-end, rather than to a shell that only compiles.
+
 ## Pre-open readiness — a PR is opened ready, not opened to be fixed
 
 The pre-push gate keeps each *push* clean. Pre-open readiness raises the bar one level: before the implementer **opens a PR for review** — not merely before merge — the branch MUST be all three of:
@@ -142,7 +171,7 @@ When any PR merges to `main`, open PRs whose changes **overlap the same files** 
 
 ## Protected branches
 
-`main` is protected by an **active GitHub ruleset** on each repo (ORAA-250, 2026-06-04). The repos are public, so rulesets are enforced server-side with an empty `bypass_actors` list — the rules apply to **everyone, including org admins**. There is no manual-discipline gap; a red, unreviewed, or stale PR **cannot** be merged. Required CI contexts: backend `quality`/`integration`/`security-tests`; frontend `Lint / Type-check / Format` + the five gate jobs (`oraclous-knowledge` has no CI workflow — its quality is covered by the `pre-push` hook + review). The legacy bullet list below describes the same intent the ruleset now enforces:
+`main` is protected by an **active GitHub ruleset** on each repo (ORAA-250, 2026-06-04). The repos are public, so rulesets are enforced server-side with an empty `bypass_actors` list — the rules apply to **everyone, including org admins**. There is no manual-discipline gap; a red, unreviewed, or stale PR **cannot** be merged. Required CI contexts: backend `quality`/`lint`/`integration`/`security-tests` plus the docker-required `r3_5_gate` (see [R3.5 enforcement](#r35-enforcement-structure-no-stubs-and-import-contracts-at-push-and-merge)); frontend `Lint / Type-check / Format` + the five gate jobs (`oraclous-knowledge` has no CI workflow — its quality is covered by the `pre-push` hook + review). The legacy bullet list below describes the same intent the ruleset now enforces:
 
 * Direct pushes blocked
 * PRs require at least one approving review (more depending on sign-off gates)

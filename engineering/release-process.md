@@ -7,6 +7,8 @@ title: "Release Process"
 
 The platform's release model is **release-based, milestone-aligned with architecture phases**. Each migration phase from Section 8 corresponds to a release; patch releases handle bug fixes between phase boundaries.
 
+> **Superseded roadmap (R3.5).** The old **R4–R8** roadmap and its **gateway-from-R5 vertical slices** plan are **discarded**. R2/R3 shipped **hollow** (stub endpoints, `raise NotImplementedError`, a `GraphNodeService` stub class defined inside a route file, ~6,300 LOC of real logic left dead and undeleted in `oraclous-backend/oraclous-core-service/`, and auth that dropped human/email/OAuth/org management). **R3.5** replaces R4–R8: it rebuilds every service **real, end-to-end, per service**, in a hard-sequenced cadence with a per-service human sign-off gate (see [R3.5 release cadence](#r35-release-cadence-per-service-sequential-delivery) below). The canonical authority for R3.5 is **ORAA-4 operating-contract** (§21–§23); when this page and ORAA-4 diverge, ORAA-4 wins.
+
 ## Versioning
 
 Releases follow semantic versioning: `MAJOR.MINOR.PATCH`.
@@ -77,6 +79,41 @@ Before the next goal may open, the CTO performs status hygiene on the goal just 
 2. **Mark ALL of that goal's projects `completed`.** A goal cannot be cleanly `achieved` while its child projects still read as open work; close them out in the same pass.
 
 A delivered goal that stays `active`, or that carries projects still marked open, is a hygiene defect to fix before the next goal opens. This status pass is **tied to the release-seam retrospective**: the retrospective closes the engineering loop on the release, and the goal/project status pass closes the planning loop — both happen at the same seam, before the next release becomes workable.
+
+## R3.5 release cadence: per-service sequential delivery
+
+R3.5 supersedes the discarded R4–R8 roadmap (see the note at the top of this page). It is **not** a single milestone release; it is a **per-service cadence**. Each service is rebuilt **real and end-to-end**, one at a time, and a service's Project does not open until the prior dependent service has cleared its human sign-off gate. The spec is pinned to legacy `develop` at commit `84152635de05c105765cfe6b631bb5ba81f2f4aa` (TASK-237; [ADR-022](../adr/) recipe/primitive/unified-graph ingestion model). Never write to `legacy-reference/`; read the spec via `git show develop:<path>`.
+
+### Graph-first service order
+
+Services ship in a hard sequence, graph-first, because each depends on the substrate the prior one establishes:
+
+1. **knowledge-graph-service** (ingest)
+2. **knowledge-retriever-service** (read)
+3. **identity/org service** (NEW: users + email + OAuth Google/GitHub/Notion + orgs/members/roles/invites; orgs **leave** the graph service)
+4. **credential-broker-service**
+5. **capability-registry + tools + connectors** (port from `oraclous-core-service`, then salvage-then-delete it — human-gated)
+6. **application-gateway**
+
+### Hard per-service human sign-off gate
+
+The cadence is **strictly sequential**: only one service is in flight at a time, and the next dependent service's **Project does not open** until the current service is fully done. "Done" here is the hardened per-service Definition of Done (ORAA-4 §22) — all eight gates, of which "merged PR + green stub-tests" satisfies **none** of gates 2–6. The terminal gate is **human**:
+
+* The service's issue carries the **`needs-human`** flag until Reza personally tests it and signs off. **No service is done while `needs-human` is set.**
+* Reza runs the service's end-to-end smoke (`services/<svc>/tests/smoke/smoke.sh`, which also runs in CI as the docker-required `r3_5_gate` job, modelled on the r2-gate) against real substrate, and signs off before the **next dependent service's Project opens**.
+* This is a per-service application of [§8 sequencing](#goal-status-hygiene-and-sequencing-at-the-release-seam): the prior service's work must be `achieved`/`completed` and human-accepted before the next becomes workable.
+
+### Reaching services before the gateway exists
+
+The **application-gateway is the last service** (step 6). Until it exists, services are reached **directly by host `IP:port`** — this is legacy parity (the legacy app had no gateway). API-authz and gateway-routed access concerns belong to the gateway service, not to the earlier services; earlier services expose their endpoints directly.
+
+### Per-service scope (anti-micro-ticket)
+
+Per ORAA-4 §23, **one service = one deliverable**, decomposed into **at most six coarse vertical slices**. Each slice cuts all layers (route → service → repository), ends in a passing smoke, and is a single `[tests]` + `[impl]` pair. No ticket per file, import, or endpoint-shell; no giant interlocked task graphs. The canonical service architecture each service conforms to (ORAA-4 §21) and its enforcement are described in [service-architecture-standard.md](service-architecture-standard.md).
+
+### Hollowness audit and salvage-then-delete
+
+`tools/audit/hollowness_audit.py` produces a true-completion map and **re-opens** the hollow R2/R3 "done" stories under R3.5. `oraclous-core-service` is marked `port_source: true`, `deletable: false`: it **stays** until its logic is ported and tested into capability-registry (step 5). Its deletion is **destructive** and requires human sign-off ([§15](../engineering/index.md)).
 
 ## Compatibility commitments
 

@@ -5,74 +5,54 @@ title: "application-gateway-service"
 
 # application-gateway-service
 
-**Layer:** 4 (Application Gateway) · **Port:** 8007 · **Status:** NEW in Phase 6 (lifted from `knowledge-graph-builder` and `oraclous-core-service`)
+**Layer:** 4 (Application Gateway) · **Port:** 8007 · **Status:** **Placeholder — built last (R3.5 step 6).** It does not exist yet. Until it is built, every service is reached **directly by host IP:port** (legacy parity — legacy had no gateway).
 
-## Purpose
+## Honest current reality
 
-`application-gateway-service` is the platform's contract with the outside world. It exposes the public-facing surface: REST APIs, MCP server, MCP client, webhook receivers, published agents, embeddable widgets, and member-facing UIs. Everything an external caller interacts with goes through this layer.
+There is no gateway today, and there is no gateway for most of R3.5. It is **step 6**, the final service in the per-service order, built only after the graph, retriever, identity-org, credential-broker, and capability-registry services are each rebuilt REAL and Reza-signed-off. Until then there is **no single public edge**: the frontend and external callers reach each service **directly by host IP:port**, exactly as the legacy stack did (legacy had no gateway). The old "gateway-from-R5 vertical slices" plan is **discarded** — superseded by R3.5.
 
-The gateway pulls together public surfaces that previously lived scattered across `knowledge-graph-builder` (chat APIs, published agents, integration keys) and `oraclous-core-service` (some workflow-era endpoints). Consolidating them gives the platform a single security boundary and a single consistent rate-limiting policy.
+## Purpose (R3.5 target, when built last)
 
-## Responsibilities
+`application-gateway-service` is the platform's contract with the outside world: the public REST surface, MCP server, MCP client, webhook receivers, published agents, embeddable widgets, and member-facing UI routing. Everything an external caller touches goes through this one layer, giving the platform a single security boundary and a single rate-limiting policy — replacing the direct IP:port access used until it ships.
+
+## Responsibilities (R3.5 target)
 
 * Public REST APIs for harnesses, chats, capabilities, members
-* Chat APIs (the persistence layer lives here; the execution backing remains the harness runtime)
-* Published agents and integration keys (slug-based routing, key validation, rate limits)
-* **MCP server** — exposes the workspace's capabilities to external MCP clients (Claude Desktop, Cursor, custom integrations)
-* **MCP client** — connects to external MCP servers and imports their tools into the capability registry
-* Webhook receivers (incoming events from external systems trigger harness executions)
-* Embeddable widget endpoints (iframe-loadable UIs for customer-side embedding)
-* Member-facing UIs (the React frontend communicates here)
-* CORS scoping per integration key
-* Authentication enforcement for external callers (integration keys, member credentials, agent credentials)
-* Rate limiting per integration key and per published agent
-* Request size limits
-* Webhook signature verification
+* Chat APIs (persistence here; execution backing stays in the lower services)
+* Published agents and integration keys (slug routing, key validation, rate limits)
+* **MCP server** — exposes the workspace's capabilities to external MCP clients
+* **MCP client** — imports external MCP tools into [capability-registry-service](capability-registry-service.md)
+* Webhook receivers (external events trigger executions)
+* Embeddable widget endpoints
+* Member-facing UI routing (the frontend talks here once it exists)
+* CORS scoping per integration key; auth enforcement; rate limiting; request-size limits; webhook signature verification
 
 ## Dependencies
 
-* **Upstream:** `auth-service` (authentication), `capability-registry-service` (capability discovery for MCP exposure), `harness-runtime-service` (execution backing for customer-facing flows), `knowledge-retriever-service` (chat retrieval)
-* **Downstream consumers:** all external callers (customers, customer-side integrations, MCP clients, webhook senders)
-
-## What lifts in (Phase 6)
-
-From `knowledge-graph-builder`:
-
-* Chat persistence (`chat_history_service.py`, chat endpoints, RLS policies on Postgres tables)
-* Published agents and integration keys (`integration_key_service.py`, public endpoints)
-* Embeddable widget endpoints
-
-New work in Phase 6:
-
-* MCP server implementation (drawing lessons from the retired MCP work but written fresh per Section 7 — `docs/RETIRED-mcp-substrate.md` documents what to avoid)
-* MCP client integration (importing external MCP tools into the registry)
-* Webhook receivers
-* Task board UI APIs
+* **Upstream:** [identity-org-service](identity-org-service.md) + [auth-service](auth-service.md) (human + machine authentication), [capability-registry-service](capability-registry-service.md) (capability discovery for MCP exposure), [knowledge-retriever-service](knowledge-retriever-service.md) (chat retrieval), [credential-broker-service](credential-broker-service.md) (no direct secret access — proxies through)
+* **Downstream consumers:** all external callers (customers, MCP clients, webhook senders, the frontend)
 
 ## What does NOT live here
 
-* **Capability execution** — that's the runtime + execution engine; the gateway proxies, it does not execute
-* **Substrate writes** — the gateway never writes directly to Neo4j or the credential broker; it goes through the appropriate substrate service
-* **Business logic** — the gateway is a thin shell; the logic lives in the lower layers
+* **Capability execution** — [capability-registry-service](capability-registry-service.md); the gateway proxies, it does not execute
+* **Substrate writes** — the gateway never writes Neo4j or the credential store directly; it goes through the owning service
+* **Business logic** — the gateway is a thin shell; logic lives in the lower layers
 
 ## MCP server
 
-The MCP server surface is determined by ReBAC. A connected MCP client authenticates with an integration key (or member credentials), and the server exposes only the capabilities the authenticated actor has access to in the connected workspace. The MCP server deliberately does NOT expose the substrate's internals, the full registry, other workspaces' capabilities, or platform-update mechanisms (Section 7).
+The MCP server surface is ReBAC-determined: a connected client authenticates (integration key or member credentials) and the server exposes only the capabilities that actor can access in the connected workspace. It deliberately does **not** expose substrate internals, the full registry, other workspaces' capabilities, or platform-update mechanisms.
 
-## Security commitments
+## Architecture conformance (ORAA-4 §21)
 
-* Authentication required on every endpoint (no anonymous access except clearly-marked public endpoints like login)
-* Rate limiting at the integration-key level prevents DoS via published agents (Section 6.5 Threat 7)
-* Indistinguishable 404s on unauthorised resources (Section 6.5 Threat 8.1)
-* Request size limits
-* CORS strictly scoped per integration key
-* Webhook signatures verified before triggering execution
-* Inbound MCP tool imports go through adapter validation; output schema enforcement applies to MCP-imported capabilities like any other
+Layered shape: package root `services/application-gateway-service/src/oraclous_application_gateway_service/` with `routes/` (parse → one service call → HTTP map), thin proxy/policy logic in `services/`, no direct DB drivers in `routes/`, Pydantic-only `schema/`, `core/{config,dependencies,lifespan}.py`. The gateway holds no business logic and is the strictest case of the no-logic-in-handlers rule.
+
+## Definition of Done (ORAA-4 §22)
+
+Done only when all 8 gates pass: structurally conformant; not hollow (`check_no_stubs` zero findings + `claimed_done` flipped in `service_status.yaml`); runs (`docker compose up` healthy, `GET /health` 200); real endpoints (integration: a public REST + MCP call proxied to real lower services via testcontainers, no stub/501); end-to-end smoke (`tests/smoke/smoke.sh`, run as the docker-required `r3_5_gate` job); Reza personally tests and signs off. Per §23: one service, ≤6 coarse vertical slices.
 
 ## Related
 
 * ADR-001 — Four-Layer Architecture (Layer 4)
-* ADR-011 — External Jira and Confluence (gateway exposes integration but does not depend on Atlassian for platform functioning)
-* Section 3 — Application Gateway layer
+* ADR-015 — Gateway Incremental Contract and Versioning
+* [capability-registry-service](capability-registry-service.md) — capability source for MCP exposure
 * Section 7 — Portability Story (MCP server + client)
-* Section 8 — Phase 6 (gateway extraction)

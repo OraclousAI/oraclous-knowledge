@@ -5,66 +5,61 @@ title: "capability-registry-service"
 
 # capability-registry-service
 
-**Layer:** 2 (Capability Registry) · **Port:** 8001 · **Status:** Evolved from `oraclous-core-service` in Phase 2
+**Layer:** 2 (Capability Registry) · **Port:** 8001 · **Status:** **Hollow today — a 136-LOC empty shell. R3.5 step 5 rebuilds it real**, porting the tool registry + execution from `oraclous-core-service`, then salvaging-and-deleting that service (human-gated, destructive).
 
-## Purpose
+## Honest current reality
 
-`capability-registry-service` is the substrate's discovery surface. It is the single source of truth for what can be composed in a workspace — tools, skills, agents, harnesses, human roles. Every capability has a uniform descriptor model with kind discrimination; every resolution goes through one path.
+R2 marked this service "done" but it is **136 lines of total Python** — an empty shell with no real registry and no execution. The genuine tool registry, validation, credential bridge, connectors, and execution logic still live, undeleted, in `oraclous-backend/oraclous-core-service` (~6,800 LOC of real-but-dead code). Nothing here resolves or invokes a capability today. This page describes the **R3.5 target**.
 
-## Responsibilities
+R3.5 rebuilds this as **step 5** (after the graph, retriever, identity-org, and credential-broker services are each signed off), because it depends on all of them. It is the largest port: real tool registry + execution comes **from `oraclous-core-service`**, and only once that logic is ported **and tested here** does `oraclous-core-service` get salvaged-then-deleted. That deletion is **destructive and human-gated** (ORAA-4 §15): the source stays `port_source: true, deletable: false` until the port is proven.
 
-* Unified capability descriptor model (one schema with kind discrimination)
+## Purpose (R3.5 target)
+
+`capability-registry-service` is the substrate's **discovery and execution surface** for what can be composed in a workspace — tools, skills, agents, harnesses, human roles, plus the **connectors** that back tool calls. Every capability has a uniform descriptor with kind discrimination; every resolution and invocation goes through one path.
+
+## Responsibilities (R3.5 target)
+
+* Unified capability descriptor model (one schema, kind-discriminated)
 * Capability resolution: name → descriptor → invocation handle
-* Versioning: content hash for every descriptor, optional semver tags
-* Adapter contracts (inbound: external format → OHM; outbound: OHM → external format)
-* ReBAC-gated visibility (capabilities scoped to workspaces; cross-workspace sharing requires explicit relationships)
-* Capability registration API (workspace admins can add tools, skills, agents)
-* MCP tool importer (Phase 2 deliverable — the first inbound adapter)
-* Validation: input/output schema conformance, credential-requirement accuracy
+* **Tool registry + execution** (ported from `oraclous-core-service`; the legacy dual-registry pattern collapses into one)
+* **Connectors** (the external-provider integrations ported from `oraclous-core-service`)
+* Validation service: input/output schema conformance, credential-requirement accuracy
+* Versioning: content hash per descriptor, optional semver tags
+* ReBAC-gated visibility (workspace-scoped; cross-workspace sharing needs explicit relationships)
+* Capability registration API
+* Credential bridge to [credential-broker-service](credential-broker-service.md) for token-backed tool calls
 
 ## The five kinds
 
-* **tool** — invokable function with input/output schemas (e.g., `google_drive_reader`, `cypher_query`)
-* **skill** — Markdown-shaped prose loaded into an agent's context (e.g., `code_review_skill`, `consciousness_skill`)
-* **agent** — actor with role, capability allocation, consciousness configuration, LLM config
-* **harness** — orchestrated assembly of actors with task board, policies, orchestration prose
-* **human_role** — declared participation slot in a harness, resolved against the workspace member directory
+* **tool** — invokable function with input/output schemas
+* **skill** — Markdown-shaped prose loaded into an agent's context
+* **agent** — actor with role, capability allocation, LLM config
+* **harness** — orchestrated assembly of actors with task board, policies
+* **human_role** — declared participation slot, resolved against the org member directory in [identity-org-service](identity-org-service.md)
 
-A `capability_pack` (sixth OHM kind from Section 4) is a bundling artifact, not a separately-typed capability — it expands into its contained capabilities on registration.
+A `capability_pack` is a bundling artifact, not a separate kind — it expands on registration.
 
 ## Dependencies
 
-* **Upstream:** Postgres (descriptor storage), `auth-service` (for ReBAC visibility checks), `knowledge-graph-service` (for `:Agent` Neo4j nodes that some kinds persist into the graph)
-* **Downstream consumers:** `harness-runtime-service` (heavy reader — every actor turn resolves capabilities), `execution-engine-service` (for tool invocations), customer-facing APIs via gateway
+* **Upstream:** Postgres (descriptor storage), [identity-org-service](identity-org-service.md) + [auth-service](auth-service.md) (ReBAC visibility for human and machine principals), [credential-broker-service](credential-broker-service.md) (runtime token resolution for connector tool calls), [knowledge-graph-service](knowledge-graph-service.md) (`:Agent` nodes some kinds persist)
+* **Downstream consumers:** every capability invocation path; the frontend reaches it **directly by host IP:port** until [application-gateway-service](application-gateway-service.md) exists
 
-## What lifts in, what retires
+## Salvage-then-delete `oraclous-core-service` (ORAA-4 §15)
 
-From `oraclous-core-service`:
+`oraclous-core-service` is marked `port_source: true, deletable: false`. It **stays** until its tool registry, validation, connectors, and execution are ported into this service **and** proven by integration + smoke tests. Only then does its deletion become eligible — and that deletion requires **Reza's human sign-off** because it is destructive. The hollowness audit (`tools/audit/hollowness_audit.py`) tracks this and re-opened the hollow R2 stories under R3.5.
 
-* **Tool registry** lifts and consolidates with the in-memory `tool_registry.py` (the dual-registry pattern goes away)
-* **Validation service** lifts as-is
-* **Credential client** stays as the bridge to `credential-broker-service`
-* **Instance manager** salvages into invocation-handle logic, but the concept of an "instance" tied to a workflow node retires
+## Architecture conformance (ORAA-4 §21)
 
-What retires entirely (Section 8 retire list):
+Rebuilt to the layered shape: package root `services/capability-registry-service/src/oraclous_capability_registry_service/` with `routes/` (parse → one service call → HTTP map), all registry/validation/execution logic in `services/`, the only Postgres access in `repositories/(+models.py)`, Pydantic-only `schema/`, `core/{config,dependencies,lifespan}.py`. No logic in handlers; no non-`BaseModel` classes or DB drivers in `routes/`.
 
-* `workflow_service.py` and `pipeline_generator.py` (stubs)
-* The workflow DB schema (replaced with OHM-shaped storage for harnesses)
-* The instance-manager-as-workflow-node-configurator concept
+## Definition of Done (ORAA-4 §22)
 
-## Security commitments
-
-* Capability registration requires `capability.register` permission (workspace-admin-scoped by default)
-* Content hashing on every capability; modification is a new version, never an overwrite
-* Strict schema validation on inputs and outputs (Section 6.5 Threat 2.3)
-* Workspace scoping: cross-workspace capability visibility requires explicit relationships (Section 6.5 Threat 2.1)
-* Provenance on every capability invocation (with hash) — past invocations queryable for incident response
+Done only when all 8 gates pass: structurally conformant; not hollow (`check_no_stubs` zero findings + `claimed_done` flipped in `service_status.yaml`); runs (`docker compose up` healthy, `GET /health` 200); real endpoints (integration: register → resolve → invoke a real connector tool vs real substrate via testcontainers, no stub/501); end-to-end smoke (`tests/smoke/smoke.sh`, run as the docker-required `r3_5_gate` job); Reza personally tests and signs off. Per §23: one service, ≤6 coarse vertical slices.
 
 ## Related
 
 * ADR-001 — Four-Layer Architecture (Layer 2)
 * ADR-002 — OHM as Canonical Manifest Format
 * ADR-005 — Workflow Concept Retirement
-* Section 3 — Capability Registry layer
+* [credential-broker-service](credential-broker-service.md) — runtime token source for connector tool calls
 * Section 4 — Manifest Format Specification (all five kinds)
-* Section 8 — Phase 2 (registry consolidation)

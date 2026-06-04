@@ -5,6 +5,8 @@ title: "R6 — Phase 6: Application Gateway extraction"
 
 # R6 — Phase 6: Application Gateway extraction
 
+> **SUPERSEDED by [R3.5 — Make every service real](r3.5-make-every-service-real.md) (2026-06-04).** The application gateway is now step (6) of the R3.5 per-service sequence, built last after services (1)–(5) are real and Reza-accepted. This standalone phase is discarded; content below is retained for reference only.
+
 | Release ID | R6 |
 | --- | --- |
 | Status | <custom data-type="status" data-id="id-0">Planned</custom> |

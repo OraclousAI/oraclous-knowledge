@@ -7,6 +7,27 @@ title: "Definition of Done"
 
 This page enumerates the gates a story must clear before it can move to **Done** on the Kanban board. Sign-off gates are owned by specific agent roles (see Agent Team Roster). A story that fails any gate stays in its current column until the gate clears.
 
+## Hardened per-service Definition of Done (R3.5 — the gate that matters now)
+
+R2/R3 shipped **hollow** — stub endpoints and `raise NotImplementedError` passed the story-level DoD because the tests were written against the stubs. R3.5 adds a **service-level** DoD so that can never happen again. This is the authoritative narrative of operating-contract **§22**; when this and ORAA-4 §22 diverge, ORAA-4 wins.
+
+For R3.5, a **SERVICE** is Done only when **all 8 gates** pass. **"Merged PR + green stub-tests" satisfies NONE of gates 2–6.**
+
+1. **Structurally conformant** — `check_service_structure` + the per-service import contract pass ([Service Architecture Standard](./service-architecture-standard.md), §21).
+2. **Not hollow** — the service is flipped to `claimed_done: true` in `tools/lint/service_status.yaml` and `check_no_stubs` (HOL001–005) returns **zero** findings over its non-test src: no `raise NotImplementedError`, no `_stub_`, no `501` route returns, no `TODO: implement`, no pass-only / `return None|[]|{}|False`-only bodies.
+3. **It runs** — `docker compose up <svc>` reaches healthy; `GET /health` returns 200.
+4. **Real endpoints** — every endpoint returns a real, persistence-backed response (no stub/501), verified by the integration suite against **real substrate via testcontainers**.
+5. **End-to-end smoke vs real substrate** — a checked-in `services/<svc>/tests/smoke/smoke.sh` exercises the actual feature top-to-bottom against the running stack (e.g. ingest a file → see real nodes in Neo4j → read them back). It runs in CI as the docker-required **`r3_5_gate`** job (modelled on the existing `r2-gate`) and is documented in the service README.
+6. **Reza personally tests it and signs off** — the CTO hands Reza the running stack + the smoke runbook; the PaperClip issue carries **`needs-human`** until Reza runs/accepts the smoke himself. **No service is R3.5-Done while `needs-human` is set.**
+
+Gates 1–5 are mechanical (CI-enforceable); gate 6 is the hard human gate. A smoke test that hits a stub/mock instead of real substrate does not count. Closing the service's R3.5 issue while `needs-human` is set is forbidden.
+
+The story-level checklist below still applies to each slice within a service.
+
+---
+
+This page enumerates the gates a story must clear before it can move to **Done** on the Kanban board. Sign-off gates are owned by specific agent roles (see Agent Team Roster). A story that fails any gate stays in its current column until the gate clears.
+
 ## The Definition of Done checklist
 
 A story is Done when **all** of these are true:

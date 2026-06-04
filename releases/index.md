@@ -211,18 +211,21 @@ The original 11 agent skill pages do not yet describe the lift-vs-rewrite rubric
 
 The release pages under this hub are listed below with their current status. This table is the single-glance view of where the migration stands.
 
+> **Roadmap pivot (2026-06-04):** R2 and R3 shipped **hollow** (stub endpoints, dead `oraclous-core-service` logic, dropped auth). The old R4–R8 roadmap and the gateway-from-R5 vertical-slice plan are **superseded by [R3.5 — Make every service real](r3.5-make-every-service-real.md)**, which rebuilds every backend service real, end-to-end, **per service** (each Reza-accepted before the next), per ORAA-4 §21–§23.
+
 | Release | Title | Window | Status |
 | --- | --- | --- | --- |
 | R0 | Phase 0 — Documentation and stabilisation | Weeks 1-2 | <custom data-type="status" data-id="id-1">Released</custom> (effectively complete with Architecture v1.1 + ADRs + Group B/C artifacts) |
 | R0.5 | Phase 0.5 — Organisation tenancy and metering substrate | Weeks 3-4 | <custom data-type="status" data-id="id-2">Planned</custom> |
 | R1 | Phase 1 — Auth and credential extensions | Weeks 5-6 | <custom data-type="status" data-id="id-3">Planned</custom> |
 | R2 | Phase 2 — Capability registry consolidation | Weeks 7-10 | <custom data-type="status" data-id="id-4">Planned</custom> |
-| R3 | Phase 3 — Knowledge graph decomposition | Weeks 11-16 | <custom data-type="status" data-id="id-5">Planned</custom> |
-| R4 | Phase 4 — Harness runtime extraction | Weeks 17-20 | <custom data-type="status" data-id="id-6">Planned</custom> |
-| R5 | Phase 5 — Execution engine and runtime completion | Weeks 21-24 | <custom data-type="status" data-id="id-7">Planned</custom> |
-| R6 | Phase 6 — Application Gateway extraction | Weeks 25-28 | <custom data-type="status" data-id="id-8">Planned</custom> |
-| R7 | Phase 7 — Compiler harness and seed manifests | Weeks 29-32 | <custom data-type="status" data-id="id-9">Planned</custom> |
-| R8 | Phase 8 — Security hardening pass | Weeks 33-36 | <custom data-type="status" data-id="id-10">Planned</custom> |
+| R3 | Phase 3 — Knowledge graph decomposition | Weeks 11-16 | <custom data-type="status" data-id="id-5">Superseded</custom> (shipped hollow; redone under R3.5) |
+| **[R3.5](r3.5-make-every-service-real.md)** | **Make every service real** — graph-first per-service rebuild (ingest → retrieve → identity/org → credential-broker → capability-registry → gateway) | Opens 2026-06-04; sequential until each service is Reza-accepted | <custom data-type="status" data-id="id-35">Active</custom> (**supersedes R4–R8 + the gateway-from-R5 plan**) |
+| R4 | Phase 4 — Harness runtime extraction | Weeks 17-20 | <custom data-type="status" data-id="id-6">Superseded</custom> (by R3.5) |
+| R5 | Phase 5 — Execution engine and runtime completion | Weeks 21-24 | <custom data-type="status" data-id="id-7">Superseded</custom> (by R3.5) |
+| R6 | Phase 6 — Application Gateway extraction | Weeks 25-28 | <custom data-type="status" data-id="id-8">Superseded</custom> (gateway is R3.5 step 6) |
+| R7 | Phase 7 — Compiler harness and seed manifests | Weeks 29-32 | <custom data-type="status" data-id="id-9">Superseded</custom> (by R3.5) |
+| R8 | Phase 8 — Security hardening pass | Weeks 33-36 | <custom data-type="status" data-id="id-10">Superseded</custom> (now a per-service R3.5 gate) |
 | RC | Compliance track — ISO 27001 + SOC 2 Type II | Parallel from R0.5 onward | <custom data-type="status" data-id="id-11">Planned</custom> |
 | RF | Frontend track — repo, console, portal, widget SDK | Parallel from R0.5; end-to-end at R6 | <custom data-type="status" data-id="id-12">Proposed</custom> (page pending tech-lead creation) |
 
