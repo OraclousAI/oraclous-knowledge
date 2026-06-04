@@ -1,7 +1,7 @@
-# Graph Report - /Users/reza/workspace/OraclousAI/oraclous-knowledge  (2026-06-03)
+# Graph Report - /Users/reza/workspace/OraclousAI/oraclous-knowledge  (2026-06-04)
 
 ## Corpus Check
-- 117 files · ~173,178 words
+- 1 files · ~225,408 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,24 +10,24 @@
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
-- [[_COMMUNITY_Compliance & Agent Governance|Compliance & Agent Governance]]
-- [[_COMMUNITY_Four-Layer Architecture & OHM|Four-Layer Architecture & OHM]]
-- [[_COMMUNITY_Agent Skills & Consciousness|Agent Skills & Consciousness]]
-- [[_COMMUNITY_Harness Runtime & Retrieval|Harness Runtime & Retrieval]]
-- [[_COMMUNITY_Application Gateway & Auth|Application Gateway & Auth]]
-- [[_COMMUNITY_Docs Process & Deployment|Docs Process & Deployment]]
-- [[_COMMUNITY_Releases & Build State|Releases & Build State]]
-- [[_COMMUNITY_Frontend & Design System|Frontend & Design System]]
-- [[_COMMUNITY_KB Index Generator (code)|KB Index Generator (code)]]
-- [[_COMMUNITY_Engineering Flows & Board|Engineering Flows & Board]]
-- [[_COMMUNITY_TDD & KB Canonicalisation|TDD & KB Canonicalisation]]
-- [[_COMMUNITY_KB Retrieval Tooling|KB Retrieval Tooling]]
-- [[_COMMUNITY_be-test-reviewer Residency|be-test-reviewer Residency]]
-- [[_COMMUNITY_auth-service|auth-service]]
-- [[_COMMUNITY_credential-broker-service|credential-broker-service]]
-- [[_COMMUNITY_Multi-tenant Isolation|Multi-tenant Isolation]]
-- [[_COMMUNITY_Cypher Injection Prevention|Cypher Injection Prevention]]
-- [[_COMMUNITY_AgentExecutor|AgentExecutor]]
+- [[_COMMUNITY_Community 0|Community 0]]
+- [[_COMMUNITY_Community 1|Community 1]]
+- [[_COMMUNITY_Community 2|Community 2]]
+- [[_COMMUNITY_Community 3|Community 3]]
+- [[_COMMUNITY_Community 4|Community 4]]
+- [[_COMMUNITY_Community 5|Community 5]]
+- [[_COMMUNITY_Community 6|Community 6]]
+- [[_COMMUNITY_Community 7|Community 7]]
+- [[_COMMUNITY_Community 8|Community 8]]
+- [[_COMMUNITY_Community 9|Community 9]]
+- [[_COMMUNITY_Community 10|Community 10]]
+- [[_COMMUNITY_Community 11|Community 11]]
+- [[_COMMUNITY_Community 12|Community 12]]
+- [[_COMMUNITY_Community 13|Community 13]]
+- [[_COMMUNITY_Community 14|Community 14]]
+- [[_COMMUNITY_Community 15|Community 15]]
+- [[_COMMUNITY_Community 16|Community 16]]
+- [[_COMMUNITY_Community 17|Community 17]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `Section 2 — Conceptual Model` - 21 edges
@@ -76,108 +76,108 @@
 
 ## Communities
 
-### Community 0 - "Compliance & Agent Governance"
+### Community 0 - "Community 0"
 Cohesion: 0.03
 Nodes (108): Agent Team Roster, security-architect (role), test-author (role), Rationale: Test-Author-First (ADR-010), Audit Evidence and Records, Compliance Posture Overview, Rationale: Provenance is Evidence / Architectural Controls over Policy, Unified Control Framework (ISO + SOC 2) (+100 more)
 
-### Community 1 - "Four-Layer Architecture & OHM"
+### Community 1 - "Community 1"
 Cohesion: 0.05
 Nodes (79): Application Gateway layer, Capability Registry layer, ADR-001 Four-Layer Architecture, Harness Runtime layer, Rationale: strict downward-only dependencies for reasoning, Substrate (only stateful layer), ADR-002 OHM as Canonical Manifest Format, Rationale: single-document portability + atomic signing (+71 more)
 
-### Community 2 - "Agent Skills & Consciousness"
+### Community 2 - "Community 2"
 Cohesion: 0.05
 Nodes (70): be-test-reviewer Addition (28 May 2026), Agent and Skill Change Log, Material Change Definition, Agent Consciousness for Development, No Auto-Apply Without Human Review, Five Pattern Categories, Consciousness Permission Model, Three Scopes of Consciousness (+62 more)
 
-### Community 3 - "Harness Runtime & Retrieval"
+### Community 3 - "Community 3"
 Cohesion: 0.04
 Nodes (66): Actor Dispatch (agents + humans), LLM Client Factory (three protocol shapes, ADR-007), Policy Envelope Enforcement, harness-runtime-service (reference), NodeResult Envelope (uniform retrieval), ReBAC-Gated Retrieval + effective_graph_ids, knowledge-retriever-service (reference), Critical Paths to Instrument (Compile/Execute/Schedule/Traversal/Retrieval/HITL) (+58 more)
 
-### Community 4 - "Application Gateway & Auth"
+### Community 4 - "Community 4"
 Cohesion: 0.06
 Nodes (49): application-gateway-service, Chat APIs / Chat Persistence, Why consolidate public surfaces (single security boundary), MCP Client, MCP Server, Published Agents and Integration Keys, Rate Limiting per Integration Key, Webhook Receivers (+41 more)
 
-### Community 5 - "Docs Process & Deployment"
+### Community 5 - "Community 5"
 Cohesion: 0.07
 Nodes (38): Change Log, Architecture v1.1 LOCKED, Initial KB structure (27 May 2026), Configuration Reference, Configuration Philosophy, How to write an ADR, How to update an architecture page, Contributing to Documentation (+30 more)
 
-### Community 6 - "Releases & Build State"
+### Community 6 - "Community 6"
 Cohesion: 0.07
 Nodes (37): Agent Owner Custom Field (Group E), Build State — Group D Follow-up (3) CLOSED, Usage-Reporting Aggregation Primitive (HTTP deferred to R6), Architecture v1.1 Locked, Eleven Founding ADRs, R0 — Documentation and Stabilisation, Structured Artifacts (OHM Spec, Governance Taxonomy, Threat Catalogue), MCP Tool Importer (first inbound adapter) (+29 more)
 
-### Community 7 - "Frontend & Design System"
+### Community 7 - "Community 7"
 Cohesion: 0.1
 Nodes (32): Component Conventions, Accessibility Minimums, Boundary Discipline (data vs render), Compound Component Patterns, File and Folder Structure, Gateway-only public exposure, Design System, Dark-first, dark-only principle (+24 more)
 
-### Community 8 - "KB Index Generator (code)"
+### Community 8 - "Community 8"
 Cohesion: 0.12
 Nodes (25): build_outputs(), check_outputs(), count_md_files(), derive_title_from_section(), first_summary(), _is_prose(), main(), _normalise_summary() (+17 more)
 
-### Community 9 - "Engineering Flows & Board"
+### Community 9 - "Community 9"
 Cohesion: 0.1
 Nodes (25): Why flows are coordinator-owned, Cross-cutting Agreement Protocol, 10. Engineering Flows hub, Interface Contracts, Migration Source Map, TDD Pair (tests + impl PR), Work Breakdown Hierarchy, BLOCKED means human action required (+17 more)
 
-### Community 10 - "TDD & KB Canonicalisation"
+### Community 10 - "Community 10"
 Cohesion: 0.16
 Nodes (14): Rationale: split test/impl to avoid tests-fit-my-code failure, ADR-010 TDD with Test-Author Agent, test-author agent (separate from implementer), Tests Review gate (two-PR workflow), ADR-011 External Jira and Confluence (Superseded), Portability foresight (artifacts survive migration), Rationale: off-the-shelf tooling on day one without bootstrap cost, Confluence OP as one-way downstream mirror (+6 more)
 
-### Community 11 - "KB Retrieval Tooling"
+### Community 11 - "Community 11"
 Cohesion: 1.0
 Nodes (3): build_kb_index.py (index.md + llms.txt generator), Git pre-commit Hook (index regeneration), scripts/ README (KB retrieval tooling)
 
-### Community 12 - "be-test-reviewer Residency"
+### Community 12 - "Community 12"
 Cohesion: 1.0
 Nodes (2): be-test-reviewer persona, How dual residency was avoided
 
-### Community 13 - "auth-service"
+### Community 13 - "Community 13"
 Cohesion: 1.0
 Nodes (1): auth-service
 
-### Community 14 - "credential-broker-service"
+### Community 14 - "Community 14"
 Cohesion: 1.0
 Nodes (1): credential-broker-service
 
-### Community 15 - "Multi-tenant Isolation"
+### Community 15 - "Community 15"
 Cohesion: 1.0
 Nodes (1): Multi-tenant Isolation Pattern
 
-### Community 16 - "Cypher Injection Prevention"
+### Community 16 - "Community 16"
 Cohesion: 1.0
 Nodes (1): Cypher Injection Prevention
 
-### Community 17 - "AgentExecutor"
+### Community 17 - "Community 17"
 Cohesion: 1.0
 Nodes (1): AgentExecutor (powers sync and durable)
 
 ## Knowledge Gaps
 - **189 isolated node(s):** `Return (frontmatter_lines, body_lines).      Frontmatter is a leading ``---`` ..`, `Extract ``title`` from frontmatter lines via regex, else return fallback.`, `True when a line is real summary prose, not heading/metadata/markup.`, `Collapse whitespace and strip markdown link syntax to plain text.`, `First non-empty prose paragraph as a normalised one-liner, else fallback.` (+184 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `be-test-reviewer Residency`** (2 nodes): `be-test-reviewer persona`, `How dual residency was avoided`
+- **Thin community `Community 12`** (2 nodes): `be-test-reviewer persona`, `How dual residency was avoided`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `auth-service`** (1 nodes): `auth-service`
+- **Thin community `Community 13`** (1 nodes): `auth-service`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `credential-broker-service`** (1 nodes): `credential-broker-service`
+- **Thin community `Community 14`** (1 nodes): `credential-broker-service`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Multi-tenant Isolation`** (1 nodes): `Multi-tenant Isolation Pattern`
+- **Thin community `Community 15`** (1 nodes): `Multi-tenant Isolation Pattern`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Cypher Injection Prevention`** (1 nodes): `Cypher Injection Prevention`
+- **Thin community `Community 16`** (1 nodes): `Cypher Injection Prevention`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `AgentExecutor`** (1 nodes): `AgentExecutor (powers sync and durable)`
+- **Thin community `Community 17`** (1 nodes): `AgentExecutor (powers sync and durable)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `R2 through R8 and Compliance (aggregate)` connect `Harness Runtime & Retrieval` to `Releases & Build State`?**
+- **Why does `R2 through R8 and Compliance (aggregate)` connect `Community 3` to `Community 6`?**
   _High betweenness centrality (0.011) - this node is a cross-community bridge._
 - **What connects `Return (frontmatter_lines, body_lines).      Frontmatter is a leading ``---`` ..`, `Extract ``title`` from frontmatter lines via regex, else return fallback.`, `True when a line is real summary prose, not heading/metadata/markup.` to the rest of the system?**
   _189 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Compliance & Agent Governance` be split into smaller, more focused modules?**
+- **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.03 - nodes in this community are weakly interconnected._
-- **Should `Four-Layer Architecture & OHM` be split into smaller, more focused modules?**
+- **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
-- **Should `Agent Skills & Consciousness` be split into smaller, more focused modules?**
+- **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
-- **Should `Harness Runtime & Retrieval` be split into smaller, more focused modules?**
+- **Should `Community 3` be split into smaller, more focused modules?**
   _Cohesion score 0.04 - nodes in this community are weakly interconnected._
-- **Should `Application Gateway & Auth` be split into smaller, more focused modules?**
+- **Should `Community 4` be split into smaller, more focused modules?**
   _Cohesion score 0.06 - nodes in this community are weakly interconnected._
