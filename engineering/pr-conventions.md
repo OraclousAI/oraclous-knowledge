@@ -28,6 +28,8 @@ Every PR has a description following this structure:
 
 **Test PR reference** — for implementation PRs, link to the test-author PR that this implements against. Show that the previously-failing tests now pass.
 
+**Base-commit assertion** — for implementation PRs, assert that the branch base is **at or after the `main` commit where the `[tests]` PR merged** (the merge SHA the test-author recorded on the story). Per ADR-010 the tests are authored first by a different agent and merge first; the impl PR must branch from or rebase onto that exact merge commit *before opening* so the two PRs stay independent without producing add/add conflicts. A reviewer (be-test-reviewer / code-reviewer) rejects an impl PR whose base predates the recorded merge SHA. See the Git Workflow page's "Branch from merged tests" section. **Do not combine tests and implementation into one PR to sidestep this** — that defeats ADR-010's two-PR independence.
+
 **Scope of change** — bulleted list of what changed at the architectural or service-boundary level. Not a line-by-line diff explanation; the diff is the diff.
 
 **Out of scope** — explicit list of things the PR deliberately does _not_ do. Prevents reviewer scope creep ("could you also fix X while you're in here?") and documents the limited intent.
@@ -80,6 +82,12 @@ A PR open for more than three working days without merge is reviewed for:
 * Is it the wrong size or scope? — split or close in favour of a fresh PR
 
 Long-lived PRs are an anti-pattern in trunk-based development. They accumulate merge conflicts, lose context, and discourage future small PRs.
+
+## Dedup before opening a fix ticket
+
+Before opening a `[fix]`, `[fix-lint]`, `[regression]`, or `[rebase]` issue, **search the open issues for the same PR + the same problem**. If one already exists, **extend it** — add the new occurrence, context, or failing check to the existing issue — rather than creating a duplicate.
+
+Duplicate fix tickets are a recurring source of churn: two issues track one problem, two agents claim them, and the board misrepresents how much real work is outstanding. One problem on one PR is one issue.
 
 ## Draft PRs
 

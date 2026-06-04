@@ -63,6 +63,16 @@ A PR cannot merge with any of these failing. Skipping a test requires an explici
 
 Per ADR-010, the test-author agent writes the test suite for a story in its own PR, **before** implementation begins. The test PR is reviewed and merged first; the implementation PR references it and shows the previously-failing tests now passing.
 
+### Two-PR independence is load-bearing — do not collapse it
+
+ADR-010's value comes from the tests being written **first, by a different agent, and left untouched by the implementer**. The implementer cannot weaken a test to make their code pass, because they do not own the test PR and it has already merged. This independence is the whole point; it is what makes the green test signal trustworthy.
+
+A recurring temptation is to "simplify" the workflow by putting tests and implementation in a single PR. **Do not.** Combining them returns ownership of the tests to the implementer and destroys the independence guarantee.
+
+The genuine problem that the single-PR idea was trying to solve — add/add conflicts between the tests branch and the implementation branch — is solved a different way, **without** sacrificing independence: the **branch-from-merged-tests** sequencing rule. The implementation PR branches from / rebases onto the *exact `main` commit where the `[tests]` PR merged* before it opens, so the implementation is built on top of the merged tests rather than alongside them. The test-author records that merge SHA on the story; the implementer asserts their base is at or after it; reviewers reject an impl PR whose base predates it. Full mechanics are on the [Git Workflow](https://oraclous.atlassian.net/wiki/spaces/OP/pages/131103) and [PR Conventions](https://oraclous.atlassian.net/wiki/spaces/OP/pages/393465) pages.
+
+### Behaviour, not implementation
+
 Tests should describe **behaviour**, not **implementation**. A test that says "verify the function calls `_internal_helper` once" is brittle and tests the mechanism. A test that says "verify a user without `harness.author` permission receives 403 when posting to the compile endpoint" is durable and tests the behaviour.
 
 ## Test data and fixtures
