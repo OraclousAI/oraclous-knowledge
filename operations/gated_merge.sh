@@ -50,12 +50,14 @@ esac
 
 # 2) Each REQUIRED (gate-able) check for this repo must be success. We check only the
 #    always-green contexts, NOT the TDD-red unit/integration jobs (see required_checks_for).
-mapfile -t REQ < <(required_checks_for "$REPO_SHORT")
-if [ "${#REQ[@]}" -eq 0 ]; then
+#    Written for bash 3.2 (macOS default) — no mapfile/arrays.
+REQ_CHECKS="$(required_checks_for "$REPO_SHORT")"
+if [ -z "$REQ_CHECKS" ]; then
   echo "   ✓ no required CI contexts for $REPO_SHORT (pre-push hook + review cover it)"
 else
   RUNS_JSON=$(gh api "/repos/$NWO/commits/$HEAD_SHA/check-runs" --paginate 2>/dev/null)
-  for ctx in "${REQ[@]}"; do
+  while IFS= read -r ctx; do
+    [ -n "$ctx" ] || continue
     concl=$(printf '%s' "$RUNS_JSON" | python3 -c "
 import sys,json
 ctx=sys.argv[1]; runs=json.load(sys.stdin).get('check_runs',[])
@@ -63,7 +65,9 @@ m=[r for r in runs if r.get('name')==ctx]
 print(m[-1]['conclusion'] if m else 'MISSING')" "$ctx")
     [ "$concl" = "success" ] || refuse "required check '$ctx' is '$concl' (must be success)"
     echo "   ✓ required check green: $ctx"
-  done
+  done <<EOF
+$REQ_CHECKS
+EOF
 fi
 
 # 3) At least one APPROVING review by a non-author.
