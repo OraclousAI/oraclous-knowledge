@@ -7,6 +7,9 @@ Two external enforcement **mechanisms** (not rules) live in `operations/`:
 
 ## Merge gating — `gated_merge.sh`
 
+> **Non-author review requires a second identity.** All agents act as one GitHub user, which cannot approve its own PRs. The CTO approves under a second identity whose token lives in `~/.config/oraclous/reviewer-gh-token` (chmod 600). Run `operations/setup-reviewer-identity.sh` to provision/verify it. Without it, the `main` ruleset's non-author-review rule deadlocks all merges.
+
+
 The org is on GitHub **free tier**, where server-side branch protection and rulesets are
 unavailable for private repos. `gated_merge.sh` is the client-side enforcement of the Definition
 of Done at the merge point: it refuses to merge a PR unless **CI is green** AND there is an
