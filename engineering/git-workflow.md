@@ -61,6 +61,15 @@ Commits carry **no attribution trailers**. Do not append `Co-Authored-By:`, `Gen
 
 where `ORAA-xx` is the issue key, `NAME` is the persona acting, and the imperative is present-tense ("add", not "added"). This is enforced by a commit-msg hook. (This agent form coexists with Conventional Commits for the squashed merge record; the per-commit agent form is what the implementer writes locally.)
 
+### Attribution is forbidden everywhere, and the hook is wired in every repo
+
+The no-attribution rule is **not limited to commit subjects**. Attribution — `Co-Authored-By:`, `Generated-with:`, robot-emoji lines, tool credit, or any equivalent — is forbidden in **commit messages, PR titles, PR descriptions, and comments** alike. There is no surface on which it is acceptable.
+
+Enforcement is two-layered:
+
+* **A wired `commit-msg` hook.** Every repository sets `core.hooksPath=.githooks` (committed to the repo), so the hook that rejects malformed subjects and attribution trailers runs on every commit for every clone — not on an opt-in basis. A repo whose `core.hooksPath` is unset, or whose `.githooks` is missing, is itself a defect to fix, because it means the gate is silently off.
+* **A CTO pre-merge grep.** Before merging, the CTO greps the full commit range **and** the PR body for attribution patterns. A match blocks the merge; the implementer strips the attribution and re-pushes (fixed in place — not a new ticket).
+
 ## Pull requests
 
 Every PR description includes:
@@ -97,6 +106,18 @@ Before **any** `git push`, run locally the same cheap checks that CI's `quality`
 `pytest --collect-only` is part of the gate deliberately: it imports every test module, which surfaces function-local-import violations and collection-time errors before they reach CI.
 
 A failure found by the pre-push gate is the **implementer's to fix before re-pushing** — it does not become a new `[fix]` issue. The gate exists precisely so the push is clean the first time.
+
+## Pre-open readiness — a PR is opened ready, not opened to be fixed
+
+The pre-push gate keeps each *push* clean. Pre-open readiness raises the bar one level: before the implementer **opens a PR for review** — not merely before merge — the branch MUST be all three of:
+
+1. **Clean on the local pre-push gate** (the cheap `quality`-job checks above pass locally).
+2. **Green on CI** (the pushed branch's CI run is passing, not pending or red).
+3. **Rebased onto current `main`** — neither `BEHIND` nor `DIRTY`. The branch base is the live tip of `main` (and, for `[impl]` PRs, at or after the recorded `[tests]` merge SHA).
+
+The **opening implementer owns all three.** A reviewer must **never** be the one to discover red CI or a needed rebase: the moment a reviewer is asked to look at a branch, the branch's own house is already in order. Opening a red or behind PR is an **implementer failure to fix in place** — the implementer makes CI green and rebases onto current `main` on the same branch — **not** a new `[fix]`/`[rebase]` ticket and not a job handed to the reviewer.
+
+This is the opening counterpart to the **mergeability gate** in the [Definition of Done](https://oraclous.atlassian.net/wiki/spaces/OP/pages/66010): the mergeability gate is re-checked at the `in_review` handoff and again at merge; pre-open readiness is the same three-part discipline applied earlier still, at the instant the PR first becomes reviewable.
 
 ## Branch from merged tests (impl PRs)
 

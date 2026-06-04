@@ -67,6 +67,17 @@ The release-gate issue **cannot close** until every surfaced delta has either be
 
 This generalises the hotfix-retrospective hook: where the hotfix retro asks "what failed, and how do we stop it recurring?" after an emergency, the release-seam retrospective asks the same question routinely, at the planned boundary between releases, so process drift is corrected at the seam rather than accumulating until it forces a hotfix.
 
+## Goal status hygiene and sequencing at the release seam
+
+Releases are **strictly sequenced**: only the **highest unfinished release is workable** at any time. The team does not open the next goal while the current one is still in flight, and a delivered goal must never be left lingering in `active`.
+
+Before the next goal may open, the CTO performs status hygiene on the goal just delivered — at the release seam, alongside the retrospective above:
+
+1. **Mark the completed goal `achieved`.** A goal that has shipped is not `active`; leaving it `active` makes the board lie about what is in progress and blurs which release is the workable one.
+2. **Mark ALL of that goal's projects `completed`.** A goal cannot be cleanly `achieved` while its child projects still read as open work; close them out in the same pass.
+
+A delivered goal that stays `active`, or that carries projects still marked open, is a hygiene defect to fix before the next goal opens. This status pass is **tied to the release-seam retrospective**: the retrospective closes the engineering loop on the release, and the goal/project status pass closes the planning loop — both happen at the same seam, before the next release becomes workable.
+
 ## Compatibility commitments
 
 Between **minor** releases:
