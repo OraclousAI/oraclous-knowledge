@@ -19,8 +19,18 @@ PR="${2:?pr number required}"
 METHOD="${3:---squash}"
 NWO="OraclousAI/oraclous-${REPO_SHORT}"
 
-# Repos with no CI workflow skip the status-check gate (knowledge: pre-push hook covers quality).
-NO_CI_REPOS=" knowledge "
+# REQUIRED, gate-able status checks per repo — these MUST mirror the `main` ruleset's
+# required_status_checks. They are the ALWAYS-GREEN contexts only: under ADR-010 two-PR TDD
+# the `unit`/`integration` checks are RED-by-design until the `[impl]` lands, so they are
+# deliberately NOT listed here (gating on them would freeze the board). Keep in sync with the
+# ruleset (set-required-checks below in operations/) and ORAA-4 §20.
+required_checks_for() {
+  case "$1" in
+    backend)  printf '%s\n' "lint" ;;
+    frontend) printf '%s\n' "Lint / Type-check / Format" "Gate 1: api-client-boundary" "Gate 2: no-token-in-storage" "Gate 3: axe-core AA" "Gate 4: bundle-budget" "Gate 5: no-dangerouslySetInnerHTML" ;;
+    knowledge) ;;  # no CI workflow — pre-push hook + review cover it
+  esac
+}
 
 refuse() { echo "❌ gated_merge REFUSED ($NWO #$PR): $1" >&2; exit 1; }
 
@@ -38,16 +48,22 @@ case "$MERGE_STATE" in
   blocked|unknown) echo "   note: mergeable_state=$MERGE_STATE — continuing to explicit gates below" ;;
 esac
 
-# 2) Required CI checks must all be success (unless this repo has no CI).
-if [[ "$NO_CI_REPOS" != *" $REPO_SHORT "* ]]; then
-  mapfile -t BAD < <(gh api "/repos/$NWO/commits/$HEAD_SHA/check-runs" \
-    --jq '.check_runs[] | select(.conclusion != "success" and .conclusion != "neutral" and .conclusion != "skipped") | "\(.name)=\(.status)/\(.conclusion)"' 2>/dev/null)
-  TOTAL=$(gh api "/repos/$NWO/commits/$HEAD_SHA/check-runs" --jq '.total_count' 2>/dev/null)
-  [ "${TOTAL:-0}" -gt 0 ] || refuse "no CI check-runs reported on $HEAD_SHA (CI did not run — is GitHub Actions billing OK?)"
-  [ "${#BAD[@]}" -eq 0 ] || refuse "CI not green: ${BAD[*]}"
-  echo "   ✓ CI green ($TOTAL checks)"
+# 2) Each REQUIRED (gate-able) check for this repo must be success. We check only the
+#    always-green contexts, NOT the TDD-red unit/integration jobs (see required_checks_for).
+mapfile -t REQ < <(required_checks_for "$REPO_SHORT")
+if [ "${#REQ[@]}" -eq 0 ]; then
+  echo "   ✓ no required CI contexts for $REPO_SHORT (pre-push hook + review cover it)"
 else
-  echo "   ✓ no-CI repo ($REPO_SHORT): status-check gate skipped (pre-push hook covers quality)"
+  RUNS_JSON=$(gh api "/repos/$NWO/commits/$HEAD_SHA/check-runs" --paginate 2>/dev/null)
+  for ctx in "${REQ[@]}"; do
+    concl=$(printf '%s' "$RUNS_JSON" | python3 -c "
+import sys,json
+ctx=sys.argv[1]; runs=json.load(sys.stdin).get('check_runs',[])
+m=[r for r in runs if r.get('name')==ctx]
+print(m[-1]['conclusion'] if m else 'MISSING')" "$ctx")
+    [ "$concl" = "success" ] || refuse "required check '$ctx' is '$concl' (must be success)"
+    echo "   ✓ required check green: $ctx"
+  done
 fi
 
 # 3) At least one APPROVING review by a non-author.
