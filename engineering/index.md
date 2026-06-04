@@ -13,7 +13,8 @@ This hub anchors the engineering documentation that governs how the Oraclous Pla
 * [Git Workflow](https://oraclous.atlassian.net/wiki/spaces/OP/pages/131103) — branching model, commit conventions, merge strategy
 * [PR Conventions](https://oraclous.atlassian.net/wiki/spaces/OP/pages/393465) — PR sizing, description template, review expectations
 * [Code Style Guide](https://oraclous.atlassian.net/wiki/spaces/OP/pages/426037) — Python and TypeScript conventions
-* [Definition of Done](https://oraclous.atlassian.net/wiki/spaces/OP/pages/66010) — gates a story must clear before closure
+* [Service Architecture Standard](./service-architecture-standard.md) — the canonical layered internal structure every service MUST follow (R3.5; ORAA-4 §21), and how hollowness is mechanically blocked
+* [Definition of Done](https://oraclous.atlassian.net/wiki/spaces/OP/pages/66010) — gates a story must clear before closure; includes the **hardened per-service 8-gate DoD** (R3.5; ORAA-4 §22)
 * [Release Process](https://oraclous.atlassian.net/wiki/spaces/OP/pages/426058) — versioning, cadence, rollback, deprecation
 
 ## Team

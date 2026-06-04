@@ -5,6 +5,8 @@ title: "R3 — Phase 3: Knowledge graph decomposition"
 
 # R3 — Phase 3: Knowledge graph decomposition
 
+> **Shipped HOLLOW — re-done under [R3.5](r3.5-make-every-service-real.md).** What merged for R3 was scaffolding, not real graph services: stub endpoints (`raise NotImplementedError`), a `GraphNodeService` **stub class defined inside a route file**, and no real ingestion or retrieval against the substrate. R3.5 rebuilds these real, end-to-end, in order — `knowledge-graph-service` (ingest, step 1) then `knowledge-retriever-service` (read, step 2) — each meeting ORAA-4 §22 (8 gates + Reza sign-off) before the next starts. The decomposition intent below stands; the implementation is redone.
+
 | Release ID | R3 |
 | --- | --- |
 | Status | <custom data-type="status" data-id="id-0">Planned</custom> |

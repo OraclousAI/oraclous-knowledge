@@ -5,6 +5,8 @@ title: "R8 — Phase 8: Security hardening pass"
 
 # R8 — Phase 8: Security hardening pass
 
+> **SUPERSEDED by [R3.5 — Make every service real](r3.5-make-every-service-real.md) (2026-06-04).** Security hardening is now a **per-service gate** inside R3.5 (DoD gate 1 structural + the docker-required smoke), not a trailing phase. This standalone phase is discarded; content below is retained for reference only.
+
 | Release ID | R8 |
 | --- | --- |
 | Status | <custom data-type="status" data-id="id-0">Planned</custom> |

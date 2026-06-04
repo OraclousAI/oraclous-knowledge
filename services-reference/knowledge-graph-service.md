@@ -5,56 +5,70 @@ title: "knowledge-graph-service"
 
 # knowledge-graph-service
 
-**Layer:** 1 (Substrate) · **Port:** 8003 · **Status:** Renamed from `knowledge-graph-builder` in Phase 3; ingest-only after retriever extraction
+**Layer:** 1 (Substrate) · **Port:** 8003 · **Status:** **Hollow today — R3.5 step 1 rebuilds it real.** Shipped as a stub: a `GraphNodeService` class is defined *inside* a route file (`api/v1/endpoints/graphs.py`) and ingestion is not real. R3.5 builds the genuine recipe/primitive/unified-graph ingestion per ADR-022, end-to-end.
 
-## Purpose
+## Honest current reality
 
-`knowledge-graph-service` is the substrate's write side. It owns ingestion (turning raw inputs into graph nodes and relationships), schema management, analytics, and ReBAC graph maintenance. The read side lives in `knowledge-retriever-service` (Phase 3 split).
+R3 marked this service "done" but it is **hollow**. The write side does not really ingest: there is a `GraphNodeService` defined inside the `graphs.py` endpoint module (a §21 violation — a non-`BaseModel` class living in `routes/`), and the multi-modal pipelines described below do not exist as working code. Real graph-building logic still sits, undeleted, in the legacy `knowledge-graph-builder` and in `oraclous-backend/oraclous-core-service` (~6,300 LOC of dead-but-real logic across the R2/R3 services). This page describes the **R3.5 target**, not what runs today.
 
-## Responsibilities
+R3.5 makes `knowledge-graph-service` the **first** service rebuilt (graph-first per-service order, ORAA-4 §R3.5). It is rebuilt REAL and signed off by Reza before the dependent [knowledge-retriever-service](knowledge-retriever-service.md) starts.
 
-* Multi-modal ingestion: text, documents (PDF, DOCX), structured data (CSV, JSON, relational), code, temporal data
-* ReBAC graph maintenance (workspace hierarchy, cross-workspace relationships, agent scopes, delegations)
+## Purpose (R3.5 target)
+
+`knowledge-graph-service` is the substrate's **write side**. It owns ingestion — turning raw inputs into graph nodes and relationships — plus schema management, analytics, and provenance writes. The read side is [knowledge-retriever-service](knowledge-retriever-service.md). After R3.5 step 3, **organisation/membership management leaves this service** and moves to [identity-org-service](identity-org-service.md); the graph keeps only the ReBAC *edges*, not the org domain logic.
+
+## Ingestion model (ADR-022)
+
+Ingestion is **recipe-driven**, not per-source code. A concern-driven **recipe** is a reusable spec that turns any source into the **unified graph** via a small set of **primitives**, so a new source type does not require a new code path. The R3.5 ingestion surface covers, per ADR-022 and the legacy spec pinned to `develop @ 84152635`:
+
+* **text**
+* **PDF**
+* **DOCX**
+* **Markdown (MD)**
+* **CSV**
+* **JSON**
+* **code** (via the code-parser path)
+* **temporal** (bitemporal facts feeding point-in-time reads on the retriever)
+
+Each modality is stored as nodes in one unified graph with modality-appropriate indexes; the recipe expresses *what to extract and how to relate it*, the primitives do the writing.
+
+## Responsibilities (R3.5 target)
+
+* Recipe + primitive ingestion across text / PDF / DOCX / MD / CSV / JSON / code / temporal into the unified graph (ADR-022)
 * Schema management (`schema_manager.py`, schema endpoints)
-* Multi-tenant component wrappers for write paths (`MultiTenantVectorRetriever` etc., enforcing `organization_id` and `graph_id`)
+* ReBAC graph maintenance: workspace hierarchy, cross-workspace relationships, agent scopes, delegations, and the membership/subgraph-grant **edges** written on behalf of [identity-org-service](identity-org-service.md)
+* Multi-tenant write wrappers enforcing `organization_id` and `graph_id`
 * Analytics: community detection, centrality, graph-shape characterisation (write side runs detection; read APIs live in the retriever)
-* Provenance writes (universal sink for every action in the platform)
-* Code ingestion via `code_parser_service.py`
-* Background job orchestration (`background_jobs.py`) for long-running ingestion pipelines
-
-## Dependencies
-
-* **Upstream:** Neo4j (graph storage), Postgres (chat persistence and other relational data — moves to gateway in Phase 6), Redis (ingestion job queues)
-* **Downstream consumers:** all services that depend on the knowledge graph (which is most of them)
+* Provenance writes (universal sink for every action)
+* Background job orchestration for long-running ingestion pipelines
 
 ## What does NOT live here
 
-* **Retrieval queries** — moved to `knowledge-retriever-service` in Phase 3
-* **AgentExecutor and toolkit** — moved to `harness-runtime-service` in Phase 4
-* **Chat persistence and chat APIs** — moved to `application-gateway-service` in Phase 6
-* **Published agents and integration keys** — moved to `application-gateway-service` in Phase 6
-
-## Multi-modal commitments
-
-Per Section 3, every modality is stored as nodes in the knowledge graph with modality-appropriate indexes. The write side adds modality-specific ingestion pipelines; the substrate stays uniform.
-
-v1 modalities: text, documents, structured, code, temporal. Future modalities (images, audio, video, design, 3D) are additive — Section 9 documents them as deferred to v2 with explicit when-in-scope criteria.
+* **Retrieval queries** — [knowledge-retriever-service](knowledge-retriever-service.md)
+* **Organisation / member / invitation management** — moves to [identity-org-service](identity-org-service.md) in R3.5 step 3 (orgs leave the graph service)
+* **Tool / capability execution** — [capability-registry-service](capability-registry-service.md)
+* **Chat persistence and public chat APIs** — [application-gateway-service](application-gateway-service.md) when it is built last
 
 ## Security commitments
 
-* All multi-tenant isolation defences preserved through Phase 3 (parameterised Cypher with `graph_id`, RLS where applicable, per-graph indexes)
-* `organization_id` filter is mandatory on every write path from Phase 0.5 forward
-* Cypher injection prevention through parameterised queries (the existing `test_cypher_injection.py` suite is preserved)
-* Decompression bomb protection via `MAX_DECOMPRESSED_BYTES` cap
+* `organization_id` filter mandatory on every write path
+* Cypher injection prevention via parameterised queries (the `test_cypher_injection.py` suite is preserved)
+* Per-graph indexes and `graph_id`-scoped writes; cross-tenant writes structurally impossible
+* Decompression-bomb protection via a `MAX_DECOMPRESSED_BYTES` cap on uploaded archives
 
-## Migrations
+## Architecture conformance (ORAA-4 §21)
 
-**Organisation backfill (A1 cutover, ORA-24).** A one-time, idempotent migration scopes a pre-A1 deployment's substrate data to an organisation — adding and backfilling `organisation_id` across the Postgres tenant tables, the Neo4j org-scoped nodes/relationships, and the Redis query cache (a cold-start flush of legacy un-scoped `qcache:` keys). Each store has a tested rollback that preserves data. Code lives in `oraclous_substrate.migrations.org_backfill`; the production run is gated on A2 (ORA-17) + A3 (ORA-18). Operator procedure: [Runbook — Organisation Backfill Migration (ORA-24)](https://oraclous.atlassian.net/wiki/spaces/OP/pages/2260996).
+The `GraphNodeService`-in-a-route violation is fixed by the rebuild: package root `services/knowledge-graph-service/src/oraclous_knowledge_graph_service/` with `routes/` (parse → one service call → HTTP map only), all ingestion/recipe logic in `services/`, the only Neo4j/Postgres/Redis access in `repositories/(+models.py)`, Pydantic-only `schema/`, `core/{config,dependencies,lifespan}.py`, `migrations/`. No business logic in handlers; no non-`BaseModel` classes or DB drivers in `routes/`.
+
+## Definition of Done (ORAA-4 §22)
+
+Done only when all 8 gates pass — and "merged PR + green stub-tests" satisfies none of them. Required: structurally conformant; not hollow (`check_no_stubs` zero findings + `claimed_done` flipped in `service_status.yaml`); runs (`docker compose up` healthy, `GET /health` 200); real endpoints (integration ingest of each modality vs real Neo4j via testcontainers, no stub/501); end-to-end smoke (`tests/smoke/smoke.sh` ingesting a real file of each kind, run as the docker-required `r3_5_gate` job); Reza personally tests and signs off (`needs-human` held until accepted). Per §23: one service, ≤6 coarse vertical slices, each cutting all layers and ending in a passing smoke.
 
 ## Related
 
+* ADR-022 — recipe / primitive / unified-graph ingestion model (the R3.5 spec)
 * ADR-001 — Four-Layer Architecture
 * ADR-006 — Organisation as Outermost Tenancy Unit
+* [knowledge-retriever-service](knowledge-retriever-service.md) — the read side (R3.5 step 2)
+* [identity-org-service](identity-org-service.md) — takes over org management (R3.5 step 3)
 * Section 3 — Substrate layer
-* Section 8 — Phase 3 (knowledge graph decomposition)
-* Runbook — Organisation Backfill Migration (ORA-24)

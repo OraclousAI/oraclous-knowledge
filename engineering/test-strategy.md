@@ -59,6 +59,28 @@ Every PR must pass:
 
 A PR cannot merge with any of these failing. Skipping a test requires an explicit annotation and a linked ticket explaining why and when the skip will be removed.
 
+## R3.5 testing requirements — real substrate, no stubs
+
+R3.5 (ORAA-4 §21–§23) rebuilds every service REAL, end-to-end, per service. R2/R3 shipped HOLLOW — stub endpoints, `raise NotImplementedError`, and green stub-tests that proved nothing. The testing bar below exists so that "green tests" can never again mean "hollow service". It is additive: the pyramid and markers above still apply.
+
+### Integration tests hit real substrate, never stubs
+
+Integration tests (`@pytest.mark.integration`) exercise the service against **real** substrate — real Postgres, real Redis, real Neo4j — stood up with testcontainers or `docker compose`. A test that swaps the substrate for a stub, mock, fake, or in-memory double does **not** count as an integration test and does not satisfy the per-service Definition of Done. An endpoint that returns a canned response, raises `NotImplementedError`, or answers `501` is not covered just because a test asserts that canned shape.
+
+### Every service ships an end-to-end smoke
+
+Every service ships an end-to-end smoke at `services/<svc>/tests/smoke/smoke.sh` (under `tests/`, **not** in `src/`, per ORAA-4 §21). The smoke:
+
+* exercises the **real** feature end-to-end against **real** substrate (testcontainers / `docker compose`), modelled on the existing `r2-gate`;
+* must hit the real service and real substrate — **a smoke that hits a stub or mock does not count**, the same rule as for integration tests;
+* runs in CI as the docker-required **`r3_5_gate`** job. Because it requires Docker, it is subject to ORAA-4 §9.3: if Docker is down the job blocks rather than passing vacuously.
+
+### Reza runs the smoke himself — final acceptance
+
+The smoke passing in CI is necessary but **not sufficient**. The final acceptance for a service is **Reza personally running the smoke and signing off** (ORAA-4 §22 gate 6). Until he accepts, the service's story carries the `needs-human` flag and **no service is done while `needs-human` is set**. This is the last of the eight per-service gates in ORAA-4 §22 — "merged PR + green stub-tests" satisfies none of gates 2–6.
+
+See [Service Architecture Standard](service-architecture-standard.md) for the layered structure these tests target and the `check_no_stubs` / `service_status.yaml` hollowness gate that pairs with this testing bar.
+
 ## Test authorship
 
 Per ADR-010, the test-author agent writes the test suite for a story in its own PR, **before** implementation begins. The test PR is reviewed and merged first; the implementation PR references it and shows the previously-failing tests now passing.

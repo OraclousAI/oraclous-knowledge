@@ -5,6 +5,8 @@ title: "R7 — Phase 7: Compiler harness and seed manifests"
 
 # R7 — Phase 7: Compiler harness and seed manifests
 
+> **SUPERSEDED by [R3.5 — Make every service real](r3.5-make-every-service-real.md) (2026-06-04).** This phase is discarded as a standalone release; any still-needed surface folds into the R3.5 per-service sequence. R2/R3 shipped hollow and are being rebuilt real, per service, before any post-gateway work resumes. Content below is retained for reference only.
+
 | Release ID | R7 |
 | --- | --- |
 | Status | <custom data-type="status" data-id="id-0">Planned</custom> |

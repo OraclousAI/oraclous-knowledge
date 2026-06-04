@@ -4,6 +4,8 @@ title: "R2 through R8 and R-Compliance and Build State"
 ---
 # R2 — Phase 2: Capability registry consolidation
 
+> **SUPERSEDED by [R3.5 — Make every service real](r3.5-make-every-service-real.md) (2026-06-04).** This bundle (R2 through R8 + compliance) captured the old roadmap. R2/R3 shipped hollow (stub endpoints, dead `oraclous-core-service` logic, dropped auth) and the old R4–R8 phasing is discarded; everything is rebuilt real, per service, under R3.5. Content below is retained for reference only.
+
 | Release ID | R2 |
 | --- | --- |
 | Status | <custom data-type="status" data-id="id-0">Planned</custom> |
