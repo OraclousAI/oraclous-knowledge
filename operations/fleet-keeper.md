@@ -1,3 +1,30 @@
+# Operations enforcement scripts (ORAA-250)
+
+Two external enforcement **mechanisms** (not rules) live in `operations/`:
+
+- `fleet_keeper.py` — intake & anti-stall automation for the PaperClip board (documented below).
+- `gated_merge.sh` — the **only sanctioned merge path** for the repos. See "Merge gating" below.
+
+## Merge gating — `gated_merge.sh`
+
+The org is on GitHub **free tier**, where server-side branch protection and rulesets are
+unavailable for private repos. `gated_merge.sh` is the client-side enforcement of the Definition
+of Done at the merge point: it refuses to merge a PR unless **CI is green** AND there is an
+**approving review by a non-author** AND the **branch is up to date with base** (not behind/dirty).
+
+```sh
+operations/gated_merge.sh <backend|frontend|knowledge> <pr#> [--squash|--merge|--rebase]
+```
+
+The CTO (and any merger) MUST merge via this script instead of raw `gh pr merge`. Knowledge has no
+CI workflow, so its status-check gate is skipped (the pre-push hook covers quality there).
+
+> If the org later upgrades to GitHub Team or makes repos public, add server-side rulesets
+> (`required_status_checks` + `pull_request` + empty `bypass_actors`) as the primary gate and keep
+> this script as defense-in-depth / the rebase-aware convenience path.
+
+---
+
 # Fleet-keeper — intake & anti-stall automation (ORAA-250)
 
 `operations/fleet_keeper.py` is an **external enforcement mechanism** (not a rule) that keeps the
