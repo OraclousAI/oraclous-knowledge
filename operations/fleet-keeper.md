@@ -54,9 +54,10 @@ cycle; once corrected, an issue stops matching, so the job is safe to run on a t
 
 | Action | Mode | Rule |
 |---|---|---|
-| **AUTO-UNBLOCK** | applied | `blocked` issue whose every `blockedBy[]` is done/cancelled, not destructive, not `[needs-human]`, no unverifiable prose dependency → `backlog`. **Fail-closed.** |
-| **AUTO-ASSIGN** | applied | ready issue (`backlog`, active goal, not parked/deferred, unassigned) → role-matched agent. Heartbeat then picks it up. |
-| **WAKE** | applied | an IDLE agent with assigned ready work sitting (issue idle > 30 min, no active run) → triggers `paperclipai heartbeat run --agent-id <id> --source assignment`. Deduped per agent; idle agents only (never double-triggers a running one). |
+| **AUTO-UNBLOCK** | applied | `blocked` issue whose every `blockedBy[]` is done/cancelled, not destructive, not `[needs-human]`, no unverifiable prose dependency → **`todo`**. **Fail-closed.** |
+| **AUTO-ASSIGN** | applied | ready UNassigned issue (`backlog`, active goal, not parked) → assign role-matched agent **and set `todo`** (so it self-starts). |
+| **PROMOTE** | applied | already-ASSIGNED ready issue stuck in `backlog` (active goal, not parked) → **`todo`**. Assigning alone leaves it asleep in backlog. |
+| **WAKE (backup)** | applied | a `todo`/`in_progress` issue assigned to an IDLE agent that *still* hasn't started after 30 min → `paperclipai heartbeat run --agent-id <id> --source assignment` as a safety net (deduped, idle agents only). Rarely needed once status is `todo`. |
 | **FLAG-STALL** | digest-only | `in_review`/`in_progress` idle > 4h → surfaced for the CTO/human. |
 
 ### Guards (ORAA-4 §13.3, fail-closed)
@@ -74,13 +75,13 @@ because its prose dependency on ORAA-77 wasn't in structured `blockedByIssueIds`
 - Blocker relations (`blockedBy[]`, with live per-blocker `status`) appear **only on the single-issue
   GET** (`/api/issues/{id}`), *not* on the company issue list — so unblock logic fetches each blocked
   issue individually.
-- There is **no `todo` status**; the ready/pickable status is **`backlog`**.
-- There is **no manual wake REST endpoint**, BUT the **CLI** `paperclipai heartbeat run --agent-id
-  <id> --source assignment` triggers one agent's heartbeat and starts its assigned work. Assigning an
-  issue does **not** schedule a first run (issues have `monitorNextCheckAt=None`), so without this
-  trigger the board dead-ends with a human hand-waking agents. WAKE shells out to it; the spawned run
-  is decoupled from the CLI streamer (a short `--timeout-ms` is fine). The npx-cache bin path rotates,
-  so `paperclip_bin()` resolves it dynamically.
+- **`backlog` does NOT wake an agent; `todo` does.** `backlog` is the holding column; **`todo`** is the ready/queued status that fires `wakeOnDemand` and starts a run. Assigning an issue while it stays `backlog` leaves it asleep — readying = moving to `todo`. (This was the real dead-end.)
+- The heartbeat is **event-driven, not a periodic poller** (multi-hour gaps in `heartbeat-runs` when
+  idle); a **`todo` transition** is what creates the wake event. The CLI `paperclipai heartbeat run
+  --agent-id <id> --source assignment` also creates one (the WAKE backup uses it); the spawned run is
+  decoupled from the CLI streamer (short `--timeout-ms` is fine). The npx-cache bin path rotates, so
+  `paperclip_bin()` resolves it dynamically — and beware multiple installs at different versions
+  (grep the one `GET /api/health` names).
 
 ## Running it
 

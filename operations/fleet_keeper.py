@@ -12,24 +12,26 @@ hand-assign and hand-trigger. This script mechanizes the two safe, idempotent co
 
 What it does (verified against the real PaperClip data model, 2026-06-04)
 ------------------------------------------------------------------------
+KEY: `backlog` is the HOLDING column and does NOT wake an agent; `todo` is the ready/queued status
+that fires the agent's `wakeOnDemand` and starts a run. Readying work = moving it to `todo`. (This
+was the real dead-end: assigning while leaving status `backlog` left work asleep.)
+
 APPLIED (idempotent -> safe for a recurring job; once corrected they stop matching):
   1) AUTO-UNBLOCK  a `blocked` issue whose every `blockedBy[]` (read from the SINGLE-issue GET;
                    the list endpoint omits it) is done/cancelled, that is NOT destructive and
-                   NOT `[needs-human]` -> set status `backlog`. Fail-closed: any live blocker,
-                   or any prose dependency we cannot verify, leaves it blocked + flagged.
-  2) AUTO-ASSIGN   a ready issue (`backlog`, in an ACTIVE goal, NOT parked/deferred) with no
-                   assignee -> the role-matched agent, so work never strands ownerless. Once
-                   assigned, the agent's own heartbeat picks it up.
+                   NOT `[needs-human]` -> set status `todo`. Fail-closed: any live blocker, or any
+                   prose dependency we cannot verify, leaves it blocked + flagged.
+  2) AUTO-ASSIGN   a ready, UNassigned issue (`backlog`, ACTIVE goal, NOT parked) -> assign the
+                   role-matched agent AND set `todo`, so it self-starts and never strands ownerless.
+  3) PROMOTE       an already-ASSIGNED ready issue stuck in `backlog` (ACTIVE goal, not parked)
+                   -> `todo`, so it self-starts. (Assigning alone leaves it in backlog = asleep.)
 
-  3) WAKE          an IDLE agent that has assigned ready work sitting (issue `backlog`/`in_progress`,
-                   no active run, idle > WAKE_MIN) -> trigger `paperclipai heartbeat run --agent-id
-                   <id> --source assignment`. This is the missing first-wake: assigning an issue
-                   does NOT schedule a run (issues have no monitorNextCheckAt), so without this the
-                   board dead-ends with the human hand-triggering. Deduped per agent; idle agents
-                   only (never double-triggers a running one); the WAKE_MIN gate bounds re-tries.
+  4) WAKE backup   a `todo`/`in_progress` issue assigned to an IDLE agent that still hasn't started
+                   after WAKE_MIN -> `paperclipai heartbeat run --agent-id <id> --source assignment`
+                   as a safety net (deduped, idle agents only). Rarely needed once status is `todo`.
 
 DIGEST-ONLY (reported, never mutated):
-  4) FLAG-STALL    in_review/in_progress idle > STALL_HOURS -> surfaced for the CTO/human.
+  5) FLAG-STALL    in_review/in_progress idle > STALL_HOURS -> surfaced for the CTO/human.
 
 Guards (ORAA-4 §13.3 fail-closed): destructive titles (delete/migration/archival/...) and
 `[needs-human]` issues are NEVER auto-unblocked; parked/deferred issues are NEVER auto-assigned.
@@ -127,7 +129,7 @@ def main():
     running = {a["id"] for a in agents if a.get("status") == "running"}
     agent_status = {a["id"]: a.get("status") for a in agents}
     agent_name = {a["id"]: a.get("name") for a in agents}
-    out = {"unblock": [], "assign": [], "wake": [], "stall": [], "skip": []}
+    out = {"unblock": [], "assign": [], "promote": [], "wake": [], "stall": [], "skip": []}
 
     # 1) AUTO-UNBLOCK — requires the single-issue blockedBy[]
     for i in [x for x in issues if x.get("status") == "blocked"]:
@@ -156,18 +158,23 @@ def main():
     for i in issues:
         st, gid, title = i.get("status"), i.get("goalId"), i.get("title") or ""
         assignee = i.get("assigneeAgentId")
-        if st == "backlog" and not assignee and gid in ACTIVE_GOALS:
+        # backlog = holding (does NOT wake an agent); todo = ready/queued -> fires wakeOnDemand.
+        # So readying work means moving it to `todo`: assign unassigned -> todo, or promote an
+        # already-assigned backlog issue -> todo. Parked/deferred work is left in backlog.
+        if st == "backlog" and gid in ACTIVE_GOALS:
             if PARKED.search(title):
-                out["skip"].append((i["identifier"], "backlog parked/deferred -> not auto-assigned"))
-                continue
-            role = role_for(title)
-            tgt = None
-            if role == "backend-implementer" and be_agents:
-                tgt = ([a for a in be_agents if a["id"] not in running] or be_agents)[0]
-            elif role and role in name_to_agent:
-                tgt = name_to_agent[role]
-            out["assign"].append((i["identifier"], role or "?", (tgt or {}).get("name", "NO-MATCH"), title[:42]))
-        if st in ("backlog", "in_progress") and assignee and not i.get("activeRun") and not PARKED.search(title):
+                out["skip"].append((i["identifier"], "backlog parked/deferred -> left in backlog"))
+            elif not assignee:
+                role = role_for(title)
+                tgt = None
+                if role == "backend-implementer" and be_agents:
+                    tgt = ([a for a in be_agents if a["id"] not in running] or be_agents)[0]
+                elif role and role in name_to_agent:
+                    tgt = name_to_agent[role]
+                out["assign"].append((i["identifier"], role or "?", (tgt or {}).get("name", "NO-MATCH"), title[:42]))
+            else:
+                out["promote"].append((i["identifier"], agent_name.get(assignee, "?"), title[:46]))
+        if st in ("todo", "in_progress") and assignee and not i.get("activeRun") and not PARKED.search(title):
             h = hours_since(i.get("lastActivityAt") or i.get("updatedAt"))
             if h is not None and h * 60 > WAKE_MIN and gid in ACTIVE_GOALS:
                 out["wake"].append((i["identifier"], st, assignee, f"idle {h:.1f}h, assigned, no active run"))
@@ -179,20 +186,26 @@ def main():
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
     print(f"=== fleet-keeper {'APPLY' if APPLY else 'DRY-RUN'} | {COMPANY_ID[:8]} | {stamp} ===")
 
-    print(f"-- AUTO-UNBLOCK -> backlog ({len(out['unblock'])}) --")
+    print(f"-- AUTO-UNBLOCK -> todo ({len(out['unblock'])}) --")
     for ident, t in out["unblock"]:
         print(f"   {ident}  {t}")
         if APPLY:
-            api("PATCH", f"/issues/{by_ident[ident]['id']}", {"status": "backlog"})
+            api("PATCH", f"/issues/{by_ident[ident]['id']}", {"status": "todo"})
 
-    print(f"-- AUTO-ASSIGN ({len(out['assign'])}) --")
+    print(f"-- AUTO-ASSIGN -> todo ({len(out['assign'])}) --")
     for ident, role, who, t in out["assign"]:
         print(f"   {ident}  role={role} -> {who}  {t}")
         if APPLY and who not in ("NO-MATCH", None):
             api("PATCH", f"/issues/{by_ident[ident]['id']}",
-                {"assigneeAgentId": name_to_agent[who]["id"], "status": "backlog"})
+                {"assigneeAgentId": name_to_agent[who]["id"], "status": "todo"})
 
-    print(f"-- WAKE (trigger heartbeat run for idle assigned agents) ({len(out['wake'])}) --")
+    print(f"-- PROMOTE backlog->todo (assigned, ready) ({len(out['promote'])}) --")
+    for ident, who, t in out["promote"]:
+        print(f"   {ident}  agent={who}  {t}")
+        if APPLY:
+            api("PATCH", f"/issues/{by_ident[ident]['id']}", {"status": "todo"})
+
+    print(f"-- WAKE backup (todo work idle > WAKE_MIN that didn't auto-start -> heartbeat run) ({len(out['wake'])}) --")
     woken = set()
     for ident, st, aid, why in out["wake"]:
         nm = agent_name.get(aid, (aid or "?")[:8])
