@@ -56,7 +56,7 @@ cycle; once corrected, an issue stops matching, so the job is safe to run on a t
 |---|---|---|
 | **AUTO-UNBLOCK** | applied | `blocked` issue whose every `blockedBy[]` is done/cancelled, not destructive, not `[needs-human]`, no unverifiable prose dependency → `backlog`. **Fail-closed.** |
 | **AUTO-ASSIGN** | applied | ready issue (`backlog`, active goal, not parked/deferred, unassigned) → role-matched agent. Heartbeat then picks it up. |
-| **WAKE** | digest-only | assigned ready/in_progress issue idle with no active run. Waking is the heartbeat's job (no REST wake endpoint exists); reported for visibility. |
+| **WAKE** | applied | an IDLE agent with assigned ready work sitting (issue idle > 30 min, no active run) → triggers `paperclipai heartbeat run --agent-id <id> --source assignment`. Deduped per agent; idle agents only (never double-triggers a running one). |
 | **FLAG-STALL** | digest-only | `in_review`/`in_progress` idle > 4h → surfaced for the CTO/human. |
 
 ### Guards (ORAA-4 §13.3, fail-closed)
@@ -75,8 +75,12 @@ because its prose dependency on ORAA-77 wasn't in structured `blockedByIssueIds`
   GET** (`/api/issues/{id}`), *not* on the company issue list — so unblock logic fetches each blocked
   issue individually.
 - There is **no `todo` status**; the ready/pickable status is **`backlog`**.
-- There is **no manual wake REST endpoint**; the heartbeat scheduler is the only thing that starts
-  runs. Keeping every ready issue *assigned* is what makes heartbeat effective — hence AUTO-ASSIGN.
+- There is **no manual wake REST endpoint**, BUT the **CLI** `paperclipai heartbeat run --agent-id
+  <id> --source assignment` triggers one agent's heartbeat and starts its assigned work. Assigning an
+  issue does **not** schedule a first run (issues have `monitorNextCheckAt=None`), so without this
+  trigger the board dead-ends with a human hand-waking agents. WAKE shells out to it; the spawned run
+  is decoupled from the CLI streamer (a short `--timeout-ms` is fine). The npx-cache bin path rotates,
+  so `paperclip_bin()` resolves it dynamically.
 
 ## Running it
 

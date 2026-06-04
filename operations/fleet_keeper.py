@@ -21,10 +21,14 @@ APPLIED (idempotent -> safe for a recurring job; once corrected they stop matchi
                    assignee -> the role-matched agent, so work never strands ownerless. Once
                    assigned, the agent's own heartbeat picks it up.
 
-DIGEST-ONLY (reported, never mutated -- avoids comment-storms / has no REST lever):
-  3) WAKE          assigned ready/in_progress issue idle > WAKE_MIN with no active run. Real
-                   waking is the heartbeat scheduler's job (no manual wake endpoint exists);
-                   ensuring the issue is ASSIGNED (step 2) is what lets heartbeat pick it up.
+  3) WAKE          an IDLE agent that has assigned ready work sitting (issue `backlog`/`in_progress`,
+                   no active run, idle > WAKE_MIN) -> trigger `paperclipai heartbeat run --agent-id
+                   <id> --source assignment`. This is the missing first-wake: assigning an issue
+                   does NOT schedule a run (issues have no monitorNextCheckAt), so without this the
+                   board dead-ends with the human hand-triggering. Deduped per agent; idle agents
+                   only (never double-triggers a running one); the WAKE_MIN gate bounds re-tries.
+
+DIGEST-ONLY (reported, never mutated):
   4) FLAG-STALL    in_review/in_progress idle > STALL_HOURS -> surfaced for the CTO/human.
 
 Guards (ORAA-4 §13.3 fail-closed): destructive titles (delete/migration/archival/...) and
@@ -37,7 +41,7 @@ Usage
 
 Exit code is 0 on success; the digest goes to stdout (captured by cron/launchd logs).
 """
-import json, re, sys, urllib.request
+import glob, json, os, re, subprocess, sys, urllib.request
 from datetime import datetime, timezone
 
 API = "http://127.0.0.1:3100/api"
@@ -69,6 +73,29 @@ def listy(x):
     return x if isinstance(x, list) else x.get("data", [])
 
 
+def paperclip_bin():
+    """Resolve the installed paperclipai entrypoint (npx cache path has a rotating hash)."""
+    cands = sorted(glob.glob(os.path.expanduser("~/.npm/_npx/*/node_modules/paperclipai/dist/index.js")),
+                   key=lambda p: os.path.getmtime(p), reverse=True)
+    return cands[0] if cands else None
+
+
+def trigger_heartbeat(agent_id):
+    """Fire one agent heartbeat (source=assignment) to start its assigned work, fire-and-forget.
+    The spawned run is decoupled from this CLI streamer, so a short --timeout-ms is fine."""
+    binp = paperclip_bin()
+    if not binp:
+        return "paperclipai bin not found"
+    try:
+        subprocess.Popen(
+            ["node", binp, "heartbeat", "run", "--agent-id", agent_id,
+             "--source", "assignment", "--trigger", "system", "--timeout-ms", "2000"],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+        return "triggered"
+    except Exception as e:
+        return f"trigger-failed: {e}"
+
+
 def hours_since(ts):
     try:
         return (datetime.now(timezone.utc) - datetime.fromisoformat(ts.replace("Z", "+00:00"))).total_seconds() / 3600
@@ -98,6 +125,8 @@ def main():
     name_to_agent = {a.get("name"): a for a in agents}
     be_agents = [a for a in agents if (a.get("name") or "").startswith("backend-implementer")]
     running = {a["id"] for a in agents if a.get("status") == "running"}
+    agent_status = {a["id"]: a.get("status") for a in agents}
+    agent_name = {a["id"]: a.get("name") for a in agents}
     out = {"unblock": [], "assign": [], "wake": [], "stall": [], "skip": []}
 
     # 1) AUTO-UNBLOCK — requires the single-issue blockedBy[]
@@ -141,7 +170,7 @@ def main():
         if st in ("backlog", "in_progress") and assignee and not i.get("activeRun") and not PARKED.search(title):
             h = hours_since(i.get("lastActivityAt") or i.get("updatedAt"))
             if h is not None and h * 60 > WAKE_MIN and gid in ACTIVE_GOALS:
-                out["wake"].append((i["identifier"], st, f"idle {h:.1f}h, assigned, no active run"))
+                out["wake"].append((i["identifier"], st, assignee, f"idle {h:.1f}h, assigned, no active run"))
         if st in ("in_review", "in_progress"):
             h = hours_since(i.get("lastActivityAt") or i.get("updatedAt"))
             if h is not None and h > STALL_HOURS:
@@ -163,9 +192,16 @@ def main():
             api("PATCH", f"/issues/{by_ident[ident]['id']}",
                 {"assigneeAgentId": name_to_agent[who]["id"], "status": "backlog"})
 
-    print(f"-- WAKE (digest-only; heartbeat owns waking) ({len(out['wake'])}) --")
-    for ident, st, why in out["wake"]:
-        print(f"   {ident}  {st}  {why}")
+    print(f"-- WAKE (trigger heartbeat run for idle assigned agents) ({len(out['wake'])}) --")
+    woken = set()
+    for ident, st, aid, why in out["wake"]:
+        nm = agent_name.get(aid, (aid or "?")[:8])
+        idle = agent_status.get(aid) == "idle"
+        tag = "[idle -> trigger]" if idle else f"[agent {agent_status.get(aid)}; skip]"
+        print(f"   {ident}  {st}  agent={nm}  {why}  {tag}")
+        if APPLY and idle and aid not in woken:
+            woken.add(aid)
+            print(f"      -> heartbeat run {nm}: {trigger_heartbeat(aid)}")
 
     print(f"-- FLAG-STALL (digest-only; for CTO/human) ({len(out['stall'])}) --")
     for ident, why in out["stall"]:
