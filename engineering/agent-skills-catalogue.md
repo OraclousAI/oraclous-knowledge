@@ -56,6 +56,13 @@ The team is 11 full agents plus one narrow verification persona (`be-test-review
 
 Every agent in the catalogue loads [Agent Consciousness for Development](https://oraclous.atlassian.net/wiki/spaces/OP/pages/688403) as a standing skill. Each agent's page documents only the _specific permissions and pattern configurations_ that agent has for the consciousness skill; the skill itself is defined once and referenced.
 
+## Standard skills loaded fleet-wide
+
+Two additional skills are now loaded across the fleet, alongside Agent Consciousness for Development:
+
+* **kb-retrieve** — token-efficient KB retrieval: read the root `llms.txt`/`index.md`, then the one relevant section index, then only the needed file; never read the whole tree. Defined at `oraclous-knowledge/.claude/skills/kb-retrieve/SKILL.md`.
+* **graphify** — build and query the KB knowledge graph (`graphify-out/`): `graphify <repo> --update` refreshes the graph after KB changes; `graphify query "…"` / `path` / `explain` answer relationship questions. Used to keep the KB graph current (ORAA-4 §16).
+
 ## How an agent page gets updated
 
 Per the [Agent and Skill Change Log](https://oraclous.atlassian.net/wiki/spaces/OP/pages/426078) process:

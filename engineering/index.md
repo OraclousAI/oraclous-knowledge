@@ -66,10 +66,11 @@ Because the rule lives in two places by design (enforced in ORAA-4, restated her
 
 ### Governance-change checklist
 
-Any change to a mechanical agent-governance rule must update **all three** surfaces together, in the same change set:
+Any change to a mechanical agent-governance rule must update **all four** surfaces together, in the same change set:
 
 1. **ORAA-4** — the operating contract (the enforcement surface).
 2. **The agent bundles** — both the live instances **and** the roster templates they are cloned from. (Updating instances without templates means the next clone regresses.)
 3. **These KB pages** — the human-facing restatement in this hub.
+4. **The three `CLAUDE.md` files** — the workspace-root coordinator file plus the `oraclous-backend` and `oraclous-frontend` repo files, each of which carries a "Governance gates — canonical in ORAA-4" pointer. Keeping them in lockstep stops the per-repo pointers from drifting.
 
-A governance change that touches only one or two of these is incomplete and leaves the surfaces inconsistent. Record the change in the [Agent and Skill Change Log](https://oraclous.atlassian.net/wiki/spaces/OP/pages/426078).
+A governance change that touches only some of these is incomplete and leaves the surfaces inconsistent. Record the change in the [Agent and Skill Change Log](https://oraclous.atlassian.net/wiki/spaces/OP/pages/426078).
