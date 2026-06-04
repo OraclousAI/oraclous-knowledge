@@ -1,11 +1,14 @@
 #!/bin/sh
 # Oraclous Knowledge Base pre-commit hook.
 #
-# When a commit touches a tracked .md file under a content section, regenerate
-# the root index.md and llms.txt so every commit carries a current index.
+# When a commit touches a tracked .md file under a content section:
+#   1. Regenerate root index.md + llms.txt (python3 required; warn-only if absent).
+#   2. Refresh the graphify knowledge graph (graphify required; warn-only if absent).
 #
-# Safe and fast: no network. If python3 is unavailable, warn and exit 0 rather
-# than blocking the commit.
+# Both steps bundle the generated output into the same commit as the KB change so
+# graphify-out/ never lags behind docs (ORAA-4 §16).
+#
+# Safe and fast: no network. Both generators fall back gracefully.
 #
 # Enable with: sh scripts/setup-hooks.sh   (sets core.hooksPath to .githooks)
 
@@ -53,5 +56,23 @@ python3 "$REPO_ROOT/scripts/build_kb_index.py" || {
 
 # Stage the regenerated files so the commit carries a current index.
 git add "$REPO_ROOT/index.md" "$REPO_ROOT/llms.txt"
+
+# Refresh the knowledge graph (ORAA-4 §16).
+# Bundles graphify-out/ into the same commit as the KB change — no separate
+# "chore: refresh knowledge graph" commit needed.
+# Decision (ORAA-210): manual step owned by docs-writer, automated here so it
+# cannot be forgotten. Not a CI job: commit-back from CI is complex and the
+# GitHub ruleset blocks it without a bypass token.
+if command -v graphify >/dev/null 2>&1; then
+	graphify update "$REPO_ROOT" || {
+		echo "pre-commit: graphify update failed; knowledge graph may be stale." >&2
+		echo "pre-commit: run 'sh scripts/refresh-graph.sh' manually to refresh." >&2
+	}
+	# Stage all graphify-out/ changes (no-op if nothing changed).
+	git add "$REPO_ROOT/graphify-out/" 2>/dev/null || true
+else
+	echo "pre-commit: graphify not found; knowledge graph may be stale." >&2
+	echo "pre-commit: install graphify or run 'sh scripts/refresh-graph.sh' manually." >&2
+fi
 
 exit 0
