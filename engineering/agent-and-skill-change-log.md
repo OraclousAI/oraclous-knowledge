@@ -60,6 +60,20 @@ A change can be rolled back at any sprint boundary. Rollback creates a new entry
 
 ## Change log
 
+### 4 June 2026 — Enforcement program (ORAA-250): mechanisms, not rules — ORAA-4 rev14
+
+| Field | Value |
+| --- | --- |
+| Type | Skill change / gate change + tooling — team-wide governance, all personas |
+| Agents affected | All personas (enforced via the operating contract, the bundles, and now running mechanisms) |
+| What changed | The recurring "rules don't stop failures" problem was addressed by converting advisory rules into **running mechanisms**, enacted as **ORAA-4 rev14** plus tooling. **Pre-push hooks (T1.1):** each repo now ships `.githooks/pre-push` with `core.hooksPath=.githooks`, blocking red pushes locally; the backend hook mirrors the **full CI `quality` job** (ruff check/format, mypy, import-contracts, org-scoping, labels-schema, test-import hygiene, neo4j write-role, contract checksums), frontend runs lint/typecheck/format:check, knowledge runs the KB-index currency check. **Merge gate (T1.2):** all three repos were made **public**, which (a) cleared the GitHub Actions spending-limit block that had halted all CI (ORAA-246) and (b) unlocked **rulesets** — an active ruleset on each `main` with empty `bypass_actors` (binds admins) requires the CI checks + a non-author approving review + an up-to-date base and blocks force-push/deletion. `operations/gated_merge.sh` is the mandated client-side merge path; GitHub **secret-scanning + push-protection** were enabled (free on public repos). **Fleet-keeper (T1.3):** `operations/fleet_keeper.py` runs every 600s via launchd `com.oraclous.fleet-keeper`, performing the §13.3 guarded unblock-and-assign sweep and ready-work intake automatically (fail-closed on destructive/`[needs-human]`/unverifiable-prose), digesting stalls to `/tmp/fleet-keeper.log`. **§19 decomposition checklist (T2):** product-planner applies a flatter-decomposition checklist at the brief gate (vertical slices, one-owner-one-file-surface, no micro-tickets, right-size 1–3 PRs). **§20 enforced-mechanisms registry:** a single table mapping each rule to the mechanism that enforces it. |
+| Why | Across R2/R3 the team kept hitting failing CIs and a dead-ending board despite repeated rule additions, because the rules were discipline, not enforcement: the documented pre-push gate wasn't a hook and under-specified the checks, "ready" work stranded ownerless, cleared blocks stayed blocked, and nothing prevented a red/unreviewed PR from merging. The acute blocker turned out to be a GitHub Actions billing wall (free-tier minutes exhausted) that no rule could clear. Going public fixed billing **and** enabled true server-side gating; the hooks, ruleset, and fleet-keeper turn the prior prose into mechanisms that fail closed. |
+| Approved by | CTO (technical authority); tech-lead (Reza Jahankohan) — authorised making the repos public |
+| Effective from | 4 June 2026 |
+| Rollback considered | Partial. Rulesets/hooks/fleet-keeper are reversible (delete ruleset, unset hooksPath, `launchctl unload`). Making the repos **public** is the consequential, less-reversible step (history is now exposed); a full git-history secret scan is the recommended follow-up. Rollback to private would re-impose the free-tier Actions wall and remove server-side gating. |
+
+Surfaces synced together for this change: **ORAA-4** (the contract, rev14 — §6/§13.1/§13.3 updated to reference the mechanisms; new §19 + §20), **14 agent bundles** (live instances, incl. CTO) + **11 roster templates** (uniform mechanisms pointer), these KB engineering docs (`git-workflow.md`, this change-log; see also `operations/fleet-keeper.md`), and the three repo CLAUDE.md files. New tooling lives in `oraclous-knowledge/operations/` (`fleet_keeper.py`, `gated_merge.sh`, `fleet-keeper.md`, `com.oraclous.fleet-keeper.plist`).
+
 ### 4 June 2026 — Flow hardening v2 (ORAA-208): ORAA-4 rev12 — pre-open readiness, handoff chain, fold-don't-spawn, docker-required, KB currency, repo structure, goal status hygiene, attribution enforcement
 
 | Field | Value |
