@@ -27,7 +27,12 @@ NWO="OraclousAI/oraclous-${REPO_SHORT}"
 required_checks_for() {
   case "$1" in
     backend)  printf '%s\n' "lint" ;;
-    frontend) ;;  # FE CI workflow (ORAA-216) not yet on main — no requireable checks; restore the lint+5 gate contexts once it merges
+    frontend) printf '%s\n' \
+        "Gate 1: api-client-boundary" \
+        "Gate 2: no-token-in-storage" \
+        "Gate 3: axe-core AA" \
+        "Gate 4: bundle-budget" \
+        "Gate 5: no-dangerouslySetInnerHTML" ;;  # ORAA-216 merged — 5 invariant gates now required
     knowledge) ;;  # no CI workflow — pre-push hook + review cover it
   esac
 }
