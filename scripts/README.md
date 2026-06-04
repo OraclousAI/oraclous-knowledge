@@ -50,13 +50,37 @@ this once to point git at the tracked `.githooks/` directory:
 sh scripts/setup-hooks.sh
 ```
 
+## `refresh-graph.sh` — knowledge-graph refresh (ORAA-4 §16 / ORAA-210)
+
+Standalone wrapper around `graphify update` for cases where the pre-commit hook
+did not run or an out-of-band graph refresh is needed (e.g. release-seam retros
+per ORAA-4 §14).
+
+### Usage
+
+```sh
+# Refresh graphify-out/ and stage the changes for the next commit
+sh scripts/refresh-graph.sh
+
+# Check if graphify-out/ is current without updating
+sh scripts/refresh-graph.sh --check
+```
+
+Requires `graphify` to be in PATH (`pip install graphify`). The normal path is
+the pre-commit hook (below) which runs this automatically on every KB change.
+
 ## `.githooks/pre-commit`
 
 A POSIX `sh` hook. When a commit stages a tracked `.md` file under any content
-section, it runs `python3 scripts/build_kb_index.py` and `git add index.md
-llms.txt`, so every commit carries a current index. It is fast and offline; if
-`python3` is missing it prints a warning and exits 0 rather than blocking the
-commit.
+section, it:
+
+1. Runs `python3 scripts/build_kb_index.py` and stages `index.md` + `llms.txt`
+   so every commit carries a current root index.
+2. Runs `graphify update` (if graphify is in PATH) and stages `graphify-out/`
+   so every commit carries a current knowledge graph (ORAA-4 §16).
+
+Both steps are fast and offline. If `python3` or `graphify` are missing the hook
+prints a warning and exits 0 — it never blocks a commit.
 
 ### CI usage
 
