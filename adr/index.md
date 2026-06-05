@@ -27,7 +27,7 @@ This hub indexes every Architecture Decision Record for the Oraclous Platform. E
 | ADR-014 | [Repo-canonical knowledge base; Confluence as mirror; PaperClip as master board](https://oraclous.atlassian.net/wiki/spaces/OP/pages/4685826) | <custom data-type="status" data-id="id-2">Accepted</custom> | 2026-05-31 |
 | ADR-015 | [Gateway Incremental Contract and Versioning (R5→R8)](adr-015-gateway-incremental-contract-and-versioning.md) | Proposed | 2026-06-01 |
 | ADR-016 | [Canonical Service-Internal Architecture and Hardened Definition of Done (No Hollow Services)](adr-016-canonical-service-architecture-and-hardened-definition-of-done.md) | Accepted | 2026-06-04 |
-| ADR-017 | [Identity/Org Service Split](adr-017-identity-org-service-split.md) | Accepted | 2026-06-04 |
+| ADR-017 | [Identity/Org Service Split](adr-017-identity-org-service-split.md) | Superseded by as-built (R3.5 — identity consolidated into auth-service) | 2026-06-04 |
 | ADR-022 | [Concern-Driven Ingestion — Recipes, Primitives, Unified Source→Structure→Entity Model](adr-022-recipe-primitive-unified-graph-ingestion.md) | Accepted (ported) | 2026-06-04 |
 
 > **ADR-022** is **ported from the legacy `develop` branch @ `84152635de05c105765cfe6b631bb5ba81f2f4aa` (TASK-237)** and kept at its **original legacy number** for traceability to the binding spec. It is the binding ingestion specification for the R3.5 knowledge-graph-service (service #1). New ADRs continue from ADR-018; the 018–021 numbers were not used in this KB.

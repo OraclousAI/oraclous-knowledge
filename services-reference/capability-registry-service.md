@@ -5,19 +5,19 @@ title: "capability-registry-service"
 
 # capability-registry-service
 
-**Layer:** 2 (Capability Registry) · **Port:** 8001 · **Status:** **Hollow today — a 136-LOC empty shell. R3.5 step 5 rebuilds it real**, porting the tool registry + execution from `oraclous-core-service`, then salvaging-and-deleting that service (human-gated, destructive).
+**Layer:** 2 (Capability Registry) · **Port:** 8001 · **Status:** **Real — R3.5-complete, §22-signed-off** (Reza ran both `smoke.sh` and `smoke_real_broker.sh`). The real tool registry + **synchronous** execution was ported from `oraclous-core-service`, which was then salvaged-and-deleted (human-gated, ORAA-4 §15). Reachable directly by host IP:port until the [application-gateway-service](application-gateway-service.md) fronts it.
 
-## Honest current reality
+## What it is now
 
-R2 marked this service "done" but it is **136 lines of total Python** — an empty shell with no real registry and no execution. The genuine tool registry, validation, credential bridge, connectors, and execution logic still live, undeleted, in `oraclous-backend/oraclous-core-service` (~6,800 LOC of real-but-dead code). Nothing here resolves or invokes a capability today. This page describes the **R3.5 target**.
+R3.5 service #5 rebuilt this real, end-to-end. It owns the unified capability registry and **synchronous** tool execution, with real connector dispatch to PostgreSQL, MySQL, Notion, and GitHub, and a real credential bridge to [credential-broker-service](credential-broker-service.md) (with a deterministic fake-broker fallback for key-free smokes). The Google Drive live connector's OAuth path is ported and tested via the fake broker; the live call is deferred (it needs a real secret in the smoke). **Asynchronous / queued / streaming execution is out of scope here by design** — that is the R5 execution-engine-service.
 
-R3.5 rebuilds this as **step 5** (after the graph, retriever, identity-org, and credential-broker services are each signed off), because it depends on all of them. It is the largest port: real tool registry + execution comes **from `oraclous-core-service`**, and only once that logic is ported **and tested here** does `oraclous-core-service` get salvaged-then-deleted. That deletion is **destructive and human-gated** (ORAA-4 §15): the source stays `port_source: true, deletable: false` until the port is proven.
+`oraclous-core-service` (~6,800 LOC of real-but-dead legacy code) was the port-source. Once its registry/validation/connectors/execution were ported here **and proven** by integration + smoke tests, it was deleted under the §15 destructive-change protocol with explicit Reza sign-off. No legacy port-source remains (`service_status.yaml` `legacy: {}`).
 
-## Purpose (R3.5 target)
+## Purpose
 
 `capability-registry-service` is the substrate's **discovery and execution surface** for what can be composed in a workspace — tools, skills, agents, harnesses, human roles, plus the **connectors** that back tool calls. Every capability has a uniform descriptor with kind discrimination; every resolution and invocation goes through one path.
 
-## Responsibilities (R3.5 target)
+## Responsibilities
 
 * Unified capability descriptor model (one schema, kind-discriminated)
 * Capability resolution: name → descriptor → invocation handle
@@ -35,18 +35,18 @@ R3.5 rebuilds this as **step 5** (after the graph, retriever, identity-org, and 
 * **skill** — Markdown-shaped prose loaded into an agent's context
 * **agent** — actor with role, capability allocation, LLM config
 * **harness** — orchestrated assembly of actors with task board, policies
-* **human_role** — declared participation slot, resolved against the org member directory in [identity-org-service](identity-org-service.md)
+* **human_role** — declared participation slot, resolved against the org member directory in [auth-service](auth-service.md)
 
 A `capability_pack` is a bundling artifact, not a separate kind — it expands on registration.
 
 ## Dependencies
 
-* **Upstream:** Postgres (descriptor storage), [identity-org-service](identity-org-service.md) + [auth-service](auth-service.md) (ReBAC visibility for human and machine principals), [credential-broker-service](credential-broker-service.md) (runtime token resolution for connector tool calls), [knowledge-graph-service](knowledge-graph-service.md) (`:Agent` nodes some kinds persist)
-* **Downstream consumers:** every capability invocation path; the frontend reaches it **directly by host IP:port** until [application-gateway-service](application-gateway-service.md) exists
+* **Upstream:** Postgres (descriptor storage), [auth-service](auth-service.md) (ReBAC visibility for human and machine principals), [credential-broker-service](credential-broker-service.md) (runtime token resolution for connector tool calls), [knowledge-graph-service](knowledge-graph-service.md) (`:Agent` nodes some kinds persist)
+* **Downstream consumers:** every capability invocation path; the frontend reaches it **directly by host IP:port** until [application-gateway-service](application-gateway-service.md) fronts it
 
-## Salvage-then-delete `oraclous-core-service` (ORAA-4 §15)
+## Salvage-then-delete `oraclous-core-service` (ORAA-4 §15) — DONE
 
-`oraclous-core-service` is marked `port_source: true, deletable: false`. It **stays** until its tool registry, validation, connectors, and execution are ported into this service **and** proven by integration + smoke tests. Only then does its deletion become eligible — and that deletion requires **Reza's human sign-off** because it is destructive. The hollowness audit (`tools/audit/hollowness_audit.py`) tracks this and re-opened the hollow R2 stories under R3.5.
+`oraclous-core-service` was the `port_source`. Its tool registry, validation, connectors, and execution were ported into this service **and proven** by integration + smoke tests, after which it was **deleted** (44 files, ~6.3k LOC) under the §15 destructive-change protocol with **explicit Reza sign-off**. No legacy port-source remains (`service_status.yaml` `legacy: {}`). The hollowness audit (`tools/audit/hollowness_audit.py`) that re-opened the hollow R2 stories now reports this service CLEAN.
 
 ## Architecture conformance (ORAA-4 §21)
 
