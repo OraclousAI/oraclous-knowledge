@@ -1,12 +1,12 @@
-# Graph Report - /Users/reza/workspace/.oraclous-worktrees/r35-kb  (2026-06-05)
+# Graph Report - /Users/reza/workspace/.oraclous-worktrees/fe-ds  (2026-06-05)
 
 ## Corpus Check
-- 2 files · ~282,552 words
+- 2 files · ~282,754 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1116 nodes · 1726 edges · 31 communities detected
-- Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 129 edges (avg confidence: 0.76)
+- 1174 nodes · 1826 edges · 33 communities detected
+- Extraction: 92% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 136 edges (avg confidence: 0.76)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
@@ -41,18 +41,20 @@
 - [[_COMMUNITY_Community 28|Community 28]]
 - [[_COMMUNITY_Community 29|Community 29]]
 - [[_COMMUNITY_Community 30|Community 30]]
+- [[_COMMUNITY_Community 31|Community 31]]
+- [[_COMMUNITY_Community 32|Community 32]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `ADR-001 Four-Layer Architecture` - 21 edges
-2. `Section 2 — Conceptual Model` - 21 edges
-3. `R3.5 — Make every service real` - 21 edges
-4. `Test Strategy` - 19 edges
-5. `04. Services Reference (hub)` - 19 edges
-6. `knowledge-retriever-service` - 19 edges
-7. `ADR-007 BYOM with Three Protocol Shapes for v1` - 18 edges
-8. `Section 2 — Conceptual Model` - 18 edges
-9. `Glossary` - 18 edges
-10. `test-author` - 17 edges
+1. `R3.5 — Make every service real (Released)` - 22 edges
+2. `ADR-001 Four-Layer Architecture` - 21 edges
+3. `Section 2 — Conceptual Model` - 21 edges
+4. `R3.5 — Make every service real` - 21 edges
+5. `Test Strategy` - 19 edges
+6. `04. Services Reference (hub)` - 19 edges
+7. `knowledge-retriever-service` - 19 edges
+8. `ADR-007 BYOM with Three Protocol Shapes for v1` - 18 edges
+9. `Section 2 — Conceptual Model` - 18 edges
+10. `Glossary` - 18 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `PaperClip master board` --semantically_similar_to--> `Coordination layer: work-breakdown hierarchy + cross-cutting agreement protocol`  [INFERRED] [semantically similar]
@@ -61,10 +63,10 @@
   adr/adr-012-substrate-tenancy-enforcement-seam-and-rls-backstop-preconditions.md → architecture/section-65-security-threats-and-mitigations.md
 - `Harness as the actor (descriptor-led behaviour)` --semantically_similar_to--> `OHM document structure (8 top-level sections)`  [INFERRED] [semantically similar]
   adr/adr-003-platform-as-code-actors-as-harnesses.md → architecture/ohm-v1.0-standalone-specification.md
-- `Frontend Asymmetry` --conceptually_related_to--> `Frontend is a gateway-only consumer (never talks to internal services)`  [INFERRED]
-  flows/session-topology-and-persona-residency.md → frontend/index.md
-- `Frontend is a gateway-only consumer (never talks to internal services)` --conceptually_related_to--> `Gateway-only public exposure`  [INFERRED]
-  frontend/index.md → operations/deployment-topology.md
+- `Voice and Copy conventions` --semantically_similar_to--> `Writing Principles`  [INFERRED] [semantically similar]
+  frontend/design-system.md → meta/documentation-conventions.md
+- `Oraclous Knowledge Base Index` --semantically_similar_to--> `llms.txt KB entry point`  [INFERRED] [semantically similar]
+  index.md → llms.txt
 
 ## Communities
 
@@ -77,40 +79,40 @@ Cohesion: 0.02
 Nodes (154): Application Gateway layer, Application Gateway layer, Capability Registry layer, Capability Registry layer, Strict downward-only layer dependency rule, ADR-001 Four-Layer Architecture, Harness Runtime layer, Harness Runtime layer (+146 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.03
-Nodes (148): be-test-reviewer Addition (28 May 2026), Agent and Skill Change Log, Enforcement Program ORAA-250 (rev14), Flow Hardening v2 (ORAA-208, rev12), Governance Surface-Sync Discipline, Hollowness Audit, Material Agent-Team Change, R2→R3 Seam Hardening (+140 more)
+Cohesion: 0.02
+Nodes (149): be-test-reviewer Addition (28 May 2026), Agent and Skill Change Log, Enforcement Program ORAA-250 (rev14), Flow Hardening v2 (ORAA-208, rev12), Governance Surface-Sync Discipline, Hollowness Audit, Material Agent-Team Change, R2→R3 Seam Hardening (+141 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.03
-Nodes (108): Agent Team Roster, security-architect (role), test-author (role), Rationale: Test-Author-First (ADR-010), Audit Evidence and Records, Compliance Posture Overview, Rationale: Provenance is Evidence / Architectural Controls over Policy, Unified Control Framework (ISO + SOC 2) (+100 more)
+Nodes (110): Agent Team Roster, security-architect (role), test-author (role), Rationale: Test-Author-First (ADR-010), Audit Evidence and Records, Compliance Posture Overview, Rationale: Provenance is Evidence / Architectural Controls over Policy, Unified Control Framework (ISO + SOC 2) (+102 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.03
-Nodes (101): Agent Owner Custom Field (Group E), Build State — Group D Follow-up (3) CLOSED, Actor Dispatch (agents + humans), LLM Client Factory (three protocol shapes, ADR-007), Policy Envelope Enforcement, harness-runtime-service (reference), NodeResult Envelope (uniform retrieval), ReBAC-Gated Retrieval + effective_graph_ids (+93 more)
+Nodes (102): Agent Owner Custom Field (Group E), Build State — Group D Follow-up (3) CLOSED, Actor Dispatch (agents + humans), LLM Client Factory (three protocol shapes, ADR-007), Policy Envelope Enforcement, harness-runtime-service (reference), NodeResult Envelope (uniform retrieval), ReBAC-Gated Retrieval + effective_graph_ids (+94 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.04
-Nodes (80): application-gateway-service, Chat APIs / Chat Persistence, Why consolidate public surfaces (single security boundary), MCP Client, MCP Server, Published Agents and Integration Keys, Rate Limiting per Integration Key, application-gateway-service (Layer 4, port 8007) (+72 more)
+Cohesion: 0.03
+Nodes (89): Eleven release pages (R0-R8, RC), Build State — Group D follow-up (3) — CLOSED, Agent Identity Convention Section 11 inserts, Change Log, Architecture v1.1 LOCKED (27 May 2026), Architecture v1.1 LOCKED, Change Log, Initial KB structure (27 May 2026) (+81 more)
 
 ### Community 6 - "Community 6"
 Cohesion: 0.04
-Nodes (73): Eleven release pages (R0-R8, RC), Build State — Group D follow-up (3) — CLOSED, Agent Identity Convention Section 11 inserts, Architecture v1.1 LOCKED (27 May 2026), Change Log, Material Change (what gets logged), Deployment — Cloud-hosted, Configuration philosophy (safe defaults, one way, explicit secrets) (+65 more)
+Nodes (80): application-gateway-service, Chat APIs / Chat Persistence, Why consolidate public surfaces (single security boundary), MCP Client, MCP Server, Published Agents and Integration Keys, Rate Limiting per Integration Key, application-gateway-service (Layer 4, port 8007) (+72 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.04
-Nodes (69): Boundary enforcement: contract test / shared fixture (not Done until it exists), Canonical home per shape kind (Interface Contracts / OHM Spec / Governance Taxonomy / ADR), Contract Jira issue type (between Epic and Story), Cross-cutting agreement protocol, Enforcement at the Boundary (CI contract test), Governing principle: record once, link many, Three Tiers of Agreement, Tier 1 — internal to one repository (implementer decides) (+61 more)
+Cohesion: 0.05
+Nodes (59): Boundary enforcement: contract test / shared fixture (not Done until it exists), Canonical home per shape kind (Interface Contracts / OHM Spec / Governance Taxonomy / ADR), Contract Jira issue type (between Epic and Story), Cross-cutting agreement protocol, Enforcement at the Boundary (CI contract test), Governing principle: record once, link many, Three Tiers of Agreement, Tier 1 — internal to one repository (implementer decides) (+51 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.07
-Nodes (50): Component Conventions, Accessibility minimums (keyboard-reachable, labels, focus, aria-live), Boundary discipline (data vs render; no business logic in components), Component shape (function components, named exports, typed props), Compound Component Patterns, Component Conventions, File/folder structure (ui, domain, features, pages, lib, hooks, api), File and Folder Structure (+42 more)
+Cohesion: 0.06
+Nodes (58): ADR-004 Federation via ReBAC Traversal, ADR-006 Organisation as Outermost Tenancy Unit, ADR-007 BYOM with Three Protocol Shapes, ADR-008 Cloud-Hosted Mode / KMS posture, ADR-015 Gateway Incremental Contract and Versioning, ADR-016 Canonical Service Architecture + Hardened DoD, ADR-017 Identity/Org Service Split (superseded by as-built), ADR-017 core boundary fix (orgs leave the graph service) (+50 more)
 
 ### Community 9 - "Community 9"
-Cohesion: 0.06
-Nodes (48): Change Log, Architecture v1.1 LOCKED, Initial KB structure (27 May 2026), Cloud operational posture (org isolation, per-org KMS, audited access), Configuration Reference, Configuration Philosophy, How to write an ADR, How to update an architecture page (+40 more)
+Cohesion: 0.07
+Nodes (51): Component Conventions, Accessibility minimums (keyboard-reachable, labels, focus, aria-live), Boundary discipline (data vs render; no business logic in components), Component shape (function components, named exports, typed props), Compound Component Patterns, Component Conventions, File/folder structure (ui, domain, features, pages, lib, hooks, api), File and Folder Structure (+43 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.07
-Nodes (29): application-gateway-service, Why consolidate public surfaces (single security boundary), auth-service, capability_pack (bundling artifact), The Five Capability Kinds, capability-registry-service, ADR-001 Four-Layer Architecture, ADR Registry / Hub (+21 more)
+Cohesion: 0.06
+Nodes (39): Configuration philosophy (safe defaults, one way, explicit secrets), Configuration Reference, AUTO-ASSIGN action, AUTO-UNBLOCK action (fail-closed), Fleet-keeper (ORAA-250), gated_merge.sh (only sanctioned merge path), GitHub main ruleset (server-side merge gate), ORAA-78 false-unblock regression guard (+31 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.12
@@ -121,60 +123,60 @@ Cohesion: 0.11
 Nodes (20): ADR-001 (Four-Layer Architecture), ADR-022 (recipe / primitive / unified-graph model), application-gateway-service, auth-service, Chat Retrieval, Full-text Search (Lucene-style), Graph Traversal (Cypher, ReBAC-bounded), Hybrid Search (vector + full-text rerank) (+12 more)
 
 ### Community 13 - "Community 13"
+Cohesion: 0.15
+Nodes (14): ADR-001 Four-Layer Architecture, ADR Registry / Hub, Four-Layer Architecture & OHM, OHM v1.0 Standalone Specification, OHM document structure (8 top-level sections), OHM v1.0 Standalone Specification, Section 4 — OHM Manifest Format, Two Zones (structured + prose) (+6 more)
+
+### Community 14 - "Community 14"
+Cohesion: 0.15
+Nodes (13): application-gateway-service, Why consolidate public surfaces (single security boundary), auth-service, capability_pack (bundling artifact), five capability kinds (tool/skill/agent/harness/human_role), capability-registry-service, Harness Runtime & Retrieval, harness-runtime-service (+5 more)
+
+### Community 15 - "Community 15"
 Cohesion: 0.22
 Nodes (11): tools/lint/check_no_stubs.py (HOL001-005), tools/lint/check_service_structure.py (STR001-005), Service Architecture Standard, tools/audit/hollowness_audit.py (read-only true-completion map), Per-service importlinter layers contracts (routes->services->domain->repositories->core), r3_5_gate CI job (structure-lint + docker + integration + smoke), Rationale: R2/R3 decomposed into hollow shells; adopt proven legacy layout, Required service layout (routes/services/domain/repositories/schema/core) (+3 more)
 
-### Community 14 - "Community 14"
+### Community 16 - "Community 16"
 Cohesion: 0.33
 Nodes (9): api(), hours_since(), listy(), main(), paperclip_bin(), Resolve the installed paperclipai entrypoint (npx cache path has a rotating hash, Fire one agent heartbeat (source=assignment) to start its assigned work, fire-an, role_for() (+1 more)
 
-### Community 15 - "Community 15"
+### Community 17 - "Community 17"
 Cohesion: 0.5
 Nodes (4): Docs Process & Deployment, Deployment Topology, Documentation Conventions, Glossary
 
-### Community 16 - "Community 16"
+### Community 18 - "Community 18"
 Cohesion: 0.5
 Nodes (4): be-test-reviewer persona, Engineering Flows & Board, Jira Board and Workflow Mapping, Session Topology and Persona Residency
 
-### Community 17 - "Community 17"
+### Community 19 - "Community 19"
 Cohesion: 1.0
 Nodes (3): build_kb_index.py (index.md + llms.txt generator), Git pre-commit Hook (index regeneration), scripts/ README (KB retrieval tooling)
 
-### Community 18 - "Community 18"
+### Community 20 - "Community 20"
 Cohesion: 0.67
 Nodes (3): Frontend & Design System, Design System, Frontend Stack Reference
 
-### Community 19 - "Community 19"
+### Community 21 - "Community 21"
 Cohesion: 0.67
 Nodes (3): ADR-010 TDD with Test-Author Agent, ADR-014 Repo-canonical Knowledge Base, TDD & KB Canonicalisation
 
-### Community 20 - "Community 20"
+### Community 22 - "Community 22"
 Cohesion: 1.0
 Nodes (2): be-test-reviewer persona, How dual residency was avoided
 
-### Community 21 - "Community 21"
+### Community 23 - "Community 23"
 Cohesion: 1.0
 Nodes (2): KB Retrieval Tooling, Git pre-commit Hook (index regeneration)
 
-### Community 22 - "Community 22"
+### Community 24 - "Community 24"
 Cohesion: 1.0
 Nodes (1): auth-service
 
-### Community 23 - "Community 23"
+### Community 25 - "Community 25"
 Cohesion: 1.0
 Nodes (1): credential-broker-service
 
-### Community 24 - "Community 24"
-Cohesion: 1.0
-Nodes (1): Multi-tenant Isolation Pattern
-
-### Community 25 - "Community 25"
-Cohesion: 1.0
-Nodes (1): Cypher Injection Prevention
-
 ### Community 26 - "Community 26"
 Cohesion: 1.0
-Nodes (1): AgentExecutor (powers sync and durable)
+Nodes (1): Multi-tenant Isolation Pattern
 
 ### Community 27 - "Community 27"
 Cohesion: 1.0
@@ -182,56 +184,68 @@ Nodes (1): Cypher Injection Prevention
 
 ### Community 28 - "Community 28"
 Cohesion: 1.0
-Nodes (1): KB Index Generator (code)
+Nodes (1): AgentExecutor (powers sync and durable)
 
 ### Community 29 - "Community 29"
 Cohesion: 1.0
-Nodes (1): Multi-tenant Isolation Pattern
+Nodes (1): Cypher Injection Prevention
 
 ### Community 30 - "Community 30"
 Cohesion: 1.0
+Nodes (1): KB Index Generator (code)
+
+### Community 31 - "Community 31"
+Cohesion: 1.0
+Nodes (1): Multi-tenant Isolation Pattern
+
+### Community 32 - "Community 32"
+Cohesion: 1.0
 Nodes (1): scripts/ tooling README
 
+## Ambiguous Edges - Review These
+- `auth-service (single identity authority)` → `ADR-017 Identity/Org Service Split (superseded by as-built)`  [AMBIGUOUS]
+  adr/index.md · relation: supersedes
+
 ## Knowledge Gaps
-- **419 isolated node(s):** `Resolve the installed paperclipai entrypoint (npx cache path has a rotating hash`, `Fire one agent heartbeat (source=assignment) to start its assigned work, fire-an`, `Return (frontmatter_lines, body_lines).      Frontmatter is a leading ``---`` ..`, `Extract ``title`` from frontmatter lines via regex, else return fallback.`, `True when a line is real summary prose, not heading/metadata/markup.` (+414 more)
+- **441 isolated node(s):** `Resolve the installed paperclipai entrypoint (npx cache path has a rotating hash`, `Fire one agent heartbeat (source=assignment) to start its assigned work, fire-an`, `Return (frontmatter_lines, body_lines).      Frontmatter is a leading ``---`` ..`, `Extract ``title`` from frontmatter lines via regex, else return fallback.`, `True when a line is real summary prose, not heading/metadata/markup.` (+436 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Community 20`** (2 nodes): `be-test-reviewer persona`, `How dual residency was avoided`
+- **Thin community `Community 22`** (2 nodes): `be-test-reviewer persona`, `How dual residency was avoided`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 21`** (2 nodes): `KB Retrieval Tooling`, `Git pre-commit Hook (index regeneration)`
+- **Thin community `Community 23`** (2 nodes): `KB Retrieval Tooling`, `Git pre-commit Hook (index regeneration)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 22`** (1 nodes): `auth-service`
+- **Thin community `Community 24`** (1 nodes): `auth-service`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 23`** (1 nodes): `credential-broker-service`
+- **Thin community `Community 25`** (1 nodes): `credential-broker-service`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 24`** (1 nodes): `Multi-tenant Isolation Pattern`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 25`** (1 nodes): `Cypher Injection Prevention`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 26`** (1 nodes): `AgentExecutor (powers sync and durable)`
+- **Thin community `Community 26`** (1 nodes): `Multi-tenant Isolation Pattern`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 27`** (1 nodes): `Cypher Injection Prevention`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 28`** (1 nodes): `KB Index Generator (code)`
+- **Thin community `Community 28`** (1 nodes): `AgentExecutor (powers sync and durable)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 29`** (1 nodes): `Multi-tenant Isolation Pattern`
+- **Thin community `Community 29`** (1 nodes): `Cypher Injection Prevention`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 30`** (1 nodes): `scripts/ tooling README`
+- **Thin community `Community 30`** (1 nodes): `KB Index Generator (code)`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 31`** (1 nodes): `Multi-tenant Isolation Pattern`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 32`** (1 nodes): `scripts/ tooling README`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Test Strategy` connect `Community 2` to `Community 8`, `Community 13`, `Community 7`?**
-  _High betweenness centrality (0.055) - this node is a cross-community bridge._
-- **Why does `Testing Approach (Frontend)` connect `Community 8` to `Community 2`?**
-  _High betweenness centrality (0.048) - this node is a cross-community bridge._
-- **Why does `Provenance` connect `Community 9` to `Community 4`?**
-  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+- **What is the exact relationship between `auth-service (single identity authority)` and `ADR-017 Identity/Org Service Split (superseded by as-built)`?**
+  _Edge tagged AMBIGUOUS (relation: supersedes) - confidence is low._
+- **Why does `Test Strategy` connect `Community 2` to `Community 9`, `Community 7`, `Community 15`?**
+  _High betweenness centrality (0.064) - this node is a cross-community bridge._
+- **Why does `Provenance` connect `Community 5` to `Community 4`?**
+  _High betweenness centrality (0.058) - this node is a cross-community bridge._
+- **Why does `Testing Approach (Frontend)` connect `Community 9` to `Community 2`?**
+  _High betweenness centrality (0.054) - this node is a cross-community bridge._
 - **What connects `Resolve the installed paperclipai entrypoint (npx cache path has a rotating hash`, `Fire one agent heartbeat (source=assignment) to start its assigned work, fire-an`, `Return (frontmatter_lines, body_lines).      Frontmatter is a leading ``---`` ..` to the rest of the system?**
-  _419 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _441 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.02 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.02 - nodes in this community are weakly interconnected._
-- **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.03 - nodes in this community are weakly interconnected._

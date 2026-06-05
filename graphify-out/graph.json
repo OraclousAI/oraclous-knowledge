@@ -6,74 +6,74 @@
     {
       "label": "fleet_keeper.py",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L1",
+      "id": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
       "community": 16,
-      "norm_label": "fleet_keeper.py",
-      "id": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py"
+      "norm_label": "fleet_keeper.py"
     },
     {
       "label": "api()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L66",
+      "id": "fleet_keeper_api",
       "community": 16,
-      "norm_label": "api()",
-      "id": "fleet_keeper_api"
+      "norm_label": "api()"
     },
     {
       "label": "listy()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L74",
+      "id": "fleet_keeper_listy",
       "community": 16,
-      "norm_label": "listy()",
-      "id": "fleet_keeper_listy"
+      "norm_label": "listy()"
     },
     {
       "label": "paperclip_bin()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L78",
+      "id": "fleet_keeper_paperclip_bin",
       "community": 16,
-      "norm_label": "paperclip_bin()",
-      "id": "fleet_keeper_paperclip_bin"
+      "norm_label": "paperclip_bin()"
     },
     {
       "label": "trigger_heartbeat()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L85",
+      "id": "fleet_keeper_trigger_heartbeat",
       "community": 16,
-      "norm_label": "trigger_heartbeat()",
-      "id": "fleet_keeper_trigger_heartbeat"
+      "norm_label": "trigger_heartbeat()"
     },
     {
       "label": "hours_since()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L101",
+      "id": "fleet_keeper_hours_since",
       "community": 16,
-      "norm_label": "hours_since()",
-      "id": "fleet_keeper_hours_since"
+      "norm_label": "hours_since()"
     },
     {
       "label": "role_for()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L108",
+      "id": "fleet_keeper_role_for",
       "community": 16,
-      "norm_label": "role_for()",
-      "id": "fleet_keeper_role_for"
+      "norm_label": "role_for()"
     },
     {
       "label": "main()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L123",
+      "id": "fleet_keeper_main",
       "community": 16,
-      "norm_label": "main()",
-      "id": "fleet_keeper_main"
+      "norm_label": "main()"
     },
     {
       "label": "Resolve the installed paperclipai entrypoint (npx cache path has a rotating hash",
@@ -96,200 +96,200 @@
     {
       "label": "build_kb_index.py",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L1",
+      "id": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "community": 11,
-      "norm_label": "build_kb_index.py",
-      "id": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py"
+      "norm_label": "build_kb_index.py"
     },
     {
       "label": "_strip_quotes()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L110",
+      "id": "build_kb_index_strip_quotes",
       "community": 11,
-      "norm_label": "_strip_quotes()",
-      "id": "build_kb_index_strip_quotes"
+      "norm_label": "_strip_quotes()"
     },
     {
       "label": "split_frontmatter()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L117",
+      "id": "build_kb_index_split_frontmatter",
       "community": 11,
-      "norm_label": "split_frontmatter()",
-      "id": "build_kb_index_split_frontmatter"
+      "norm_label": "split_frontmatter()"
     },
     {
       "label": "parse_title()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L131",
+      "id": "build_kb_index_parse_title",
       "community": 11,
-      "norm_label": "parse_title()",
-      "id": "build_kb_index_parse_title"
+      "norm_label": "parse_title()"
     },
     {
       "label": "_is_prose()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L140",
+      "id": "build_kb_index_is_prose",
       "community": 11,
-      "norm_label": "_is_prose()",
-      "id": "build_kb_index_is_prose"
+      "norm_label": "_is_prose()"
     },
     {
       "label": "_normalise_summary()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L159",
+      "id": "build_kb_index_normalise_summary",
       "community": 11,
-      "norm_label": "_normalise_summary()",
-      "id": "build_kb_index_normalise_summary"
+      "norm_label": "_normalise_summary()"
     },
     {
       "label": "first_summary()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L171",
+      "id": "build_kb_index_first_summary",
       "community": 11,
-      "norm_label": "first_summary()",
-      "id": "build_kb_index_first_summary"
+      "norm_label": "first_summary()"
     },
     {
       "label": "derive_title_from_section()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L185",
+      "id": "build_kb_index_derive_title_from_section",
       "community": 11,
-      "norm_label": "derive_title_from_section()",
-      "id": "build_kb_index_derive_title_from_section"
+      "norm_label": "derive_title_from_section()"
     },
     {
       "label": "SectionInfo",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L193",
+      "id": "build_kb_index_sectioninfo",
       "community": 11,
-      "norm_label": "sectioninfo",
-      "id": "build_kb_index_sectioninfo"
+      "norm_label": "sectioninfo"
     },
     {
       "label": ".__init__()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L194",
+      "id": "build_kb_index_sectioninfo_init",
       "community": 11,
-      "norm_label": ".__init__()",
-      "id": "build_kb_index_sectioninfo_init"
+      "norm_label": ".__init__()"
     },
     {
       "label": "index_rel()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L202",
+      "id": "build_kb_index_index_rel",
       "community": 11,
-      "norm_label": "index_rel()",
-      "id": "build_kb_index_index_rel"
+      "norm_label": "index_rel()"
     },
     {
       "label": "count_md_files()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L206",
+      "id": "build_kb_index_count_md_files",
       "community": 11,
-      "norm_label": "count_md_files()",
-      "id": "build_kb_index_count_md_files"
+      "norm_label": "count_md_files()"
     },
     {
       "label": "scan_section()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L215",
+      "id": "build_kb_index_scan_section",
       "community": 11,
-      "norm_label": "scan_section()",
-      "id": "build_kb_index_scan_section"
+      "norm_label": "scan_section()"
     },
     {
       "label": "scan_all()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L242",
+      "id": "build_kb_index_scan_all",
       "community": 11,
-      "norm_label": "scan_all()",
-      "id": "build_kb_index_scan_all"
+      "norm_label": "scan_all()"
     },
     {
       "label": "render_index_md()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L250",
+      "id": "build_kb_index_render_index_md",
       "community": 11,
-      "norm_label": "render_index_md()",
-      "id": "build_kb_index_render_index_md"
+      "norm_label": "render_index_md()"
     },
     {
       "label": "render_llms_txt()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L293",
+      "id": "build_kb_index_render_llms_txt",
       "community": 11,
-      "norm_label": "render_llms_txt()",
-      "id": "build_kb_index_render_llms_txt"
+      "norm_label": "render_llms_txt()"
     },
     {
       "label": "build_outputs()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L342",
+      "id": "build_kb_index_build_outputs",
       "community": 11,
-      "norm_label": "build_outputs()",
-      "id": "build_kb_index_build_outputs"
+      "norm_label": "build_outputs()"
     },
     {
       "label": "read_existing()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L350",
+      "id": "build_kb_index_read_existing",
       "community": 11,
-      "norm_label": "read_existing()",
-      "id": "build_kb_index_read_existing"
+      "norm_label": "read_existing()"
     },
     {
       "label": "write_outputs()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L358",
+      "id": "build_kb_index_write_outputs",
       "community": 11,
-      "norm_label": "write_outputs()",
-      "id": "build_kb_index_write_outputs"
+      "norm_label": "write_outputs()"
     },
     {
       "label": "check_outputs()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L365",
+      "id": "build_kb_index_check_outputs",
       "community": 11,
-      "norm_label": "check_outputs()",
-      "id": "build_kb_index_check_outputs"
+      "norm_label": "check_outputs()"
     },
     {
       "label": "report_missing()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L390",
+      "id": "build_kb_index_report_missing",
       "community": 11,
-      "norm_label": "report_missing()",
-      "id": "build_kb_index_report_missing"
+      "norm_label": "report_missing()"
     },
     {
       "label": "main()",
       "file_type": "code",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L399",
+      "id": "build_kb_index_main",
       "community": 11,
-      "norm_label": "main()",
-      "id": "build_kb_index_main"
+      "norm_label": "main()"
     },
     {
       "label": "Return (frontmatter_lines, body_lines).      Frontmatter is a leading ``---`` ..",
@@ -14403,9 +14403,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "auth_service",
       "community": 8,
-      "norm_label": "auth-service (single identity authority)"
+      "norm_label": "auth-service (single identity authority)",
+      "id": "auth_service"
     },
     {
       "label": "auth-service human identity (email/password + OAuth)",
@@ -14416,9 +14416,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "auth_service_human_identity",
       "community": 8,
-      "norm_label": "auth-service human identity (email/password + oauth)"
+      "norm_label": "auth-service human identity (email/password + oauth)",
+      "id": "auth_service_human_identity"
     },
     {
       "label": "auth-service machine identity (agents + service accounts)",
@@ -14429,9 +14429,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "auth_service_machine_identity",
       "community": 8,
-      "norm_label": "auth-service machine identity (agents + service accounts)"
+      "norm_label": "auth-service machine identity (agents + service accounts)",
+      "id": "auth_service_machine_identity"
     },
     {
       "label": "auth-service organisations/members/invitations",
@@ -14442,9 +14442,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "auth_service_orgs_membership",
       "community": 8,
-      "norm_label": "auth-service organisations/members/invitations"
+      "norm_label": "auth-service organisations/members/invitations",
+      "id": "auth_service_orgs_membership"
     },
     {
       "label": "login OAuth (Google/GitHub/Notion sign-in)",
@@ -14455,9 +14455,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "auth_service_login_oauth",
       "community": 8,
-      "norm_label": "login oauth (google/github/notion sign-in)"
+      "norm_label": "login oauth (google/github/notion sign-in)",
+      "id": "auth_service_login_oauth"
     },
     {
       "label": "port 8005 (auth-service)",
@@ -14468,9 +14468,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "auth_service_port_8005",
       "community": 8,
-      "norm_label": "port 8005 (auth-service)"
+      "norm_label": "port 8005 (auth-service)",
+      "id": "auth_service_port_8005"
     },
     {
       "label": "identity-org-service (NOT BUILT \u2014 tombstone)",
@@ -14481,9 +14481,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "identity_org_service_tombstone",
       "community": 8,
-      "norm_label": "identity-org-service (not built \u2014 tombstone)"
+      "norm_label": "identity-org-service (not built \u2014 tombstone)",
+      "id": "identity_org_service_tombstone"
     },
     {
       "label": "ADR-017 Identity/Org Service Split (superseded by as-built)",
@@ -14494,9 +14494,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "adr_017",
       "community": 8,
-      "norm_label": "adr-017 identity/org service split (superseded by as-built)"
+      "norm_label": "adr-017 identity/org service split (superseded by as-built)",
+      "id": "adr_017"
     },
     {
       "label": "ADR-017 core boundary fix (orgs leave the graph service)",
@@ -14507,9 +14507,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "adr_017_boundary_fix",
       "community": 8,
-      "norm_label": "adr-017 core boundary fix (orgs leave the graph service)"
+      "norm_label": "adr-017 core boundary fix (orgs leave the graph service)",
+      "id": "adr_017_boundary_fix"
     },
     {
       "label": "ADR-017 two-service split (dropped)",
@@ -14520,9 +14520,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "adr_017_two_service_split",
       "community": 8,
-      "norm_label": "adr-017 two-service split (dropped)"
+      "norm_label": "adr-017 two-service split (dropped)",
+      "id": "adr_017_two_service_split"
     },
     {
       "label": "knowledge-graph-service (write side)",
@@ -14533,9 +14533,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "knowledge_graph_service",
       "community": 8,
-      "norm_label": "knowledge-graph-service (write side)"
+      "norm_label": "knowledge-graph-service (write side)",
+      "id": "knowledge_graph_service"
     },
     {
       "label": "port 8003 (knowledge-graph-service)",
@@ -14546,9 +14546,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "knowledge_graph_service_port_8003",
       "community": 8,
-      "norm_label": "port 8003 (knowledge-graph-service)"
+      "norm_label": "port 8003 (knowledge-graph-service)",
+      "id": "knowledge_graph_service_port_8003"
     },
     {
       "label": "OrganisationScopedKGWriter (Cypher write chain)",
@@ -14559,9 +14559,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "knowledge_graph_service_org_scoped_kg_writer",
       "community": 8,
-      "norm_label": "organisationscopedkgwriter (cypher write chain)"
+      "norm_label": "organisationscopedkgwriter (cypher write chain)",
+      "id": "knowledge_graph_service_org_scoped_kg_writer"
     },
     {
       "label": "knowledge-retriever-service (read side)",
@@ -14572,9 +14572,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "knowledge_retriever_service",
       "community": 8,
-      "norm_label": "knowledge-retriever-service (read side)"
+      "norm_label": "knowledge-retriever-service (read side)",
+      "id": "knowledge_retriever_service"
     },
     {
       "label": "port 8004 (knowledge-retriever-service)",
@@ -14585,9 +14585,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "knowledge_retriever_service_port_8004",
       "community": 8,
-      "norm_label": "port 8004 (knowledge-retriever-service)"
+      "norm_label": "port 8004 (knowledge-retriever-service)",
+      "id": "knowledge_retriever_service_port_8004"
     },
     {
       "label": "NodeResult uniform envelope",
@@ -14598,9 +14598,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "knowledge_retriever_service_node_result",
       "community": 8,
-      "norm_label": "noderesult uniform envelope"
+      "norm_label": "noderesult uniform envelope",
+      "id": "knowledge_retriever_service_node_result"
     },
     {
       "label": "credential-broker-service (secret keeper)",
@@ -14611,9 +14611,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "credential_broker_service",
       "community": 8,
-      "norm_label": "credential-broker-service (secret keeper)"
+      "norm_label": "credential-broker-service (secret keeper)",
+      "id": "credential_broker_service"
     },
     {
       "label": "port 8002 (credential-broker-service)",
@@ -14624,9 +14624,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "credential_broker_service_port_8002",
       "community": 8,
-      "norm_label": "port 8002 (credential-broker-service)"
+      "norm_label": "port 8002 (credential-broker-service)",
+      "id": "credential_broker_service_port_8002"
     },
     {
       "label": "AES-256-GCM encrypted credential store",
@@ -14637,9 +14637,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "credential_broker_service_aes_256_gcm",
       "community": 8,
-      "norm_label": "aes-256-gcm encrypted credential store"
+      "norm_label": "aes-256-gcm encrypted credential store",
+      "id": "credential_broker_service_aes_256_gcm"
     },
     {
       "label": "runtime OAuth token resolution",
@@ -14650,9 +14650,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "credential_broker_service_runtime_oauth",
       "community": 8,
-      "norm_label": "runtime oauth token resolution"
+      "norm_label": "runtime oauth token resolution",
+      "id": "credential_broker_service_runtime_oauth"
     },
     {
       "label": "/internal/resolve-credential seam",
@@ -14663,9 +14663,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "credential_broker_service_resolve_credential",
       "community": 8,
-      "norm_label": "/internal/resolve-credential seam"
+      "norm_label": "/internal/resolve-credential seam",
+      "id": "credential_broker_service_resolve_credential"
     },
     {
       "label": "capability-registry-service (discovery + sync execution)",
@@ -14676,9 +14676,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "capability_registry_service",
       "community": 8,
-      "norm_label": "capability-registry-service (discovery + sync execution)"
+      "norm_label": "capability-registry-service (discovery + sync execution)",
+      "id": "capability_registry_service"
     },
     {
       "label": "port 8001 (capability-registry-service)",
@@ -14689,9 +14689,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "capability_registry_service_port_8001",
       "community": 8,
-      "norm_label": "port 8001 (capability-registry-service)"
+      "norm_label": "port 8001 (capability-registry-service)",
+      "id": "capability_registry_service_port_8001"
     },
     {
       "label": "connectors (PostgreSQL/MySQL/Notion/GitHub)",
@@ -14702,9 +14702,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "capability_registry_service_connectors",
       "community": 8,
-      "norm_label": "connectors (postgresql/mysql/notion/github)"
+      "norm_label": "connectors (postgresql/mysql/notion/github)",
+      "id": "capability_registry_service_connectors"
     },
     {
       "label": "Google Drive live connector (deferred)",
@@ -14715,9 +14715,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "capability_registry_service_google_drive_deferred",
       "community": 8,
-      "norm_label": "google drive live connector (deferred)"
+      "norm_label": "google drive live connector (deferred)",
+      "id": "capability_registry_service_google_drive_deferred"
     },
     {
       "label": "application-gateway-service (reverse-proxy edge)",
@@ -14728,9 +14728,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "application_gateway_service",
       "community": 8,
-      "norm_label": "application-gateway-service (reverse-proxy edge)"
+      "norm_label": "application-gateway-service (reverse-proxy edge)",
+      "id": "application_gateway_service"
     },
     {
       "label": "port 8006 (application-gateway-service)",
@@ -14741,9 +14741,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "application_gateway_service_port_8006",
       "community": 8,
-      "norm_label": "port 8006 (application-gateway-service)"
+      "norm_label": "port 8006 (application-gateway-service)",
+      "id": "application_gateway_service_port_8006"
     },
     {
       "label": "edge JWT termination + identity forwarding (anti-spoof)",
@@ -14754,9 +14754,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "application_gateway_service_edge_jwt",
       "community": 8,
-      "norm_label": "edge jwt termination + identity forwarding (anti-spoof)"
+      "norm_label": "edge jwt termination + identity forwarding (anti-spoof)",
+      "id": "application_gateway_service_edge_jwt"
     },
     {
       "label": "gateway R6 hardening (MCP/chat/webhooks/error-envelope, deferred)",
@@ -14767,9 +14767,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "application_gateway_service_r6_hardening",
       "community": 8,
-      "norm_label": "gateway r6 hardening (mcp/chat/webhooks/error-envelope, deferred)"
+      "norm_label": "gateway r6 hardening (mcp/chat/webhooks/error-envelope, deferred)",
+      "id": "application_gateway_service_r6_hardening"
     },
     {
       "label": "ORA-37 unified error envelope",
@@ -14780,9 +14780,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "ora_37_error_envelope",
       "community": 8,
-      "norm_label": "ora-37 unified error envelope"
+      "norm_label": "ora-37 unified error envelope",
+      "id": "ora_37_error_envelope"
     },
     {
       "label": "oraclous-core-service (salvaged-then-deleted)",
@@ -14793,9 +14793,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "oraclous_core_service",
       "community": 8,
-      "norm_label": "oraclous-core-service (salvaged-then-deleted)"
+      "norm_label": "oraclous-core-service (salvaged-then-deleted)",
+      "id": "oraclous_core_service"
     },
     {
       "label": "R3.5 \u2014 Make every service real (Released)",
@@ -14806,9 +14806,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "r3_5_release",
       "community": 8,
-      "norm_label": "r3.5 \u2014 make every service real (released)"
+      "norm_label": "r3.5 \u2014 make every service real (released)",
+      "id": "r3_5_release"
     },
     {
       "label": "R3.5 release-seam retrospective",
@@ -14819,9 +14819,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "r3_5_retrospective",
       "community": 8,
-      "norm_label": "r3.5 release-seam retrospective"
+      "norm_label": "r3.5 release-seam retrospective",
+      "id": "r3_5_retrospective"
     },
     {
       "label": "\u00a722 hardened per-service Definition of Done (8 gates)",
@@ -14832,9 +14832,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "r3_5_definition_of_done",
       "community": 8,
-      "norm_label": "\u00a722 hardened per-service definition of done (8 gates)"
+      "norm_label": "\u00a722 hardened per-service definition of done (8 gates)",
+      "id": "r3_5_definition_of_done"
     },
     {
       "label": "\u00a721 canonical service architecture (layered)",
@@ -14845,9 +14845,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "r3_5_canonical_service_architecture",
       "community": 8,
-      "norm_label": "\u00a721 canonical service architecture (layered)"
+      "norm_label": "\u00a721 canonical service architecture (layered)",
+      "id": "r3_5_canonical_service_architecture"
     },
     {
       "label": "hollowness audit (re-opens hollow R2/R3 done)",
@@ -14858,9 +14858,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "r3_5_hollowness_audit",
       "community": 8,
-      "norm_label": "hollowness audit (re-opens hollow r2/r3 done)"
+      "norm_label": "hollowness audit (re-opens hollow r2/r3 done)",
+      "id": "r3_5_hollowness_audit"
     },
     {
       "label": "Reza per-service sign-off (needs-human gate)",
@@ -14871,9 +14871,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "r3_5_reza_signoff",
       "community": 8,
-      "norm_label": "reza per-service sign-off (needs-human gate)"
+      "norm_label": "reza per-service sign-off (needs-human gate)",
+      "id": "r3_5_reza_signoff"
     },
     {
       "label": "legacy spec pin develop@84152635",
@@ -14884,9 +14884,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "r3_5_spec_pin",
       "community": 8,
-      "norm_label": "legacy spec pin develop@84152635"
+      "norm_label": "legacy spec pin develop@84152635",
+      "id": "r3_5_spec_pin"
     },
     {
       "label": "\u00a723 anti-micro-ticket (\u22646 coarse slices)",
@@ -14897,9 +14897,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "r3_5_anti_micro_ticket",
       "community": 8,
-      "norm_label": "\u00a723 anti-micro-ticket (\u22646 coarse slices)"
+      "norm_label": "\u00a723 anti-micro-ticket (\u22646 coarse slices)",
+      "id": "r3_5_anti_micro_ticket"
     },
     {
       "label": "old R4\u2013R8 roadmap (superseded/discarded)",
@@ -14910,9 +14910,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "old_r4_r8_roadmap",
       "community": 8,
-      "norm_label": "old r4\u2013r8 roadmap (superseded/discarded)"
+      "norm_label": "old r4\u2013r8 roadmap (superseded/discarded)",
+      "id": "old_r4_r8_roadmap"
     },
     {
       "label": "gateway-from-R5 vertical-slice plan (discarded)",
@@ -14923,9 +14923,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "gateway_from_r5_plan",
       "community": 8,
-      "norm_label": "gateway-from-r5 vertical-slice plan (discarded)"
+      "norm_label": "gateway-from-r5 vertical-slice plan (discarded)",
+      "id": "gateway_from_r5_plan"
     },
     {
       "label": "R3 \u2014 Knowledge graph decomposition (shipped hollow)",
@@ -14936,9 +14936,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "r3_release",
       "community": 8,
-      "norm_label": "r3 \u2014 knowledge graph decomposition (shipped hollow)"
+      "norm_label": "r3 \u2014 knowledge graph decomposition (shipped hollow)",
+      "id": "r3_release"
     },
     {
       "label": "R2 \u2014 Capability registry consolidation (shipped hollow)",
@@ -14949,9 +14949,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "r2_release",
       "community": 8,
-      "norm_label": "r2 \u2014 capability registry consolidation (shipped hollow)"
+      "norm_label": "r2 \u2014 capability registry consolidation (shipped hollow)",
+      "id": "r2_release"
     },
     {
       "label": "09. Releases hub",
@@ -14962,9 +14962,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "releases_hub",
       "community": 8,
-      "norm_label": "09. releases hub"
+      "norm_label": "09. releases hub",
+      "id": "releases_hub"
     },
     {
       "label": "lift-vs-rewrite migration source map convention",
@@ -14975,9 +14975,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "lift_vs_rewrite_convention",
       "community": 8,
-      "norm_label": "lift-vs-rewrite migration source map convention"
+      "norm_label": "lift-vs-rewrite migration source map convention",
+      "id": "lift_vs_rewrite_convention"
     },
     {
       "label": "02. ADRs hub",
@@ -14988,9 +14988,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "adr_hub",
       "community": 8,
-      "norm_label": "02. adrs hub"
+      "norm_label": "02. adrs hub",
+      "id": "adr_hub"
     },
     {
       "label": "ADR-006 Organisation as Outermost Tenancy Unit",
@@ -15001,9 +15001,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "adr_006",
       "community": 8,
-      "norm_label": "adr-006 organisation as outermost tenancy unit"
+      "norm_label": "adr-006 organisation as outermost tenancy unit",
+      "id": "adr_006"
     },
     {
       "label": "ADR-016 Canonical Service Architecture + Hardened DoD",
@@ -15014,9 +15014,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "adr_016",
       "community": 8,
-      "norm_label": "adr-016 canonical service architecture + hardened dod"
+      "norm_label": "adr-016 canonical service architecture + hardened dod",
+      "id": "adr_016"
     },
     {
       "label": "ADR-022 Recipe/Primitive/Unified-Graph Ingestion",
@@ -15027,9 +15027,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "adr_022",
       "community": 8,
-      "norm_label": "adr-022 recipe/primitive/unified-graph ingestion"
+      "norm_label": "adr-022 recipe/primitive/unified-graph ingestion",
+      "id": "adr_022"
     },
     {
       "label": "ADR-004 Federation via ReBAC Traversal",
@@ -15040,9 +15040,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "adr_004",
       "community": 8,
-      "norm_label": "adr-004 federation via rebac traversal"
+      "norm_label": "adr-004 federation via rebac traversal",
+      "id": "adr_004"
     },
     {
       "label": "ADR-007 BYOM with Three Protocol Shapes",
@@ -15053,9 +15053,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "adr_007",
       "community": 8,
-      "norm_label": "adr-007 byom with three protocol shapes"
+      "norm_label": "adr-007 byom with three protocol shapes",
+      "id": "adr_007"
     },
     {
       "label": "ADR-008 Cloud-Hosted Mode / KMS posture",
@@ -15066,9 +15066,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "adr_008",
       "community": 8,
-      "norm_label": "adr-008 cloud-hosted mode / kms posture"
+      "norm_label": "adr-008 cloud-hosted mode / kms posture",
+      "id": "adr_008"
     },
     {
       "label": "ADR-015 Gateway Incremental Contract and Versioning",
@@ -15079,9 +15079,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "adr_015",
       "community": 8,
-      "norm_label": "adr-015 gateway incremental contract and versioning"
+      "norm_label": "adr-015 gateway incremental contract and versioning",
+      "id": "adr_015"
     },
     {
       "label": "harness-runtime-service (R4-deferred scaffold)",
@@ -15092,9 +15092,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "harness_runtime_service",
       "community": 8,
-      "norm_label": "harness-runtime-service (r4-deferred scaffold)"
+      "norm_label": "harness-runtime-service (r4-deferred scaffold)",
+      "id": "harness_runtime_service"
     },
     {
       "label": "execution-engine-service (R5-deferred scaffold)",
@@ -15105,9 +15105,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "execution_engine_service",
       "community": 8,
-      "norm_label": "execution-engine-service (r5-deferred scaffold)"
+      "norm_label": "execution-engine-service (r5-deferred scaffold)",
+      "id": "execution_engine_service"
     },
     {
       "label": "04. Services Reference hub",
@@ -15118,9 +15118,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "services_reference_hub",
       "community": 8,
-      "norm_label": "04. services reference hub"
+      "norm_label": "04. services reference hub",
+      "id": "services_reference_hub"
     },
     {
       "label": "Neo4j graph substrate",
@@ -15131,9 +15131,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "neo4j_substrate",
       "community": 8,
-      "norm_label": "neo4j graph substrate"
+      "norm_label": "neo4j graph substrate",
+      "id": "neo4j_substrate"
     },
     {
       "label": "ReBAC + organisation_id tenancy scoping",
@@ -15144,731 +15144,731 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "id": "rebac_tenancy_scoping",
       "community": 8,
-      "norm_label": "rebac + organisation_id tenancy scoping"
+      "norm_label": "rebac + organisation_id tenancy scoping",
+      "id": "rebac_tenancy_scoping"
     }
   ],
   "links": [
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L66",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_api",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_api"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
+      "target": "fleet_keeper_api",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L74",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_listy",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_listy"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
+      "target": "fleet_keeper_listy",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L78",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_paperclip_bin",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_paperclip_bin"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
+      "target": "fleet_keeper_paperclip_bin",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L85",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_trigger_heartbeat",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_trigger_heartbeat"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
+      "target": "fleet_keeper_trigger_heartbeat",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L101",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_hours_since",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_hours_since"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
+      "target": "fleet_keeper_hours_since",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L108",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_role_for",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_role_for"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
+      "target": "fleet_keeper_role_for",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L123",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_main",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_main"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_operations_fleet_keeper_py",
+      "target": "fleet_keeper_main",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L124",
       "weight": 1.0,
       "_src": "fleet_keeper_main",
       "_tgt": "fleet_keeper_api",
-      "confidence_score": 1.0,
       "source": "fleet_keeper_api",
-      "target": "fleet_keeper_main"
+      "target": "fleet_keeper_main",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L124",
       "weight": 1.0,
       "_src": "fleet_keeper_main",
       "_tgt": "fleet_keeper_listy",
-      "confidence_score": 1.0,
       "source": "fleet_keeper_listy",
-      "target": "fleet_keeper_main"
+      "target": "fleet_keeper_main",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L88",
       "weight": 1.0,
       "_src": "fleet_keeper_trigger_heartbeat",
       "_tgt": "fleet_keeper_paperclip_bin",
-      "confidence_score": 1.0,
       "source": "fleet_keeper_paperclip_bin",
-      "target": "fleet_keeper_trigger_heartbeat"
+      "target": "fleet_keeper_trigger_heartbeat",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L79",
       "weight": 1.0,
       "_src": "fleet_keeper_rationale_79",
       "_tgt": "fleet_keeper_paperclip_bin",
-      "confidence_score": 1.0,
       "source": "fleet_keeper_paperclip_bin",
-      "target": "fleet_keeper_rationale_79"
+      "target": "fleet_keeper_rationale_79",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L217",
       "weight": 1.0,
       "_src": "fleet_keeper_main",
       "_tgt": "fleet_keeper_trigger_heartbeat",
-      "confidence_score": 1.0,
       "source": "fleet_keeper_trigger_heartbeat",
-      "target": "fleet_keeper_main"
+      "target": "fleet_keeper_main",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L86",
       "weight": 1.0,
       "_src": "fleet_keeper_rationale_86",
       "_tgt": "fleet_keeper_trigger_heartbeat",
-      "confidence_score": 1.0,
       "source": "fleet_keeper_trigger_heartbeat",
-      "target": "fleet_keeper_rationale_86"
+      "target": "fleet_keeper_rationale_86",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L178",
       "weight": 1.0,
       "_src": "fleet_keeper_main",
       "_tgt": "fleet_keeper_hours_since",
-      "confidence_score": 1.0,
       "source": "fleet_keeper_hours_since",
-      "target": "fleet_keeper_main"
+      "target": "fleet_keeper_main",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/operations/fleet_keeper.py",
       "source_location": "L168",
       "weight": 1.0,
       "_src": "fleet_keeper_main",
       "_tgt": "fleet_keeper_role_for",
-      "confidence_score": 1.0,
       "source": "fleet_keeper_role_for",
-      "target": "fleet_keeper_main"
+      "target": "fleet_keeper_main",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L110",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_strip_quotes",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_strip_quotes"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_strip_quotes",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L117",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_split_frontmatter",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_split_frontmatter"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_split_frontmatter",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L131",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_parse_title",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_parse_title"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_parse_title",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L140",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_is_prose",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_is_prose"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_is_prose",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L159",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_normalise_summary",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_normalise_summary"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_normalise_summary",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L171",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_first_summary",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_first_summary"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_first_summary",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L185",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_derive_title_from_section",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_derive_title_from_section"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_derive_title_from_section",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L193",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_sectioninfo",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_sectioninfo"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_sectioninfo",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L202",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_index_rel",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_index_rel"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_index_rel",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L206",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_count_md_files",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_count_md_files"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_count_md_files",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L215",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_scan_section",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_scan_section"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_scan_section",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L242",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_scan_all",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_scan_all"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_scan_all",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L250",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_render_index_md",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_render_index_md"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_render_index_md",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L293",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_render_llms_txt",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_render_llms_txt"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_render_llms_txt",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L342",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_build_outputs",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_build_outputs"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_build_outputs",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L350",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_read_existing",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_read_existing"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_read_existing",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L358",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_write_outputs",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_write_outputs"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_write_outputs",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L365",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_check_outputs",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_check_outputs"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_check_outputs",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L390",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_report_missing",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_report_missing"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_report_missing",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L399",
       "weight": 1.0,
-      "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
+      "_src": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_main",
-      "confidence_score": 1.0,
-      "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_main"
+      "source": "users_reza_workspace_oraclous_worktrees_fe_ds_scripts_build_kb_index_py",
+      "target": "build_kb_index_main",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L136",
       "weight": 1.0,
       "_src": "build_kb_index_parse_title",
       "_tgt": "build_kb_index_strip_quotes",
-      "confidence_score": 1.0,
       "source": "build_kb_index_strip_quotes",
-      "target": "build_kb_index_parse_title"
+      "target": "build_kb_index_parse_title",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L229",
       "weight": 1.0,
       "_src": "build_kb_index_scan_section",
       "_tgt": "build_kb_index_split_frontmatter",
-      "confidence_score": 1.0,
       "source": "build_kb_index_split_frontmatter",
-      "target": "build_kb_index_scan_section"
+      "target": "build_kb_index_scan_section",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L118",
       "weight": 1.0,
       "_src": "build_kb_index_rationale_118",
       "_tgt": "build_kb_index_split_frontmatter",
-      "confidence_score": 1.0,
       "source": "build_kb_index_split_frontmatter",
-      "target": "build_kb_index_rationale_118"
+      "target": "build_kb_index_rationale_118",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L230",
       "weight": 1.0,
       "_src": "build_kb_index_scan_section",
       "_tgt": "build_kb_index_parse_title",
-      "confidence_score": 1.0,
       "source": "build_kb_index_parse_title",
-      "target": "build_kb_index_scan_section"
+      "target": "build_kb_index_scan_section",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L132",
       "weight": 1.0,
       "_src": "build_kb_index_rationale_132",
       "_tgt": "build_kb_index_parse_title",
-      "confidence_score": 1.0,
       "source": "build_kb_index_parse_title",
-      "target": "build_kb_index_rationale_132"
+      "target": "build_kb_index_rationale_132",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L175",
       "weight": 1.0,
       "_src": "build_kb_index_first_summary",
       "_tgt": "build_kb_index_is_prose",
-      "confidence_score": 1.0,
       "source": "build_kb_index_is_prose",
-      "target": "build_kb_index_first_summary"
+      "target": "build_kb_index_first_summary",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L141",
       "weight": 1.0,
       "_src": "build_kb_index_rationale_141",
       "_tgt": "build_kb_index_is_prose",
-      "confidence_score": 1.0,
       "source": "build_kb_index_is_prose",
-      "target": "build_kb_index_rationale_141"
+      "target": "build_kb_index_rationale_141",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L182",
       "weight": 1.0,
       "_src": "build_kb_index_first_summary",
       "_tgt": "build_kb_index_normalise_summary",
-      "confidence_score": 1.0,
       "source": "build_kb_index_normalise_summary",
-      "target": "build_kb_index_first_summary"
+      "target": "build_kb_index_first_summary",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L160",
       "weight": 1.0,
       "_src": "build_kb_index_rationale_160",
       "_tgt": "build_kb_index_normalise_summary",
-      "confidence_score": 1.0,
       "source": "build_kb_index_normalise_summary",
-      "target": "build_kb_index_rationale_160"
+      "target": "build_kb_index_rationale_160",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L234",
       "weight": 1.0,
       "_src": "build_kb_index_scan_section",
       "_tgt": "build_kb_index_first_summary",
-      "confidence_score": 1.0,
       "source": "build_kb_index_first_summary",
-      "target": "build_kb_index_scan_section"
+      "target": "build_kb_index_scan_section",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L172",
       "weight": 1.0,
       "_src": "build_kb_index_rationale_172",
       "_tgt": "build_kb_index_first_summary",
-      "confidence_score": 1.0,
       "source": "build_kb_index_first_summary",
-      "target": "build_kb_index_rationale_172"
+      "target": "build_kb_index_rationale_172",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L219",
       "weight": 1.0,
       "_src": "build_kb_index_scan_section",
       "_tgt": "build_kb_index_derive_title_from_section",
-      "confidence_score": 1.0,
       "source": "build_kb_index_derive_title_from_section",
-      "target": "build_kb_index_scan_section"
+      "target": "build_kb_index_scan_section",
+      "confidence_score": 1.0
     },
     {
       "relation": "method",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L194",
       "weight": 1.0,
       "_src": "build_kb_index_sectioninfo",
       "_tgt": "build_kb_index_sectioninfo_init",
-      "confidence_score": 1.0,
       "source": "build_kb_index_sectioninfo",
-      "target": "build_kb_index_sectioninfo_init"
+      "target": "build_kb_index_sectioninfo_init",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L224",
       "weight": 1.0,
       "_src": "build_kb_index_scan_section",
       "_tgt": "build_kb_index_sectioninfo",
-      "confidence_score": 1.0,
       "source": "build_kb_index_sectioninfo",
-      "target": "build_kb_index_scan_section"
+      "target": "build_kb_index_scan_section",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L238",
       "weight": 1.0,
       "_src": "build_kb_index_scan_section",
       "_tgt": "build_kb_index_count_md_files",
-      "confidence_score": 1.0,
       "source": "build_kb_index_count_md_files",
-      "target": "build_kb_index_scan_section"
+      "target": "build_kb_index_scan_section",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L243",
       "weight": 1.0,
       "_src": "build_kb_index_scan_all",
       "_tgt": "build_kb_index_scan_section",
-      "confidence_score": 1.0,
       "source": "build_kb_index_scan_section",
-      "target": "build_kb_index_scan_all"
+      "target": "build_kb_index_scan_all",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L343",
       "weight": 1.0,
       "_src": "build_kb_index_build_outputs",
       "_tgt": "build_kb_index_scan_all",
-      "confidence_score": 1.0,
       "source": "build_kb_index_scan_all",
-      "target": "build_kb_index_build_outputs"
+      "target": "build_kb_index_build_outputs",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L345",
       "weight": 1.0,
       "_src": "build_kb_index_build_outputs",
       "_tgt": "build_kb_index_render_index_md",
-      "confidence_score": 1.0,
       "source": "build_kb_index_render_index_md",
-      "target": "build_kb_index_build_outputs"
+      "target": "build_kb_index_build_outputs",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L346",
       "weight": 1.0,
       "_src": "build_kb_index_build_outputs",
       "_tgt": "build_kb_index_render_llms_txt",
-      "confidence_score": 1.0,
       "source": "build_kb_index_render_llms_txt",
-      "target": "build_kb_index_build_outputs"
+      "target": "build_kb_index_build_outputs",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L407",
       "weight": 1.0,
       "_src": "build_kb_index_main",
       "_tgt": "build_kb_index_build_outputs",
-      "confidence_score": 1.0,
       "source": "build_kb_index_build_outputs",
-      "target": "build_kb_index_main"
+      "target": "build_kb_index_main",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L369",
       "weight": 1.0,
       "_src": "build_kb_index_check_outputs",
       "_tgt": "build_kb_index_read_existing",
-      "confidence_score": 1.0,
       "source": "build_kb_index_read_existing",
-      "target": "build_kb_index_check_outputs"
+      "target": "build_kb_index_check_outputs",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L416",
       "weight": 1.0,
       "_src": "build_kb_index_main",
       "_tgt": "build_kb_index_write_outputs",
-      "confidence_score": 1.0,
       "source": "build_kb_index_write_outputs",
-      "target": "build_kb_index_main"
+      "target": "build_kb_index_main",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L411",
       "weight": 1.0,
       "_src": "build_kb_index_main",
       "_tgt": "build_kb_index_check_outputs",
-      "confidence_score": 1.0,
       "source": "build_kb_index_check_outputs",
-      "target": "build_kb_index_main"
+      "target": "build_kb_index_main",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L366",
       "weight": 1.0,
       "_src": "build_kb_index_rationale_366",
       "_tgt": "build_kb_index_check_outputs",
-      "confidence_score": 1.0,
       "source": "build_kb_index_check_outputs",
-      "target": "build_kb_index_rationale_366"
+      "target": "build_kb_index_rationale_366",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
+      "source_file": "/Users/reza/workspace/.oraclous-worktrees/fe-ds/scripts/build_kb_index.py",
       "source_location": "L408",
       "weight": 1.0,
       "_src": "build_kb_index_main",
       "_tgt": "build_kb_index_report_missing",
-      "confidence_score": 1.0,
       "source": "build_kb_index_report_missing",
-      "target": "build_kb_index_main"
+      "target": "build_kb_index_main",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -27637,8 +27637,8 @@
       "source_file": "services-reference/capability-registry-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "capability_registry_service",
-      "_tgt": "capability_registry_service_five_kinds",
+      "_src": "capability_registry_service_five_kinds",
+      "_tgt": "capability_registry_service",
       "source": "capability_registry_service_five_kinds",
       "target": "capability_registry_service"
     },
@@ -35881,8 +35881,8 @@
       "source_file": "services-reference/identity-org-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "identity_org_service_tombstone",
-      "_tgt": "auth_service",
+      "_src": "auth_service",
+      "_tgt": "identity_org_service_tombstone",
       "source": "auth_service",
       "target": "identity_org_service_tombstone"
     },
@@ -35893,8 +35893,8 @@
       "source_file": "adr/index.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "adr_017",
-      "_tgt": "auth_service",
+      "_src": "auth_service",
+      "_tgt": "adr_017",
       "source": "auth_service",
       "target": "adr_017"
     },
@@ -35989,8 +35989,8 @@
       "source_file": "services-reference/knowledge-graph-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "knowledge_graph_service",
-      "_tgt": "auth_service",
+      "_src": "auth_service",
+      "_tgt": "knowledge_graph_service",
       "source": "auth_service",
       "target": "knowledge_graph_service"
     },
@@ -36001,8 +36001,8 @@
       "source_file": "services-reference/knowledge-retriever-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "knowledge_retriever_service",
-      "_tgt": "auth_service",
+      "_src": "auth_service",
+      "_tgt": "knowledge_retriever_service",
       "source": "auth_service",
       "target": "knowledge_retriever_service"
     },
@@ -36013,8 +36013,8 @@
       "source_file": "services-reference/credential-broker-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "credential_broker_service",
-      "_tgt": "auth_service",
+      "_src": "auth_service",
+      "_tgt": "credential_broker_service",
       "source": "auth_service",
       "target": "credential_broker_service"
     },
@@ -36025,8 +36025,8 @@
       "source_file": "services-reference/capability-registry-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "capability_registry_service",
-      "_tgt": "auth_service",
+      "_src": "auth_service",
+      "_tgt": "capability_registry_service",
       "source": "auth_service",
       "target": "capability_registry_service"
     },
@@ -36037,8 +36037,8 @@
       "source_file": "services-reference/application-gateway-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "application_gateway_service",
-      "_tgt": "auth_service",
+      "_src": "auth_service",
+      "_tgt": "application_gateway_service",
       "source": "auth_service",
       "target": "application_gateway_service"
     },
@@ -36049,8 +36049,8 @@
       "source_file": "releases/r3.5-make-every-service-real.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_5_release",
-      "_tgt": "auth_service",
+      "_src": "auth_service",
+      "_tgt": "r3_5_release",
       "source": "auth_service",
       "target": "r3_5_release"
     },
@@ -36061,8 +36061,8 @@
       "source_file": "releases/r3.5-retrospective.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_5_retrospective",
-      "_tgt": "auth_service",
+      "_src": "auth_service",
+      "_tgt": "r3_5_retrospective",
       "source": "auth_service",
       "target": "r3_5_retrospective"
     },
@@ -36085,8 +36085,8 @@
       "source_file": "services-reference/credential-broker-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "credential_broker_service_runtime_oauth",
-      "_tgt": "auth_service_login_oauth",
+      "_src": "auth_service_login_oauth",
+      "_tgt": "credential_broker_service_runtime_oauth",
       "source": "auth_service_login_oauth",
       "target": "credential_broker_service_runtime_oauth"
     },
@@ -36109,8 +36109,8 @@
       "source_file": "services-reference/index.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "services_reference_hub",
-      "_tgt": "identity_org_service_tombstone",
+      "_src": "identity_org_service_tombstone",
+      "_tgt": "services_reference_hub",
       "source": "identity_org_service_tombstone",
       "target": "services_reference_hub"
     },
@@ -36181,8 +36181,8 @@
       "source_file": "releases/r3.5-make-every-service-real.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_5_release",
-      "_tgt": "adr_017",
+      "_src": "adr_017",
+      "_tgt": "r3_5_release",
       "source": "adr_017",
       "target": "r3_5_release"
     },
@@ -36193,8 +36193,8 @@
       "source_file": "adr/index.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "adr_hub",
-      "_tgt": "adr_017",
+      "_src": "adr_017",
+      "_tgt": "adr_hub",
       "source": "adr_017",
       "target": "adr_hub"
     },
@@ -36205,8 +36205,8 @@
       "source_file": "services-reference/knowledge-graph-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "knowledge_graph_service",
-      "_tgt": "adr_017_boundary_fix",
+      "_src": "adr_017_boundary_fix",
+      "_tgt": "knowledge_graph_service",
       "source": "adr_017_boundary_fix",
       "target": "knowledge_graph_service"
     },
@@ -36265,8 +36265,8 @@
       "source_file": "services-reference/knowledge-retriever-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "knowledge_retriever_service",
-      "_tgt": "knowledge_graph_service",
+      "_src": "knowledge_graph_service",
+      "_tgt": "knowledge_retriever_service",
       "source": "knowledge_graph_service",
       "target": "knowledge_retriever_service"
     },
@@ -36277,8 +36277,8 @@
       "source_file": "services-reference/capability-registry-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "capability_registry_service",
-      "_tgt": "knowledge_graph_service",
+      "_src": "knowledge_graph_service",
+      "_tgt": "capability_registry_service",
       "source": "knowledge_graph_service",
       "target": "capability_registry_service"
     },
@@ -36289,8 +36289,8 @@
       "source_file": "services-reference/application-gateway-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "application_gateway_service",
-      "_tgt": "knowledge_graph_service",
+      "_src": "knowledge_graph_service",
+      "_tgt": "application_gateway_service",
       "source": "knowledge_graph_service",
       "target": "application_gateway_service"
     },
@@ -36301,8 +36301,8 @@
       "source_file": "releases/r3.5-make-every-service-real.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_5_release",
-      "_tgt": "knowledge_graph_service",
+      "_src": "knowledge_graph_service",
+      "_tgt": "r3_5_release",
       "source": "knowledge_graph_service",
       "target": "r3_5_release"
     },
@@ -36361,8 +36361,8 @@
       "source_file": "services-reference/application-gateway-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "application_gateway_service",
-      "_tgt": "knowledge_retriever_service",
+      "_src": "knowledge_retriever_service",
+      "_tgt": "application_gateway_service",
       "source": "knowledge_retriever_service",
       "target": "application_gateway_service"
     },
@@ -36373,8 +36373,8 @@
       "source_file": "releases/r3.5-make-every-service-real.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_5_release",
-      "_tgt": "knowledge_retriever_service",
+      "_src": "knowledge_retriever_service",
+      "_tgt": "r3_5_release",
       "source": "knowledge_retriever_service",
       "target": "r3_5_release"
     },
@@ -36469,8 +36469,8 @@
       "source_file": "services-reference/capability-registry-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "capability_registry_service",
-      "_tgt": "credential_broker_service",
+      "_src": "credential_broker_service",
+      "_tgt": "capability_registry_service",
       "source": "credential_broker_service",
       "target": "capability_registry_service"
     },
@@ -36481,8 +36481,8 @@
       "source_file": "services-reference/application-gateway-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "application_gateway_service",
-      "_tgt": "credential_broker_service",
+      "_src": "credential_broker_service",
+      "_tgt": "application_gateway_service",
       "source": "credential_broker_service",
       "target": "application_gateway_service"
     },
@@ -36493,8 +36493,8 @@
       "source_file": "releases/r3.5-make-every-service-real.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_5_release",
-      "_tgt": "credential_broker_service",
+      "_src": "credential_broker_service",
+      "_tgt": "r3_5_release",
       "source": "credential_broker_service",
       "target": "r3_5_release"
     },
@@ -36505,8 +36505,8 @@
       "source_file": "services-reference/capability-registry-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "capability_registry_service",
-      "_tgt": "credential_broker_service_resolve_credential",
+      "_src": "credential_broker_service_resolve_credential",
+      "_tgt": "capability_registry_service",
       "source": "credential_broker_service_resolve_credential",
       "target": "capability_registry_service"
     },
@@ -36517,8 +36517,8 @@
       "source_file": "releases/r3.5-retrospective.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_5_retrospective",
-      "_tgt": "credential_broker_service_resolve_credential",
+      "_src": "credential_broker_service_resolve_credential",
+      "_tgt": "r3_5_retrospective",
       "source": "credential_broker_service_resolve_credential",
       "target": "r3_5_retrospective"
     },
@@ -36589,8 +36589,8 @@
       "source_file": "services-reference/application-gateway-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "application_gateway_service",
-      "_tgt": "capability_registry_service",
+      "_src": "capability_registry_service",
+      "_tgt": "application_gateway_service",
       "source": "capability_registry_service",
       "target": "application_gateway_service"
     },
@@ -36601,8 +36601,8 @@
       "source_file": "services-reference/application-gateway-service.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "application_gateway_service_r6_hardening",
-      "_tgt": "capability_registry_service",
+      "_src": "capability_registry_service",
+      "_tgt": "application_gateway_service_r6_hardening",
       "source": "capability_registry_service",
       "target": "application_gateway_service_r6_hardening"
     },
@@ -36613,8 +36613,8 @@
       "source_file": "releases/r3.5-make-every-service-real.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_5_release",
-      "_tgt": "capability_registry_service",
+      "_src": "capability_registry_service",
+      "_tgt": "r3_5_release",
       "source": "capability_registry_service",
       "target": "r3_5_release"
     },
@@ -36625,8 +36625,8 @@
       "source_file": "services-reference/index.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "execution_engine_service",
-      "_tgt": "capability_registry_service",
+      "_src": "capability_registry_service",
+      "_tgt": "execution_engine_service",
       "source": "capability_registry_service",
       "target": "execution_engine_service"
     },
@@ -36685,8 +36685,8 @@
       "source_file": "releases/r3.5-make-every-service-real.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_5_release",
-      "_tgt": "application_gateway_service",
+      "_src": "application_gateway_service",
+      "_tgt": "r3_5_release",
       "source": "application_gateway_service",
       "target": "r3_5_release"
     },
@@ -36709,8 +36709,8 @@
       "source_file": "releases/r3.5-retrospective.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_5_retrospective",
-      "_tgt": "ora_37_error_envelope",
+      "_src": "ora_37_error_envelope",
+      "_tgt": "r3_5_retrospective",
       "source": "ora_37_error_envelope",
       "target": "r3_5_retrospective"
     },
@@ -36721,8 +36721,8 @@
       "source_file": "releases/r3.5-make-every-service-real.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_5_release",
-      "_tgt": "oraclous_core_service",
+      "_src": "oraclous_core_service",
+      "_tgt": "r3_5_release",
       "source": "oraclous_core_service",
       "target": "r3_5_release"
     },
@@ -36733,8 +36733,8 @@
       "source_file": "releases/r3.5-retrospective.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_5_retrospective",
-      "_tgt": "oraclous_core_service",
+      "_src": "oraclous_core_service",
+      "_tgt": "r3_5_retrospective",
       "source": "oraclous_core_service",
       "target": "r3_5_retrospective"
     },
@@ -36853,8 +36853,8 @@
       "source_file": "releases/index.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r2_release",
-      "_tgt": "r3_5_release",
+      "_src": "r3_5_release",
+      "_tgt": "r2_release",
       "source": "r3_5_release",
       "target": "r2_release"
     },
@@ -36865,8 +36865,8 @@
       "source_file": "releases/index.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_release",
-      "_tgt": "r3_5_release",
+      "_src": "r3_5_release",
+      "_tgt": "r3_release",
       "source": "r3_5_release",
       "target": "r3_release"
     },
@@ -36877,8 +36877,8 @@
       "source_file": "releases/r3.5-retrospective.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "r3_5_retrospective",
-      "_tgt": "r3_5_release",
+      "_src": "r3_5_release",
+      "_tgt": "r3_5_retrospective",
       "source": "r3_5_release",
       "target": "r3_5_retrospective"
     },
@@ -36889,8 +36889,8 @@
       "source_file": "releases/index.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "releases_hub",
-      "_tgt": "r3_5_release",
+      "_src": "r3_5_release",
+      "_tgt": "releases_hub",
       "source": "r3_5_release",
       "target": "releases_hub"
     },
@@ -36901,8 +36901,8 @@
       "source_file": "services-reference/index.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "services_reference_hub",
-      "_tgt": "r3_5_release",
+      "_src": "r3_5_release",
+      "_tgt": "services_reference_hub",
       "source": "r3_5_release",
       "target": "services_reference_hub"
     },
@@ -36973,8 +36973,8 @@
       "source_file": "releases/r3.5-make-every-service-real.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "lift_vs_rewrite_convention",
-      "_tgt": "r3_5_spec_pin",
+      "_src": "r3_5_spec_pin",
+      "_tgt": "lift_vs_rewrite_convention",
       "source": "r3_5_spec_pin",
       "target": "lift_vs_rewrite_convention"
     },
@@ -36985,8 +36985,8 @@
       "source_file": "releases/index.md",
       "source_location": null,
       "weight": 1.0,
-      "_src": "releases_hub",
-      "_tgt": "old_r4_r8_roadmap",
+      "_src": "old_r4_r8_roadmap",
+      "_tgt": "releases_hub",
       "source": "old_r4_r8_roadmap",
       "target": "releases_hub"
     },

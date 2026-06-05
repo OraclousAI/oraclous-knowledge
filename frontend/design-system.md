@@ -5,62 +5,67 @@ title: "Design System"
 
 # Design System
 
-The visual and interaction language of the Oraclous frontend. This page defines tokens, conventions, and patterns that hold across every screen.
+The visual and interaction language of the Oraclous frontend.
 
-## Status
+## Source of truth — the brand v1.0 handoff (decided, high-fidelity)
 
-Placeholder — design system formalises as the v1 UI lands
+The design system is **already decided and high-fidelity.** It lives, read-only, in the legacy FE app:
 
-The seed comes from the legacy `Jahankohan/oraclous-app` repo; the formal design system grows from there.
+```
+legacy-reference/old-frontend/design_handoff_oraclous_v1/
+```
 
-## Design principles
+Per its `README.md` the handoff is **final** ("colours, typography, spacing, motion, and copy are decided; recreate pixel-by-pixel; do not improvise — if something is genuinely missing, ask before inventing"). FE-first work **must respect it.** Contents:
 
-* **Dark-first, dark-only** — the platform operates in a dark visual register. Light mode is not supported for v1.
-* **Quiet by default** — colour is used for meaning, not decoration. Most of the surface is neutral; accent colour signals status, action, or attention.
-* **Information density without claustrophobia** — the platform shows a lot (graphs, task boards, manifests, provenance). The design system trades raw density for legibility through spacing scale and typographic rhythm.
-* **Distinctive, not eccentric** — Syne for display, DM Mono for code; these set the voice. Avoid additional display fonts.
-* **Provenance and metadata are first-class** — every primary surface has a way to see _why_ something is the way it is (who authored it, when, with what permissions)
+| Path | What |
+|---|---|
+| `01-design-tokens/colors_and_type.css` (also root `colors_and_type.css`) | The canonical token set — colour, type, spacing, motion, the `.brand-prompt`/`.is-blink` utilities |
+| `02-brand-assets/` | `oraclous-chevron.svg`, `oraclous-cursor.svg`, `oraclous-mark.svg`, `oraclous-wordmark.png`, `oraclous-lockup.png`, `oraclous-symbol.png` |
+| `03-brand-book/brand_book_v0.html` | The brand book |
+| `04-redesigned-screens/`, `06-design-system-previews/` | High-fidelity screen + component references (HTML prototypes, not code to copy) |
+| `05-ui-kits/{marketing,product}` | UI kits |
 
-## Token categories
+> **This page corrects earlier drafts.** Prior versions of this page said "dark-first, dark-only" and named **Syne / DM Mono** — both are **superseded** by the handoff (see corrections below). When this page and the handoff diverge, **the handoff wins.**
 
-* **Colour** — base palette (neutrals 0–950), accent (one primary, one secondary), semantic (success, warning, danger, info)
-* **Typography** — Syne for headings/display, DM Mono for code/identifiers, system sans for body
-* **Spacing** — 4 px base, multiples through 64 px; component-level spacing uses tokens, not arbitrary values
-* **Radius** — small (4 px), medium (8 px), large (12 px); fully-rounded reserved for avatars and pill controls
-* **Elevation** — flat-first; elevation reserved for floating UI (popovers, dialogs, toasts); no decorative shadows
-* **Motion** — durations are short (120 ms / 200 ms / 320 ms); easing is `ease-out` by default; reduce-motion respected
-* **Iconography** — lucide-react only, stroke width 1.5 px standard, 1.75 px in dense UI
+## The six non-negotiables (brand regressions if broken)
 
-## Component conventions (visual)
+1. **Mint `#10D88A` is LIVE-SIGNAL only** — active source nodes, the streaming cursor, "agent online" dots, the active graph edge. Never a button fill, hover, brand-mark colour, or decoration.
+2. **No emoji anywhere** in platform chrome — use `lucide-react`. (Emoji is allowed only in customer-authored content.)
+3. **Banned-word list** — strip from every string: *revolutionize, unleash, supercharge, AI-powered, game-changing, seamlessly, leverage (verb), robust, cutting-edge, innovative, empower, intuitive, ecosystem, journey (for users)*.
+4. **The symbol never appears alone** — `>|` (chevron + cursor) is always in lockup with the `ORACLOUS` wordmark, **or** functioning as the in-product live cursor. Never a bare chevron on a favicon / OG image / splash.
+5. **Cursor blink is `1.06s steps(1, end)`** — discrete on/off (terminal duty cycle), not a fade. The `.is-blink` utility encodes it.
+6. **The chat-prompt indicator is the brand chevron + brand cursor** — shipped as `<BrandPrompt>` (`src/components/brand/BrandPrompt.tsx`), rendered in every composer / "ask the graph" input. Forbidden substitutes: keyboard `>`, typographic `›` (U+203A), letter `I`, em-dash, or a Lucide `chevron-right`.
 
-* Buttons have three sizes (sm / md / lg) and four variants (primary, secondary, ghost, danger)
-* Forms use a consistent label-above-field pattern; inline errors below the field; never error-toasts for validation
-* Tables prefer monospaced numerals; right-aligned numbers; left-aligned text
-* Empty states always include: an icon, a one-line explanation, a primary action
-* Loading states use shimmer skeletons for known shapes; spinners only for indeterminate operations
+## Tokens (from `colors_and_type.css` — authoritative)
+
+* **Typography** — `--font-sans: 'Sora'` (300–800; display + product), `--font-mono: 'JetBrains Mono'` (400–600; code/identifiers), with `'Inter'` as the **dense fallback only** (`--t-dense`/`--t-tiny`). Sora holds at 13.5px for dense product UI (Reza checkpoint). **(Corrects the old "Syne / DM Mono".)**
+* **Surface / theme** — **light is the default surface** (`--paper #F4F4F2`, `--ink #0B1220`); **dark is a supported variant** via `:root[data-surface="dark"]` / `.surface-dark` (tokens flip). **(Corrects the old "dark-first, dark-only / light not supported".)**
+* **Colour** — core (`--ink`, `--paper`, `--paper-soft`, `--rule`, `--mute`), the single `--accent` mint (live-signal-only), semantic (`--success #2E8B57` — deliberately *not* mint, `--warning`, danger), and OKLCH equivalents.
+* **ReBAC permission states** (a key product differentiator — visualised in the grant editor, graph, audit): `--perm-granted` (mint), `--perm-inherited` (cool blue #6BA0E8), `--perm-denied` (iron red #C8412C), `--perm-expired` (amber-brown #B5862A), each with a `-bg` tint.
+* **Spacing / radius / elevation / motion** — per the handoff: spacing scale, small/medium/large radius (fully-rounded for avatars/pills only), flat-first elevation, short motion (reduce-motion respected).
+* **Iconography** — `lucide-react` only.
+
+## Target stack & integration approach
+
+The handoff files are **HTML design references, not production code.** Recreate them **inside the existing legacy FE codebase** (`oraclous-visual-flow` — React + TypeScript + Vite + Tailwind + shadcn/ui), keeping its routing, API client (`src/lib/api.ts`), React Query usage, lazy loading, and folder layout. **Only the visual + content layer changes.** Tokens are the source of truth — port `colors_and_type.css` into the Tailwind theme (`tailwind.config.ts`); no raw hex in component code.
+
+> FE-first targets the **real application gateway** (port 8006) and the R3.5 capabilities behind it (auth/orgs, credentials, knowledge-graph, retrieval, capability-registry **sync** execution). Agent-orchestration/streaming UIs wait for R4/R5.
+
+## Design principles (aligned to the handoff)
+
+* **Quiet by default** — colour carries meaning, not decoration; the mint signal is rationed (non-negotiable #1).
+* **Information density without claustrophobia** — graphs, boards, manifests, provenance shown legibly via the spacing scale + Sora's dense sizing.
+* **Distinctive, not eccentric** — Sora (display/product) + JetBrains Mono (code) set the voice; no additional display fonts.
+* **Provenance and metadata are first-class** — every primary surface can show *why* (author, time, permissions).
 
 ## Voice and copy
 
-* **Plain, direct** — short sentences; second person; no marketing voice
-* **Honest** — "this didn't work because X" not "oops, something went wrong"
-* **No emoji in UI copy** — emoji belongs in customer-authored content, not platform chrome
-
-## What this page will cover
-
-* **Token reference** — the canonical token list with values and CSS variable names
-* **Component gallery** — visual reference for every shadcn-derived component as customised
-* **Patterns** — common compositions (form layout, list-detail, board view, graph view, modal stack)
-* **Accessibility** — colour contrast, focus indicators, keyboard navigation, screen-reader text
-* **Iconography** — approved lucide set; how to request additions
-* **Imagery** — when to use illustrations, when not to; placeholder treatment for empty graphs
-* **Brand boundary** — what is Oraclous-the-platform UI vs Oraclous-the-company marketing (different visual systems)
-
-## Tokens as code
-
-Tokens live in `tailwind.config.ts` as the source of truth. The Tailwind theme is the source; CSS variables and component code consume the tokens. No raw hex values in component code.
+* Plain, direct, second person; no marketing voice; honest errors ("this didn't work because X").
+* No emoji in platform chrome; obey the banned-word list (non-negotiable #3).
 
 ## Related references
 
-* **Frontend Stack Reference** — technology choices including Tailwind and shadcn
+* **Legacy handoff** — `legacy-reference/old-frontend/design_handoff_oraclous_v1/` (the decided source of truth)
+* **Frontend Stack Reference** — Tailwind + shadcn choices
 * **Component Conventions** — code-level component patterns (this page covers the visual side)
 * **State and Data Patterns** — how data flows through components
