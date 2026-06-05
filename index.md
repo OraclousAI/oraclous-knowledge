@@ -27,8 +27,8 @@ Never read the whole tree or open many files speculatively. `oraclous-knowledge`
 | [07. Frontend](frontend/index.md) | The frontend stack, design system, and code-level conventions for the Oraclous user interface. This section is the authority on how the frontend is built; the visual side is governed by the Design System page within. | 6 |
 | [08. Meta](meta/index.md) | Documentation about the documentation. This hub captures how the knowledge base is structured, written, maintained, and changed; it also captures the integration boundaries between Confluence, Jira, GitHub, Claude Code, and the various model providers the platform depends on. | 6 |
 | [05. Operations](operations/index.md) | How the platform is deployed, operated, monitored, and maintained. This section is the operator's reference. | 10 |
-| [09. Releases](releases/index.md) | This is the home of release-level planning. Each child page is the execution contract for one release — what it delivers, what success looks like, which architectural commitments it implements, and how it relates to the Jira tickets that execute it. Release pages are the input to ticket creation, not the output. | 17 |
-| [04. Services Reference](services-reference/index.md) | This hub indexes one reference page per target service. Each page documents purpose, responsibilities, dependencies, and status against the migration plan. These are stable reference documents that update as services evolve. | 10 |
+| [09. Releases](releases/index.md) | This is the home of release-level planning. Each child page is the execution contract for one release — what it delivers, what success looks like, which architectural commitments it implements, and how it relates to the Jira tickets that execute it. Release pages are the input to ticket creation, not the output. | 18 |
+| [04. Services Reference](services-reference/index.md) | This hub indexes one reference page per service. Each page documents purpose, responsibilities, dependencies, and status. These are stable reference documents that update as services evolve. | 10 |
 
 ## Non-canonical
 
