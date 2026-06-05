@@ -35,12 +35,14 @@ JSON
 }
 
 # Required gate-able checks per repo (bash 3.2: function, not associative array).
-# backend: lint (always-green). frontend: none yet (CI workflow ORAA-216 not on main).
+# backend: lint (always-green). frontend: the always-green CI jobs — the quality job
+# (lint/type-check/format) + the 5 ORAA-216 invariant gates (now on main, all green).
 # knowledge: none (no CI workflow). Keep in sync with required_checks_for() in gated_merge.sh.
 checks_for_repo() {
   case "$1" in
     backend) echo '[{"context":"lint"}]' ;;
-    frontend|knowledge) echo '' ;;
+    frontend) echo '[{"context":"Lint / Type-check / Format"},{"context":"Gate 1: api-client-boundary"},{"context":"Gate 2: no-token-in-storage"},{"context":"Gate 3: axe-core AA"},{"context":"Gate 4: bundle-budget"},{"context":"Gate 5: no-dangerouslySetInnerHTML"}]' ;;
+    knowledge) echo '' ;;
   esac
 }
 
