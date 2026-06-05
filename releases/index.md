@@ -211,7 +211,7 @@ The original 11 agent skill pages do not yet describe the lift-vs-rewrite rubric
 
 The release pages under this hub are listed below with their current status. This table is the single-glance view of where the migration stands.
 
-> **Roadmap pivot (2026-06-04):** R2 and R3 shipped **hollow** (stub endpoints, dead `oraclous-core-service` logic, dropped auth). The old R4–R8 roadmap and the gateway-from-R5 vertical-slice plan are **superseded by [R3.5 — Make every service real](r3.5-make-every-service-real.md)**, which rebuilds every backend service real, end-to-end, **per service** (each Reza-accepted before the next), per ORAA-4 §21–§23.
+> **Roadmap pivot (2026-06-04) — R3.5 now COMPLETE (2026-06-05):** R2 and R3 had shipped **hollow** (stub endpoints, dead `oraclous-core-service` logic, dropped auth). The old R4–R8 roadmap and the gateway-from-R5 vertical-slice plan were **superseded by [R3.5 — Make every service real](r3.5-make-every-service-real.md)**, which rebuilt all six backend services real, end-to-end, **per service** (each Reza-accepted), per ORAA-4 §21–§23. **R3.5 is now Released** — see the [R3.5 retrospective](r3.5-retrospective.md). The forward sequence (retrospective §6): **FE-first** against the real gateway (after the gateway error-contract slice + FE gate setup), then re-planned R4 (harness-runtime), R5 (execution-engine), R6 (gateway hardening), R7/R8. The R4–R8 rows below stay superseded as *original shapes*; their new shapes are re-planned when their turn comes.
 
 | Release | Title | Window | Status |
 | --- | --- | --- | --- |
@@ -220,7 +220,7 @@ The release pages under this hub are listed below with their current status. Thi
 | R1 | Phase 1 — Auth and credential extensions | Weeks 5-6 | <custom data-type="status" data-id="id-3">Planned</custom> |
 | R2 | Phase 2 — Capability registry consolidation | Weeks 7-10 | <custom data-type="status" data-id="id-4">Planned</custom> |
 | R3 | Phase 3 — Knowledge graph decomposition | Weeks 11-16 | <custom data-type="status" data-id="id-5">Superseded</custom> (shipped hollow; redone under R3.5) |
-| **[R3.5](r3.5-make-every-service-real.md)** | **Make every service real** — graph-first per-service rebuild (ingest → retrieve → identity/org → credential-broker → capability-registry → gateway) | Opens 2026-06-04; sequential until each service is Reza-accepted | <custom data-type="status" data-id="id-35">Active</custom> (**supersedes R4–R8 + the gateway-from-R5 plan**) |
+| **[R3.5](r3.5-make-every-service-real.md)** | **Make every service real** — graph-first per-service rebuild (ingest → retrieve → identity[→ auth-service] → credential-broker → capability-registry → gateway) · [retrospective](r3.5-retrospective.md) | 2026-06-04 → 2026-06-05; sequential, each Reza-accepted | <custom data-type="status" data-id="id-35">Released</custom> (all six real & signed off; legacy deleted; **superseded R4–R8 + the gateway-from-R5 plan**) |
 | R4 | Phase 4 — Harness runtime extraction | Weeks 17-20 | <custom data-type="status" data-id="id-6">Superseded</custom> (by R3.5) |
 | R5 | Phase 5 — Execution engine and runtime completion | Weeks 21-24 | <custom data-type="status" data-id="id-7">Superseded</custom> (by R3.5) |
 | R6 | Phase 6 — Application Gateway extraction | Weeks 25-28 | <custom data-type="status" data-id="id-8">Superseded</custom> (gateway is R3.5 step 6) |
