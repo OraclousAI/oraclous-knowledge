@@ -9,13 +9,15 @@ title: "ADR-017 — Identity/Org Service Split"
 
 | Field | Value |
 |---|---|
-| Status | Accepted |
-| Date | 2026-06-04 |
+| Status | **Superseded by as-built (R3.5)** — original decision Accepted 2026-06-04 |
+| Date | 2026-06-04 (superseded 2026-06-05) |
 | Proposed by | solution-architect |
 | Approved by | tech-lead (Reza Jahankohan) |
 | Supersedes | None |
-| Superseded by | None |
+| Superseded by | As-built R3.5 — see [auth-service](../services-reference/auth-service.md) |
 | Driving artifact | ORAA-4 operating contract (rev15) — R3.5 graph-first per-service order, service #3; R3.5 auth-hollowness finding |
+
+> **As-built outcome (2026-06-05).** This ADR's two-service split was **not executed**. In the R3.5 build the whole identity lifecycle — human users, email/password, OAuth, organisations, members, roles, invitations, **and** the machine principals (agents, service accounts) — was consolidated into the **single** [auth-service](../services-reference/auth-service.md), not a new `identity-org-service`. The reasoning is the ADR's own "Alternative C" applied one level up: users/orgs/members/roles/invitations form one tightly-coupled lifecycle, so they stay in one deployable rather than split across a network boundary. **The ADR's core fix held** — org/member/role/invitation **left the knowledge-graph-service** (the boundary fault the audit found is fixed); only the *separate-service* decomposition was dropped. There is no `identity-org-service`. A future split remains available if a concern genuinely diverges (an R6+ call). The Decision section below is retained as the historical record of the original choice.
 
 ## Context
 

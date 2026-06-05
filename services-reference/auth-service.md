@@ -5,42 +5,52 @@ title: "auth-service"
 
 # auth-service
 
-**Layer:** 1 (Substrate) · **Port:** 8000 · **Status:** Agent-only today (R2/R3 dropped human/email/OAuth). Human identity is NOT here — it moves to the new [identity-org-service](identity-org-service.md) in R3.5 step 3. After that, `auth-service` is the machine-identity service.
+**Layer:** 1 (Substrate) · **Port:** 8005 · **Status:** **Real — R3.5-complete, §22-signed-off.** The platform's single **identity authority**: human users (email/password + OAuth), organisations/members/invitations, and machine principals (agents + service accounts). Reachable directly by host IP:port until the [application-gateway-service](application-gateway-service.md) fronts it.
 
-## Honest current reality
+## What it is
 
-What shipped through R2/R3 is **agent-identity only**. The new `services/auth-service` is `agent_model` + `agent_repository` + `agent_identity_backfill` and a JWT handler — it issues and validates **agent** principals and nothing else. The legacy `auth-service` had real human auth (email/password, email verification, password reset, OAuth Google/GitHub/Notion, JWT) and that surface was **not** ported; it was dropped on the floor. So the platform today has machine identity but no human login.
+`auth-service` is the one identity service. R3.5 rebuilt it real, end-to-end, against real Postgres/Redis, and it passed all eight §22 gates with Reza's sign-off. It owns **everything about who a principal is and which organisation they belong to** — human and machine alike.
 
-R3.5 does not rebuild human auth *here*. Per ORAA-4 §R3.5 the human/email/OAuth/org surface lands in a **new** service, [identity-org-service](identity-org-service.md), built as step 3 of the per-service order. This page's service stays the **agent / service-account / machine-identity authority** and is the cleaner boundary for it.
+> **As-built note (supersedes ADR-017's two-service split).** [ADR-017](../adr/adr-017-identity-org-service-split.md) planned a *separate* `identity-org-service` for human identity, distinct from a machine-only `auth-service`. In build, R3.5 **consolidated the whole identity lifecycle into this one service** instead — one deployable, one substrate, one place where users, orgs, members, invitations, OAuth, agents and service accounts live. ADR-017's **core fix was still honored**: org/member/role/invitation **left the graph service** (they no longer live in knowledge-graph-service). Only the split-into-two-services decision was reconsidered. There is no `identity-org-service`.
 
-## Scope after R3.5
+## Responsibilities
 
-`auth-service` issues and validates **non-human** principals:
+### Human identity
+
+* Email + password registration and login; email verification; password reset / change-password
+* Social OAuth login: **Google**, **GitHub**, **Notion** (login-URL build, token exchange, refresh, profile fetch) — `domain/oauth.py`, `oauth_routes`, `oauth_service`
+* JWT issuance/validation for human principals; `validate` / `me` introspection
+
+### Organisations + membership
+
+* Organisation CRUD — `domain/organisations.py`, `org_routes`, `organisation_repository`
+* Membership: a user belongs to an organisation with an `org_role` of `owner | admin | member`; `org_member_repository`
+* Invitations: invite an email at an `org_role`, accept/decline lifecycle — `domain/invitations.py`, `invitation_routes`, `invitation_service`
+* Every org/membership query carries `organisation_id` (ADR-006 tenancy anchor; org-scoping enforced)
+
+### Machine identity
 
 * **agent** identity issuance (agents as first-class principals)
 * **service account** identity and key validation
-* JWT issuance and validation for machine actors
-* delegated-identity token issuance (the agent half of member→agent delegation; the member half originates in [identity-org-service](identity-org-service.md))
-
-Human users, email/password, email verification, password reset, social OAuth (Google/GitHub/Notion), and org/member/role management are **not** here — they are [identity-org-service](identity-org-service.md).
+* JWT for machine actors; the agent half of member→agent delegated-identity tokens
 
 ## Dependencies
 
-* **Upstream:** Postgres (agent + service-account records), Redis (token/session state)
-* **Downstream consumers:** every service that authenticates an agent or service-account request; [identity-org-service](identity-org-service.md) cross-checks delegated relationships
+* **Upstream:** Postgres (users, orgs, members, invitations, agents, service accounts, OAuth records — 6 migrations), Redis (token/session/verification state)
+* **Downstream consumers:** every service that authenticates a request; [credential-broker-service](credential-broker-service.md) for runtime token resolution; the frontend (via the gateway once it fronts this service)
 
 ## Architecture conformance (ORAA-4 §21)
 
-Package root `services/auth-service/src/oraclous_auth_service/` with the layered shape: `main.py` (app = `create_app()` only), `app/factory.py` (wire-only), `routes/`, `services/` (all logic), `repositories/(+models.py)` (the only DB access), `schema/`, `core/{config,dependencies,lifespan}.py`, `migrations/`. The three non-negotiable rules apply: no logic in handlers, no non-`BaseModel` classes or DB drivers in `routes/`, repositories are the only DB access.
+Package root `services/auth-service/src/oraclous_auth_service/` in the canonical layered shape: `main.py` (`app = create_app()` only), `app/factory.py` (wire-only), `routes/` (`auth_routes`, `org_routes`, `invitation_routes`, `oauth_routes`), `services/` (all logic), `domain/` (pure entities: users, organisations, invitations, oauth), `repositories/(+models.py)` (the only DB access: user/organisation/org_member/invitation/oauth repositories), `schema/`, `core/{config,dependencies,lifespan}.py`, `migrations/`. The three non-negotiable rules hold (no logic in handlers, no non-`BaseModel` classes or DB drivers in `routes/`, repositories are the only DB access). `structure_enforced: true` and `claimed_done: true` in `service_status.yaml` — the structure and no-stub checkers fail CI on any regression.
 
-## Definition of Done (ORAA-4 §22)
+## Definition of Done (ORAA-4 §22) — MET
 
-Done only when all 8 gates pass: structurally conformant, not hollow (`check_no_stubs` zero findings + `claimed_done` flipped in `service_status.yaml`), runs (`docker compose up` healthy, `GET /health` 200), real endpoints (integration vs real Postgres/Redis via testcontainers), end-to-end smoke (`tests/smoke/smoke.sh` in the `r3_5_gate` job), and Reza personally tests and signs off (issue carries `needs-human` until accepted).
+All 8 gates passed: structurally conformant; not hollow (`check_no_stubs` zero findings, `claimed_done: true`); runs (`docker compose up` healthy, `GET /health` 200); real endpoints (integration vs real Postgres/Redis via testcontainers — `test_user_auth_api`, `test_oauth_api`, `test_invitation_api`, `test_service_account_api`); end-to-end smoke (`tests/smoke/smoke.sh`, `r3_5_gate` job); Reza personally signed off. Org-scoping proven by `tests/organization_isolation/`.
 
 ## Related
 
-* [identity-org-service](identity-org-service.md) — the NEW human identity + org service (human auth lives there, not here)
+* [ADR-017](../adr/adr-017-identity-org-service-split.md) — the (superseded) identity/org split; this service is the as-built single identity authority
+* [credential-broker-service](credential-broker-service.md) — partner for runtime OAuth *token* resolution (distinct from login OAuth)
 * ADR-006 — Organisation as Outermost Tenancy Unit
-* [credential-broker-service](credential-broker-service.md) — partner for runtime token resolution
+* [knowledge-graph-service](knowledge-graph-service.md) — shed org/member management to this service in R3.5
 * Section 2 — Member, Actor, Delegated Identity definitions
-* Section 6.5 — Threat 4 (identity confusion)
