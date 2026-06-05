@@ -28,11 +28,12 @@ required_checks_for() {
   case "$1" in
     backend)  printf '%s\n' "lint" ;;
     frontend) printf '%s\n' \
+        "Lint / Type-check / Format" \
         "Gate 1: api-client-boundary" \
         "Gate 2: no-token-in-storage" \
         "Gate 3: axe-core AA" \
         "Gate 4: bundle-budget" \
-        "Gate 5: no-dangerouslySetInnerHTML" ;;  # ORAA-216 merged — 5 invariant gates now required
+        "Gate 5: no-dangerouslySetInnerHTML" ;;  # quality job + 5 ORAA-216 invariant gates (all on main, green)
     knowledge) ;;  # no CI workflow — pre-push hook + review cover it
   esac
 }
