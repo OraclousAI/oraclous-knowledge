@@ -8,79 +8,79 @@
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
       "source_location": "L1",
-      "id": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "community": 14,
-      "norm_label": "fleet_keeper.py"
+      "community": 16,
+      "norm_label": "fleet_keeper.py",
+      "id": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py"
     },
     {
       "label": "api()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
       "source_location": "L66",
-      "id": "fleet_keeper_api",
-      "community": 14,
-      "norm_label": "api()"
+      "community": 16,
+      "norm_label": "api()",
+      "id": "fleet_keeper_api"
     },
     {
       "label": "listy()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
       "source_location": "L74",
-      "id": "fleet_keeper_listy",
-      "community": 14,
-      "norm_label": "listy()"
+      "community": 16,
+      "norm_label": "listy()",
+      "id": "fleet_keeper_listy"
     },
     {
       "label": "paperclip_bin()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
       "source_location": "L78",
-      "id": "fleet_keeper_paperclip_bin",
-      "community": 14,
-      "norm_label": "paperclip_bin()"
+      "community": 16,
+      "norm_label": "paperclip_bin()",
+      "id": "fleet_keeper_paperclip_bin"
     },
     {
       "label": "trigger_heartbeat()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
       "source_location": "L85",
-      "id": "fleet_keeper_trigger_heartbeat",
-      "community": 14,
-      "norm_label": "trigger_heartbeat()"
+      "community": 16,
+      "norm_label": "trigger_heartbeat()",
+      "id": "fleet_keeper_trigger_heartbeat"
     },
     {
       "label": "hours_since()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
       "source_location": "L101",
-      "id": "fleet_keeper_hours_since",
-      "community": 14,
-      "norm_label": "hours_since()"
+      "community": 16,
+      "norm_label": "hours_since()",
+      "id": "fleet_keeper_hours_since"
     },
     {
       "label": "role_for()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
       "source_location": "L108",
-      "id": "fleet_keeper_role_for",
-      "community": 14,
-      "norm_label": "role_for()"
+      "community": 16,
+      "norm_label": "role_for()",
+      "id": "fleet_keeper_role_for"
     },
     {
       "label": "main()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/operations/fleet_keeper.py",
       "source_location": "L123",
-      "id": "fleet_keeper_main",
-      "community": 14,
-      "norm_label": "main()"
+      "community": 16,
+      "norm_label": "main()",
+      "id": "fleet_keeper_main"
     },
     {
       "label": "Resolve the installed paperclipai entrypoint (npx cache path has a rotating hash",
       "file_type": "rationale",
       "source_file": "operations/fleet_keeper.py",
       "source_location": "L79",
-      "community": 14,
+      "community": 16,
       "norm_label": "resolve the installed paperclipai entrypoint (npx cache path has a rotating hash",
       "id": "fleet_keeper_rationale_79"
     },
@@ -89,7 +89,7 @@
       "file_type": "rationale",
       "source_file": "operations/fleet_keeper.py",
       "source_location": "L86",
-      "community": 14,
+      "community": 16,
       "norm_label": "fire one agent heartbeat (source=assignment) to start its assigned work, fire-an",
       "id": "fleet_keeper_rationale_86"
     },
@@ -98,198 +98,198 @@
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L1",
-      "id": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "community": 11,
-      "norm_label": "build_kb_index.py"
+      "norm_label": "build_kb_index.py",
+      "id": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py"
     },
     {
       "label": "_strip_quotes()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L110",
-      "id": "build_kb_index_strip_quotes",
       "community": 11,
-      "norm_label": "_strip_quotes()"
+      "norm_label": "_strip_quotes()",
+      "id": "build_kb_index_strip_quotes"
     },
     {
       "label": "split_frontmatter()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L117",
-      "id": "build_kb_index_split_frontmatter",
       "community": 11,
-      "norm_label": "split_frontmatter()"
+      "norm_label": "split_frontmatter()",
+      "id": "build_kb_index_split_frontmatter"
     },
     {
       "label": "parse_title()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L131",
-      "id": "build_kb_index_parse_title",
       "community": 11,
-      "norm_label": "parse_title()"
+      "norm_label": "parse_title()",
+      "id": "build_kb_index_parse_title"
     },
     {
       "label": "_is_prose()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L140",
-      "id": "build_kb_index_is_prose",
       "community": 11,
-      "norm_label": "_is_prose()"
+      "norm_label": "_is_prose()",
+      "id": "build_kb_index_is_prose"
     },
     {
       "label": "_normalise_summary()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L159",
-      "id": "build_kb_index_normalise_summary",
       "community": 11,
-      "norm_label": "_normalise_summary()"
+      "norm_label": "_normalise_summary()",
+      "id": "build_kb_index_normalise_summary"
     },
     {
       "label": "first_summary()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L171",
-      "id": "build_kb_index_first_summary",
       "community": 11,
-      "norm_label": "first_summary()"
+      "norm_label": "first_summary()",
+      "id": "build_kb_index_first_summary"
     },
     {
       "label": "derive_title_from_section()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L185",
-      "id": "build_kb_index_derive_title_from_section",
       "community": 11,
-      "norm_label": "derive_title_from_section()"
+      "norm_label": "derive_title_from_section()",
+      "id": "build_kb_index_derive_title_from_section"
     },
     {
       "label": "SectionInfo",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L193",
-      "id": "build_kb_index_sectioninfo",
       "community": 11,
-      "norm_label": "sectioninfo"
+      "norm_label": "sectioninfo",
+      "id": "build_kb_index_sectioninfo"
     },
     {
       "label": ".__init__()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L194",
-      "id": "build_kb_index_sectioninfo_init",
       "community": 11,
-      "norm_label": ".__init__()"
+      "norm_label": ".__init__()",
+      "id": "build_kb_index_sectioninfo_init"
     },
     {
       "label": "index_rel()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L202",
-      "id": "build_kb_index_index_rel",
       "community": 11,
-      "norm_label": "index_rel()"
+      "norm_label": "index_rel()",
+      "id": "build_kb_index_index_rel"
     },
     {
       "label": "count_md_files()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L206",
-      "id": "build_kb_index_count_md_files",
       "community": 11,
-      "norm_label": "count_md_files()"
+      "norm_label": "count_md_files()",
+      "id": "build_kb_index_count_md_files"
     },
     {
       "label": "scan_section()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L215",
-      "id": "build_kb_index_scan_section",
       "community": 11,
-      "norm_label": "scan_section()"
+      "norm_label": "scan_section()",
+      "id": "build_kb_index_scan_section"
     },
     {
       "label": "scan_all()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L242",
-      "id": "build_kb_index_scan_all",
       "community": 11,
-      "norm_label": "scan_all()"
+      "norm_label": "scan_all()",
+      "id": "build_kb_index_scan_all"
     },
     {
       "label": "render_index_md()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L250",
-      "id": "build_kb_index_render_index_md",
       "community": 11,
-      "norm_label": "render_index_md()"
+      "norm_label": "render_index_md()",
+      "id": "build_kb_index_render_index_md"
     },
     {
       "label": "render_llms_txt()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L293",
-      "id": "build_kb_index_render_llms_txt",
       "community": 11,
-      "norm_label": "render_llms_txt()"
+      "norm_label": "render_llms_txt()",
+      "id": "build_kb_index_render_llms_txt"
     },
     {
       "label": "build_outputs()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L342",
-      "id": "build_kb_index_build_outputs",
       "community": 11,
-      "norm_label": "build_outputs()"
+      "norm_label": "build_outputs()",
+      "id": "build_kb_index_build_outputs"
     },
     {
       "label": "read_existing()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L350",
-      "id": "build_kb_index_read_existing",
       "community": 11,
-      "norm_label": "read_existing()"
+      "norm_label": "read_existing()",
+      "id": "build_kb_index_read_existing"
     },
     {
       "label": "write_outputs()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L358",
-      "id": "build_kb_index_write_outputs",
       "community": 11,
-      "norm_label": "write_outputs()"
+      "norm_label": "write_outputs()",
+      "id": "build_kb_index_write_outputs"
     },
     {
       "label": "check_outputs()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L365",
-      "id": "build_kb_index_check_outputs",
       "community": 11,
-      "norm_label": "check_outputs()"
+      "norm_label": "check_outputs()",
+      "id": "build_kb_index_check_outputs"
     },
     {
       "label": "report_missing()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L390",
-      "id": "build_kb_index_report_missing",
       "community": 11,
-      "norm_label": "report_missing()"
+      "norm_label": "report_missing()",
+      "id": "build_kb_index_report_missing"
     },
     {
       "label": "main()",
       "file_type": "code",
       "source_file": "/Users/reza/workspace/.oraclous-worktrees/r35-kb/scripts/build_kb_index.py",
       "source_location": "L399",
-      "id": "build_kb_index_main",
       "community": 11,
-      "norm_label": "main()"
+      "norm_label": "main()",
+      "id": "build_kb_index_main"
     },
     {
       "label": "Return (frontmatter_lines, body_lines).      Frontmatter is a leading ``---`` ..",
@@ -1719,7 +1719,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
+      "community": 24,
       "norm_label": "auth-service",
       "id": "section_8_consolidation_and_migration_plan_auth_service"
     },
@@ -1732,7 +1732,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 23,
+      "community": 25,
       "norm_label": "credential-broker-service",
       "id": "section_8_consolidation_and_migration_plan_credential_broker_service"
     },
@@ -3890,7 +3890,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 2,
       "norm_label": "sensitive-data rules (never in error body) + existence-hiding 404-over-403",
       "id": "interface_contracts_sensitive_data_rules"
     },
@@ -4059,7 +4059,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 22,
       "norm_label": "be-test-reviewer persona",
       "id": "session_topology_be_test_reviewer"
     },
@@ -4072,7 +4072,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 22,
       "norm_label": "how dual residency was avoided",
       "id": "session_topology_dual_residency_avoidance"
     },
@@ -4098,7 +4098,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 9,
       "norm_label": "frontend asymmetry",
       "id": "session_topology_frontend_asymmetry"
     },
@@ -4189,7 +4189,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "testing approach (frontend)",
       "id": "testing_approach_frontend"
     },
@@ -4202,7 +4202,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "frontend test pyramid",
       "id": "testing_approach_frontend_test_pyramid"
     },
@@ -4215,7 +4215,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "msw network mocking (mock the network layer, not components)",
       "id": "testing_approach_frontend_msw"
     },
@@ -4228,7 +4228,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "playwright e2e",
       "id": "testing_approach_frontend_playwright"
     },
@@ -4241,7 +4241,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "vitest unit and component tests",
       "id": "testing_approach_frontend_vitest"
     },
@@ -4254,7 +4254,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "tdd enforcement uniform with backend (adr-010; test-author serves both)",
       "id": "testing_approach_frontend_tdd_uniform"
     },
@@ -4267,7 +4267,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "component conventions",
       "id": "component_conventions"
     },
@@ -4280,7 +4280,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "file and folder structure",
       "id": "component_conventions_folder_structure"
     },
@@ -4293,7 +4293,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "boundary discipline (data vs render; no business logic in components)",
       "id": "component_conventions_boundary_discipline"
     },
@@ -4306,7 +4306,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "accessibility minimums (keyboard-reachable, labels, focus, aria-live)",
       "id": "component_conventions_accessibility_minimums"
     },
@@ -4319,7 +4319,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "compound component patterns",
       "id": "component_conventions_compound_components"
     },
@@ -4332,7 +4332,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "frontend stack reference",
       "id": "frontend_stack_reference"
     },
@@ -4345,7 +4345,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "react query (server state)",
       "id": "frontend_stack_react_query"
     },
@@ -4358,7 +4358,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "zustand (client state)",
       "id": "frontend_stack_zustand"
     },
@@ -4371,7 +4371,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "react-hook-form + zod",
       "id": "frontend_stack_react_hook_form_zod"
     },
@@ -4384,7 +4384,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "radix + shadcn/ui",
       "id": "frontend_stack_shadcn_radix"
     },
@@ -4397,7 +4397,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "tailwind (dark-only)",
       "id": "frontend_stack_tailwind"
     },
@@ -4410,7 +4410,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "openapi is the contract (backend wins; fe types generated)",
       "id": "frontend_stack_openapi_contract"
     },
@@ -4423,7 +4423,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "legacy oraclous-app repo seed",
       "id": "frontend_stack_legacy_repo_seed"
     },
@@ -4436,7 +4436,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "07. frontend hub",
       "id": "frontend_index"
     },
@@ -4449,7 +4449,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "frontend is a gateway-only consumer (never talks to internal services)",
       "id": "frontend_index_gateway_only_consumer"
     },
@@ -4462,7 +4462,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "design system",
       "id": "design_system"
     },
@@ -4475,7 +4475,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "dark-first, dark-only principle",
       "id": "design_system_dark_only"
     },
@@ -4488,7 +4488,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "token categories (colour, typography syne/dm mono, spacing, radius, motion, lucide)",
       "id": "design_system_tokens"
     },
@@ -4501,7 +4501,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "provenance and metadata first-class",
       "id": "design_system_provenance_first_class"
     },
@@ -4514,7 +4514,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "voice and copy conventions",
       "id": "design_system_voice_copy"
     },
@@ -4527,7 +4527,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "state and data patterns",
       "id": "state_data_patterns"
     },
@@ -4540,7 +4540,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "three kinds of state",
       "id": "state_data_three_kinds_of_state"
     },
@@ -4553,7 +4553,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "api layer (typed fetcher, central auth)",
       "id": "state_data_api_layer"
     },
@@ -4566,7 +4566,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "real-time updates (sse / websocket)",
       "id": "state_data_realtime_updates"
     },
@@ -4579,7 +4579,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "oraclous knowledge base index",
       "id": "kb_index_knowledge_base"
     },
@@ -4592,7 +4592,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "token-efficiency retrieval contract",
       "id": "kb_index_token_efficiency_contract"
     },
@@ -4605,7 +4605,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "llms.txt kb entry point",
       "id": "llms_txt_knowledge_base"
     },
@@ -4618,7 +4618,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "documentation conventions",
       "id": "documentation_conventions"
     },
@@ -4631,7 +4631,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "writing principles",
       "id": "documentation_conventions_writing_principles"
     },
@@ -4644,7 +4644,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "status conventions",
       "id": "documentation_conventions_status_macro"
     },
@@ -4657,7 +4657,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "docs-writer agent",
       "id": "documentation_conventions_docs_writer"
     },
@@ -4670,7 +4670,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "eight numbered hubs structure",
       "id": "documentation_conventions_section_structure"
     },
@@ -4683,7 +4683,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "glossary",
       "id": "glossary"
     },
@@ -4696,7 +4696,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "harness",
       "id": "glossary_harness"
     },
@@ -4709,7 +4709,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "ohm (oraclous harness manifest)",
       "id": "glossary_ohm"
     },
@@ -4722,7 +4722,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "rebac (relationship-based access control)",
       "id": "glossary_rebac"
     },
@@ -4735,7 +4735,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "substrate (layer 1)",
       "id": "glossary_substrate"
     },
@@ -4748,7 +4748,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "metering",
       "id": "glossary_metering"
     },
@@ -4761,7 +4761,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "organisation (outermost tenancy unit)",
       "id": "glossary_organisation"
     },
@@ -4774,7 +4774,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "workspace",
       "id": "glossary_workspace"
     },
@@ -4787,7 +4787,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "provenance",
       "id": "glossary_provenance"
     },
@@ -4800,7 +4800,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 5,
       "norm_label": "byom (bring your own model)",
       "id": "glossary_byom"
     },
@@ -4813,7 +4813,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "contributing to documentation",
       "id": "contributing_to_documentation"
     },
@@ -4826,7 +4826,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "how to write an adr",
       "id": "contributing_adr_authoring"
     },
@@ -4839,7 +4839,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "how to update an architecture page",
       "id": "contributing_architecture_update_process"
     },
@@ -4852,7 +4852,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "08. meta hub",
       "id": "meta_index"
     },
@@ -4865,7 +4865,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 5,
       "norm_label": "tooling and integration map",
       "id": "tooling_integration_map"
     },
@@ -4878,7 +4878,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 5,
       "norm_label": "sources of truth table",
       "id": "tooling_sources_of_truth"
     },
@@ -4904,7 +4904,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 5,
       "norm_label": "github setup (oraclousai org, backend/frontend repos)",
       "id": "tooling_github_setup"
     },
@@ -4917,7 +4917,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 5,
       "norm_label": "claude code setup (11-agent team)",
       "id": "tooling_claude_code_setup"
     },
@@ -4930,7 +4930,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 5,
       "norm_label": "model providers (byom, three protocols)",
       "id": "tooling_model_providers_byom"
     },
@@ -4943,7 +4943,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "change log",
       "id": "change_log"
     },
@@ -4956,7 +4956,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "initial kb structure (27 may 2026)",
       "id": "change_log_initial_kb_structure"
     },
@@ -4969,7 +4969,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "architecture v1.1 locked",
       "id": "change_log_architecture_v1_1_locked"
     },
@@ -4982,7 +4982,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "configuration reference",
       "id": "configuration_reference"
     },
@@ -4995,7 +4995,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "configuration philosophy",
       "id": "configuration_reference_philosophy"
     },
@@ -5008,7 +5008,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "deployment topology",
       "id": "deployment_topology"
     },
@@ -5021,7 +5021,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "eight services stack",
       "id": "deployment_topology_eight_services"
     },
@@ -5034,7 +5034,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "neo4j / postgres / redis infrastructure",
       "id": "deployment_topology_infra_neo4j_postgres_redis"
     },
@@ -5047,7 +5047,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "all-services-same-version deployment unit",
       "id": "deployment_topology_versioned_set"
     },
@@ -5060,7 +5060,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "db-level read/write role separation",
       "id": "deployment_topology_db_role_separation"
     },
@@ -5086,7 +5086,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "deployment \u2014 self-hosted",
       "id": "deployment_self_hosted"
     },
@@ -5099,7 +5099,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "deployment \u2014 cloud-hosted",
       "id": "deployment_cloud_hosted"
     },
@@ -5112,7 +5112,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "operator separation / per-org kms keys",
       "id": "deployment_cloud_hosted_operator_separation"
     },
@@ -5125,7 +5125,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "incident response",
       "id": "incident_response"
     },
@@ -5138,7 +5138,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "severity to response posture (p0\u2013p3)",
       "id": "incident_response_severity_posture"
     },
@@ -5151,7 +5151,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "blameless post-mortem template",
       "id": "incident_response_post_mortem"
     },
@@ -6074,7 +6074,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 4,
       "norm_label": "11 founding adrs (adr-001..adr-011)",
       "id": "r0_founding_adrs"
     },
@@ -6087,7 +6087,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "ohm spec, governance taxonomy, threat catalogue",
       "id": "r0_structured_artifacts"
     },
@@ -6412,7 +6412,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 17,
+      "community": 19,
       "norm_label": "scripts/ readme (kb retrieval tooling)",
       "id": "scripts_readme_doc"
     },
@@ -6425,7 +6425,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 17,
+      "community": 19,
       "norm_label": "build_kb_index.py (index.md + llms.txt generator)",
       "id": "scripts_build_kb_index"
     },
@@ -6438,7 +6438,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 17,
+      "community": 19,
       "norm_label": "git pre-commit hook (index regeneration)",
       "id": "scripts_precommit_hook"
     },
@@ -6542,7 +6542,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "capability-registry-service",
       "id": "capability_registry_service_capability_registry_service"
     },
@@ -6555,7 +6555,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "oraclous-core-service",
       "id": "capability_registry_service_oraclous_core_service"
     },
@@ -6568,7 +6568,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "unified capability descriptor model",
       "id": "capability_registry_service_unified_capability_descriptor"
     },
@@ -6581,21 +6581,21 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "capability resolution",
       "id": "capability_registry_service_capability_resolution"
     },
     {
-      "label": "The Five Capability Kinds",
+      "label": "five capability kinds (tool/skill/agent/harness/human_role)",
       "file_type": "document",
-      "source_file": "graphify-out/wiki/capability-registry-service.md",
+      "source_file": "services-reference/capability-registry-service.md",
       "source_location": null,
       "source_url": null,
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
-      "norm_label": "the five capability kinds",
+      "community": 14,
+      "norm_label": "five capability kinds (tool/skill/agent/harness/human_role)",
       "id": "capability_registry_service_five_kinds"
     },
     {
@@ -6607,7 +6607,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "adapter contracts",
       "id": "capability_registry_service_adapter_contracts"
     },
@@ -6620,7 +6620,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "mcp tool importer",
       "id": "capability_registry_service_mcp_tool_importer"
     },
@@ -6633,7 +6633,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 14,
       "norm_label": "capability_pack (bundling artifact)",
       "id": "capability_registry_service_capability_pack"
     },
@@ -6646,7 +6646,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "why content hashing (modification = new version)",
       "id": "capability_registry_service_content_hashing_rationale"
     },
@@ -6659,7 +6659,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "04. services reference (hub)",
       "id": "index_services_reference_hub"
     },
@@ -6672,7 +6672,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "credential-broker-service",
       "id": "index_credential_broker_service"
     },
@@ -6685,7 +6685,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "knowledge-retriever-service",
       "id": "index_knowledge_retriever_service"
     },
@@ -6698,7 +6698,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "harness-runtime-service",
       "id": "index_harness_runtime_service"
     },
@@ -6711,7 +6711,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 24,
+      "community": 26,
       "norm_label": "multi-tenant isolation pattern",
       "id": "index_multi_tenant_isolation"
     },
@@ -6724,7 +6724,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "rebac checks pattern",
       "id": "index_rebac_checks"
     },
@@ -6737,7 +6737,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "provenance write-through pattern",
       "id": "index_provenance_write_through"
     },
@@ -6750,7 +6750,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "capability resolution pattern",
       "id": "index_capability_resolution_pattern"
     },
@@ -6763,7 +6763,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "credential resolution pattern",
       "id": "index_credential_resolution_pattern"
     },
@@ -6776,7 +6776,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "auth-service",
       "id": "auth_service_auth_service"
     },
@@ -6789,7 +6789,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "principal-type model (user/service-account/agent)",
       "id": "auth_service_principal_type_model"
     },
@@ -6802,7 +6802,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "jwt issuance and validation",
       "id": "auth_service_jwt_issuance"
     },
@@ -6815,7 +6815,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "delegated identity token issuance",
       "id": "auth_service_delegated_identity"
     },
@@ -6828,7 +6828,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "agent identity issuance (phase 1)",
       "id": "auth_service_agent_identity_issuance"
     },
@@ -6841,7 +6841,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "knowledge-graph-service",
       "id": "knowledge_graph_service_knowledge_graph_service"
     },
@@ -6854,7 +6854,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "knowledge-graph-builder",
       "id": "knowledge_graph_service_knowledge_graph_builder"
     },
@@ -6867,7 +6867,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "multi-modal ingestion",
       "id": "knowledge_graph_service_multimodal_ingestion"
     },
@@ -6880,7 +6880,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "rebac graph maintenance",
       "id": "knowledge_graph_service_rebac_graph_maintenance"
     },
@@ -6893,7 +6893,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "provenance writes (universal sink)",
       "id": "knowledge_graph_service_provenance_writes"
     },
@@ -6906,7 +6906,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "graph analytics (community detection, centrality)",
       "id": "knowledge_graph_service_analytics"
     },
@@ -6919,7 +6919,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "organisation backfill migration (ora-24)",
       "id": "knowledge_graph_service_org_backfill_migration"
     },
@@ -6932,7 +6932,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 25,
+      "community": 27,
       "norm_label": "cypher injection prevention",
       "id": "knowledge_graph_service_cypher_injection_prevention"
     },
@@ -6945,7 +6945,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "execution-engine-service",
       "id": "execution_engine_service_execution_engine_service"
     },
@@ -6958,7 +6958,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "durable execution context",
       "id": "execution_engine_service_durable_execution_context"
     },
@@ -6971,7 +6971,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "schedule registration and firing",
       "id": "execution_engine_service_schedule_firing"
     },
@@ -6984,7 +6984,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "task board state management",
       "id": "execution_engine_service_task_board_state"
     },
@@ -6997,7 +6997,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "why separate runtime from execution engine",
       "id": "execution_engine_service_separation_rationale"
     },
@@ -7010,7 +7010,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 26,
+      "community": 28,
       "norm_label": "agentexecutor (powers sync and durable)",
       "id": "execution_engine_service_agent_executor"
     },
@@ -7023,7 +7023,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "schedule storm threat (7.3) bounding",
       "id": "execution_engine_service_schedule_storm_threat"
     },
@@ -7036,7 +7036,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "application-gateway-service",
       "id": "application_gateway_service_application_gateway_service"
     },
@@ -7049,7 +7049,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "mcp server",
       "id": "application_gateway_service_mcp_server"
     },
@@ -7062,7 +7062,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "mcp client",
       "id": "application_gateway_service_mcp_client"
     },
@@ -7075,7 +7075,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "published agents and integration keys",
       "id": "application_gateway_service_published_agents"
     },
@@ -7088,7 +7088,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "chat apis / chat persistence",
       "id": "application_gateway_service_chat_apis"
     },
@@ -7101,7 +7101,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "webhook receivers",
       "id": "application_gateway_service_webhook_receivers"
     },
@@ -7114,7 +7114,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "why consolidate public surfaces (single security boundary)",
       "id": "application_gateway_service_consolidation_rationale"
     },
@@ -7127,7 +7127,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "rate limiting per integration key",
       "id": "application_gateway_service_rate_limiting"
     },
@@ -7140,7 +7140,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "adr-001 \u2014 four-layer architecture",
       "id": "shared_adr_001_four_layer"
     },
@@ -7153,7 +7153,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "adr-002 \u2014 ohm as canonical manifest format",
       "id": "shared_adr_002_ohm"
     },
@@ -7166,7 +7166,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "adr-005 \u2014 workflow concept retirement",
       "id": "shared_adr_005_workflow_retirement"
     },
@@ -7179,7 +7179,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "adr-006 \u2014 organisation as outermost tenancy unit",
       "id": "shared_adr_006_organisation_tenancy"
     },
@@ -7192,7 +7192,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "adr-011 \u2014 external jira and confluence",
       "id": "shared_adr_011_external_jira_confluence"
     },
@@ -7205,7 +7205,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "ohm (oraclous harness manifest)",
       "id": "shared_ohm"
     },
@@ -11192,7 +11192,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 13,
+      "community": 15,
       "norm_label": "service architecture standard",
       "id": "service_architecture_standard_doc"
     },
@@ -11205,7 +11205,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 13,
+      "community": 15,
       "norm_label": "required service layout (routes/services/domain/repositories/schema/core)",
       "id": "service_architecture_standard_required_layout"
     },
@@ -11218,7 +11218,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 13,
+      "community": 15,
       "norm_label": "three non-negotiable rules (no logic in routes, no db drivers/stub classes in routes, repositories are only db access)",
       "id": "service_architecture_standard_three_rules"
     },
@@ -11231,7 +11231,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 13,
+      "community": 15,
       "norm_label": "rationale: r2/r3 decomposed into hollow shells; adopt proven legacy layout",
       "id": "service_architecture_standard_rationale_hollow_shells"
     },
@@ -11244,7 +11244,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 13,
+      "community": 15,
       "norm_label": "tools/lint/check_service_structure.py (str001-005)",
       "id": "service_architecture_standard_check_service_structure"
     },
@@ -11257,7 +11257,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 13,
+      "community": 15,
       "norm_label": "tools/lint/check_no_stubs.py (hol001-005)",
       "id": "service_architecture_standard_check_no_stubs"
     },
@@ -11270,7 +11270,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 13,
+      "community": 15,
       "norm_label": "tools/lint/service_status.yaml (claimed_done source of truth)",
       "id": "service_architecture_standard_service_status_yaml"
     },
@@ -11283,7 +11283,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 13,
+      "community": 15,
       "norm_label": "per-service importlinter layers contracts (routes->services->domain->repositories->core)",
       "id": "service_architecture_standard_import_contracts"
     },
@@ -11296,7 +11296,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 13,
+      "community": 15,
       "norm_label": "r3_5_gate ci job (structure-lint + docker + integration + smoke)",
       "id": "service_architecture_standard_r3_5_gate"
     },
@@ -11309,7 +11309,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 13,
+      "community": 15,
       "norm_label": "tools/audit/hollowness_audit.py (read-only true-completion map)",
       "id": "service_architecture_standard_hollowness_audit"
     },
@@ -11348,7 +11348,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 13,
+      "community": 15,
       "norm_label": "r3.5 requirement: integration/smoke hit real substrate, never stubs",
       "id": "test_strategy_real_substrate"
     },
@@ -11374,7 +11374,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "two-pr independence (tests written first by different agent; branch-from-merged-tests)",
       "id": "test_strategy_two_pr_independence"
     },
@@ -11387,7 +11387,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "adr-010 tdd with test-author agent (referenced)",
       "id": "test_strategy_adr_010"
     },
@@ -11634,7 +11634,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "component conventions",
       "id": "component_conventions_doc"
     },
@@ -11647,7 +11647,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "file/folder structure (ui, domain, features, pages, lib, hooks, api)",
       "id": "component_conventions_file_structure"
     },
@@ -11660,7 +11660,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "component shape (function components, named exports, typed props)",
       "id": "component_conventions_component_shape"
     },
@@ -11673,7 +11673,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "design system",
       "id": "design_system_doc"
     },
@@ -11686,7 +11686,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "design principles (dark-only, quiet by default, provenance first-class)",
       "id": "design_system_principles"
     },
@@ -11699,7 +11699,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "tokens live in tailwind.config.ts (single source; no raw hex in code)",
       "id": "design_system_tokens_as_code"
     },
@@ -11712,7 +11712,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "frontend stack reference",
       "id": "frontend_stack_reference_doc"
     },
@@ -11725,7 +11725,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "locked core stack (react 18.3, ts 5.5, vite, react query, zustand, rhf+zod, radix/shadcn, tailwind)",
       "id": "frontend_stack_core_stack"
     },
@@ -11738,7 +11738,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "out of scope (redux/mobx/formik/styled-components/mui/jest/moment)",
       "id": "frontend_stack_out_of_scope"
     },
@@ -11751,7 +11751,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "07. frontend (index)",
       "id": "frontend_index_doc"
     },
@@ -11764,7 +11764,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "state and data patterns",
       "id": "state_and_data_patterns_doc"
     },
@@ -11777,7 +11777,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "three kinds of state (react query server / zustand client / usestate local)",
       "id": "state_and_data_three_kinds"
     },
@@ -11790,7 +11790,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "api layer (generated openapi types, typed fetcher, central auth interceptor)",
       "id": "state_and_data_api_layer"
     },
@@ -11803,7 +11803,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "real-time updates (sse for streamed output, websocket for bidirectional)",
       "id": "state_and_data_realtime"
     },
@@ -11816,7 +11816,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "testing approach (frontend)",
       "id": "testing_approach_frontend_doc"
     },
@@ -11829,7 +11829,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "fe test pyramid (vitest unit, vitest+testing library component, playwright e2e)",
       "id": "testing_approach_frontend_pyramid"
     },
@@ -11998,7 +11998,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 27,
+      "community": 29,
       "norm_label": "cypher injection prevention",
       "id": "cypher_injection_prevention_concept"
     },
@@ -12011,7 +12011,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 15,
+      "community": 17,
       "norm_label": "docs process & deployment",
       "id": "docs_process_deployment_community"
     },
@@ -12024,7 +12024,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 15,
+      "community": 17,
       "norm_label": "glossary",
       "id": "docs_process_deployment_glossary"
     },
@@ -12037,7 +12037,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 15,
+      "community": 17,
       "norm_label": "deployment topology",
       "id": "docs_process_deployment_deployment_topology"
     },
@@ -12050,7 +12050,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 15,
+      "community": 17,
       "norm_label": "documentation conventions",
       "id": "docs_process_deployment_documentation_conventions"
     },
@@ -12063,7 +12063,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 16,
+      "community": 18,
       "norm_label": "engineering flows & board",
       "id": "engineering_flows_board_community"
     },
@@ -12076,7 +12076,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 16,
+      "community": 18,
       "norm_label": "jira board and workflow mapping",
       "id": "engineering_flows_board_jira_board_workflow"
     },
@@ -12089,7 +12089,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 16,
+      "community": 18,
       "norm_label": "session topology and persona residency",
       "id": "engineering_flows_board_persona_residency"
     },
@@ -12102,7 +12102,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "four-layer architecture & ohm",
       "id": "four_layer_architecture_ohm_community"
     },
@@ -12115,7 +12115,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "adr registry / hub",
       "id": "four_layer_architecture_ohm_adr_registry"
     },
@@ -12128,7 +12128,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "adr-001 four-layer architecture",
       "id": "four_layer_architecture_ohm_adr001"
     },
@@ -12141,7 +12141,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "ohm v1.0 standalone specification",
       "id": "four_layer_architecture_ohm_spec"
     },
@@ -12154,7 +12154,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 18,
+      "community": 20,
       "norm_label": "frontend & design system",
       "id": "frontend_design_system_community"
     },
@@ -12167,7 +12167,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 18,
+      "community": 20,
       "norm_label": "frontend stack reference",
       "id": "frontend_design_system_stack_reference"
     },
@@ -12180,7 +12180,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 18,
+      "community": 20,
       "norm_label": "design system",
       "id": "frontend_design_system_design_system"
     },
@@ -12193,7 +12193,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 14,
       "norm_label": "harness runtime & retrieval",
       "id": "harness_runtime_retrieval_community"
     },
@@ -12206,7 +12206,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 14,
       "norm_label": "r5 execution engine and runtime completion",
       "id": "harness_runtime_retrieval_r5_execution_engine"
     },
@@ -12219,7 +12219,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 14,
       "norm_label": "harness-runtime-service",
       "id": "harness_runtime_retrieval_harness_runtime_service"
     },
@@ -12232,7 +12232,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 14,
       "norm_label": "knowledge-retriever-service",
       "id": "harness_runtime_retrieval_knowledge_retriever"
     },
@@ -12245,7 +12245,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 28,
+      "community": 30,
       "norm_label": "kb index generator (code)",
       "id": "kb_index_generator_community"
     },
@@ -12258,7 +12258,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 21,
+      "community": 23,
       "norm_label": "kb retrieval tooling",
       "id": "kb_retrieval_tooling_community"
     },
@@ -12271,7 +12271,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 21,
+      "community": 23,
       "norm_label": "git pre-commit hook (index regeneration)",
       "id": "kb_retrieval_tooling_precommit_hook"
     },
@@ -12284,7 +12284,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 29,
+      "community": 31,
       "norm_label": "multi-tenant isolation pattern",
       "id": "multi_tenant_isolation_pattern"
     },
@@ -12297,7 +12297,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "ohm v1.0 standalone specification",
       "id": "ohm_v1_standalone_specification_godnode"
     },
@@ -12310,7 +12310,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "ohm document structure (8 top-level sections)",
       "id": "ohm_v1_standalone_specification_doc_structure"
     },
@@ -12323,7 +12323,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 14,
       "norm_label": "releases & build state",
       "id": "releases_build_state_community"
     },
@@ -12336,7 +12336,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 14,
       "norm_label": "r6 application gateway extraction",
       "id": "releases_build_state_r6_gateway"
     },
@@ -12349,7 +12349,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 14,
       "norm_label": "lift-vs-rewrite rubric",
       "id": "releases_build_state_lift_vs_rewrite"
     },
@@ -12362,7 +12362,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 3,
       "norm_label": "section 2 \u2014 conceptual model",
       "id": "section_2_conceptual_model_godnode"
     },
@@ -12375,7 +12375,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "section 4 \u2014 ohm manifest format",
       "id": "section_4_ohm_manifest_format_godnode"
     },
@@ -12388,7 +12388,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "two zones (structured + prose)",
       "id": "section_4_ohm_manifest_format_two_zones"
     },
@@ -12401,7 +12401,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "structured governance taxonomy",
       "id": "structured_governance_taxonomy_godnode"
     },
@@ -12414,7 +12414,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "policy set (named versioned governance bundle)",
       "id": "structured_governance_taxonomy_policy_set"
     },
@@ -12427,7 +12427,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "trust tiers (development, staging, production)",
       "id": "structured_governance_taxonomy_trust_tiers"
     },
@@ -12440,7 +12440,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "structured threat catalogue",
       "id": "structured_threat_catalogue_godnode"
     },
@@ -12453,7 +12453,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "t1 data exfiltration",
       "id": "structured_threat_catalogue_t1_exfiltration"
     },
@@ -12466,7 +12466,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 13,
       "norm_label": "t6 operator-separation breach",
       "id": "structured_threat_catalogue_t6_operator_separation"
     },
@@ -12479,7 +12479,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
+      "community": 21,
       "norm_label": "tdd & kb canonicalisation",
       "id": "tdd_kb_canonicalisation_community"
     },
@@ -12492,7 +12492,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
+      "community": 21,
       "norm_label": "adr-014 repo-canonical knowledge base",
       "id": "tdd_kb_canonicalisation_adr014_repo_canonical"
     },
@@ -12505,7 +12505,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
+      "community": 21,
       "norm_label": "adr-010 tdd with test-author agent",
       "id": "tdd_kb_canonicalisation_adr010_tdd"
     },
@@ -12518,7 +12518,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 14,
       "norm_label": "application-gateway-service",
       "id": "application_gateway_service_godnode"
     },
@@ -12531,7 +12531,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 14,
       "norm_label": "why consolidate public surfaces (single security boundary)",
       "id": "application_gateway_service_single_security_boundary"
     },
@@ -12544,7 +12544,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 14,
       "norm_label": "auth-service",
       "id": "auth_service_concept"
     },
@@ -12557,7 +12557,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 16,
+      "community": 18,
       "norm_label": "be-test-reviewer persona",
       "id": "be_test_reviewer_residency_persona"
     },
@@ -12570,7 +12570,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 14,
       "norm_label": "capability-registry-service",
       "id": "capability_registry_service_godnode"
     },
@@ -12583,7 +12583,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 3,
       "norm_label": "knowledge graph index",
       "id": "index_knowledge_graph_index"
     },
@@ -12596,7 +12596,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "oraclous knowledge base",
       "id": "llms_knowledge_base"
     },
@@ -12609,7 +12609,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "knowledge base sections (llms.txt convention)",
       "id": "llms_kb_sections"
     },
@@ -12622,7 +12622,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "change log",
       "id": "change_log_change_log"
     },
@@ -12635,7 +12635,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "material change (what gets logged)",
       "id": "change_log_material_change"
     },
@@ -12648,7 +12648,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "architecture v1.1 locked (27 may 2026)",
       "id": "change_log_architecture_v11_lock"
     },
@@ -12661,7 +12661,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "contributing to documentation",
       "id": "contributing_contributing_to_documentation"
     },
@@ -12674,7 +12674,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "docs-writer agent",
       "id": "contributing_docs_writer_agent"
     },
@@ -12687,7 +12687,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "adr authoring process",
       "id": "contributing_adr_process"
     },
@@ -12700,7 +12700,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "architecture page update process (locked versions)",
       "id": "contributing_architecture_page_update"
     },
@@ -12713,7 +12713,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "documentation conventions",
       "id": "conventions_documentation_conventions"
     },
@@ -12726,7 +12726,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "writing principles (prose, british english, no marketing)",
       "id": "conventions_writing_principles"
     },
@@ -12739,7 +12739,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "status conventions (placeholder/draft/current/locked/deprecated)",
       "id": "conventions_status_macro"
     },
@@ -12752,7 +12752,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "eight numbered top-level hubs",
       "id": "conventions_eight_hubs"
     },
@@ -12765,7 +12765,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "glossary",
       "id": "glossary_glossary"
     },
@@ -12778,7 +12778,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "actor",
       "id": "glossary_actor"
     },
@@ -12791,7 +12791,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "agent",
       "id": "glossary_agent"
     },
@@ -12804,7 +12804,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "capability",
       "id": "glossary_capability"
     },
@@ -12817,7 +12817,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "capability registry",
       "id": "glossary_capability_registry"
     },
@@ -12830,7 +12830,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "runtime",
       "id": "glossary_runtime"
     },
@@ -12843,7 +12843,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "operator separation",
       "id": "glossary_operator_separation"
     },
@@ -12856,7 +12856,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "content hash",
       "id": "glossary_content_hash"
     },
@@ -12869,7 +12869,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "08. meta hub",
       "id": "meta_index_meta_hub"
     },
@@ -12882,7 +12882,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 5,
       "norm_label": "tooling and integration map",
       "id": "tooling_tooling_integration_map"
     },
@@ -12895,7 +12895,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "jira kanban columns + wip limits",
       "id": "tooling_jira_kanban_columns"
     },
@@ -12908,7 +12908,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 5,
       "norm_label": "model providers (byom, 3 protocol shapes)",
       "id": "tooling_model_providers"
     },
@@ -12921,7 +12921,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "configuration reference",
       "id": "configuration_configuration_reference"
     },
@@ -12934,7 +12934,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "configuration philosophy (safe defaults, one way, explicit secrets)",
       "id": "configuration_config_philosophy"
     },
@@ -12947,7 +12947,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "deployment \u2014 cloud-hosted",
       "id": "cloud_deployment_cloud_hosted"
     },
@@ -12960,7 +12960,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "cloud operational posture (org isolation, per-org kms, audited access)",
       "id": "cloud_operational_posture"
     },
@@ -12973,7 +12973,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "deployment \u2014 self-hosted",
       "id": "selfhosted_deployment_self_hosted"
     },
@@ -12986,7 +12986,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "deployment topology",
       "id": "topology_deployment_topology"
     },
@@ -12999,7 +12999,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "eight-service stack",
       "id": "topology_eight_services"
     },
@@ -13012,7 +13012,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "auth-service (8000)",
       "id": "topology_auth_service"
     },
@@ -13025,7 +13025,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "capability-registry-service (8001)",
       "id": "topology_capability_registry_service"
     },
@@ -13038,7 +13038,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "credential-broker-service (8002)",
       "id": "topology_credential_broker_service"
     },
@@ -13051,7 +13051,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "knowledge-graph-service (8003)",
       "id": "topology_knowledge_graph_service"
     },
@@ -13064,7 +13064,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "harness-runtime-service (8004)",
       "id": "topology_harness_runtime_service"
     },
@@ -13077,7 +13077,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "execution-engine-service (8005)",
       "id": "topology_execution_engine_service"
     },
@@ -13090,7 +13090,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "knowledge-retriever-service (8006)",
       "id": "topology_knowledge_retriever_service"
     },
@@ -13103,7 +13103,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "application-gateway-service (8007)",
       "id": "topology_application_gateway_service"
     },
@@ -13116,7 +13116,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "neo4j (graph, rebac, provenance)",
       "id": "topology_neo4j"
     },
@@ -13129,7 +13129,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "postgres (relational data)",
       "id": "topology_postgres"
     },
@@ -13142,7 +13142,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "redis (caches, queues, schedules)",
       "id": "topology_redis"
     },
@@ -13155,7 +13155,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "disaster recovery (rpo 1h, rto 4h)",
       "id": "topology_disaster_recovery"
     },
@@ -13168,7 +13168,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 5,
       "norm_label": "role-based db credentials (read/write separation)",
       "id": "topology_role_based_db_credentials"
     },
@@ -13181,7 +13181,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "fleet-keeper (oraa-250)",
       "id": "fleetkeeper_doc_fleet_keeper"
     },
@@ -13194,7 +13194,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "gated_merge.sh (only sanctioned merge path)",
       "id": "fleetkeeper_doc_gated_merge"
     },
@@ -13207,7 +13207,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "github main ruleset (server-side merge gate)",
       "id": "fleetkeeper_doc_github_ruleset"
     },
@@ -13220,7 +13220,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "reviewer second identity (non-author review)",
       "id": "fleetkeeper_doc_reviewer_identity"
     },
@@ -13233,7 +13233,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "auto-unblock action (fail-closed)",
       "id": "fleetkeeper_doc_auto_unblock"
     },
@@ -13246,7 +13246,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "auto-assign action",
       "id": "fleetkeeper_doc_auto_assign"
     },
@@ -13259,7 +13259,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "todo wakes agents; backlog is holding",
       "id": "fleetkeeper_doc_todo_vs_backlog"
     },
@@ -13272,7 +13272,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "oraa-78 false-unblock regression guard",
       "id": "fleetkeeper_doc_oraa78_guard"
     },
@@ -13285,7 +13285,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "incident response",
       "id": "incident_incident_response"
     },
@@ -13298,7 +13298,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "severity \u2192 response posture (p0-p3)",
       "id": "incident_severity_posture"
     },
@@ -13311,7 +13311,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "blameless post-mortem process",
       "id": "incident_postmortem"
     },
@@ -13324,7 +13324,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "05. operations hub",
       "id": "operations_index_operations_hub"
     },
@@ -13337,7 +13337,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "two deployment modes (self-hosted, cloud-hosted)",
       "id": "operations_index_two_deployment_modes"
     },
@@ -13350,7 +13350,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "monitoring and observability",
       "id": "monitoring_monitoring_observability"
     },
@@ -13363,7 +13363,7 @@
       "captured_at": null,
       "author": "docs-writer",
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "runbook \u2014 organisation backfill migration (ora-24)",
       "id": "runbook_org_backfill_migration"
     },
@@ -13376,7 +13376,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "oraclous_substrate.migrations.org_backfill",
       "id": "runbook_org_backfill_code"
     },
@@ -13389,7 +13389,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "redis cold-start flush (qcache namespace)",
       "id": "runbook_redis_cold_start_flush"
     },
@@ -13402,7 +13402,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "t1 control \u2014 no unscoped primitive",
       "id": "runbook_t1_unscoped_primitive"
     },
@@ -13415,7 +13415,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "seed_organisation_id well-known org",
       "id": "runbook_seed_organisation_id"
     },
@@ -13428,7 +13428,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "troubleshooting playbook",
       "id": "troubleshooting_troubleshooting_playbook"
     },
@@ -13441,7 +13441,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "severity guidance (p0-p3)",
       "id": "troubleshooting_severity_p0_p3"
     },
@@ -13454,7 +13454,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "build state \u2014 group d follow-up (3) \u2014 closed",
       "id": "buildstate_group_d_followup3"
     },
@@ -13467,7 +13467,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "eleven release pages (r0-r8, rc)",
       "id": "buildstate_eleven_release_pages"
     },
@@ -13480,7 +13480,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "agent identity convention section 11 inserts",
       "id": "buildstate_section11_inserts"
     },
@@ -13493,7 +13493,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "09. releases hub",
       "id": "releases_index_releases_hub"
     },
@@ -13506,7 +13506,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "release definition (strategic vs tactical)",
       "id": "releases_index_release_definition"
     },
@@ -13519,7 +13519,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "release lifecycle (planned\u2192briefed\u2192in progress\u2192released\u2192superseded)",
       "id": "releases_index_release_lifecycle"
     },
@@ -13532,7 +13532,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "standard release-page template",
       "id": "releases_index_release_page_template"
     },
@@ -13545,7 +13545,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 5,
       "norm_label": "agent owner jira custom field (customfield_10074)",
       "id": "releases_index_agent_owner_field"
     },
@@ -13558,7 +13558,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 10,
       "norm_label": "needs-human attention flag (customfield_10075)",
       "id": "releases_index_needs_human_flag"
     },
@@ -13571,7 +13571,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "agent-jira operation set (my_tasks, claim_next, handoff_to, escalate_to_human...)",
       "id": "releases_index_agent_jira_operations"
     },
@@ -13584,7 +13584,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "lift-vs-rewrite rubric (lift/reshape/extract/greenfield)",
       "id": "releases_index_lift_vs_rewrite_rubric"
     },
@@ -13597,7 +13597,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "migration source map section",
       "id": "releases_index_migration_source_map"
     },
@@ -13610,7 +13610,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "tests lifted before code",
       "id": "releases_index_tests_lifted_first"
     },
@@ -13623,7 +13623,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "r3.5 roadmap pivot \u2014 make every service real",
       "id": "releases_index_r35_pivot"
     },
@@ -13636,7 +13636,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "r-compliance \u2014 cloud-mode compliance track",
       "id": "rcompliance_r_compliance"
     },
@@ -13649,7 +13649,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "iso 27001 + soc 2 type ii certification",
       "id": "rcompliance_iso27001_soc2"
     },
@@ -13662,7 +13662,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "trust centre",
       "id": "rcompliance_trust_centre"
     },
@@ -13675,7 +13675,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "r0 \u2014 phase 0: documentation and stabilisation",
       "id": "r0_r0_phase0"
     },
@@ -13688,7 +13688,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 6,
+      "community": 5,
       "norm_label": "platform architecture v1.1 (locked)",
       "id": "r0_architecture_v11"
     },
@@ -13701,7 +13701,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r0.5 \u2014 organisation tenancy and metering substrate",
       "id": "r0_5_phase_0_5_organisation_tenancy_and_metering_substrate_release"
     },
@@ -13714,7 +13714,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "organisation_id scoping on every substrate primitive",
       "id": "r0_5_phase_0_5_organisation_tenancy_and_metering_substrate_org_id_scoping"
     },
@@ -13727,7 +13727,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "substrate-level metering subsystem",
       "id": "r0_5_phase_0_5_organisation_tenancy_and_metering_substrate_metering_subsystem"
     },
@@ -13740,7 +13740,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "substrate-level organisation isolation test gate",
       "id": "r0_5_phase_0_5_organisation_tenancy_and_metering_substrate_isolation_gate"
     },
@@ -13753,7 +13753,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r2 \u2014 capability registry consolidation",
       "id": "r2_phase_2_capability_registry_consolidation_release"
     },
@@ -13766,7 +13766,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r2 shipped hollow (stub endpoints, ~6,300 loc dead in oraclous-core-service)",
       "id": "r2_phase_2_capability_registry_consolidation_hollow_note"
     },
@@ -13779,7 +13779,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r2 through r8 and r-compliance and build state (bundle)",
       "id": "r2_through_r8_and_compliance_bundle"
     },
@@ -13792,7 +13792,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r-compliance \u2014 cloud-mode compliance track",
       "id": "r2_through_r8_and_compliance_r_compliance"
     },
@@ -13805,7 +13805,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "build state \u2014 group d follow-up (3) \u2014 closed",
       "id": "r2_through_r8_and_compliance_build_state"
     },
@@ -13818,7 +13818,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r3 \u2014 knowledge graph decomposition",
       "id": "r3_phase_3_knowledge_graph_decomposition_release"
     },
@@ -13831,7 +13831,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r3 shipped hollow (notimplementederror stubs, graphnodeservice stub in route file)",
       "id": "r3_phase_3_knowledge_graph_decomposition_hollow_note"
     },
@@ -13844,7 +13844,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r3.5 \u2014 make every service real",
       "id": "r3_5_make_every_service_real_release"
     },
@@ -13857,7 +13857,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r3.5 per-service sequence (1 ingest \u2192 6 gateway)",
       "id": "r3_5_make_every_service_real_per_service_sequence"
     },
@@ -13870,7 +13870,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r3.5 8-gate per-service definition of done (incl. reza sign-off)",
       "id": "r3_5_make_every_service_real_definition_of_done"
     },
@@ -13883,7 +13883,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "hollowness audit & salvage-then-delete oraclous-core-service",
       "id": "r3_5_make_every_service_real_hollowness_audit"
     },
@@ -13896,7 +13896,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "\u00a721 canonical service architecture (layered shape)",
       "id": "r3_5_make_every_service_real_canonical_service_architecture"
     },
@@ -13909,7 +13909,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r4 \u2014 harness runtime extraction",
       "id": "r4_phase_4_harness_runtime_extraction_release"
     },
@@ -13922,7 +13922,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r5 \u2014 execution engine and runtime completion",
       "id": "r5_phase_5_execution_engine_and_runtime_completion_release"
     },
@@ -13935,7 +13935,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r6 \u2014 application gateway extraction",
       "id": "r6_phase_6_application_gateway_extraction_release"
     },
@@ -13948,7 +13948,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r7 \u2014 compiler harness and seed manifests",
       "id": "r7_phase_7_compiler_harness_and_seed_manifests_release"
     },
@@ -13961,7 +13961,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "r8 \u2014 security hardening pass",
       "id": "r8_phase_8_security_hardening_pass_release"
     },
@@ -13974,7 +13974,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "revised plan: gateway-from-r5 + fe/be vertical slices",
       "id": "revised_plan_gateway_from_r5_fe_be_slices_plan"
     },
@@ -13987,7 +13987,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "rf phase a \u2014 frontend foundation",
       "id": "rf_phase_a_frontend_foundation_release"
     },
@@ -14000,7 +14000,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 30,
+      "community": 32,
       "norm_label": "scripts/ tooling readme",
       "id": "scripts_readme"
     },
@@ -14013,7 +14013,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "application-gateway-service (layer 4, port 8007)",
       "id": "application_gateway_service_ref"
     },
@@ -14026,7 +14026,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "auth-service (layer 1, port 8000, machine identity)",
       "id": "auth_service_ref"
     },
@@ -14039,7 +14039,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "capability-registry-service (layer 2, port 8001)",
       "id": "capability_registry_service_ref"
     },
@@ -14052,7 +14052,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "execution-engine-service (layer 3, port 8005)",
       "id": "execution_engine_service_ref"
     },
@@ -14065,7 +14065,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "harness-runtime-service (layer 3, port 8004)",
       "id": "harness_runtime_service_ref"
     },
@@ -14078,7 +14078,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "identity-org-service (layer 1, new in r3.5)",
       "id": "identity_org_service_ref"
     },
@@ -14091,7 +14091,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "knowledge-graph-service (layer 1, port 8003)",
       "id": "knowledge_graph_service_ref"
     },
@@ -14104,7 +14104,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "oraclous-core-service (legacy, ~6,300 loc dead-but-real)",
       "id": "index_oraclous_core_service"
     },
@@ -14117,7 +14117,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "knowledge-retriever-service (layer 1, port 8006)",
       "id": "knowledge_graph_service_ref_retriever"
     },
@@ -14130,7 +14130,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 6,
       "norm_label": "credential-broker-service (layer 1, port 8002)",
       "id": "identity_org_service_ref_credential_broker"
     },
@@ -14393,6 +14393,760 @@
       "community": 12,
       "norm_label": "adr-001 (four-layer architecture)",
       "id": "knowledge_retriever_service_adr_001"
+    },
+    {
+      "label": "auth-service (single identity authority)",
+      "file_type": "document",
+      "source_file": "services-reference/auth-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "auth_service",
+      "community": 8,
+      "norm_label": "auth-service (single identity authority)"
+    },
+    {
+      "label": "auth-service human identity (email/password + OAuth)",
+      "file_type": "document",
+      "source_file": "services-reference/auth-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "auth_service_human_identity",
+      "community": 8,
+      "norm_label": "auth-service human identity (email/password + oauth)"
+    },
+    {
+      "label": "auth-service machine identity (agents + service accounts)",
+      "file_type": "document",
+      "source_file": "services-reference/auth-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "auth_service_machine_identity",
+      "community": 8,
+      "norm_label": "auth-service machine identity (agents + service accounts)"
+    },
+    {
+      "label": "auth-service organisations/members/invitations",
+      "file_type": "document",
+      "source_file": "services-reference/auth-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "auth_service_orgs_membership",
+      "community": 8,
+      "norm_label": "auth-service organisations/members/invitations"
+    },
+    {
+      "label": "login OAuth (Google/GitHub/Notion sign-in)",
+      "file_type": "document",
+      "source_file": "services-reference/auth-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "auth_service_login_oauth",
+      "community": 8,
+      "norm_label": "login oauth (google/github/notion sign-in)"
+    },
+    {
+      "label": "port 8005 (auth-service)",
+      "file_type": "document",
+      "source_file": "services-reference/auth-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "auth_service_port_8005",
+      "community": 8,
+      "norm_label": "port 8005 (auth-service)"
+    },
+    {
+      "label": "identity-org-service (NOT BUILT \u2014 tombstone)",
+      "file_type": "document",
+      "source_file": "services-reference/identity-org-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "identity_org_service_tombstone",
+      "community": 8,
+      "norm_label": "identity-org-service (not built \u2014 tombstone)"
+    },
+    {
+      "label": "ADR-017 Identity/Org Service Split (superseded by as-built)",
+      "file_type": "document",
+      "source_file": "adr/adr-017-identity-org-service-split.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "adr_017",
+      "community": 8,
+      "norm_label": "adr-017 identity/org service split (superseded by as-built)"
+    },
+    {
+      "label": "ADR-017 core boundary fix (orgs leave the graph service)",
+      "file_type": "document",
+      "source_file": "adr/adr-017-identity-org-service-split.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "adr_017_boundary_fix",
+      "community": 8,
+      "norm_label": "adr-017 core boundary fix (orgs leave the graph service)"
+    },
+    {
+      "label": "ADR-017 two-service split (dropped)",
+      "file_type": "document",
+      "source_file": "adr/adr-017-identity-org-service-split.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "adr_017_two_service_split",
+      "community": 8,
+      "norm_label": "adr-017 two-service split (dropped)"
+    },
+    {
+      "label": "knowledge-graph-service (write side)",
+      "file_type": "document",
+      "source_file": "services-reference/knowledge-graph-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "knowledge_graph_service",
+      "community": 8,
+      "norm_label": "knowledge-graph-service (write side)"
+    },
+    {
+      "label": "port 8003 (knowledge-graph-service)",
+      "file_type": "document",
+      "source_file": "services-reference/knowledge-graph-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "knowledge_graph_service_port_8003",
+      "community": 8,
+      "norm_label": "port 8003 (knowledge-graph-service)"
+    },
+    {
+      "label": "OrganisationScopedKGWriter (Cypher write chain)",
+      "file_type": "document",
+      "source_file": "services-reference/knowledge-graph-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "knowledge_graph_service_org_scoped_kg_writer",
+      "community": 8,
+      "norm_label": "organisationscopedkgwriter (cypher write chain)"
+    },
+    {
+      "label": "knowledge-retriever-service (read side)",
+      "file_type": "document",
+      "source_file": "services-reference/knowledge-retriever-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "knowledge_retriever_service",
+      "community": 8,
+      "norm_label": "knowledge-retriever-service (read side)"
+    },
+    {
+      "label": "port 8004 (knowledge-retriever-service)",
+      "file_type": "document",
+      "source_file": "services-reference/knowledge-retriever-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "knowledge_retriever_service_port_8004",
+      "community": 8,
+      "norm_label": "port 8004 (knowledge-retriever-service)"
+    },
+    {
+      "label": "NodeResult uniform envelope",
+      "file_type": "document",
+      "source_file": "services-reference/knowledge-retriever-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "knowledge_retriever_service_node_result",
+      "community": 8,
+      "norm_label": "noderesult uniform envelope"
+    },
+    {
+      "label": "credential-broker-service (secret keeper)",
+      "file_type": "document",
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "credential_broker_service",
+      "community": 8,
+      "norm_label": "credential-broker-service (secret keeper)"
+    },
+    {
+      "label": "port 8002 (credential-broker-service)",
+      "file_type": "document",
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "credential_broker_service_port_8002",
+      "community": 8,
+      "norm_label": "port 8002 (credential-broker-service)"
+    },
+    {
+      "label": "AES-256-GCM encrypted credential store",
+      "file_type": "document",
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "credential_broker_service_aes_256_gcm",
+      "community": 8,
+      "norm_label": "aes-256-gcm encrypted credential store"
+    },
+    {
+      "label": "runtime OAuth token resolution",
+      "file_type": "document",
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "credential_broker_service_runtime_oauth",
+      "community": 8,
+      "norm_label": "runtime oauth token resolution"
+    },
+    {
+      "label": "/internal/resolve-credential seam",
+      "file_type": "document",
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "credential_broker_service_resolve_credential",
+      "community": 8,
+      "norm_label": "/internal/resolve-credential seam"
+    },
+    {
+      "label": "capability-registry-service (discovery + sync execution)",
+      "file_type": "document",
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "capability_registry_service",
+      "community": 8,
+      "norm_label": "capability-registry-service (discovery + sync execution)"
+    },
+    {
+      "label": "port 8001 (capability-registry-service)",
+      "file_type": "document",
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "capability_registry_service_port_8001",
+      "community": 8,
+      "norm_label": "port 8001 (capability-registry-service)"
+    },
+    {
+      "label": "connectors (PostgreSQL/MySQL/Notion/GitHub)",
+      "file_type": "document",
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "capability_registry_service_connectors",
+      "community": 8,
+      "norm_label": "connectors (postgresql/mysql/notion/github)"
+    },
+    {
+      "label": "Google Drive live connector (deferred)",
+      "file_type": "document",
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "capability_registry_service_google_drive_deferred",
+      "community": 8,
+      "norm_label": "google drive live connector (deferred)"
+    },
+    {
+      "label": "application-gateway-service (reverse-proxy edge)",
+      "file_type": "document",
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "application_gateway_service",
+      "community": 8,
+      "norm_label": "application-gateway-service (reverse-proxy edge)"
+    },
+    {
+      "label": "port 8006 (application-gateway-service)",
+      "file_type": "document",
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "application_gateway_service_port_8006",
+      "community": 8,
+      "norm_label": "port 8006 (application-gateway-service)"
+    },
+    {
+      "label": "edge JWT termination + identity forwarding (anti-spoof)",
+      "file_type": "document",
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "application_gateway_service_edge_jwt",
+      "community": 8,
+      "norm_label": "edge jwt termination + identity forwarding (anti-spoof)"
+    },
+    {
+      "label": "gateway R6 hardening (MCP/chat/webhooks/error-envelope, deferred)",
+      "file_type": "document",
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "application_gateway_service_r6_hardening",
+      "community": 8,
+      "norm_label": "gateway r6 hardening (mcp/chat/webhooks/error-envelope, deferred)"
+    },
+    {
+      "label": "ORA-37 unified error envelope",
+      "file_type": "document",
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "ora_37_error_envelope",
+      "community": 8,
+      "norm_label": "ora-37 unified error envelope"
+    },
+    {
+      "label": "oraclous-core-service (salvaged-then-deleted)",
+      "file_type": "document",
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "oraclous_core_service",
+      "community": 8,
+      "norm_label": "oraclous-core-service (salvaged-then-deleted)"
+    },
+    {
+      "label": "R3.5 \u2014 Make every service real (Released)",
+      "file_type": "document",
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "r3_5_release",
+      "community": 8,
+      "norm_label": "r3.5 \u2014 make every service real (released)"
+    },
+    {
+      "label": "R3.5 release-seam retrospective",
+      "file_type": "document",
+      "source_file": "releases/r3.5-retrospective.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "r3_5_retrospective",
+      "community": 8,
+      "norm_label": "r3.5 release-seam retrospective"
+    },
+    {
+      "label": "\u00a722 hardened per-service Definition of Done (8 gates)",
+      "file_type": "document",
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "r3_5_definition_of_done",
+      "community": 8,
+      "norm_label": "\u00a722 hardened per-service definition of done (8 gates)"
+    },
+    {
+      "label": "\u00a721 canonical service architecture (layered)",
+      "file_type": "document",
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "r3_5_canonical_service_architecture",
+      "community": 8,
+      "norm_label": "\u00a721 canonical service architecture (layered)"
+    },
+    {
+      "label": "hollowness audit (re-opens hollow R2/R3 done)",
+      "file_type": "document",
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "r3_5_hollowness_audit",
+      "community": 8,
+      "norm_label": "hollowness audit (re-opens hollow r2/r3 done)"
+    },
+    {
+      "label": "Reza per-service sign-off (needs-human gate)",
+      "file_type": "document",
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "r3_5_reza_signoff",
+      "community": 8,
+      "norm_label": "reza per-service sign-off (needs-human gate)"
+    },
+    {
+      "label": "legacy spec pin develop@84152635",
+      "file_type": "document",
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "r3_5_spec_pin",
+      "community": 8,
+      "norm_label": "legacy spec pin develop@84152635"
+    },
+    {
+      "label": "\u00a723 anti-micro-ticket (\u22646 coarse slices)",
+      "file_type": "document",
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "r3_5_anti_micro_ticket",
+      "community": 8,
+      "norm_label": "\u00a723 anti-micro-ticket (\u22646 coarse slices)"
+    },
+    {
+      "label": "old R4\u2013R8 roadmap (superseded/discarded)",
+      "file_type": "document",
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "old_r4_r8_roadmap",
+      "community": 8,
+      "norm_label": "old r4\u2013r8 roadmap (superseded/discarded)"
+    },
+    {
+      "label": "gateway-from-R5 vertical-slice plan (discarded)",
+      "file_type": "document",
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "gateway_from_r5_plan",
+      "community": 8,
+      "norm_label": "gateway-from-r5 vertical-slice plan (discarded)"
+    },
+    {
+      "label": "R3 \u2014 Knowledge graph decomposition (shipped hollow)",
+      "file_type": "document",
+      "source_file": "releases/index.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "r3_release",
+      "community": 8,
+      "norm_label": "r3 \u2014 knowledge graph decomposition (shipped hollow)"
+    },
+    {
+      "label": "R2 \u2014 Capability registry consolidation (shipped hollow)",
+      "file_type": "document",
+      "source_file": "releases/index.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "r2_release",
+      "community": 8,
+      "norm_label": "r2 \u2014 capability registry consolidation (shipped hollow)"
+    },
+    {
+      "label": "09. Releases hub",
+      "file_type": "document",
+      "source_file": "releases/index.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "releases_hub",
+      "community": 8,
+      "norm_label": "09. releases hub"
+    },
+    {
+      "label": "lift-vs-rewrite migration source map convention",
+      "file_type": "document",
+      "source_file": "releases/index.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "lift_vs_rewrite_convention",
+      "community": 8,
+      "norm_label": "lift-vs-rewrite migration source map convention"
+    },
+    {
+      "label": "02. ADRs hub",
+      "file_type": "document",
+      "source_file": "adr/index.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "adr_hub",
+      "community": 8,
+      "norm_label": "02. adrs hub"
+    },
+    {
+      "label": "ADR-006 Organisation as Outermost Tenancy Unit",
+      "file_type": "document",
+      "source_file": "adr/adr-017-identity-org-service-split.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "adr_006",
+      "community": 8,
+      "norm_label": "adr-006 organisation as outermost tenancy unit"
+    },
+    {
+      "label": "ADR-016 Canonical Service Architecture + Hardened DoD",
+      "file_type": "document",
+      "source_file": "adr/index.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "adr_016",
+      "community": 8,
+      "norm_label": "adr-016 canonical service architecture + hardened dod"
+    },
+    {
+      "label": "ADR-022 Recipe/Primitive/Unified-Graph Ingestion",
+      "file_type": "document",
+      "source_file": "adr/index.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "adr_022",
+      "community": 8,
+      "norm_label": "adr-022 recipe/primitive/unified-graph ingestion"
+    },
+    {
+      "label": "ADR-004 Federation via ReBAC Traversal",
+      "file_type": "document",
+      "source_file": "adr/adr-017-identity-org-service-split.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "adr_004",
+      "community": 8,
+      "norm_label": "adr-004 federation via rebac traversal"
+    },
+    {
+      "label": "ADR-007 BYOM with Three Protocol Shapes",
+      "file_type": "document",
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "adr_007",
+      "community": 8,
+      "norm_label": "adr-007 byom with three protocol shapes"
+    },
+    {
+      "label": "ADR-008 Cloud-Hosted Mode / KMS posture",
+      "file_type": "document",
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "adr_008",
+      "community": 8,
+      "norm_label": "adr-008 cloud-hosted mode / kms posture"
+    },
+    {
+      "label": "ADR-015 Gateway Incremental Contract and Versioning",
+      "file_type": "document",
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "adr_015",
+      "community": 8,
+      "norm_label": "adr-015 gateway incremental contract and versioning"
+    },
+    {
+      "label": "harness-runtime-service (R4-deferred scaffold)",
+      "file_type": "document",
+      "source_file": "services-reference/index.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "harness_runtime_service",
+      "community": 8,
+      "norm_label": "harness-runtime-service (r4-deferred scaffold)"
+    },
+    {
+      "label": "execution-engine-service (R5-deferred scaffold)",
+      "file_type": "document",
+      "source_file": "services-reference/index.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "execution_engine_service",
+      "community": 8,
+      "norm_label": "execution-engine-service (r5-deferred scaffold)"
+    },
+    {
+      "label": "04. Services Reference hub",
+      "file_type": "document",
+      "source_file": "services-reference/index.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "services_reference_hub",
+      "community": 8,
+      "norm_label": "04. services reference hub"
+    },
+    {
+      "label": "Neo4j graph substrate",
+      "file_type": "document",
+      "source_file": "services-reference/knowledge-graph-service.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "neo4j_substrate",
+      "community": 8,
+      "norm_label": "neo4j graph substrate"
+    },
+    {
+      "label": "ReBAC + organisation_id tenancy scoping",
+      "file_type": "document",
+      "source_file": "services-reference/index.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "rebac_tenancy_scoping",
+      "community": 8,
+      "norm_label": "rebac + organisation_id tenancy scoping"
     }
   ],
   "links": [
@@ -14404,9 +15158,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_api",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_api",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_api"
     },
     {
       "relation": "contains",
@@ -14416,9 +15170,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_listy",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_listy",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_listy"
     },
     {
       "relation": "contains",
@@ -14428,9 +15182,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_paperclip_bin",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_paperclip_bin",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_paperclip_bin"
     },
     {
       "relation": "contains",
@@ -14440,9 +15194,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_trigger_heartbeat",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_trigger_heartbeat",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_trigger_heartbeat"
     },
     {
       "relation": "contains",
@@ -14452,9 +15206,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_hours_since",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_hours_since",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_hours_since"
     },
     {
       "relation": "contains",
@@ -14464,9 +15218,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_role_for",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_role_for",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_role_for"
     },
     {
       "relation": "contains",
@@ -14476,9 +15230,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
       "_tgt": "fleet_keeper_main",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_operations_fleet_keeper_py",
-      "target": "fleet_keeper_main",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_main"
     },
     {
       "relation": "calls",
@@ -14488,9 +15242,9 @@
       "weight": 1.0,
       "_src": "fleet_keeper_main",
       "_tgt": "fleet_keeper_api",
+      "confidence_score": 1.0,
       "source": "fleet_keeper_api",
-      "target": "fleet_keeper_main",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_main"
     },
     {
       "relation": "calls",
@@ -14500,9 +15254,9 @@
       "weight": 1.0,
       "_src": "fleet_keeper_main",
       "_tgt": "fleet_keeper_listy",
+      "confidence_score": 1.0,
       "source": "fleet_keeper_listy",
-      "target": "fleet_keeper_main",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_main"
     },
     {
       "relation": "calls",
@@ -14512,9 +15266,9 @@
       "weight": 1.0,
       "_src": "fleet_keeper_trigger_heartbeat",
       "_tgt": "fleet_keeper_paperclip_bin",
+      "confidence_score": 1.0,
       "source": "fleet_keeper_paperclip_bin",
-      "target": "fleet_keeper_trigger_heartbeat",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_trigger_heartbeat"
     },
     {
       "relation": "rationale_for",
@@ -14524,9 +15278,9 @@
       "weight": 1.0,
       "_src": "fleet_keeper_rationale_79",
       "_tgt": "fleet_keeper_paperclip_bin",
+      "confidence_score": 1.0,
       "source": "fleet_keeper_paperclip_bin",
-      "target": "fleet_keeper_rationale_79",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_rationale_79"
     },
     {
       "relation": "calls",
@@ -14536,9 +15290,9 @@
       "weight": 1.0,
       "_src": "fleet_keeper_main",
       "_tgt": "fleet_keeper_trigger_heartbeat",
+      "confidence_score": 1.0,
       "source": "fleet_keeper_trigger_heartbeat",
-      "target": "fleet_keeper_main",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_main"
     },
     {
       "relation": "rationale_for",
@@ -14548,9 +15302,9 @@
       "weight": 1.0,
       "_src": "fleet_keeper_rationale_86",
       "_tgt": "fleet_keeper_trigger_heartbeat",
+      "confidence_score": 1.0,
       "source": "fleet_keeper_trigger_heartbeat",
-      "target": "fleet_keeper_rationale_86",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_rationale_86"
     },
     {
       "relation": "calls",
@@ -14560,9 +15314,9 @@
       "weight": 1.0,
       "_src": "fleet_keeper_main",
       "_tgt": "fleet_keeper_hours_since",
+      "confidence_score": 1.0,
       "source": "fleet_keeper_hours_since",
-      "target": "fleet_keeper_main",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_main"
     },
     {
       "relation": "calls",
@@ -14572,9 +15326,9 @@
       "weight": 1.0,
       "_src": "fleet_keeper_main",
       "_tgt": "fleet_keeper_role_for",
+      "confidence_score": 1.0,
       "source": "fleet_keeper_role_for",
-      "target": "fleet_keeper_main",
-      "confidence_score": 1.0
+      "target": "fleet_keeper_main"
     },
     {
       "relation": "contains",
@@ -14584,9 +15338,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_strip_quotes",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_strip_quotes",
-      "confidence_score": 1.0
+      "target": "build_kb_index_strip_quotes"
     },
     {
       "relation": "contains",
@@ -14596,9 +15350,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_split_frontmatter",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_split_frontmatter",
-      "confidence_score": 1.0
+      "target": "build_kb_index_split_frontmatter"
     },
     {
       "relation": "contains",
@@ -14608,9 +15362,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_parse_title",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_parse_title",
-      "confidence_score": 1.0
+      "target": "build_kb_index_parse_title"
     },
     {
       "relation": "contains",
@@ -14620,9 +15374,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_is_prose",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_is_prose",
-      "confidence_score": 1.0
+      "target": "build_kb_index_is_prose"
     },
     {
       "relation": "contains",
@@ -14632,9 +15386,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_normalise_summary",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_normalise_summary",
-      "confidence_score": 1.0
+      "target": "build_kb_index_normalise_summary"
     },
     {
       "relation": "contains",
@@ -14644,9 +15398,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_first_summary",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_first_summary",
-      "confidence_score": 1.0
+      "target": "build_kb_index_first_summary"
     },
     {
       "relation": "contains",
@@ -14656,9 +15410,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_derive_title_from_section",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_derive_title_from_section",
-      "confidence_score": 1.0
+      "target": "build_kb_index_derive_title_from_section"
     },
     {
       "relation": "contains",
@@ -14668,9 +15422,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_sectioninfo",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_sectioninfo",
-      "confidence_score": 1.0
+      "target": "build_kb_index_sectioninfo"
     },
     {
       "relation": "contains",
@@ -14680,9 +15434,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_index_rel",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_index_rel",
-      "confidence_score": 1.0
+      "target": "build_kb_index_index_rel"
     },
     {
       "relation": "contains",
@@ -14692,9 +15446,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_count_md_files",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_count_md_files",
-      "confidence_score": 1.0
+      "target": "build_kb_index_count_md_files"
     },
     {
       "relation": "contains",
@@ -14704,9 +15458,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_scan_section",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_scan_section",
-      "confidence_score": 1.0
+      "target": "build_kb_index_scan_section"
     },
     {
       "relation": "contains",
@@ -14716,9 +15470,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_scan_all",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_scan_all",
-      "confidence_score": 1.0
+      "target": "build_kb_index_scan_all"
     },
     {
       "relation": "contains",
@@ -14728,9 +15482,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_render_index_md",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_render_index_md",
-      "confidence_score": 1.0
+      "target": "build_kb_index_render_index_md"
     },
     {
       "relation": "contains",
@@ -14740,9 +15494,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_render_llms_txt",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_render_llms_txt",
-      "confidence_score": 1.0
+      "target": "build_kb_index_render_llms_txt"
     },
     {
       "relation": "contains",
@@ -14752,9 +15506,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_build_outputs",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_build_outputs",
-      "confidence_score": 1.0
+      "target": "build_kb_index_build_outputs"
     },
     {
       "relation": "contains",
@@ -14764,9 +15518,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_read_existing",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_read_existing",
-      "confidence_score": 1.0
+      "target": "build_kb_index_read_existing"
     },
     {
       "relation": "contains",
@@ -14776,9 +15530,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_write_outputs",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_write_outputs",
-      "confidence_score": 1.0
+      "target": "build_kb_index_write_outputs"
     },
     {
       "relation": "contains",
@@ -14788,9 +15542,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_check_outputs",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_check_outputs",
-      "confidence_score": 1.0
+      "target": "build_kb_index_check_outputs"
     },
     {
       "relation": "contains",
@@ -14800,9 +15554,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_report_missing",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_report_missing",
-      "confidence_score": 1.0
+      "target": "build_kb_index_report_missing"
     },
     {
       "relation": "contains",
@@ -14812,9 +15566,9 @@
       "weight": 1.0,
       "_src": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
       "_tgt": "build_kb_index_main",
+      "confidence_score": 1.0,
       "source": "users_reza_workspace_oraclous_worktrees_r35_kb_scripts_build_kb_index_py",
-      "target": "build_kb_index_main",
-      "confidence_score": 1.0
+      "target": "build_kb_index_main"
     },
     {
       "relation": "calls",
@@ -14824,9 +15578,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_parse_title",
       "_tgt": "build_kb_index_strip_quotes",
+      "confidence_score": 1.0,
       "source": "build_kb_index_strip_quotes",
-      "target": "build_kb_index_parse_title",
-      "confidence_score": 1.0
+      "target": "build_kb_index_parse_title"
     },
     {
       "relation": "calls",
@@ -14836,9 +15590,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_scan_section",
       "_tgt": "build_kb_index_split_frontmatter",
+      "confidence_score": 1.0,
       "source": "build_kb_index_split_frontmatter",
-      "target": "build_kb_index_scan_section",
-      "confidence_score": 1.0
+      "target": "build_kb_index_scan_section"
     },
     {
       "relation": "rationale_for",
@@ -14848,9 +15602,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_rationale_118",
       "_tgt": "build_kb_index_split_frontmatter",
+      "confidence_score": 1.0,
       "source": "build_kb_index_split_frontmatter",
-      "target": "build_kb_index_rationale_118",
-      "confidence_score": 1.0
+      "target": "build_kb_index_rationale_118"
     },
     {
       "relation": "calls",
@@ -14860,9 +15614,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_scan_section",
       "_tgt": "build_kb_index_parse_title",
+      "confidence_score": 1.0,
       "source": "build_kb_index_parse_title",
-      "target": "build_kb_index_scan_section",
-      "confidence_score": 1.0
+      "target": "build_kb_index_scan_section"
     },
     {
       "relation": "rationale_for",
@@ -14872,9 +15626,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_rationale_132",
       "_tgt": "build_kb_index_parse_title",
+      "confidence_score": 1.0,
       "source": "build_kb_index_parse_title",
-      "target": "build_kb_index_rationale_132",
-      "confidence_score": 1.0
+      "target": "build_kb_index_rationale_132"
     },
     {
       "relation": "calls",
@@ -14884,9 +15638,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_first_summary",
       "_tgt": "build_kb_index_is_prose",
+      "confidence_score": 1.0,
       "source": "build_kb_index_is_prose",
-      "target": "build_kb_index_first_summary",
-      "confidence_score": 1.0
+      "target": "build_kb_index_first_summary"
     },
     {
       "relation": "rationale_for",
@@ -14896,9 +15650,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_rationale_141",
       "_tgt": "build_kb_index_is_prose",
+      "confidence_score": 1.0,
       "source": "build_kb_index_is_prose",
-      "target": "build_kb_index_rationale_141",
-      "confidence_score": 1.0
+      "target": "build_kb_index_rationale_141"
     },
     {
       "relation": "calls",
@@ -14908,9 +15662,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_first_summary",
       "_tgt": "build_kb_index_normalise_summary",
+      "confidence_score": 1.0,
       "source": "build_kb_index_normalise_summary",
-      "target": "build_kb_index_first_summary",
-      "confidence_score": 1.0
+      "target": "build_kb_index_first_summary"
     },
     {
       "relation": "rationale_for",
@@ -14920,9 +15674,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_rationale_160",
       "_tgt": "build_kb_index_normalise_summary",
+      "confidence_score": 1.0,
       "source": "build_kb_index_normalise_summary",
-      "target": "build_kb_index_rationale_160",
-      "confidence_score": 1.0
+      "target": "build_kb_index_rationale_160"
     },
     {
       "relation": "calls",
@@ -14932,9 +15686,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_scan_section",
       "_tgt": "build_kb_index_first_summary",
+      "confidence_score": 1.0,
       "source": "build_kb_index_first_summary",
-      "target": "build_kb_index_scan_section",
-      "confidence_score": 1.0
+      "target": "build_kb_index_scan_section"
     },
     {
       "relation": "rationale_for",
@@ -14944,9 +15698,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_rationale_172",
       "_tgt": "build_kb_index_first_summary",
+      "confidence_score": 1.0,
       "source": "build_kb_index_first_summary",
-      "target": "build_kb_index_rationale_172",
-      "confidence_score": 1.0
+      "target": "build_kb_index_rationale_172"
     },
     {
       "relation": "calls",
@@ -14956,9 +15710,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_scan_section",
       "_tgt": "build_kb_index_derive_title_from_section",
+      "confidence_score": 1.0,
       "source": "build_kb_index_derive_title_from_section",
-      "target": "build_kb_index_scan_section",
-      "confidence_score": 1.0
+      "target": "build_kb_index_scan_section"
     },
     {
       "relation": "method",
@@ -14968,9 +15722,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_sectioninfo",
       "_tgt": "build_kb_index_sectioninfo_init",
+      "confidence_score": 1.0,
       "source": "build_kb_index_sectioninfo",
-      "target": "build_kb_index_sectioninfo_init",
-      "confidence_score": 1.0
+      "target": "build_kb_index_sectioninfo_init"
     },
     {
       "relation": "calls",
@@ -14980,9 +15734,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_scan_section",
       "_tgt": "build_kb_index_sectioninfo",
+      "confidence_score": 1.0,
       "source": "build_kb_index_sectioninfo",
-      "target": "build_kb_index_scan_section",
-      "confidence_score": 1.0
+      "target": "build_kb_index_scan_section"
     },
     {
       "relation": "calls",
@@ -14992,9 +15746,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_scan_section",
       "_tgt": "build_kb_index_count_md_files",
+      "confidence_score": 1.0,
       "source": "build_kb_index_count_md_files",
-      "target": "build_kb_index_scan_section",
-      "confidence_score": 1.0
+      "target": "build_kb_index_scan_section"
     },
     {
       "relation": "calls",
@@ -15004,9 +15758,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_scan_all",
       "_tgt": "build_kb_index_scan_section",
+      "confidence_score": 1.0,
       "source": "build_kb_index_scan_section",
-      "target": "build_kb_index_scan_all",
-      "confidence_score": 1.0
+      "target": "build_kb_index_scan_all"
     },
     {
       "relation": "calls",
@@ -15016,9 +15770,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_build_outputs",
       "_tgt": "build_kb_index_scan_all",
+      "confidence_score": 1.0,
       "source": "build_kb_index_scan_all",
-      "target": "build_kb_index_build_outputs",
-      "confidence_score": 1.0
+      "target": "build_kb_index_build_outputs"
     },
     {
       "relation": "calls",
@@ -15028,9 +15782,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_build_outputs",
       "_tgt": "build_kb_index_render_index_md",
+      "confidence_score": 1.0,
       "source": "build_kb_index_render_index_md",
-      "target": "build_kb_index_build_outputs",
-      "confidence_score": 1.0
+      "target": "build_kb_index_build_outputs"
     },
     {
       "relation": "calls",
@@ -15040,9 +15794,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_build_outputs",
       "_tgt": "build_kb_index_render_llms_txt",
+      "confidence_score": 1.0,
       "source": "build_kb_index_render_llms_txt",
-      "target": "build_kb_index_build_outputs",
-      "confidence_score": 1.0
+      "target": "build_kb_index_build_outputs"
     },
     {
       "relation": "calls",
@@ -15052,9 +15806,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_main",
       "_tgt": "build_kb_index_build_outputs",
+      "confidence_score": 1.0,
       "source": "build_kb_index_build_outputs",
-      "target": "build_kb_index_main",
-      "confidence_score": 1.0
+      "target": "build_kb_index_main"
     },
     {
       "relation": "calls",
@@ -15064,9 +15818,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_check_outputs",
       "_tgt": "build_kb_index_read_existing",
+      "confidence_score": 1.0,
       "source": "build_kb_index_read_existing",
-      "target": "build_kb_index_check_outputs",
-      "confidence_score": 1.0
+      "target": "build_kb_index_check_outputs"
     },
     {
       "relation": "calls",
@@ -15076,9 +15830,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_main",
       "_tgt": "build_kb_index_write_outputs",
+      "confidence_score": 1.0,
       "source": "build_kb_index_write_outputs",
-      "target": "build_kb_index_main",
-      "confidence_score": 1.0
+      "target": "build_kb_index_main"
     },
     {
       "relation": "calls",
@@ -15088,9 +15842,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_main",
       "_tgt": "build_kb_index_check_outputs",
+      "confidence_score": 1.0,
       "source": "build_kb_index_check_outputs",
-      "target": "build_kb_index_main",
-      "confidence_score": 1.0
+      "target": "build_kb_index_main"
     },
     {
       "relation": "rationale_for",
@@ -15100,9 +15854,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_rationale_366",
       "_tgt": "build_kb_index_check_outputs",
+      "confidence_score": 1.0,
       "source": "build_kb_index_check_outputs",
-      "target": "build_kb_index_rationale_366",
-      "confidence_score": 1.0
+      "target": "build_kb_index_rationale_366"
     },
     {
       "relation": "calls",
@@ -15112,9 +15866,9 @@
       "weight": 1.0,
       "_src": "build_kb_index_main",
       "_tgt": "build_kb_index_report_missing",
+      "confidence_score": 1.0,
       "source": "build_kb_index_report_missing",
-      "target": "build_kb_index_main",
-      "confidence_score": 1.0
+      "target": "build_kb_index_main"
     },
     {
       "relation": "references",
@@ -26877,6 +27631,18 @@
       "target": "capability_registry_service_godnode"
     },
     {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "capability_registry_service",
+      "_tgt": "capability_registry_service_five_kinds",
+      "source": "capability_registry_service_five_kinds",
+      "target": "capability_registry_service"
+    },
+    {
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -35107,6 +35873,1194 @@
       "_tgt": "knowledge_retriever_service_knowledge_graph_service",
       "source": "knowledge_retriever_service_r3_5_rebuild",
       "target": "knowledge_retriever_service_knowledge_graph_service"
+    },
+    {
+      "relation": "consolidated_into",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/identity-org-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "identity_org_service_tombstone",
+      "_tgt": "auth_service",
+      "source": "auth_service",
+      "target": "identity_org_service_tombstone"
+    },
+    {
+      "relation": "supersedes",
+      "confidence": "AMBIGUOUS",
+      "confidence_score": 0.2,
+      "source_file": "adr/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr_017",
+      "_tgt": "auth_service",
+      "source": "auth_service",
+      "target": "adr_017"
+    },
+    {
+      "relation": "supersedes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/identity-org-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "auth_service",
+      "_tgt": "adr_017_two_service_split",
+      "source": "auth_service",
+      "target": "adr_017_two_service_split"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/auth-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "auth_service",
+      "_tgt": "auth_service_port_8005",
+      "source": "auth_service",
+      "target": "auth_service_port_8005"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/auth-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "auth_service",
+      "_tgt": "auth_service_human_identity",
+      "source": "auth_service",
+      "target": "auth_service_human_identity"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/auth-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "auth_service",
+      "_tgt": "auth_service_machine_identity",
+      "source": "auth_service",
+      "target": "auth_service_machine_identity"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/auth-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "auth_service",
+      "_tgt": "auth_service_orgs_membership",
+      "source": "auth_service",
+      "target": "auth_service_orgs_membership"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/auth-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "auth_service",
+      "_tgt": "auth_service_login_oauth",
+      "source": "auth_service",
+      "target": "auth_service_login_oauth"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/auth-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "auth_service",
+      "_tgt": "r3_5_definition_of_done",
+      "source": "auth_service",
+      "target": "r3_5_definition_of_done"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/knowledge-graph-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "knowledge_graph_service",
+      "_tgt": "auth_service",
+      "source": "auth_service",
+      "target": "knowledge_graph_service"
+    },
+    {
+      "relation": "depends_on",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/knowledge-retriever-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "knowledge_retriever_service",
+      "_tgt": "auth_service",
+      "source": "auth_service",
+      "target": "knowledge_retriever_service"
+    },
+    {
+      "relation": "depends_on",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "credential_broker_service",
+      "_tgt": "auth_service",
+      "source": "auth_service",
+      "target": "credential_broker_service"
+    },
+    {
+      "relation": "depends_on",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "capability_registry_service",
+      "_tgt": "auth_service",
+      "source": "auth_service",
+      "target": "capability_registry_service"
+    },
+    {
+      "relation": "depends_on",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "application_gateway_service",
+      "_tgt": "auth_service",
+      "source": "auth_service",
+      "target": "application_gateway_service"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "auth_service",
+      "source": "auth_service",
+      "target": "r3_5_release"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-retrospective.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_retrospective",
+      "_tgt": "auth_service",
+      "source": "auth_service",
+      "target": "r3_5_retrospective"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/auth-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "auth_service_orgs_membership",
+      "_tgt": "adr_006",
+      "source": "auth_service_orgs_membership",
+      "target": "adr_006"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "credential_broker_service_runtime_oauth",
+      "_tgt": "auth_service_login_oauth",
+      "source": "auth_service_login_oauth",
+      "target": "credential_broker_service_runtime_oauth"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/identity-org-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "identity_org_service_tombstone",
+      "_tgt": "adr_017",
+      "source": "identity_org_service_tombstone",
+      "target": "adr_017"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "services_reference_hub",
+      "_tgt": "identity_org_service_tombstone",
+      "source": "identity_org_service_tombstone",
+      "target": "services_reference_hub"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/adr-017-identity-org-service-split.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr_017",
+      "_tgt": "adr_017_boundary_fix",
+      "source": "adr_017",
+      "target": "adr_017_boundary_fix"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/adr-017-identity-org-service-split.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr_017",
+      "_tgt": "adr_017_two_service_split",
+      "source": "adr_017",
+      "target": "adr_017_two_service_split"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/adr-017-identity-org-service-split.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr_017",
+      "_tgt": "adr_006",
+      "source": "adr_017",
+      "target": "adr_006"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/adr-017-identity-org-service-split.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr_017",
+      "_tgt": "adr_004",
+      "source": "adr_017",
+      "target": "adr_004"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/adr-017-identity-org-service-split.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr_017",
+      "_tgt": "adr_016",
+      "source": "adr_017",
+      "target": "adr_016"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "adr_017",
+      "source": "adr_017",
+      "target": "r3_5_release"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr_hub",
+      "_tgt": "adr_017",
+      "source": "adr_017",
+      "target": "adr_hub"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/knowledge-graph-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "knowledge_graph_service",
+      "_tgt": "adr_017_boundary_fix",
+      "source": "adr_017_boundary_fix",
+      "target": "knowledge_graph_service"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/knowledge-graph-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "knowledge_graph_service",
+      "_tgt": "knowledge_graph_service_port_8003",
+      "source": "knowledge_graph_service",
+      "target": "knowledge_graph_service_port_8003"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/knowledge-graph-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "knowledge_graph_service",
+      "_tgt": "knowledge_graph_service_org_scoped_kg_writer",
+      "source": "knowledge_graph_service",
+      "target": "knowledge_graph_service_org_scoped_kg_writer"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/knowledge-graph-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "knowledge_graph_service",
+      "_tgt": "adr_022",
+      "source": "knowledge_graph_service",
+      "target": "adr_022"
+    },
+    {
+      "relation": "depends_on",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/knowledge-graph-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "knowledge_graph_service",
+      "_tgt": "neo4j_substrate",
+      "source": "knowledge_graph_service",
+      "target": "neo4j_substrate"
+    },
+    {
+      "relation": "depends_on",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/knowledge-retriever-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "knowledge_retriever_service",
+      "_tgt": "knowledge_graph_service",
+      "source": "knowledge_graph_service",
+      "target": "knowledge_retriever_service"
+    },
+    {
+      "relation": "depends_on",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "capability_registry_service",
+      "_tgt": "knowledge_graph_service",
+      "source": "knowledge_graph_service",
+      "target": "capability_registry_service"
+    },
+    {
+      "relation": "depends_on",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "application_gateway_service",
+      "_tgt": "knowledge_graph_service",
+      "source": "knowledge_graph_service",
+      "target": "application_gateway_service"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "knowledge_graph_service",
+      "source": "knowledge_graph_service",
+      "target": "r3_5_release"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/knowledge-retriever-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "knowledge_retriever_service",
+      "_tgt": "knowledge_retriever_service_port_8004",
+      "source": "knowledge_retriever_service",
+      "target": "knowledge_retriever_service_port_8004"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/knowledge-retriever-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "knowledge_retriever_service",
+      "_tgt": "knowledge_retriever_service_node_result",
+      "source": "knowledge_retriever_service",
+      "target": "knowledge_retriever_service_node_result"
+    },
+    {
+      "relation": "depends_on",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/knowledge-retriever-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "knowledge_retriever_service",
+      "_tgt": "neo4j_substrate",
+      "source": "knowledge_retriever_service",
+      "target": "neo4j_substrate"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/knowledge-retriever-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "knowledge_retriever_service",
+      "_tgt": "adr_022",
+      "source": "knowledge_retriever_service",
+      "target": "adr_022"
+    },
+    {
+      "relation": "depends_on",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "application_gateway_service",
+      "_tgt": "knowledge_retriever_service",
+      "source": "knowledge_retriever_service",
+      "target": "application_gateway_service"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "knowledge_retriever_service",
+      "source": "knowledge_retriever_service",
+      "target": "r3_5_release"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.6,
+      "source_file": "services-reference/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "knowledge_retriever_service",
+      "_tgt": "rebac_tenancy_scoping",
+      "source": "knowledge_retriever_service",
+      "target": "rebac_tenancy_scoping"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "credential_broker_service",
+      "_tgt": "credential_broker_service_port_8002",
+      "source": "credential_broker_service",
+      "target": "credential_broker_service_port_8002"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "credential_broker_service",
+      "_tgt": "credential_broker_service_aes_256_gcm",
+      "source": "credential_broker_service",
+      "target": "credential_broker_service_aes_256_gcm"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "credential_broker_service",
+      "_tgt": "credential_broker_service_runtime_oauth",
+      "source": "credential_broker_service",
+      "target": "credential_broker_service_runtime_oauth"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "credential_broker_service",
+      "_tgt": "credential_broker_service_resolve_credential",
+      "source": "credential_broker_service",
+      "target": "credential_broker_service_resolve_credential"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "credential_broker_service",
+      "_tgt": "adr_007",
+      "source": "credential_broker_service",
+      "target": "adr_007"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/credential-broker-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "credential_broker_service",
+      "_tgt": "adr_008",
+      "source": "credential_broker_service",
+      "target": "adr_008"
+    },
+    {
+      "relation": "depends_on",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "capability_registry_service",
+      "_tgt": "credential_broker_service",
+      "source": "credential_broker_service",
+      "target": "capability_registry_service"
+    },
+    {
+      "relation": "depends_on",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "application_gateway_service",
+      "_tgt": "credential_broker_service",
+      "source": "credential_broker_service",
+      "target": "application_gateway_service"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "credential_broker_service",
+      "source": "credential_broker_service",
+      "target": "r3_5_release"
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "capability_registry_service",
+      "_tgt": "credential_broker_service_resolve_credential",
+      "source": "credential_broker_service_resolve_credential",
+      "target": "capability_registry_service"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-retrospective.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_retrospective",
+      "_tgt": "credential_broker_service_resolve_credential",
+      "source": "credential_broker_service_resolve_credential",
+      "target": "r3_5_retrospective"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "capability_registry_service",
+      "_tgt": "capability_registry_service_port_8001",
+      "source": "capability_registry_service",
+      "target": "capability_registry_service_port_8001"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "capability_registry_service",
+      "_tgt": "capability_registry_service_connectors",
+      "source": "capability_registry_service",
+      "target": "capability_registry_service_connectors"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "capability_registry_service",
+      "_tgt": "capability_registry_service_google_drive_deferred",
+      "source": "capability_registry_service",
+      "target": "capability_registry_service_google_drive_deferred"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "capability_registry_service",
+      "_tgt": "oraclous_core_service",
+      "source": "capability_registry_service",
+      "target": "oraclous_core_service"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/capability-registry-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "capability_registry_service",
+      "_tgt": "r3_5_definition_of_done",
+      "source": "capability_registry_service",
+      "target": "r3_5_definition_of_done"
+    },
+    {
+      "relation": "depends_on",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "application_gateway_service",
+      "_tgt": "capability_registry_service",
+      "source": "capability_registry_service",
+      "target": "application_gateway_service"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "application_gateway_service_r6_hardening",
+      "_tgt": "capability_registry_service",
+      "source": "capability_registry_service",
+      "target": "application_gateway_service_r6_hardening"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "capability_registry_service",
+      "source": "capability_registry_service",
+      "target": "r3_5_release"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "services-reference/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "execution_engine_service",
+      "_tgt": "capability_registry_service",
+      "source": "capability_registry_service",
+      "target": "execution_engine_service"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "application_gateway_service",
+      "_tgt": "application_gateway_service_port_8006",
+      "source": "application_gateway_service",
+      "target": "application_gateway_service_port_8006"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "application_gateway_service",
+      "_tgt": "application_gateway_service_edge_jwt",
+      "source": "application_gateway_service",
+      "target": "application_gateway_service_edge_jwt"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "application_gateway_service",
+      "_tgt": "application_gateway_service_r6_hardening",
+      "source": "application_gateway_service",
+      "target": "application_gateway_service_r6_hardening"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "application_gateway_service",
+      "_tgt": "adr_015",
+      "source": "application_gateway_service",
+      "target": "adr_015"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "application_gateway_service",
+      "source": "application_gateway_service",
+      "target": "r3_5_release"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/application-gateway-service.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "application_gateway_service_r6_hardening",
+      "_tgt": "ora_37_error_envelope",
+      "source": "application_gateway_service_r6_hardening",
+      "target": "ora_37_error_envelope"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-retrospective.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_retrospective",
+      "_tgt": "ora_37_error_envelope",
+      "source": "ora_37_error_envelope",
+      "target": "r3_5_retrospective"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "oraclous_core_service",
+      "source": "oraclous_core_service",
+      "target": "r3_5_release"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-retrospective.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_retrospective",
+      "_tgt": "oraclous_core_service",
+      "source": "oraclous_core_service",
+      "target": "r3_5_retrospective"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "r3_5_definition_of_done",
+      "source": "r3_5_release",
+      "target": "r3_5_definition_of_done"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "r3_5_canonical_service_architecture",
+      "source": "r3_5_release",
+      "target": "r3_5_canonical_service_architecture"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "r3_5_hollowness_audit",
+      "source": "r3_5_release",
+      "target": "r3_5_hollowness_audit"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "r3_5_reza_signoff",
+      "source": "r3_5_release",
+      "target": "r3_5_reza_signoff"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "r3_5_spec_pin",
+      "source": "r3_5_release",
+      "target": "r3_5_spec_pin"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "r3_5_anti_micro_ticket",
+      "source": "r3_5_release",
+      "target": "r3_5_anti_micro_ticket"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "adr_022",
+      "source": "r3_5_release",
+      "target": "adr_022"
+    },
+    {
+      "relation": "supersedes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "old_r4_r8_roadmap",
+      "source": "r3_5_release",
+      "target": "old_r4_r8_roadmap"
+    },
+    {
+      "relation": "supersedes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_release",
+      "_tgt": "gateway_from_r5_plan",
+      "source": "r3_5_release",
+      "target": "gateway_from_r5_plan"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r2_release",
+      "_tgt": "r3_5_release",
+      "source": "r3_5_release",
+      "target": "r2_release"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_release",
+      "_tgt": "r3_5_release",
+      "source": "r3_5_release",
+      "target": "r3_release"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-retrospective.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_retrospective",
+      "_tgt": "r3_5_release",
+      "source": "r3_5_release",
+      "target": "r3_5_retrospective"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "releases_hub",
+      "_tgt": "r3_5_release",
+      "source": "r3_5_release",
+      "target": "releases_hub"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "services_reference_hub",
+      "_tgt": "r3_5_release",
+      "source": "r3_5_release",
+      "target": "services_reference_hub"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-retrospective.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_retrospective",
+      "_tgt": "harness_runtime_service",
+      "source": "r3_5_retrospective",
+      "target": "harness_runtime_service"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-retrospective.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_retrospective",
+      "_tgt": "execution_engine_service",
+      "source": "r3_5_retrospective",
+      "target": "execution_engine_service"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_definition_of_done",
+      "_tgt": "adr_016",
+      "source": "r3_5_definition_of_done",
+      "target": "adr_016"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_definition_of_done",
+      "_tgt": "r3_5_reza_signoff",
+      "source": "r3_5_definition_of_done",
+      "target": "r3_5_reza_signoff"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "r3_5_canonical_service_architecture",
+      "_tgt": "adr_016",
+      "source": "r3_5_canonical_service_architecture",
+      "target": "adr_016"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "releases/r3.5-make-every-service-real.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lift_vs_rewrite_convention",
+      "_tgt": "r3_5_spec_pin",
+      "source": "r3_5_spec_pin",
+      "target": "lift_vs_rewrite_convention"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "releases_hub",
+      "_tgt": "old_r4_r8_roadmap",
+      "source": "old_r4_r8_roadmap",
+      "target": "releases_hub"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "releases/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "releases_hub",
+      "_tgt": "lift_vs_rewrite_convention",
+      "source": "releases_hub",
+      "target": "lift_vs_rewrite_convention"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr_hub",
+      "_tgt": "adr_016",
+      "source": "adr_hub",
+      "target": "adr_016"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr_hub",
+      "_tgt": "adr_022",
+      "source": "adr_hub",
+      "target": "adr_022"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr_hub",
+      "_tgt": "adr_015",
+      "source": "adr_hub",
+      "target": "adr_015"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "services-reference/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "harness_runtime_service",
+      "_tgt": "execution_engine_service",
+      "source": "harness_runtime_service",
+      "target": "execution_engine_service"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "services-reference/index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "services_reference_hub",
+      "_tgt": "rebac_tenancy_scoping",
+      "source": "services_reference_hub",
+      "target": "rebac_tenancy_scoping"
     }
   ],
   "hyperedges": []
