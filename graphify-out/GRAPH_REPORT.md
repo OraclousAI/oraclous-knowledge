@@ -1,7 +1,7 @@
 # Graph Report - /Users/reza/workspace/.oraclous-worktrees/r35-kb  (2026-06-05)
 
 ## Corpus Check
-- 2 files · ~282,551 words
+- 2 files · ~282,552 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -222,11 +222,11 @@ Nodes (1): scripts/ tooling README
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Test Strategy` connect `Community 2` to `Community 8`, `Community 13`, `Community 7`?**
-  _High betweenness centrality (0.054) - this node is a cross-community bridge._
-- **Why does `Cross-cutting agreement protocol` connect `Community 7` to `Community 2`?**
-  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+  _High betweenness centrality (0.055) - this node is a cross-community bridge._
 - **Why does `Testing Approach (Frontend)` connect `Community 8` to `Community 2`?**
-  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+- **Why does `Provenance` connect `Community 9` to `Community 4`?**
+  _High betweenness centrality (0.048) - this node is a cross-community bridge._
 - **What connects `Resolve the installed paperclipai entrypoint (npx cache path has a rotating hash`, `Fire one agent heartbeat (source=assignment) to start its assigned work, fire-an`, `Return (frontmatter_lines, body_lines).      Frontmatter is a leading ``---`` ..` to the rest of the system?**
   _419 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
