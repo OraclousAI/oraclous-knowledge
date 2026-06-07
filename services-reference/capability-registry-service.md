@@ -9,7 +9,7 @@ title: "capability-registry-service"
 
 ## What it is now
 
-R3.5 service #5 rebuilt this real, end-to-end. It owns the unified capability registry and **synchronous** tool execution, with real connector dispatch to PostgreSQL, MySQL, Notion, and GitHub, and a real credential bridge to [credential-broker-service](credential-broker-service.md) (with a deterministic fake-broker fallback for key-free smokes). The Google Drive live connector's OAuth path is ported and tested via the fake broker; the live call is deferred (it needs a real secret in the smoke). **Asynchronous / queued / streaming execution is out of scope here by design** — that is the R5 execution-engine-service.
+R3.5 service #5 rebuilt this real, end-to-end. It owns the unified capability registry and **synchronous** tool execution, with real connector dispatch to PostgreSQL, MySQL, Notion, and GitHub, and a real credential bridge to [credential-broker-service](credential-broker-service.md) (with a deterministic fake-broker fallback for key-free smokes). The Google Drive Reader exists as a registered tool **descriptor only**; its live OAuth connector/executor is deferred (no Drive executor is registered, and there is no key-free smoke for it). The generic `oauth_token` credential path is exercised via the fake broker, but no Drive-specific connector code has been ported. **Asynchronous / queued / streaming execution is out of scope here by design** — that is the R5 execution-engine-service.
 
 `oraclous-core-service` (~6,800 LOC of real-but-dead legacy code) was the port-source. Once its registry/validation/connectors/execution were ported here **and proven** by integration + smoke tests, it was deleted under the §15 destructive-change protocol with explicit Reza sign-off. No legacy port-source remains (`service_status.yaml` `legacy: {}`).
 
@@ -25,7 +25,7 @@ R3.5 service #5 rebuilt this real, end-to-end. It owns the unified capability re
 * **Connectors** (the external-provider integrations ported from `oraclous-core-service`)
 * Validation service: input/output schema conformance, credential-requirement accuracy
 * Versioning: content hash per descriptor, optional semver tags
-* ReBAC-gated visibility (workspace-scoped; cross-workspace sharing needs explicit relationships)
+* Organisation-scoped visibility — every read/write is parameterised by `organisation_id` (ADR-006); platform/built-in tools are seeded under `PLATFORM_ORG_ID` and read-widened to every tenant org. Cross-org ReBAC sharing is not yet wired in this service
 * Capability registration API
 * Credential bridge to [credential-broker-service](credential-broker-service.md) for token-backed tool calls
 
@@ -41,7 +41,7 @@ A `capability_pack` is a bundling artifact, not a separate kind — it expands o
 
 ## Dependencies
 
-* **Upstream:** Postgres (descriptor storage), [auth-service](auth-service.md) (ReBAC visibility for human and machine principals), [credential-broker-service](credential-broker-service.md) (runtime token resolution for connector tool calls), [knowledge-graph-service](knowledge-graph-service.md) (`:Agent` nodes some kinds persist)
+* **Upstream:** Postgres (descriptor storage + local `executions` table), [auth-service](auth-service.md) (principal/organisation identity — JWT-decode under `AUTH_MODE=jwt`, or trusted `X-Principal-*`/`X-Organisation-Id` headers under `AUTH_MODE=gateway`, ADR-018), [credential-broker-service](credential-broker-service.md) (runtime token resolution for connector tool calls)
 * **Downstream consumers:** every capability invocation path; the frontend reaches it **directly by host IP:port** until [application-gateway-service](application-gateway-service.md) fronts it
 
 ## Salvage-then-delete `oraclous-core-service` (ORAA-4 §15) — DONE

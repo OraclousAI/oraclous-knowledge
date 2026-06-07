@@ -5,7 +5,7 @@ title: "harness-runtime-service"
 
 # harness-runtime-service
 
-**Layer:** 3 (Harness Runtime + Execution Engine) · **Port:** 8007 (gateway prefix `/v1/harnesses`) · **Status:** **Real — R4 code-complete** (synchronous OHM runtime: the plan→act→observe loop over real registry tools, under a governance/budget envelope, BYOM live LLM, human-actor dispatch, provenance + consciousness; awaiting the §22 Reza sign-off). **R5 added the mid-loop HITL resume + the assignment claim/complete endpoints** the [execution-engine-service](execution-engine-service.md) drives.
+**Layer:** 3 (Harness Runtime + Execution Engine) · **Port:** 8007 (gateway prefix `/v1/harnesses`) · **Status:** **Real — R4 runtime + R5 HITL-resume/assignment surface shipped** (synchronous OHM runtime: the plan→act→observe loop over real registry tools, under a governance/budget envelope, BYOM live LLM, human-actor dispatch, provenance + consciousness write). R5 added the mid-loop HITL resume (`POST /v1/harnesses/{id}/resume`) + the assignment claim/complete endpoints the [execution-engine-service](execution-engine-service.md) drives.
 
 ## Purpose
 
@@ -15,33 +15,31 @@ title: "harness-runtime-service"
 
 * Harness execution (loads the OHM, runs to completion or escalation)
 * Actor dispatch (agents go through tool-use loop; humans get task board assignments)
-* Multi-mode tool-use loop (`AgentExecutor` and its streaming variant, lifted from `knowledge-graph-builder`)
+* Synchronous tool-use loop (`run_tool_use_loop` in `domain/loop/tool_use.py`, lifted from `knowledge-graph-builder`)
 * Capability resolution at every invocation (calls `capability-registry-service`)
 * Credential resolution at every invocation (calls `credential-broker-service`)
-* Policy envelope enforcement (budget caps, **HITL gates**, output redaction, cross-workspace traversal checks) — coded, prose can't relax it
+* Policy envelope enforcement (budget caps, **HITL gates**, output redaction) — coded, prose can't relax it
 * **Human-actor dispatch** — an entrypoint human actor parks the run ESCALATED as a `harness_assignments` task; `POST /v1/harnesses/assignments/{id}/claim` + `/complete` resolve it (R5-S4)
 * **Mid-loop HITL pause + resume** (R5-S6) — a gated capability halts the loop ESCALATED and persists a redacted loop checkpoint (`harness_checkpoints`); `POST /v1/harnesses/{id}/resume` re-enters the loop on APPROVED (the approved tool runs) or terminates it on DENIED. Secrets never enter the checkpoint (redaction-at-source); provenance emits only the new step tail.
 * Provenance write-through (every action recorded; storage lives in `knowledge-graph-service`)
-* LLM client factory supporting the three v1 protocol shapes (ADR-007)
-* LLM config resolution (agent → workspace → organisation)
-* Agent CRUD APIs (the `:Agent` Neo4j nodes live in the graph substrate; the lifecycle service lives here)
-* Chat engine (synthetic-agent pattern for chat-shaped interactions)
+* LLM client factory — the three v1 protocol shapes are modelled (ADR-007); only `openai-compatible` is wired in this build (OpenRouter serves Claude/OpenAI/Gemini behind it); `native` (Anthropic) and `gemini` fail-closed with a config error until their direct providers are wired
+* LLM resolution from the OHM's primary model binding + a BYOM credential via [credential-broker-service](credential-broker-service.md) (ADR-008; no platform/workspace/org fallback chain)
 
 ## Dependencies
 
-* **Upstream:** `auth-service`, `credential-broker-service`, `capability-registry-service`, `knowledge-retriever-service`, `knowledge-graph-service` (for provenance writes and `:Agent` node persistence)
+* **Upstream:** `auth-service`, `credential-broker-service`, `capability-registry-service`, `knowledge-retriever-service`, `knowledge-graph-service` (for provenance writes via the `oraclous_substrate` collector)
 * **Downstream consumers:** `execution-engine-service` (for durable jobs and schedules), `application-gateway-service` (which proxies customer-facing interactions)
 
 ## What lifts in (Phase 4)
 
-From `knowledge-graph-builder`:
+From `knowledge-graph-builder`, as-built (the rebuild did not lift these file-for-file):
 
-* `AgentExecutor` (`agent_executor.py`) and its streaming variant
-* Agent toolkit (`agent_tools.py`, `agent_tool_schemas.py`) — graph tools become one category of capability among many
-* LLM client factory + LLM config service
-* Provenance collector (`provenance.py`) for in-flight collection; persistent storage stays in the graph substrate
-* Chat engine (`chat_engine.py`)
-* Agent CRUD service (`agent_service.py`)
+* Tool-use loop — `run_tool_use_loop` in `domain/loop/tool_use.py` (single synchronous loop; no streaming variant)
+* Tool schemas — `domain/tool_schemas.py` — graph tools become one category of capability among many
+* LLM client factory (`domain/llm/factory.py`; `openai-compatible` wired)
+* Provenance collector — `ProvenanceCollector` imported from the `oraclous_substrate` package (in-flight collection; persistent storage stays in the graph substrate)
+
+Not lifted (deferred / not built): the `AgentExecutor` streaming variant, the chat engine (`chat_engine.py`), and the agent CRUD service (`agent_service.py`).
 
 ## API surface (through the gateway, `/v1/harnesses`)
 

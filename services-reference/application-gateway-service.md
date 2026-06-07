@@ -5,16 +5,18 @@ title: "application-gateway-service"
 
 # application-gateway-service
 
-**Layer:** 4 (Application Gateway) · **Port:** 8006 · **Status:** **Real — R3.5-complete, §22-signed-off** (Reza ran `smoke.sh` over the full stack). Built as a **streaming reverse-proxy edge**: route table → proxy to the five lower services, edge JWT termination + identity forwarding, CORS, and health aggregation. It holds **no database**. The richer gateway surface (MCP, chat, webhooks, widgets, rate-limiting, API keys, versioned public OpenAPI) is **R6 hardening — not built yet**.
+**Layer:** 4 (Application Gateway) · **Port:** 8006 · **Status:** **Real — R3.5-complete, §22-signed-off** (Reza ran `smoke.sh` over the full stack). Built as a **streaming reverse-proxy edge**: route table → proxy to seven lower services (the five substrate/capability services plus harness-runtime and execution-engine), edge JWT termination + identity forwarding with ADR-018 `X-Internal-Key` attestation, CORS, and health aggregation. It holds **no database**. The richer gateway surface (MCP, chat, webhooks, widgets, rate-limiting, API keys, versioned public OpenAPI) is **R6 hardening — not built yet**.
 
 ## What it is now (real today)
 
 R3.5 service #6 built the gateway as a thin, stateless edge:
 
-* **Reverse proxy** — a longest-prefix route table maps public paths to upstreams and streams requests/responses through (`httpx` send `stream=True` → `StreamingResponse` + `BackgroundTask` to close the upstream). All five lower services sit behind it: auth, credential-broker, knowledge-graph, knowledge-retriever, capability-registry.
-* **Edge JWT termination** — `GATEWAY_AUTH_MODE` (`dev` | `jwt`) verifies the caller's token at the edge, then forwards identity as `X-Principal-*` / `X-Organisation-Id` headers. Inbound copies of those trusted headers are **stripped first** (anti-spoof), so upstreams trust only what the gateway asserts. Public paths (`/v1/auth`, `/oauth`) bypass auth.
+* **Reverse proxy** — a longest-prefix route table maps public paths to upstreams and streams requests/responses through (`httpx` send `stream=True` → `StreamingResponse` + `BackgroundTask` to close the upstream). Seven lower services sit behind it: auth (`/v1/auth`, `/v1/orgs`, `/v1/invitations`, `/oauth`), credential-broker (`/credentials`), knowledge-graph (`/api/v1/graphs`, `/api/v1/recipes`), knowledge-retriever (`/v1/search`, `/v1/graph`), capability-registry (`/api/v1/{capabilities,tools,instances,executions}`) on Layers 1–2, plus harness-runtime (`/v1/harnesses`) and execution-engine (`/v1/engine`) on Layer 3. Health aggregation (`/health/upstreams`) rolls up only the five substrate/capability services.
+* **Edge JWT termination** — `GATEWAY_AUTH_MODE` (`dev` | `jwt`) verifies the caller's token at the edge, then forwards identity as `X-Principal-*` / `X-Organisation-Id` headers. Inbound copies of those trusted headers are **stripped first** (anti-spoof), so upstreams trust only what the gateway asserts. Only `/v1/auth` and `/oauth` bypass edge auth; `/v1/orgs` and `/v1/invitations` are proxied to auth-service but stay authenticated.
+* **Edge-auth attestation (ADR-018)** — every forwarded request carries a shared `X-Internal-Key` (`INTERNAL_SERVICE_KEY`; any client-supplied copy stripped first) so upstreams in gateway-mode can prove the request actually transited the gateway and trust the `X-Principal-*` headers.
 * **CORS** — `CORSMiddleware`, origins from config.
-* **Health aggregation** — `GET /health` (self) and `GET /health/upstreams` (rolls up every upstream's health with a bounded timeout).
+* **Health aggregation** — `GET /health` (self) and `GET /health/upstreams` (rolls up the five substrate/capability upstreams' health with a bounded timeout).
+* **Canonical ORA-37 error envelope** — every 4xx/5xx the gateway returns (its own errors AND normalized upstream errors) is the canonical `{error:{code, message, requestId, retryable, details?}}` shape via the shared `oraclous_errors` emitter; upstream error bodies are drained and discarded so no upstream stack trace / SQL / internal host leaks through the edge (Interface Contracts §3 rule 8). `requestId` is the server-minted `req_*` correlation id set by `RequestIdMiddleware` and echoed in `X-Request-Id`.
 
 It is the strictest case of the §21 no-logic-in-handlers rule: the gateway proxies and applies policy, it never executes business logic or touches substrate.
 
@@ -28,12 +30,11 @@ The following are the gateway's eventual contract surface and are **deferred to 
 * Webhook receivers; embeddable widget endpoints
 * Rate limiting, request-size limits, webhook signature verification, per-key CORS scoping
 * A **versioned public OpenAPI** as the canonical interface home (replacing `flows/interface-contracts.md`)
-* The **unified ORA-37 error envelope.** The contract is pinned at `packages/errors/contract/error-envelope.schema.json` (`{error: {code, message, requestId, retryable, details?}}`). The gateway's own-error body is currently the non-conformant `{error_code, message, request_id}` — corrected by the **error-contract slice pulled forward** ahead of the frontend (build the `oraclous_errors` emitter; make the gateway emit the canonical envelope for its own errors and normalize upstream 4xx/5xx into it).
 * **Sole-ingress** posture (closing upstream host ports) — a security-architect call; upstream ports stay open today for per-service smokes + defense-in-depth.
 
 ## Dependencies
 
-* **Upstream:** [auth-service](auth-service.md) (human + machine authentication), [capability-registry-service](capability-registry-service.md), [knowledge-graph-service](knowledge-graph-service.md), [knowledge-retriever-service](knowledge-retriever-service.md), [credential-broker-service](credential-broker-service.md) — all proxied; the gateway never reads their secrets or substrate directly
+* **Upstream:** [auth-service](auth-service.md) (human + machine authentication), [capability-registry-service](capability-registry-service.md), [knowledge-graph-service](knowledge-graph-service.md), [knowledge-retriever-service](knowledge-retriever-service.md), [credential-broker-service](credential-broker-service.md), [harness-runtime-service](harness-runtime-service.md) (`/v1/harnesses`), [execution-engine-service](execution-engine-service.md) (`/v1/engine`) — all proxied; the gateway never reads their secrets or substrate directly
 * **Downstream consumers:** all external callers (the frontend; later, customers, MCP clients, webhook senders)
 
 ## What does NOT live here

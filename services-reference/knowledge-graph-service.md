@@ -9,7 +9,7 @@ title: "knowledge-graph-service"
 
 ## What it is now
 
-R3.5 rebuilt this real, end-to-end, against real Neo4j + Postgres. The write side genuinely ingests: `routes/` (`graph_routes`, `ingest_routes`, `recipe_routes`, `ontology_routes`, `internal_routes`) → `services/` (real `graph_service`, `ingestion_service`, `structured_ingestion_service`, `code_ingestion_service`, recipe `engine`, `recipe_service`, `ontology_service`, `job_service`, plus `chunker`/`embedder`/`extractors`/`parser`/`primitives`) → repositories → substrate. The legacy port-sources (`knowledge-graph-builder`, `oraclous-core-service`) are deleted. The org/member/role/invitation domain **left this service** (the ADR-017 boundary fix) and lives in [auth-service](auth-service.md); the graph keeps only the ReBAC *edges*.
+R3.5 rebuilt this real, end-to-end, against real Neo4j + Postgres. The write side genuinely ingests: `routes/` (`health_routes`, `graph_routes`, `ingest_routes`, `recipe_routes`, `ontology_routes`, `internal_routes`) → `services/` (real `graph_service`, `ingestion_service`, `structured_ingestion_service`, `code_ingestion_service`, recipe `engine`, `recipe_service`, `ontology_service`, `job_service`, plus `chunker`/`embedder`/`extractors`/`parser`/`primitives`) → repositories → substrate. The legacy port-sources (`knowledge-graph-builder`, `oraclous-core-service`) are deleted. The org/member/role/invitation domain **left this service** (the ADR-017 boundary fix) and lives in [auth-service](auth-service.md); the graph keeps only the ReBAC *edges*.
 
 ## Purpose
 
@@ -33,8 +33,8 @@ Each modality is stored as nodes in one unified graph with modality-appropriate 
 ## Responsibilities
 
 * Recipe + primitive ingestion across text / PDF / DOCX / MD / CSV / JSON / code into the unified graph (ADR-022), with temporal write-side stamps
-* Ontology enforcement (`ontology_service`, ontology endpoints) and internal schema extraction (`internal_routes`, `/internal/v1/schema`)
-* ReBAC graph maintenance: workspace hierarchy, cross-workspace relationships, agent scopes, delegations, and the membership/subgraph-grant **edges** written on behalf of [auth-service](auth-service.md)
+* Ontology enforcement (`ontology_service`, ontology endpoints) and internal schema extraction (`internal_routes`, `GET /internal/v1/schema/{graph_id}`)
+* Reserves ReBAC label namespaces (`__Rebac__`) against accidental ingestion overwrite; **actual ReBAC-edge writes (workspace hierarchy, cross-workspace relationships, agent scopes, delegations, membership/subgraph-grant edges) are not implemented in this build**
 * Multi-tenant write wrappers enforcing `organisation_id` and `graph_id`
 * Provenance writes
 * Background job orchestration for long-running ingestion pipelines (`job_service`)
@@ -52,7 +52,7 @@ Each modality is stored as nodes in one unified graph with modality-appropriate 
 * `organization_id` filter mandatory on every write path
 * Cypher injection prevention via parameterised queries (the `test_cypher_injection.py` suite is preserved)
 * Per-graph indexes and `graph_id`-scoped writes; cross-tenant writes structurally impossible
-* Decompression-bomb protection via a `MAX_DECOMPRESSED_BYTES` cap on uploaded archives
+* Decompression-bomb protection on zip archives in code ingestion via a per-file size cap (`_MAX_FILE_BYTES`, 2 MB) and a file-count cap (`_MAX_FILES`, 5000) — `code_ingestion_service.py` (there is no aggregate total-decompressed cap today)
 
 ## Architecture conformance (ORAA-4 §21)
 

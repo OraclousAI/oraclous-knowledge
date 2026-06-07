@@ -9,18 +9,18 @@ title: "credential-broker-service"
 
 ## What it is now
 
-R3.5 rebuilt the broker real, end-to-end. Concrete and unhedged: an **AES-256-GCM** encrypted credential store (per-organisation key derivation), and **runtime OAuth token resolution** — handing a freshly-valid provider token to an authorised tool invocation, refreshing it transparently on expiry. `routes/` (`credential_routes`, `internal_routes`) → `services/` (`credential_service`, `credential_broker_service`, `delegation_service`, `refresh_client`) → repositories; `domain/` holds `providers`, `scopes`, `errors`. The smoke proves store → resolve → decrypt with **ciphertext (not plaintext) at rest in the DB**, plus delegated-token issue/validate. It serves [auth-service](auth-service.md) for principal verification and is consumed by [capability-registry-service](capability-registry-service.md).
+R3.5 rebuilt the broker real, end-to-end. Concrete and unhedged: an **AES-256-GCM** encrypted credential store (a single service key, `ENCRYPTION_KEY`; per-organisation isolation enforced by mandatory `organisation_id` query-scoping, ADR-006 — not by cryptographic key separation), and **runtime OAuth token resolution** — handing a freshly-valid provider token to an authorised tool invocation, refreshing it transparently on expiry. `routes/` (`credential_routes`, `internal_routes`) → `services/` (`credential_service`, `credential_broker_service`, `delegation_service`, `refresh_client`) → repositories; `domain/` holds `providers`, `scopes`, `errors`. The smoke proves store → resolve → decrypt with **ciphertext (not plaintext) at rest in the DB**, plus delegated-token issue/validate. It serves [auth-service](auth-service.md) for principal verification and is consumed by [capability-registry-service](capability-registry-service.md).
 
 ## Purpose
 
-`credential-broker-service` is the platform's **secret keeper**. It stores credentials — OAuth tokens, API keys, BYOM provider credentials, internal service tokens — under per-organisation AES-256-GCM encryption, and resolves them on demand for authorised invocations. Credentials never leave the broker in plaintext.
+`credential-broker-service` is the platform's **secret keeper**. It stores credentials — OAuth tokens, API keys, BYOM provider credentials, internal service tokens — under AES-256-GCM encryption (a single service key; per-organisation isolation via `organisation_id` query-scoping), and resolves them on demand for authorised invocations. Credentials never leave the broker in plaintext.
 
 ## Responsibilities
 
-* **Encrypted credential storage** with **AES-256-GCM**, per-organisation key derivation
+* **Encrypted credential storage** with **AES-256-GCM** under a single service key (`ENCRYPTION_KEY`); per-organisation isolation enforced by mandatory `organisation_id` query-scoping (ADR-006), not by cryptographic key separation
 * **Runtime OAuth token resolution:** resolve a provider token for an authorised tool call, refreshing transparently on expiry (the refresh-flow runtime, distinct from the *login* OAuth in [auth-service](auth-service.md))
-* BYOM provider credentials (Anthropic, OpenAI-compatible, AWS Bedrock — ADR-007)
-* Provider descriptors for external providers (Google Drive, Notion, PostgreSQL, MySQL, etc.) — `domain/providers.py`
+* BYOM provider credentials are stored as generic `api_key`/`raw` secrets in the same encrypted store and resolved via `/internal/resolve-credential`; the broker is provider-agnostic — no Anthropic/OpenAI/Bedrock-specific protocol logic lives here (the three-protocol-shape handling per ADR-007 lives in the consuming runtime/registry)
+* Provider descriptors for external providers (Google — Drive/Docs/Sheets, Notion — pages/databases, GitHub — repos/issues/PRs) — `domain/providers.py`
 * Per-invocation resolution; tokens never cached outside the broker
 * Delegated-scope verification + delegated-token issuance for member→agent delegated calls
 * Internal credential brokerage for cross-workspace traversal
@@ -34,12 +34,12 @@ These are two different jobs and they live in two different services:
 
 ## Dependencies
 
-* **Upstream:** Postgres (encrypted credential store), [auth-service](auth-service.md) (principal-type verification for human and machine callers). An external **KMS** for per-organisation key custody is the ADR-008 cloud-mode posture — **not in this build**; today keys are derived AES-256-GCM.
+* **Upstream:** Postgres (encrypted credential store), [auth-service](auth-service.md) (principal-type verification for human and machine callers). An external **KMS** for per-organisation key custody is the ADR-008 cloud-mode posture — **not in this build**; today a single AES-256-GCM service key (`ENCRYPTION_KEY`) encrypts all orgs' credentials, isolated by `organisation_id` query-scoping.
 * **Downstream consumers:** [capability-registry-service](capability-registry-service.md) and every tool invocation path; reached **directly by host IP:port** until [application-gateway-service](application-gateway-service.md) fronts it
 
 ## Security commitments
 
-* Credentials encrypted at rest with **AES-256-GCM**, per-organisation keys; cross-organisation decryption is structurally impossible
+* Credentials encrypted at rest with **AES-256-GCM** under a single service key; per-organisation isolation enforced by mandatory `organisation_id` query-scoping on every read/write (ADR-006). Per-organisation key custody — so cross-org decryption would be structurally impossible — is the ADR-008 KMS posture, **not in this build**
 * Credentials never returned via API in plaintext; admins verify existence and rotate, not retrieve
 * Cloud mode: KMS separation so Oraclous-the-company cannot unilaterally decrypt (ADR-008) — a later, cloud-mode commitment, not in this build
 * Outbound provider calls scoped to the requesting organisation; no code path can substitute another org's credentials

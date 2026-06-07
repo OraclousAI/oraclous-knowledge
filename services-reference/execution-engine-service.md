@@ -5,7 +5,7 @@ title: "execution-engine-service"
 
 # execution-engine-service
 
-**Layer:** 3 (Harness Runtime + Execution Engine) · **Port:** 8008 (gateway prefix `/v1/engine`) · **Status:** **Real — R5 code-complete** (all 7 slices merged; the consolidated `smoke.sh` is green end-to-end against the real substrate; awaiting the ORAA-4 §22 Reza sign-off to flip `claimed_done`). Reached directly by host IP:port behind the [application-gateway-service](application-gateway-service.md), which fronts it on `/v1/engine`.
+**Layer:** 3 (Harness Runtime + Execution Engine) · **Port:** 8008 (gateway prefix `/v1/engine`) · **Status:** **Real — R5 done** (all 7 slices merged #185–#193; the per-service `smoke.sh` — `tests/smoke/smoke.sh` — is green end-to-end against the real substrate; the ORAA-4 §22 Reza sign-off is accepted and `claimed_done` is flipped). Reached directly by host IP:port behind the [application-gateway-service](application-gateway-service.md), which fronts it on `/v1/engine`.
 
 ## What it is now
 

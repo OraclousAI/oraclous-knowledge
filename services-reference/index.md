@@ -14,7 +14,7 @@ This hub indexes one reference page per service. Each page documents purpose, re
 ## Layer 1 — Substrate
 
 * [knowledge-graph-service](knowledge-graph-service.md) (port 8003) — **Real (R3.5-complete).** Graph CRUD + recipe-driven ingestion (text/PDF/DOCX/MD/CSV/JSON/code) into the unified graph (ADR-022) + ontology + jobs. Org/member management left this service. Heavy analytics (community/centrality) deferred.
-* [knowledge-retriever-service](knowledge-retriever-service.md) (port 8004) — **Real (R3.5-complete).** Semantic/full-text/hybrid/graph retrieval, uniform `NodeResult` envelope. Chat + temporal-slice + dedicated query-cache deferred.
+* [knowledge-retriever-service](knowledge-retriever-service.md) (port 8004) — **Real (R3.5-complete).** Semantic/full-text/hybrid/graph retrieval (incl. **temporal point-in-time** reads, `GET /v1/graph/{id}/temporal?as_of=`), uniform `NodeResult` envelope. Chat + a dedicated query-cache deferred.
 * [auth-service](auth-service.md) (port 8005) — **Real (R3.5-complete).** The single **identity authority**: human users (email/password + OAuth Google/GitHub/Notion), orgs/members/invitations, and machine principals (agents, service accounts). Consolidates what ADR-017 had planned as a separate identity-org-service.
 * [credential-broker-service](credential-broker-service.md) (port 8002) — **Real (R3.5-complete).** AES-256-GCM encrypted credential store + runtime OAuth token resolution + delegated tokens. (External KMS is the ADR-008 cloud-mode posture, later.)
 
@@ -29,14 +29,14 @@ This hub indexes one reference page per service. Each page documents purpose, re
 
 ## Layer 4 — Application Gateway
 
-* [application-gateway-service](application-gateway-service.md) (port 8006) — **Real (R3.5-complete) as a reverse-proxy edge:** longest-prefix route table → streaming proxy to the five lower services, edge JWT termination + identity forwarding (anti-spoof), CORS, health aggregation; no DB. The richer surface (MCP server/client, chat APIs, published agents, webhooks, rate-limiting, API keys, versioned public OpenAPI, the unified ORA-37 error envelope, sole-ingress) is **R6 hardening — not built yet**.
+* [application-gateway-service](application-gateway-service.md) (port 8006) — **Real (R3.5-complete) as a reverse-proxy edge:** longest-prefix route table → streaming proxy to the five lower services, edge JWT termination + identity forwarding (anti-spoof), CORS, health aggregation; no DB. The unified **ORA-37 error envelope is built and live** (`schema/error.py` via `oraclous_errors`). The richer surface (MCP server/client, chat APIs, published agents, webhooks, rate-limiting, API keys, versioned public OpenAPI, sole-ingress) is **R6 hardening — not built yet**.
 
 ## Cross-service patterns
 
 A few patterns thread through all services:
 
 * **Multi-tenant isolation** — every service includes `organisation_id` and (where relevant) `graph_id` in every query. The pattern is uniform; the enforcement is layered (every service smoke asserts a cross-org denial).
-* **ReBAC checks** — every access decision routes through the substrate's ReBAC graph. No service makes authorisation decisions independently.
+* **Authorization (as-built) — `organisation_id` scoping, not ReBAC.** Every access decision today is org-scoped: a request only ever sees its own org's rows, enforced by mandatory `organisation_id` query-scoping in every repository (ADR-006), with each service's smoke asserting a cross-org denial. The substrate ships a **ReBAC library** (`packages/rebac`) and reserves the `__Rebac__` graph namespace, but **no service yet enforces ReBAC** (relationship-based cross-workspace sharing, agent scopes, delegations) — that is a later authorization layer. Treat "ReBAC-gated" in the per-service pages as the target model, not the current control.
 * **Provenance write-through** — actions record to provenance; storage lives in the knowledge-graph substrate.
 * **Capability resolution** — every capability invocation goes through the registry. There is no path that bypasses descriptor lookup.
 * **Credential resolution** — every secret use goes through the broker. Services never cache, log, or transmit credentials.

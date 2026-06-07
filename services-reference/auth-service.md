@@ -17,8 +17,8 @@ title: "auth-service"
 
 ### Human identity
 
-* Email + password registration and login; email verification; password reset / change-password
-* Social OAuth login: **Google**, **GitHub**, **Notion** (login-URL build, token exchange, refresh, profile fetch) — `domain/oauth.py`, `oauth_routes`, `oauth_service`
+* Email + password registration and login; change-password for an authenticated user (`POST /v1/auth/change-password`). Self-service email-verification and password-reset endpoints are **not yet built** — the schema and `set_email_verified()` exist, but only the OAuth path marks an email verified
+* Social OAuth login: **Google**, **GitHub**, **Notion** (login-URL build, token exchange, profile fetch; provider tokens stored encrypted at rest — automatic provider-token refresh is not yet built) — `domain/oauth.py`, `oauth_routes`, `oauth_service`
 * JWT issuance/validation for human principals; `validate` / `me` introspection
 
 ### Organisations + membership
@@ -32,16 +32,17 @@ title: "auth-service"
 
 * **agent** identity issuance (agents as first-class principals)
 * **service account** identity and key validation
-* JWT for machine actors; the agent half of member→agent delegated-identity tokens
+* Append-only audit log of identity events (register, login, switch-org, oauth.login) — `audit_repository`, migration `0006_audit`
+* JWT for machine actors — standalone **agent** and **service-account** tokens minted from a credential (`POST /agent-token`; agents created internally via `POST /internal/agent-credentials`). Member→agent delegated-identity tokens are **not issued here** (runtime delegation/OAuth token resolution lives in [credential-broker-service](credential-broker-service.md))
 
 ## Dependencies
 
-* **Upstream:** Postgres (users, orgs, members, invitations, agents, service accounts, OAuth records — 6 migrations), Redis (token/session/verification state)
+* **Upstream:** Postgres (users, orgs, members, invitations, agents, service accounts, OAuth records, audit events — 6 migrations, the 6th being `0006_audit`), Redis (token/session/verification state)
 * **Downstream consumers:** every service that authenticates a request; [credential-broker-service](credential-broker-service.md) for runtime token resolution; the frontend (via the gateway once it fronts this service)
 
 ## Architecture conformance (ORAA-4 §21)
 
-Package root `services/auth-service/src/oraclous_auth_service/` in the canonical layered shape: `main.py` (`app = create_app()` only), `app/factory.py` (wire-only), `routes/` (`auth_routes`, `org_routes`, `invitation_routes`, `oauth_routes`), `services/` (all logic), `domain/` (pure entities: users, organisations, invitations, oauth), `repositories/(+models.py)` (the only DB access: user/organisation/org_member/invitation/oauth repositories), `schema/`, `core/{config,dependencies,lifespan}.py`, `migrations/`. The three non-negotiable rules hold (no logic in handlers, no non-`BaseModel` classes or DB drivers in `routes/`, repositories are the only DB access). `structure_enforced: true` and `claimed_done: true` in `service_status.yaml` — the structure and no-stub checkers fail CI on any regression.
+Package root `services/auth-service/src/oraclous_auth_service/` in the canonical layered shape: `main.py` (`app = create_app()` only), `app/factory.py` (wire-only), `routes/` (`auth_routes` — register/login/refresh/switch-org/change-password/me/validate; `org_routes`; `invitation_routes` — incl. token `peek`/`accept`; `oauth_routes` — incl. `providers`) plus an un-prefixed machine surface in `app/factory.py` (`POST /agent-token`, `POST`+`DELETE /internal/agent-credentials`, a second machine `GET /me`, `GET /health`), `services/` (all logic), `domain/` (pure entities: users, organisations, invitations, oauth), `repositories/(+models.py)` (the only DB access: user/organisation/org_member/invitation/oauth repositories), `schema/`, `core/{config,dependencies,lifespan}.py`, `migrations/`. The three non-negotiable rules hold (no logic in handlers, no non-`BaseModel` classes or DB drivers in `routes/`, repositories are the only DB access). `structure_enforced: true` and `claimed_done: true` in `service_status.yaml` — the structure and no-stub checkers fail CI on any regression.
 
 ## Definition of Done (ORAA-4 §22) — MET
 
