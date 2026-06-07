@@ -5,11 +5,11 @@ title: "harness-runtime-service"
 
 # harness-runtime-service
 
-**Layer:** 3 (Harness Runtime + Execution Engine) · **Port:** 8004 · **Status:** NEW in Phase 4 (lifted from `knowledge-graph-builder`)
+**Layer:** 3 (Harness Runtime + Execution Engine) · **Port:** 8007 (gateway prefix `/v1/harnesses`) · **Status:** **Real — R4 code-complete** (synchronous OHM runtime: the plan→act→observe loop over real registry tools, under a governance/budget envelope, BYOM live LLM, human-actor dispatch, provenance + consciousness; awaiting the §22 Reza sign-off). **R5 added the mid-loop HITL resume + the assignment claim/complete endpoints** the [execution-engine-service](execution-engine-service.md) drives.
 
 ## Purpose
 
-`harness-runtime-service` is the platform's central nervous system. It executes harnesses: loads OHM manifests, resolves capability allocations, dispatches actors (agents and humans), enforces the policy envelope, and coordinates multi-actor work. The compiler, consciousness agents, and customer harnesses all run on this same runtime — there is no privileged code path for platform-internal harnesses (ADR-003).
+`harness-runtime-service` is the platform's central nervous system. It runs **one OHM synchronously, in-request**: loads the manifest, resolves capability allocations, dispatches the entrypoint actor (agent or human), enforces the policy envelope, runs the agent tool-use loop, and returns the execution row. Durable/async work — long jobs, schedules, multi-actor **round-table** coordination — is the [execution-engine-service](execution-engine-service.md), which drives this runtime over HTTP (ADR-001); the **governance enforcement point stays single here**. The compiler, consciousness agents, and customer harnesses all run on this same runtime — no privileged code path (ADR-003).
 
 ## Responsibilities
 
@@ -18,9 +18,9 @@ title: "harness-runtime-service"
 * Multi-mode tool-use loop (`AgentExecutor` and its streaming variant, lifted from `knowledge-graph-builder`)
 * Capability resolution at every invocation (calls `capability-registry-service`)
 * Credential resolution at every invocation (calls `credential-broker-service`)
-* Policy envelope enforcement (budget caps, HITL gates, output redaction, cross-workspace traversal checks)
-* Round-table primitive (lifecycle, invitation, contribution, decision capture — Phase 5)
-* HITL primitive (task assignment, notification dispatch, resumption — Phase 5)
+* Policy envelope enforcement (budget caps, **HITL gates**, output redaction, cross-workspace traversal checks) — coded, prose can't relax it
+* **Human-actor dispatch** — an entrypoint human actor parks the run ESCALATED as a `harness_assignments` task; `POST /v1/harnesses/assignments/{id}/claim` + `/complete` resolve it (R5-S4)
+* **Mid-loop HITL pause + resume** (R5-S6) — a gated capability halts the loop ESCALATED and persists a redacted loop checkpoint (`harness_checkpoints`); `POST /v1/harnesses/{id}/resume` re-enters the loop on APPROVED (the approved tool runs) or terminates it on DENIED. Secrets never enter the checkpoint (redaction-at-source); provenance emits only the new step tail.
 * Provenance write-through (every action recorded; storage lives in `knowledge-graph-service`)
 * LLM client factory supporting the three v1 protocol shapes (ADR-007)
 * LLM config resolution (agent → workspace → organisation)
@@ -43,12 +43,12 @@ From `knowledge-graph-builder`:
 * Chat engine (`chat_engine.py`)
 * Agent CRUD service (`agent_service.py`)
 
-## What lifts in (Phase 5)
+## R5 additions (the harness side of the execution engine)
 
-* Multi-actor coordination primitives (HITL, round-tables)
-* Task board state management (the data model lives in the substrate; the lifecycle lives here)
-* Cross-workspace federation traversal coordination
-* Schedule-trigger dispatch (interacting with `execution-engine-service`)
+* **Assignment lifecycle** — `AssignmentRepository.claim/complete` + `POST /v1/harnesses/assignments/{id}/{claim,complete}`; complete flips the parked execution ESCALATED → SUCCEEDED with the human's output.
+* **Loop checkpoint + resume** — `run_tool_use_loop` returns a `LoopCheckpoint` on a HITL pause (the redacted transcript + the not-yet-dispatched tool calls + the budget cursor); `POST /v1/harnesses/{id}/resume` rehydrates it and re-enters the loop. The drift-proof manifest is replayed from the checkpoint, and load-policy + signatures are re-enforced on resume.
+
+**Multi-actor round-tables are NOT here** — they are coordinated by the [execution-engine-service](execution-engine-service.md), which sequences single-actor harness runs over a shared transcript. The harness stays a single-OHM, single-run service.
 
 ## Security commitments
 

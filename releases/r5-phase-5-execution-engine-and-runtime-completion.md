@@ -6,6 +6,8 @@ title: "R5 — Phase 5: Execution engine and runtime completion"
 # R5 — Phase 5: Execution engine and runtime completion
 
 > **SUPERSEDED by [R3.5 — Make every service real](r3.5-make-every-service-real.md) (2026-06-04).** This phase is discarded as a standalone release; any still-needed surface folds into the R3.5 per-service sequence. R2/R3 shipped hollow and are being rebuilt real, per service, before any post-gateway work resumes. Content below is retained for reference only.
+>
+> **As-built (the engine WAS subsequently built).** In the R3.5-forward sequence the durable layer was built real as **`execution-engine-service`** (port 8008, `/v1/engine`) in 7 reviewed vertical slices — durable jobs, retry/timeout/reaper, the human task board, mid-loop HITL pause+resume, cron schedules, and the round-table primitive — code-complete with a green end-to-end smoke (awaiting §22 sign-off). See **[services-reference/execution-engine-service](../services-reference/execution-engine-service.md)** for the as-built surface; the conceptual scope below largely held.
 
 | Release ID | R5 |
 | --- | --- |
