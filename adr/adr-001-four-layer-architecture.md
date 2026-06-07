@@ -70,9 +70,9 @@ The v0 approach. Documented here for honesty: it is a valid choice for a prototy
 
 ## Implementation notes
 
-* Each layer maps to a separate top-level package in the `oraclous-backend` repository (planned for Phase 1 scaffolding).
-* Layer dependencies are declared in each package's `pyproject.toml` dependency list; upward dependencies are rejected at install time, not just at runtime.
-* An import linter (e.g. `import-linter`) is planned for Phase 1 CI to mechanically enforce the rule.
+* Each service maps to a package under `oraclous-backend/services/<service>/` (ORAA-4 §17).
+* **As-built (R3.5+): the boundary is enforced by a central `import-linter` `layers` contract in the ROOT `pyproject.toml`** — not by per-package install-time dependency lists. The contract pins the four tiers and treats the two Layer-3 services (`harness-runtime` / `execution-engine`) as a sibling tier, so it rejects **upward AND sibling** imports (e.g. execution-engine importing harness-runtime) — which install-time dependency declarations could not catch. The two Layer-3 services therefore talk **only over HTTP** (the engine drives the harness via an httpx client), never by import.
+* That contract is enforced **live** by `uv run lint-imports` in CI and the per-repo pre-push hook (as-built it reports the four-layer + shared-packages contracts *kept, 0 broken*).
 * 04. Services Reference will be organised by layer; each service page declares its layer in its identity table.
 
 ## References

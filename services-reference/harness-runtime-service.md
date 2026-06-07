@@ -43,6 +43,16 @@ From `knowledge-graph-builder`:
 * Chat engine (`chat_engine.py`)
 * Agent CRUD service (`agent_service.py`)
 
+## API surface (through the gateway, `/v1/harnesses`)
+
+| Method + path | Purpose |
+| --- | --- |
+| `POST /v1/harnesses/execute` (201) | Run an inline (or referenced) OHM to completion/escalation; returns the execution row |
+| `GET /v1/harnesses/executions` · `GET /executions/{id}` | List / read the org's runs |
+| `GET /v1/harnesses/assignments` | The pending human task-board assignments (org-scoped) |
+| `POST /v1/harnesses/assignments/{id}/claim` · `/complete` | A human claims / completes an entrypoint assignment (R5-S4) |
+| `POST /v1/harnesses/{id}/resume` | Resolve a mid-loop HITL pause — APPROVED resumes the loop, DENIED fails it (R5-S6) |
+
 ## R5 additions (the harness side of the execution engine)
 
 * **Assignment lifecycle** — `AssignmentRepository.claim/complete` + `POST /v1/harnesses/assignments/{id}/{claim,complete}`; complete flips the parked execution ESCALATED → SUCCEEDED with the human's output.
