@@ -25,7 +25,7 @@ This hub indexes every Architecture Decision Record for the Oraclous Platform. E
 | ADR-012 | [Substrate Tenancy Enforcement Seam and RLS Backstop Preconditions](https://oraclous.atlassian.net/wiki/spaces/OP/pages/2490396) | <custom data-type="status" data-id="id-1">Proposed</custom> | 2026-05-29 |
 | ADR-013 | [Fail-Closed Authority Placement at the Substrate ReBAC Seam](https://oraclous.atlassian.net/wiki/spaces/OP/pages/3702787) | Accepted | 2026-05-31 |
 | ADR-014 | [Repo-canonical knowledge base; Confluence as mirror; PaperClip as master board](https://oraclous.atlassian.net/wiki/spaces/OP/pages/4685826) | <custom data-type="status" data-id="id-2">Accepted</custom> | 2026-05-31 |
-| ADR-015 | [Gateway Incremental Contract and Versioning (R5→R8)](adr-015-gateway-incremental-contract-and-versioning.md) | Proposed | 2026-06-01 |
+| ADR-015 | [Gateway Incremental Contract and Versioning (R5→R8)](adr-015-gateway-incremental-contract-and-versioning.md) | Accepted | 2026-06-01 (accepted 2026-06-08) |
 | ADR-016 | [Canonical Service-Internal Architecture and Hardened Definition of Done (No Hollow Services)](adr-016-canonical-service-architecture-and-hardened-definition-of-done.md) | Accepted | 2026-06-04 |
 | ADR-017 | [Identity/Org Service Split](adr-017-identity-org-service-split.md) | Superseded by as-built (R3.5 — identity consolidated into auth-service) | 2026-06-04 |
 | ADR-018 | [Edge Authentication (Trusted Gateway) — single auth boundary; services trust forwarded identity + X-Internal-Key](adr-018-edge-authentication-trusted-gateway.md) | Accepted | 2026-06-05 |
