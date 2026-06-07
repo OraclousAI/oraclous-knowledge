@@ -5,7 +5,7 @@ title: "application-gateway-service"
 
 # application-gateway-service
 
-**Layer:** 4 (Application Gateway) · **Port:** 8006 · **Status:** **Real — R3.5-complete, §22-signed-off** (Reza ran `smoke.sh` over the full stack). Built as a **streaming reverse-proxy edge**: route table → proxy to seven lower services (the five substrate/capability services plus harness-runtime and execution-engine), edge JWT termination + identity forwarding with ADR-018 `X-Internal-Key` attestation, CORS, and health aggregation. It holds **no database**. The richer gateway surface (MCP, chat, webhooks, widgets, rate-limiting, API keys, versioned public OpenAPI) is **R6 hardening — not built yet**.
+**Layer:** 4 (Application Gateway) · **Port:** 8006 · **Status:** **Real — R3.5-complete, §22-signed-off** (Reza ran `smoke.sh` over the full stack). Built as a **streaming reverse-proxy edge**: route table → proxy to seven lower services (the five substrate/capability services plus harness-runtime and execution-engine), edge JWT termination + identity forwarding with ADR-018 `X-Internal-Key` attestation, CORS, and health aggregation. It holds **no database** today (R6 Slice 3 adds a dedicated gateway store, ADR-019). **R6 hardening is underway:** the **versioned public OpenAPI contract** (Slice 1) and the **edge rate-limit + request-size guard** (Slice 2) are built; MCP, chat, webhooks, widgets, integration keys, and sole-ingress remain.
 
 ## What it is now (real today)
 
@@ -20,6 +20,14 @@ R3.5 service #6 built the gateway as a thin, stateless edge:
 
 It is the strictest case of the §21 no-logic-in-handlers rule: the gateway proxies and applies policy, it never executes business logic or touches substrate.
 
+## R6 hardening — shipped so far
+
+* **Versioned public OpenAPI contract (Slice 1, ADR-015)** — the gateway publishes the canonical `openapi/v1.yaml` at `/v1/openapi.json` + `/v1/openapi.yaml` + a Swagger UI at `/docs` (served before the proxy catch-all; FastAPI's leaky auto-spec is disabled). The spec carries the closed ORA-37 `ErrorEnvelope` (byte-identical to the cross-repo schema), per-operation `x-stability`, and only operations that actually route (no `/internal` plane). An `openapi-diff-gate` CI job blocks any breaking change to a `stable` operation. `openapi/v1.yaml` is now the source of truth for what the gateway exposes.
+* **Edge rate-limit + request-size guard (Slice 2)** — two pure-ASGI edge middlewares (never `BaseHTTPMiddleware`, so the streaming proxy is never buffered):
+  * **Request-size guard — FAIL-CLOSED:** `413 PAYLOAD_TOO_LARGE` when a body is not positively within `MAX_REQUEST_BODY_BYTES` — a Content-Length fast-path plus an authoritative byte counter that stops reading at `max+1` (catches chunked / omitted-length; never buffers an oversize upload to measure it).
+  * **Rate limit — FAIL-OPEN:** a Redis-backed (own DB 2) per-client-IP fixed window (`INCR`+`EXPIRE` in a transactional pipeline) → `429 RATE_LIMITED` + `Retry-After`. A Redis outage logs + **allows** — the gateway is the sole ingress, so throttling on a Redis blip would self-DoS the platform; short Redis socket timeouts make the fail-open instant under a partition. Liveness + contract probes (`/health*`, `/v1/openapi.*`, `/docs`) are exempt.
+  * **X-Forwarded-For trust boundary** (`TRUSTED_PROXY_COUNT`, default 0): at 0 the client-IP key is the socket peer and XFF is ignored (a rotating XFF can't fork buckets); at N>0 the (N+1)-th hop from the right, never the spoofable left-most. **Security ruling (recorded):** fail-open rate limit, fail-closed size guard, count-XFF-from-the-right — residual risks: no volumetric protection during a Redis outage (alert-driven), shared egress (NAT) shares a bucket, a misconfigured `TRUSTED_PROXY_COUNT` re-opens spoofing (default 0 is the safe floor). Both 429/413 are the ORA-37 envelope, carry `X-Request-Id`, and (CORS sits outside the guards) carry `Access-Control-Allow-Origin` so a browser can read them.
+
 ## R6 hardening targets (NOT built yet)
 
 The following are the gateway's eventual contract surface and are **deferred to R6** (the "gateway-from-R5 vertical slices" plan is discarded; R6 owns these):
@@ -27,9 +35,8 @@ The following are the gateway's eventual contract surface and are **deferred to 
 * Public REST APIs for harnesses/chats/capabilities/members; chat persistence
 * Published agents and integration keys (slug routing, key validation)
 * **MCP server** (expose workspace capabilities to external MCP clients) and **MCP client** (import external MCP tools into [capability-registry-service](capability-registry-service.md))
-* Webhook receivers; embeddable widget endpoints
-* Rate limiting, request-size limits, webhook signature verification, per-key CORS scoping
-* A **versioned public OpenAPI** as the canonical interface home (replacing `flows/interface-contracts.md`)
+* Webhook receivers (+ signature verification); embeddable widget endpoints
+* **Per-key / per-origin CORS scoping** (Slice 5 — the edge-wide rate-limit + size guard shipped in Slice 2; per-*key* limits/CORS ride the integration-key store)
 * **Sole-ingress** posture (closing upstream host ports) — a security-architect call; upstream ports stay open today for per-service smokes + defense-in-depth.
 
 ## Dependencies

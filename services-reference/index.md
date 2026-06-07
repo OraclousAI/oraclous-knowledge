@@ -29,7 +29,7 @@ This hub indexes one reference page per service. Each page documents purpose, re
 
 ## Layer 4 — Application Gateway
 
-* [application-gateway-service](application-gateway-service.md) (port 8006) — **Real (R3.5-complete) as a reverse-proxy edge:** longest-prefix route table → streaming proxy to the five lower services, edge JWT termination + identity forwarding (anti-spoof), CORS, health aggregation; no DB. The unified **ORA-37 error envelope is built and live** (`schema/error.py` via `oraclous_errors`). The richer surface (MCP server/client, chat APIs, published agents, webhooks, rate-limiting, API keys, versioned public OpenAPI, sole-ingress) is **R6 hardening — not built yet**.
+* [application-gateway-service](application-gateway-service.md) (port 8006) — **Real (R3.5-complete) reverse-proxy edge + R6 hardening underway:** longest-prefix route table → streaming proxy, edge JWT termination + identity forwarding (anti-spoof), CORS, health aggregation, the live **ORA-37 error envelope**, plus the **versioned public OpenAPI contract** (`/v1/openapi.json` + `openapi-diff-gate`, Slice 1) and the **edge rate-limit + request-size guard** (Redis-backed; fail-open limit / fail-closed size, Slice 2). Still **not built** (R6): the gateway datastore + integration keys, published agents, chat, webhooks, MCP, per-key CORS, sole-ingress.
 
 ## Cross-service patterns
 

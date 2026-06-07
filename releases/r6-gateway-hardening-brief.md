@@ -7,11 +7,11 @@ title: "R6 — Gateway hardening (release brief)"
 
 | Release ID | R6 |
 | --- | --- |
-| Status | **Briefed** |
+| Status | **In progress** — Slice 1 ✅ (#196) · Slice 2 ✅ (#197) · Slices 3–9 pending |
 | Owner | tech-lead (Reza Jahankohan) |
 | Briefer | product-planner (architecture: solution-architect; threats: security-architect) |
 | Dependencies | R3.5 (all six services real), R4 (harness), R5 (execution-engine) — all §22-signed-off |
-| Governing decisions | **[ADR-019](../adr/adr-019-r6-gateway-datastore-and-integration-key-authz-floor.md)** (Accepted — gateway datastore + integration-key authz floor); [ADR-015](../adr/adr-015-gateway-incremental-contract-and-versioning.md) (**must reach Accepted before Slice 1**) |
+| Governing decisions | **[ADR-019](../adr/adr-019-r6-gateway-datastore-and-integration-key-authz-floor.md)** (Accepted — gateway datastore + integration-key authz floor); **[ADR-015](../adr/adr-015-gateway-incremental-contract-and-versioning.md)** (Accepted 2026-06-08 — unblocked Slice 1) |
 
 > R3.5 built the gateway as a real **reverse-proxy edge** (route table → proxy, edge-JWT + identity forwarding, CORS, health; §22-signed-off). The *richer* surface was deferred. **R6 hardens the gateway into the platform's sole, external contract surface.** Built **first** and **strictly sequential** (Reza's decision): one vertical slice at a time, each ending in a §22 gateway smoke against the real stack, signed off before the next opens.
 
