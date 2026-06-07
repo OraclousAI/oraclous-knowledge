@@ -9,13 +9,16 @@ title: "ADR-015 — Gateway Incremental Contract and Versioning (R5→R8)"
 
 | Field | Value |
 |---|---|
-| Status | Proposed |
-| Date | 2026-06-01 |
+| Status | **Accepted** |
+| Date | 2026-06-01 (accepted 2026-06-08) |
 | Proposed by | solution-architect |
-| Approved by | Pending CTO sign-off |
+| Approved by | tech-lead (Reza Jahankohan) |
 | Supersedes | None |
 | Superseded by | None |
+| Amended by | [ADR-019](adr-019-r6-gateway-datastore-and-integration-key-authz-floor.md) (R6 gateway datastore + integration-key authz floor; the gateway is no longer purely stateless) |
 | Driving artifact | ORAA-31; ORAA-28 (gateway thin-service decision) |
+
+> **Accepted 2026-06-08** to unblock R6 Slice 1 (publish `openapi/v1.yaml` + the `openapi-diff-gate`). As-built reconciliation: the actual proxied paths are heterogeneous (`/v1/auth`, `/api/v1/graphs`, `/credentials`, `/oauth`), not the uniform `/v1/` this ADR assumes — the published spec documents the **real** surface; normalising every proxied path to a uniform `/v1/` is tracked as a follow-up within R6 (gateway path-rewriting + FE/Postman updates), not a Slice-1 deliverable. The R5 REST-table rows (`POST /v1/executions`, `/v1/taskboards/{id}`) are superseded by the as-built engine surface (`/v1/engine/jobs`, `/v1/engine/tasks`); §4's tables are the planning intent, the published `openapi/v1.yaml` is the source of truth.
 
 ## Context
 
