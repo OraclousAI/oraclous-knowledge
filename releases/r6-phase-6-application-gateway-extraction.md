@@ -6,6 +6,8 @@ title: "R6 — Phase 6: Application Gateway extraction"
 # R6 — Phase 6: Application Gateway extraction
 
 > **SUPERSEDED by [R3.5 — Make every service real](r3.5-make-every-service-real.md) (2026-06-04).** The application gateway is now step (6) of the R3.5 per-service sequence, built last after services (1)–(5) are real and Reza-accepted. This standalone phase is discarded; content below is retained for reference only.
+>
+> **The forward R6 is "gateway hardening", not "extraction" (the reverse-proxy extraction shipped in R3.5).** The current plan — the gateway as the sole external contract surface (public OpenAPI, integration keys + published agents, chat, webhooks, MCP, sole-ingress), built first and strictly sequential — is the **[R6 — Gateway hardening (release brief)](r6-gateway-hardening-brief.md)**, governed by [ADR-019](../adr/adr-019-r6-gateway-datastore-and-integration-key-authz-floor.md). Read that, not this page.
 
 | Release ID | R6 |
 | --- | --- |

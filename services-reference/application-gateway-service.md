@@ -42,7 +42,7 @@ The following are the gateway's eventual contract surface and are **deferred to 
 * **Capability execution** — [capability-registry-service](capability-registry-service.md); the gateway proxies, it does not execute
 * **Substrate writes** — the gateway never writes Neo4j or the credential store directly; it goes through the owning service
 * **Business logic** — the gateway is a thin shell; logic lives in the lower layers
-* **A database** — by design, the gateway is stateless
+* **A database** — by design, the gateway is stateless **today**. (Forward note: **R6 adds a dedicated gateway-owned, org-scoped Postgres** for the integration-key store, published-agent records, and chat persistence — per [ADR-019](../adr/adr-019-r6-gateway-datastore-and-integration-key-authz-floor.md). This reverses the no-DB invariant for those three surfaces only; the proxy/auth/health paths stay stateless.)
 
 ## Architecture conformance (ORAA-4 §21)
 
