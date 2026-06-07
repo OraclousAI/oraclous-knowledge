@@ -22,10 +22,10 @@ This hub indexes one reference page per service. Each page documents purpose, re
 
 * [capability-registry-service](capability-registry-service.md) (port 8001) — **Real (R3.5-complete).** Unified registry + **synchronous** tool execution with real connectors (PostgreSQL/MySQL/Notion/GitHub) and a credential bridge to the broker. Ported from `oraclous-core-service`, which was then deleted (§15, human-gated). Async/streaming execution is the R5 execution-engine.
 
-## Layer 3 — Harness Runtime + Execution Engine (deferred scaffolds)
+## Layer 3 — Harness Runtime + Execution Engine
 
-* [harness-runtime-service](https://oraclous.atlassian.net/wiki/spaces/OP/pages/688350) — **R4-deferred scaffold** (README + pyproject only; not wired into compose; `claimed_done: false`). AgentExecutor, actor dispatch, policy envelope, HITL, round-tables.
-* [execution-engine-service](https://oraclous.atlassian.net/wiki/spaces/OP/pages/884777) — **R5-deferred scaffold** (README + pyproject only; not wired into compose; `claimed_done: false`). Durable/async execution, schedule firing, job tracking, task-board state, SSE streaming.
+* [harness-runtime-service](harness-runtime-service.md) (port 8007) — **Real — R4 code-complete** (awaiting §22 sign-off). The synchronous OHM runtime: plan→act→observe over real registry tools under a governance/budget envelope, BYOM live LLM, human-actor dispatch, mid-loop HITL gate, provenance + consciousness. R5 added the assignment claim/complete + the mid-loop HITL `/resume` the engine drives.
+* [execution-engine-service](execution-engine-service.md) (port 8008) — **Real — R5 code-complete** (consolidated `smoke.sh` green; awaiting §22 sign-off). Durable orchestration above the harness (wraps it over HTTP): async jobs (progress/cancel/retry/timeout/reaper), the human task board (entrypoint complete + mid-loop HITL approve/deny), cron schedules (Celery Beat), and the round-table multi-actor primitive. Built in 7 reviewed slices.
 
 ## Layer 4 — Application Gateway
 
