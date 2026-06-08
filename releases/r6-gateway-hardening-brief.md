@@ -7,7 +7,7 @@ title: "R6 — Gateway hardening (release brief)"
 
 | Release ID | R6 |
 | --- | --- |
-| Status | **In progress** — Slice 1 ✅ (#196) · Slice 2 ✅ (#197) · Slices 3–9 pending |
+| Status | **In progress** — Slice 1 ✅ (#196) · Slice 2 ✅ (#197) · Slice 3 ✅ (#199) · Slices 4–9 pending |
 | Owner | tech-lead (Reza Jahankohan) |
 | Briefer | product-planner (architecture: solution-architect; threats: security-architect) |
 | Dependencies | R3.5 (all six services real), R4 (harness), R5 (execution-engine) — all §22-signed-off |
@@ -37,7 +37,7 @@ Make the application-gateway the single hardened external door: a versioned publ
 | **1** | **Public OpenAPI** (`openapi/v1.yaml` as the declared contract, served before the catch-all) + **openapi-diff-gate** CI + confirm **ORA-37** on gateway-own *and proxied-upstream* errors | greenfield | M | **ADR-015 Accepted** |
 | **2** | **Edge hardening pt.1** — Redis-backed rate-limit (429 + Retry-After) + request-body-size guard (caps *streamed* bytes, not the header) | reshape | M | S1 + limiter-posture ruling |
 | **3** | **Gateway datastore + integration-key store/validator** (the stateful authz floor — established once, reused by 4/8) | reshape | L | **ADR-019** (done) |
-| **4** | **Published-agent public surface** (`GET /v1/agents/{slug}`, `POST .../invoke`) + **integration-key CRUD** (publish/list/rotate/revoke) | reshape | L | S2, S3 + **auth-svc key mint/validate route** |
+| **4** | **Published-agent public surface** (`GET /v1/agents/{slug}`, `POST .../invoke`) + **integration-key CRUD** (publish/list/rotate/revoke) | reshape | L | S2, S3 (the key store + validator already shipped in S3) |
 | **5** | **Edge hardening pt.2** — per-key / per-origin CORS scoping (stops the blanket middleware answering keyed paths) | reshape | M | S2, S4 |
 | **6** | **Chat persistence + thin chat surface** (gateway's first customer-data write; executes via the R4 harness synthetic-agent pattern; **re-tenant to org**, not legacy user-scope) | reshape | L | ADR-019 (same gateway DB) |
 | **7** | **Engine EVENT-fire path** *(the one cross-service prerequisite)* → **webhook ingress** (HMAC-verify raw-body-first, 404-never-403, dedup via engine idempotency) | reshape | L | R5 engine (done) + **cred-broker webhook-secret ns** + security T5 ruling |
@@ -46,7 +46,7 @@ Make the application-gateway the single hardened external door: a versioned publ
 
 ## Cross-service prerequisites (R6 is not gateway-only)
 
-* **auth-service:** an integration-key **mint / scope / validate** route — the bcrypt prefix-index store exists but is unexposed; without it Slice 4 degrades to JWT-only and its DoD ("connect with a key") fails. *(+ confirm an org-admin role claim in the member JWT for admin-gated surfaces.)*
+* **auth-service:** ~~an integration-key mint/scope/validate route~~ — **superseded (Slice-3 scoping):** ADR-019 puts the integration-key store + the mint/validate in the **gateway's own** Postgres, and auth-service has no integration-key store to reuse. The only surviving auth-service item is confirming an **org-admin role claim** in the member JWT for the admin-gated surfaces (members/invitations, MCP-client register) — not a key route, not on the Slice-4 critical path.
 * **credential-broker:** an org-scoped **webhook-secret namespace** (HMAC secrets live there, ADR-008 — never in the stateless gateway).
 * **capability-registry:** the **`McpToolExecutor` + external-MCP registry** (the import target for Slice 8 — without it imported descriptors raise `NoExecutorError`).
 * **gateway infra (devops):** **Redis** wired in (`GATEWAY_REDIS_URL` + lifespan + compose) for Slices 2/5; the **openapi-diff-gate** CI job; the **sole-ingress compose overlay**.
