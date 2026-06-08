@@ -29,7 +29,7 @@ This hub indexes one reference page per service. Each page documents purpose, re
 
 ## Layer 4 — Application Gateway
 
-* [application-gateway-service](application-gateway-service.md) (port 8006) — **Real (R3.5-complete) reverse-proxy edge + R6 hardening underway:** longest-prefix route table → streaming proxy, edge JWT termination + identity forwarding (anti-spoof), CORS, health aggregation, the live **ORA-37 error envelope**, plus the **versioned public OpenAPI contract** (`/v1/openapi.json` + `openapi-diff-gate`, Slice 1) and the **edge rate-limit + request-size guard** (Redis-backed; fail-open limit / fail-closed size, Slice 2). Still **not built** (R6): the gateway datastore + integration keys, published agents, chat, webhooks, MCP, per-key CORS, sole-ingress.
+* [application-gateway-service](application-gateway-service.md) (port 8006) — **Real (R3.5-complete) reverse-proxy edge + R6 hardening underway:** longest-prefix route table → streaming proxy, edge JWT termination + identity forwarding (anti-spoof), CORS, health aggregation, the live **ORA-37 error envelope**, plus the **versioned public OpenAPI contract** (`/v1/openapi.json` + `openapi-diff-gate`, Slice 1), the **edge rate-limit + request-size guard** (Redis-backed; fail-open limit / fail-closed size, Slice 2), and its **own org-scoped Postgres + the integration-key store/validator** (Slice 3, ADR-019 — fail-closed `oak-`/`oag-` key auth minting a SERVICE_ACCOUNT principal). Still **not built** (R6): published agents + key CRUD, chat, webhooks, MCP, per-key CORS, sole-ingress.
 
 ## Cross-service patterns
 
