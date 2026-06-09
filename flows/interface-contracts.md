@@ -18,6 +18,7 @@ Each contract below corresponds to a `Contract` issue in Jira. The Jira issue tr
 | Auth token claims | — ⚠ (see note) | Done | See §1 |
 | OHM manifest envelope | — ⚠ (see note) | Done | See §2 |
 | Gateway error envelope | [ORA-56](https://oraclous.atlassian.net/browse/ORA-56) | AGREED & enforced (fixture [ORA-53](https://oraclous.atlassian.net/browse/ORA-53) Done); implementing stories **deferred** — BE ([ORA-54](https://oraclous.atlassian.net/browse/ORA-54)) → R6, FE ([ORA-55](https://oraclous.atlassian.net/browse/ORA-55)) → R-Frontend | See §3 |
+| Webhook ingress → engine + broker (R6 S7) | — (sole-worker; #209/#210/#211) | Done & live (GW-13 + engine smoke) | See §S7 |
 
 > ⚠ **Index integrity (31 May 2026, solution-architect).** Of the three rows, only the Gateway error envelope has a real `Contract`-type Jira issue: [**ORA-56**](https://oraclous.atlassian.net/browse/ORA-56), backfilled 31 May 2026. The keys previously shown for the other two rows were **wrong** — "ORA-12" is the R0.5 0d substrate-test-harness story and "ORA-19" is the deferred B1 isolation story; neither the Auth-token-claims nor the OHM-manifest-envelope shape has a Contract issue yet (the same applies to the `(ORA-12)`/`(ORA-19)` keys in the §1/§2 headers below). Backfilling those two is **pending** — the 31 May coordinator decision limited this pass to the gateway envelope. Until then, treat §1/§2 as shape-of-record without a tracking Contract.
 
@@ -101,3 +102,35 @@ JSON Schema constraints: single top-level `error` object; `additionalProperties:
 ### Enforcement (Contract not Done until this exists)
 
 A shared fixture (pre-R6): a JSON Schema encoding the envelope with `additionalProperties: false` + the `code` enum, plus sample fixtures and a forbidden-substring negative test. The backend asserts every error response validates and `code` is in the enum; the frontend api-client parses against the same fixture. Built by devops-implementer. This is the fixture story [ORA-53](https://oraclous.atlassian.net/browse/ORA-53) (**Done**), which blocks both the BE ([ORA-54](https://oraclous.atlassian.net/browse/ORA-54)) and FE ([ORA-55](https://oraclous.atlassian.net/browse/ORA-55)) implementing stories.
+
+## §S7 — Webhook ingress: gateway → engine + gateway → broker (R6 Slice 7)
+
+Two internal, `X-Internal-Key`-gated cross-service shapes the gateway webhook ingress depends on. Built + live (gateway `GW-13` + the engine event-fire smoke); recorded here as the canonical home (sole-worker mode — no separate Contract issue; the implementing PRs are #209 cred-broker, #210 engine, #211 gateway).
+
+### (a) Gateway → execution-engine — fire a verified webhook event
+
+`POST /v1/engine/events` (the engine; gated by `X-Internal-Key` + the gateway-asserted `X-Principal-Id`/`X-Principal-Type`/`X-Organisation-Id`, the **same** trust gate as `/v1/engine/jobs` — the engine does **not** re-verify the signature, the gateway already did).
+
+```jsonc
+// request body
+{ "manifest_ref": "<bound_capability_ref>",   // XOR "manifest" (inline OHM) — exactly one
+  "input": "<goal built from the event payload>",
+  "idempotency_key": "<provider delivery id | sha256(raw_body)>",  // ≤255 chars; dedupe key
+  "event_type": "webhook", "source": "<subscription id>" }         // audit only
+// response 202
+{ "accepted": true, "deduped": false, "job_id": "<uuid>" }          // deduped:true + job_id:null on a redelivery
+```
+Invariants: `organisation_id`/`user_id` are **never** in the body (ORG001) — both come from the gateway-asserted principal headers (ADR-006/ADR-018). Idempotent on the engine's existing `(org, idempotency_key)` UNIQUE → a redelivered event is a no-op, still `202`. The engine reuses the R5 durable spine unchanged (no new table).
+
+### (b) Gateway → credential-broker — the webhook signing secret
+
+`POST /internal/webhook-secrets` (mint) + `POST /internal/webhook-secrets/resolve` (decrypt) on the broker, under the existing `verify_internal_key` gate. The secret is AES-256-GCM at rest (ADR-008); the gateway stores only the returned id (`broker_secret_ref`), never the plaintext.
+
+```jsonc
+// mint  -> 200            // resolve -> 200 (cross-org/missing -> 404, mask)
+{ "organisation_id": "<uuid>", "secret": "<whsec_…>" }      // mint in
+{ "secret_id": "<uuid>" }                                   // mint out
+{ "organisation_id": "<uuid>", "secret_id": "<uuid>" }      // resolve in
+{ "secret": "<whsec_…>" }                                   // resolve out (the gateway recomputes the HMAC, then discards)
+```
+Enforcement: live cross-service smokes (the gateway `GW-13` mints + resolves against the running broker; the cred-broker smoke step 9 covers mint/resolve/cross-org-404/no-key-401). A redundant shared fixture is unnecessary while both sides live in one repo + are smoke-pinned; revisit if either side moves.
