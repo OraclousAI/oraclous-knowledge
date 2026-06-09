@@ -19,7 +19,7 @@ title: "auth-service"
 
 * Email + password registration and login; change-password for an authenticated user (`POST /v1/auth/change-password`). Self-service email-verification and password-reset endpoints are **not yet built** — the schema and `set_email_verified()` exist, but only the OAuth path marks an email verified
 * Social OAuth login: **Google**, **GitHub**, **Notion** (login-URL build, token exchange, profile fetch; provider tokens stored encrypted at rest — automatic provider-token refresh is not yet built) — `domain/oauth.py`, `oauth_routes`, `oauth_service`
-* JWT issuance/validation for human principals; `validate` / `me` introspection
+* JWT issuance/validation for human principals; `validate` / `me` introspection. The **access** token stamps the member's `org_role` for the token's org (R7-SEC S2 — the gateway reads it for the admin-vs-member floor; omitted when unknown so a non-member token can't satisfy an admin gate); see [interface-contracts §S2-ROLE](../flows/interface-contracts.md)
 
 ### Organisations + membership
 
