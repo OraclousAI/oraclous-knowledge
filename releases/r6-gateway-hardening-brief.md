@@ -7,7 +7,7 @@ title: "R6 — Gateway hardening (release brief)"
 
 | Release ID | R6 |
 | --- | --- |
-| Status | **In progress** — Slice 1 ✅ (#196) · Slice 2 ✅ (#197) · Slice 3 ✅ (#199) · Slice 4 ✅ (#201+#202) · Slices 5–9 pending |
+| Status | **In progress** — Slices 1–4 ✅ (#196/#197/#199/#201+#202) · Slice 5 ✅ (#204, per-key CORS) · Slices 6–9 pending |
 | Owner | tech-lead (Reza Jahankohan) |
 | Briefer | product-planner (architecture: solution-architect; threats: security-architect) |
 | Dependencies | R3.5 (all six services real), R4 (harness), R5 (execution-engine) — all §22-signed-off |
