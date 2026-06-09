@@ -7,7 +7,7 @@ title: "R6 — Gateway hardening (release brief)"
 
 | Release ID | R6 |
 | --- | --- |
-| Status | **CODE-COMPLETE (all 9 slices); §22 sign-off pending** — Slices 1–6 ✅ · Slice 7 ✅ (#209/#210/#211, webhook ingress — 3 services) · Slice 8 ✅ (#213, MCP server; MCP client/import deferred) · Slice 9 ✅ (#215, sole-ingress — the gateway is the only host-reachable surface) |
+| Status | **RELEASED — §22-signed-off (Reza, 2026-06-10).** All 9 slices: 1–6 ✅ · Slice 7 ✅ (#209/#210/#211, webhook ingress — 3 services) · Slice 8 ✅ (#213, MCP server; MCP client/import deferred) · Slice 9 ✅ (#215, sole-ingress). Sign-off artifact: the full gateway smoke GW-1..GW-15 = 81 checks / 0 fails, live on the real stack from merged main. Successor: [R7-SEC — security hardening](r7-security-hardening-brief.md). |
 | Owner | tech-lead (Reza Jahankohan) |
 | Briefer | product-planner (architecture: solution-architect; threats: security-architect) |
 | Dependencies | R3.5 (all six services real), R4 (harness), R5 (execution-engine) — all §22-signed-off |
