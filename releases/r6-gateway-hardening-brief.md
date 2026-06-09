@@ -7,7 +7,7 @@ title: "R6 — Gateway hardening (release brief)"
 
 | Release ID | R6 |
 | --- | --- |
-| Status | **In progress** — Slices 1–5 ✅ (CORS hardened #206) · Slice 6 ✅ (#207, member chat) · Slice 7 ✅ (#209/#210/#211, webhook ingress — 3 services) · Slices 8–9 pending |
+| Status | **In progress** — Slices 1–6 ✅ · Slice 7 ✅ (#209/#210/#211, webhook ingress — 3 services) · Slice 8 ✅ (#213, MCP server; the MCP client/import is a deferred follow-on) · Slice 9 pending |
 | Owner | tech-lead (Reza Jahankohan) |
 | Briefer | product-planner (architecture: solution-architect; threats: security-architect) |
 | Dependencies | R3.5 (all six services real), R4 (harness), R5 (execution-engine) — all §22-signed-off |
