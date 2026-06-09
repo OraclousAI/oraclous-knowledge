@@ -1,7 +1,7 @@
-# Graph Report - /Users/reza/workspace/.oraclous-worktrees/kb-s8  (2026-06-09)
+# Graph Report - /Users/reza/workspace/.oraclous-worktrees/kb-s9  (2026-06-09)
 
 ## Corpus Check
-- 2 files · ~294,849 words
+- 2 files · ~295,132 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -238,11 +238,11 @@ _Questions this graph is uniquely positioned to answer:_
 - **What is the exact relationship between `auth-service (single identity authority)` and `ADR-017 Identity/Org Service Split (superseded by as-built)`?**
   _Edge tagged AMBIGUOUS (relation: supersedes) - confidence is low._
 - **Why does `Test Strategy` connect `Community 2` to `Community 9`, `Community 7`, `Community 15`?**
-  _High betweenness centrality (0.056) - this node is a cross-community bridge._
-- **Why does `Cross-cutting agreement protocol` connect `Community 7` to `Community 2`?**
-  _High betweenness centrality (0.049) - this node is a cross-community bridge._
-- **Why does `Testing Approach (Frontend)` connect `Community 9` to `Community 2`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
+  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+- **Why does `five capability kinds (tool/skill/agent/harness/human_role)` connect `Community 14` to `Community 8`, `Community 6`?**
+  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+- **Why does `Knowledge Graph Index` connect `Community 3` to `Community 13`, `Community 14`?**
+  _High betweenness centrality (0.039) - this node is a cross-community bridge._
 - **What connects `Resolve the installed paperclipai entrypoint (npx cache path has a rotating hash`, `Fire one agent heartbeat (source=assignment) to start its assigned work, fire-an`, `Return (frontmatter_lines, body_lines).      Frontmatter is a leading ``---`` ..` to the rest of the system?**
   _441 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
