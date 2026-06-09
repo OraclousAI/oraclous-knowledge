@@ -30,16 +30,17 @@ This hub indexes every Architecture Decision Record for the Oraclous Platform. E
 | ADR-017 | [Identity/Org Service Split](adr-017-identity-org-service-split.md) | Superseded by as-built (R3.5 — identity consolidated into auth-service) | 2026-06-04 |
 | ADR-018 | [Edge Authentication (Trusted Gateway) — single auth boundary; services trust forwarded identity + X-Internal-Key](adr-018-edge-authentication-trusted-gateway.md) | Accepted | 2026-06-05 |
 | ADR-019 | [R6 Gateway: dedicated datastore + integration-key authorization floor](adr-019-r6-gateway-datastore-and-integration-key-authz-floor.md) | Accepted | 2026-06-08 |
+| ADR-020 | [Per-Org Envelope Encryption with a KMS-Held KEK (extends ADR-008; R7-SEC S5)](adr-020-per-org-envelope-encryption-kms-held-kek.md) | Accepted | 2026-06-10 |
 | ADR-022 | [Concern-Driven Ingestion — Recipes, Primitives, Unified Source→Structure→Entity Model](adr-022-recipe-primitive-unified-graph-ingestion.md) | Accepted (ported) | 2026-06-04 |
 
-> **ADR-022** is **ported from the legacy `develop` branch @ `84152635de05c105765cfe6b631bb5ba81f2f4aa` (TASK-237)** and kept at its **original legacy number** for traceability to the binding spec. It is the binding ingestion specification for the R3.5 knowledge-graph-service (service #1). **ADR-019** is now used (R6 gateway datastore + authz floor, 2026-06-08); the next NEW number is **ADR-020** (020–021 unused).
+> **ADR-022** is **ported from the legacy `develop` branch @ `84152635de05c105765cfe6b631bb5ba81f2f4aa` (TASK-237)** and kept at its **original legacy number** for traceability to the binding spec. It is the binding ingestion specification for the R3.5 knowledge-graph-service (service #1). **ADR-020** is now used (per-org envelope encryption + KMS, 2026-06-10); the next NEW number is **ADR-021** (021 unused).
 
 ## ADR conventions
 
 * **One decision per ADR.** If a decision is compound, it gets split into multiple ADRs that may reference each other.
 * **Status lifecycle:** `Proposed` → `Accepted` → optionally `Superseded by ADR-NNN`. Rejected ADRs are kept (as `Rejected`) for the historical record.
 * **No silent supersession.** When a new ADR overrides an existing one, the new ADR names it explicitly and the old ADR's status is updated.
-* **Numbering is monotonic.** ADR-020 is the next number for NEW decisions (ADR-019 was taken on 2026-06-08); numbers are not reused even if an ADR is rejected. (ADR-022 is a **ported legacy ADR** kept at its original number for traceability; 020–021 are simply unused here, not gaps to backfill.)
+* **Numbering is monotonic.** ADR-021 is the next number for NEW decisions (ADR-020 was taken on 2026-06-10); numbers are not reused even if an ADR is rejected. (ADR-022 is a **ported legacy ADR** kept at its original number for traceability; 021 is simply unused here, not a gap to backfill.)
 
 ## When to write an ADR
 
