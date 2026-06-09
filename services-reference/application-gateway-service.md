@@ -47,7 +47,7 @@ All R6 hardening targets are shipped (the "gateway-from-R5 vertical slices" plan
 * ✅ **Per-key / per-origin CORS scoping** — Slice 5 (the edge-wide rate-limit + size guard shipped in Slice 2; per-*key* limits/CORS ride the integration-key store).
 * ✅ **Sole-ingress** posture (upstream host ports closed; the gateway is the only host-reachable application surface) — Slice 9.
 
-**Remaining R6 follow-ups (recorded, out of the 9 slices):** the MCP client/import · per-subscription webhook rate-limit (the T5 gate) · the webhook orphan-secret GC (needs a broker delete endpoint) · per-provider webhook signature schemes · the chat history-fold prompt-injection hardening · uniform-`/v1/` path normalisation.
+**R6 follow-ups (recorded, out of the 9 slices) — most now closed by [R7-SEC](../releases/r7-security-hardening-brief.md):** ✅ per-subscription (+per-key) webhook rate-limit, the T5 gate (R7-SEC S3 — a Redis fixed-window bucket above the per-IP floor; over-cap → 429 + Retry-After; #218) · ✅ the webhook orphan-secret GC (R7-SEC S4 — a cred-broker `POST /internal/webhook-secrets/delete`; the gateway's `WebhookSubscriptionService` compensates a failed create + GCs the secret on delete; #219) · ✅ the chat history-fold prompt-injection hardening (R7-SEC S4 — `build_turn_input` XML-escapes + `<turn>`-tags prior turns so content can't forge a turn) · ✅ uniform-`/v1/` path hygiene (R7-SEC S4 — `is_malformed_path` rejects NUL/backslash/`..`-traversal at the edge → 400, before any upstream forward). **Still open:** the MCP client/import (its own SSRF-egress + supply-chain HITL — deferred) · per-provider webhook signature schemes (GitHub/Stripe/Slack, the same pure seam).
 
 ## Dependencies
 
