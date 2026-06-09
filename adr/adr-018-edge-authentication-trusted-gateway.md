@@ -34,7 +34,7 @@ The desired model is the standard one: **authenticate once at the edge; downstre
 
 Adopt **edge authentication**. The application-gateway is the **single authentication boundary**; upstream services **trust the gateway's forwarded identity and do not re-validate tokens**.
 
-1. **The gateway terminates auth** (verifies the JWT/session), resolves the `Principal`, and forwards `X-Principal-Id` / `X-Principal-Type` / `X-Organisation-Id`, stripping any client-supplied copies (unchanged behaviour).
+1. **The gateway terminates auth** (verifies the JWT/session), resolves the `Principal`, and forwards `X-Principal-Id` / `X-Principal-Type` / `X-Organisation-Id` / `X-Principal-Org-Role` (the member's org role — added R7-SEC S2; present only when the principal carries a role), stripping any client-supplied copies (anti-spoof — the role is trust-asserted exactly like the other `X-Principal-*`).
 
 2. **The gateway attests every forwarded request with `X-Internal-Key`** — a shared secret (`INTERNAL_SERVICE_KEY`) injected on all upstream requests (a client-supplied copy is stripped first, exactly like `X-Principal-*`). This is the proof-of-origin that a request came through the gateway.
 

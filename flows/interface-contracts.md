@@ -19,6 +19,7 @@ Each contract below corresponds to a `Contract` issue in Jira. The Jira issue tr
 | OHM manifest envelope | — ⚠ (see note) | Done | See §2 |
 | Gateway error envelope | [ORA-56](https://oraclous.atlassian.net/browse/ORA-56) | AGREED & enforced (fixture [ORA-53](https://oraclous.atlassian.net/browse/ORA-53) Done); implementing stories **deferred** — BE ([ORA-54](https://oraclous.atlassian.net/browse/ORA-54)) → R6, FE ([ORA-55](https://oraclous.atlassian.net/browse/ORA-55)) → R-Frontend | See §3 |
 | Webhook ingress → engine + broker (R6 S7) | — (sole-worker; #209/#210/#211) | Done & live (GW-13 + engine smoke) | See §S7 |
+| Org-role claim + `X-Principal-Org-Role` (R7-SEC S2) | — (sole-worker; #217) | Done & live (GW-17) | See §S2-ROLE |
 
 > ⚠ **Index integrity (31 May 2026, solution-architect).** Of the three rows, only the Gateway error envelope has a real `Contract`-type Jira issue: [**ORA-56**](https://oraclous.atlassian.net/browse/ORA-56), backfilled 31 May 2026. The keys previously shown for the other two rows were **wrong** — "ORA-12" is the R0.5 0d substrate-test-harness story and "ORA-19" is the deferred B1 isolation story; neither the Auth-token-claims nor the OHM-manifest-envelope shape has a Contract issue yet (the same applies to the `(ORA-12)`/`(ORA-19)` keys in the §1/§2 headers below). Backfilling those two is **pending** — the 31 May coordinator decision limited this pass to the gateway envelope. Until then, treat §1/§2 as shape-of-record without a tracking Contract.
 
@@ -134,3 +135,23 @@ Invariants: `organisation_id`/`user_id` are **never** in the body (ORG001) — b
 { "secret": "<whsec_…>" }                                   // resolve out (the gateway recomputes the HMAC, then discards)
 ```
 Enforcement: live cross-service smokes (the gateway `GW-13` mints + resolves against the running broker; the cred-broker smoke step 9 covers mint/resolve/cross-org-404/no-key-401). A redundant shared fixture is unnecessary while both sides live in one repo + are smoke-pinned; revisit if either side moves.
+
+## §S2-ROLE — Org-role claim + the `X-Principal-Org-Role` trust header (R7-SEC S2)
+
+The org-roles floor (admin vs member on the management plane) crosses two boundaries: **auth-service → the JWT** and **the gateway → upstreams** (ADR-018). Recorded once here; built + live (`GW-17`); sole-worker mode (no separate Contract issue; implementing PR #217).
+
+### (a) The `org_role` access-token claim (auth-service → the gateway/any verifier)
+
+The user **access** JWT (and only the access token) carries the member's role in the **token's** organisation:
+
+```jsonc
+// access-token claims (in addition to the existing sub / principal_type / organisation_id / type / iat / exp / jti)
+{ "org_role": "owner" | "admin" | "member" }   // the member's role in `organisation_id`; OMITTED when unknown
+```
+Invariants: the role is **per-`(user, org)`** — an admin-in-A / member-in-B user gets `member` in a B-scoped token. **Omitted** (not `null`) when the issuer can't resolve a membership role, and on agent/service-account tokens — a verifier reads a missing claim as **None**, which never satisfies an admin gate (fail-closed). Canonical rank lives in `packages/governance` (`org_role_at_least`, owner≥admin≥member, fail-closed); every service checks admin-vs-member the same way.
+
+### (b) The `X-Principal-Org-Role` forwarded trust header (gateway → upstreams)
+
+On an authenticated request the gateway **strips** any client-supplied `X-Principal-Org-Role` and **injects** the verified `principal.org_role` (present only when the principal carries one), exactly like the other `X-Principal-*` headers (ADR-018, §1). An upstream MAY role-gate on it; today **only the gateway enforces** (its `require_admin` gates the destructive management ops — key mint/rotate/revoke, agent publish, webhook-subscription create/delete), so no upstream is half-wired to trust it. The header is also on the gateway's response **denylist** (never reflected to the client).
+
+Enforcement: the gateway `GW-17` smoke (member → mint/publish/webhook-create = 403; admin → 201; member reads = 200) + unit tests (`require_admin` allows admin/owner, denies member/None/unknown; the forward strip-then-inject; the auth-service claim present/omitted).
