@@ -20,6 +20,8 @@ Each contract below corresponds to a `Contract` issue in Jira. The Jira issue tr
 | Gateway error envelope | [ORA-56](https://oraclous.atlassian.net/browse/ORA-56) | AGREED & enforced (fixture [ORA-53](https://oraclous.atlassian.net/browse/ORA-53) Done); implementing stories **deferred** — BE ([ORA-54](https://oraclous.atlassian.net/browse/ORA-54)) → R6, FE ([ORA-55](https://oraclous.atlassian.net/browse/ORA-55)) → R-Frontend | See §3 |
 | Webhook ingress → engine + broker (R6 S7) | — (sole-worker; #209/#210/#211) | Done & live (GW-13 + engine smoke) | See §S7 |
 | Org-role claim + `X-Principal-Org-Role` (R7-SEC S2) | — (sole-worker; #217) | Done & live (GW-17) | See §S2-ROLE |
+| Enriched graph schema (KGS recipe enrichment, #269) | — (epic #269; #270/#271/#274/#275, perf #272) | Live (KGS smoke) | See §GRAPH |
+| BYOM spend estimate (`GET /v1/harnesses/spend`) | — | Live | See §SPEND |
 
 > ⚠ **Index integrity (31 May 2026, solution-architect).** Of the three rows, only the Gateway error envelope has a real `Contract`-type Jira issue: [**ORA-56**](https://oraclous.atlassian.net/browse/ORA-56), backfilled 31 May 2026. The keys previously shown for the other two rows were **wrong** — "ORA-12" is the R0.5 0d substrate-test-harness story and "ORA-19" is the deferred B1 isolation story; neither the Auth-token-claims nor the OHM-manifest-envelope shape has a Contract issue yet (the same applies to the `(ORA-12)`/`(ORA-19)` keys in the §1/§2 headers below). Backfilling those two is **pending** — the 31 May coordinator decision limited this pass to the gateway envelope. Until then, treat §1/§2 as shape-of-record without a tracking Contract.
 
@@ -155,3 +157,66 @@ Invariants: the role is **per-`(user, org)`** — an admin-in-A / member-in-B us
 On an authenticated request the gateway **strips** any client-supplied `X-Principal-Org-Role` and **injects** the verified `principal.org_role` (present only when the principal carries one), exactly like the other `X-Principal-*` headers (ADR-018, §1). An upstream MAY role-gate on it; today **only the gateway enforces** (its `require_admin` gates the destructive management ops — key mint/rotate/revoke, agent publish, webhook-subscription create/delete), so no upstream is half-wired to trust it. The header is also on the gateway's response **denylist** (never reflected to the client).
 
 Enforcement: the gateway `GW-17` smoke (member → mint/publish/webhook-create = 403; admin → 201; member reads = 200) + unit tests (`require_admin` allows admin/owner, denies member/None/unknown; the forward strip-then-inject; the auth-service claim present/omitted).
+
+## §GRAPH — Enriched graph schema (KGS recipe enrichment, #269)
+
+The shape of the graph the `knowledge-graph-service` writes once a recipe uses the #269 enrichment rule shapes (`transform`, `from_each`+`edge_to_each`, `extractions`, `similarities`, `resolution`). Recorded here because the **knowledge-retriever** and the **frontend** read these labels/edges/properties. Domain labels and edge types are recipe-supplied (validated safe-identifiers), not platform-fixed; the set below is what the canonical enriched evidence recipe writes (`build_evidence_recipe`). Authoritative narrative + the rule-shape table: [knowledge-graph-service reference](../services-reference/knowledge-graph-service.md#recipe-rule-shapes-format-02--enriched-by-epic-269). Epic #269; slice PRs #270 (transform + list fan-out), #271 (free-text extraction), #274 (similarity), #275 (resolution), perf #272.
+
+### Node labels
+
+| Label | Origin |
+| --- | --- |
+| `Publisher` | Host-keyed from a source URL via `transform: host` — one node per domain (every article URL on `eurail.com` collapses to one `Publisher`). |
+| `Tag` | Fanned from a list-valued field (`from_each`); MERGE-shared across records. |
+| `Person`, `Organization`, `Product`, `Place` | Mined from a prose field by the LLM extractor under the recipe's inline ontology (`extractions[].ontology`). |
+
+(alongside the recipe's structured baseline labels — for the evidence recipe: `Evidence`, `ClaimSource`, `Conflict`.)
+
+### Edge types
+
+| Edge | Pattern | Notes |
+| --- | --- | --- |
+| `PUBLISHED_BY` | `ClaimSource-[:PUBLISHED_BY]->Publisher` | Same-record identity. |
+| `HAS_DIMENSION` | `Evidence-[:HAS_DIMENSION]->Tag` | One per fanned-out list element (`edge_to_each`). |
+| `MENTIONS` | `Evidence-[:MENTIONS]->`entity | The extraction `link` edge from the record's primary node to each mined entity. |
+| `OPERATES`, `LOCATED_IN` | `Organization-[:OPERATES]->Product`, `Organization-[:LOCATED_IN]->Place` | Relationship types declared in the inline extraction ontology, between mined entities. |
+| `SIMILAR_TO` | `Evidence-[:SIMILAR_TO {score}]->Evidence` | Content-similarity (embed → cosine kNN); carries `score`. One edge per unordered pair. |
+| `SAME_AS_CANDIDATE` | entity-`[:SAME_AS_CANDIDATE {score}]->`entity | Resolution review band — two canonical nodes that are close but **not** auto-merged; carries `score`. A flag for review, **not** an identity assertion. |
+
+### Entity properties (on a resolved entity)
+
+* `name` — the **canonical key** the node is keyed by (e.g. `eurail`).
+* `canonical_name` — a chosen **display form** (e.g. `Eurail B.V.`).
+* `aliases` — the set of original **surface forms** seen across records (the alias audit trail).
+
+### Edge `score`
+
+A rounded cosine similarity float, present on **`SIMILAR_TO`** and **`SAME_AS_CANDIDATE`** edges. On `SIMILAR_TO` it is the content-similarity of the two records; on `SAME_AS_CANDIDATE` it is the name-embedding similarity of the two canonical entities (in the `[candidate_threshold, merge_threshold)` band, default 0.85–0.92).
+
+## §SPEND — BYOM spend estimate (`GET /v1/harnesses/spend`)
+
+A read-only, org-scoped **estimate** of the caller organisation's own provider (BYOM) LLM spend, served by the `harness-runtime-service` and reachable through the gateway. The **frontend** consumes it (a spend/usage view). It is **not** platform billing or a charge Oraclous levies: per [ADR-009](../adr/adr-009-metering-at-substrate-billing-as-separable.md) the substrate meters **raw tokens**; pricing is a separable, read-time concern. Raw per-model token sums are priced at read time from a **static rate table**; a model absent from the table reports its tokens only (`estimated_usd: null`, `priced: false`) and is named in `unpriced_models`. `total_estimated_usd` sums only the priced rows.
+
+Request: `GET /v1/harnesses/spend?since=<ISO8601>` — `since` is **optional**; it bounds the window to executions at or after it (omit for all-time). Org-scoped from the authenticated principal (`organisation_id` is never inbound).
+
+```jsonc
+// 200 — SpendResponse
+{
+  "since": "2026-06-01T00:00:00Z" | null,   // echoes the query param; null for all-time
+  "currency": "USD",                          // always USD today
+  "by_model": [
+    { "model": "openai/gpt-4o" | null,        // the provider model id (null when unattributed)
+      "input_tokens": 12000,
+      "output_tokens": 3400,
+      "executions": 7,                         // harness executions that used this model
+      "estimated_usd": 0.085 | null,           // null when the model is not in the rate table
+      "priced": true }                         // false → tokens-only (unpriced)
+  ],
+  "total_estimated_usd": 0.085,                // sum of estimated_usd over PRICED rows only
+  "total_input_tokens": 12000,
+  "total_output_tokens": 3400,
+  "unpriced_models": ["some/unlisted-model"]   // recorded tokens but absent from the rate table
+}
+```
+
+Mirrors the `harness-runtime-service` `SpendResponse`/`ModelSpendOut` schema and the gateway OpenAPI `SpendResponse`/`ModelSpendOut` components (`openapi/v1.yaml`). The operation is `x-stability: provisional`.
