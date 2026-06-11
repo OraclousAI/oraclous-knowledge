@@ -75,3 +75,4 @@ Any change to a mechanical agent-governance rule must update **all four** surfac
 4. **The three `CLAUDE.md` files** — the workspace-root coordinator file plus the `oraclous-backend` and `oraclous-frontend` repo files, each of which carries a "Governance gates — canonical in ORAA-4" pointer. Keeping them in lockstep stops the per-repo pointers from drifting.
 
 A governance change that touches only some of these is incomplete and leaves the surfaces inconsistent. Record the change in the [Agent and Skill Change Log](https://oraclous.atlassian.net/wiki/spaces/OP/pages/426078).
+- [KGS recipe-driven ingestion](kgs-recipe-driven-ingestion.md) — restore + improve the legacy instruction-driven extraction (hard schema, structured/semi-structured mapping, provenance, agent-addressable); unlocks EURail evidence/conflicts + the onboarder agent.
