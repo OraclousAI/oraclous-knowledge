@@ -44,6 +44,14 @@ services/<svc>/
 
 `domain/` and `migrations/` are required only if the service has domain rules / owns storage. Everything else is mandatory.
 
+### Documented deviations (read-only services)
+
+Because `domain/` and `models/` are optional, a service that legitimately has neither is **not** a structure violation — but the absence is recorded as **intentional** rather than left implicit. A service declares the optional layers it deliberately omits in `tools/lint/service_status.yaml` under `structure_exceptions` (`[{layer, reason}]`); `check_service_structure` prints each as an *accepted* exception, and re-flags it as **STR006** if that layer is ever added (so a resolved deviation can't leave a stale note behind).
+
+The canonical example is the **knowledge-retriever-service** (read-only): it has no `domain/` (a request is *parse query → read substrate → shape response*, no business-logic aggregates) and no `models/` (it owns no relational schema; its only persistence is a Redis query cache, which is repository-layer access). The deviation is recorded in `service_status.yaml` and noted in the service's `__init__`/README.
+
+A second recorded case is the **knowledge-graph-service**: its ORM table declarations live in `repositories/models.py` (the *colocated* form) rather than a sibling `models/` package. STR004 treats the two as equivalent ("Both `repositories/models.py` (colocated) and a sibling `models/` package are accepted"), so the absent `models/` dir is the same accepted-deviation pattern — not a layering defect, and not worth a churn-only refactor to split out.
+
 ## What belongs in each layer (and what is forbidden there)
 
 | Layer | Contains | MUST NOT contain |
