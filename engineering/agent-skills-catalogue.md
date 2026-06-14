@@ -19,7 +19,7 @@ This also lets the [Agent and Skill Change Log](https://oraclous.atlassian.net/w
 
 ## Agent index
 
-The team is 11 full agents plus one narrow verification persona (`be-test-reviewer`). The "Session" column records where each runs; see [Session topology and persona residency](https://oraclous.atlassian.net/wiki/spaces/OP/pages/1736705) for the full rationale.
+The team is 12 full agents plus one narrow verification persona (`be-test-reviewer`). The "Session" column records where each runs; see [Session topology and persona residency](https://oraclous.atlassian.net/wiki/spaces/OP/pages/1736705) for the full rationale.
 
 | Tier | Agent | Session | Status |
 | --- | --- | --- | --- |
@@ -27,6 +27,7 @@ The team is 11 full agents plus one narrow verification persona (`be-test-review
 | Architecture | [security-architect](https://oraclous.atlassian.net/wiki/spaces/OP/pages/557195) | Coordinator | <custom data-type="status" data-id="id-1">Skill page current</custom> |
 | Planning | [product-planner](https://oraclous.atlassian.net/wiki/spaces/OP/pages/884840) | Coordinator | <custom data-type="status" data-id="id-2">Skill page current</custom> |
 | Planning | [tech-lead (human)](https://oraclous.atlassian.net/wiki/spaces/OP/pages/983101) | All | <custom data-type="status" data-id="id-3">Skill page current</custom> |
+| Design | [experience-architect](personas/experience-architect.md) | Coordinator | <custom data-type="status" data-id="id-12">Skill page current</custom> |
 | Implementation | [test-author](https://oraclous.atlassian.net/wiki/spaces/OP/pages/294957) | Backend | <custom data-type="status" data-id="id-4">Skill page current</custom> |
 | Implementation | [backend-implementer](https://oraclous.atlassian.net/wiki/spaces/OP/pages/294995) | Backend | <custom data-type="status" data-id="id-5">Skill page current</custom> |
 | Implementation | [frontend-implementer](https://oraclous.atlassian.net/wiki/spaces/OP/pages/295035) | Frontend | <custom data-type="status" data-id="id-6">Skill page current</custom> |
