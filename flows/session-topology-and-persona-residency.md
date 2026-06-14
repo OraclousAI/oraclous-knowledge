@@ -24,6 +24,7 @@ The human `tech-lead` (Reza) operates across all three and is the final sign-off
 | Persona | Session | What it does there |
 | --- | --- | --- |
 | product-planner | Coordinator | Epics, Contracts, Stories, briefs, migration source maps, backlog |
+| experience-architect | Coordinator | End-user personas, IA/navigation model, user journeys, UI/UX design; directs FE product-surface work (opens the GitHub issue with the design) and reviews/validates the PR from the user's perspective (approving via the `johnkennII` identity, paired with the CTO); backend-gap Contracts |
 | solution-architect | Coordinator | Architecture review, Contract drafting, target-shape sign-off on source maps |
 | security-architect | Coordinator | Threat modelling, threat tagging, security review of Contracts |
 | devops-implementer | Coordinator (operates _on_ both repos) | `[impl-infra]` PRs against either repo: CI, containers, deployment, contract-test fixtures. Never application code. |
@@ -42,11 +43,12 @@ The two architecture personas (`solution-architect`, `security-architect`) are n
 
 ## 4. Coordinator persona routing
 
-The coordinator session can load five personas. It chooses by task:
+The coordinator session can load six personas. It chooses by task:
 
 | Task | Load |
 | --- | --- |
 | Decompose a release; author epics/stories/briefs; fill a migration source map; groom backlog | product-planner |
+| Design a user journey / IA / UI-UX for a product surface; build the capability-surface inventory; author end-user personas; review an FE build from the user lens; file a journey→backend-gap Contract | experience-architect |
 | Review a brief's architecture; draft a Contract; sign off a source map's target-shape column; answer a be-test-reviewer escalation | solution-architect |
 | Threat-model; tag threats on a brief; review a security-touching Contract | security-architect |
 | CI, container, deployment, or contract-test-fixture work on either repo | devops-implementer |
@@ -64,6 +66,8 @@ The coordinator **never** loads test-author, be-test-reviewer, backend-implement
 ## 6. The frontend asymmetry
 
 The frontend session currently loads only `frontend-implementer`. FE tests, test review, and code review are deferred; FE craft review is manual by the human `tech-lead`. FE invariants (gateway-only API, no token in `localStorage`, WCAG AA) are enforced by CI, not by a review agent. Re-evaluate at R-Frontend Phase B. See [Jira board and workflow mapping](https://oraclous.atlassian.net/wiki/spaces/OP/pages/1671170) Section 4.
+
+For **product-surface** FE work, the Coordinator-resident `experience-architect` adds two touchpoints that do not change FE session residency, and **no process gate**: (a) it **designs and directs** — opens the GitHub issue to the frontend agent with the journey+IA+UX design as the brief; and (b) it **reviews/validates the PR** from the user's perspective and approves via the `johnkennII` GitHub identity, parallel to the CTO's craft review (surface-drift or a non-negotiable violation is a request-changes even when the code is correct). Those two agent reviews are the whole check on a product-surface PR; the automated FE invariant CI runs on its own.
 
 ## 11. Session residency — AGENTS.md §11 template
 

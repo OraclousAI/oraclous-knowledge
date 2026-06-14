@@ -5,7 +5,7 @@ title: "Agent Team Roster"
 
 # Agent Team Roster
 
-The Oraclous engineering team operates as a multi-agent system with eleven role-bounded agents organised across four tiers, plus a human tech lead. Every story or feature flows through this team with explicit hand-offs and sign-off gates.
+The Oraclous engineering team operates as a multi-agent system with twelve role-bounded agents organised across five tiers, plus a human tech lead. Every story or feature flows through this team with explicit hand-offs and sign-off gates.
 
 This page is the reference for who does what. Implementation of these agents lives in Claude Code skills and project configuration; the _roles_ documented here are stable across implementation changes.
 
@@ -20,6 +20,10 @@ This page is the reference for who does what. Implementation of these agents liv
 **product-planner** — Decomposes features and epics into stories. Writes briefs that test-author and implementers will work from. Ensures stories are independently shippable, have clear acceptance criteria, and reference the relevant architecture sections or ADRs.
 
 **tech-lead (human — Reza)** — Final sign-off authority. Resolves cross-tier disputes. Owns sprint planning and the prioritisation backlog. Makes the call when architecture, security, and implementation views disagree.
+
+## Design tier
+
+**experience-architect** — Owns the forward-looking product surface: end-user personas, the information-architecture / navigation model, user journeys, and UI/UX design, grounded in the **live** gateway capability surface (never the legacy app). The FE loop is simple: it **designs** each surface, **directs** the frontend agent to build it (opens the GitHub issue with the design as the brief), and **reviews/validates** the resulting PR from the user's perspective — approving via the `johnkennII` GitHub identity, paired with the CTO's craft review (the two together are the whole check). Files backend-gap Contracts when a journey needs an unexposed capability. Sits between the Planning tier and the Implementation tier. Coordinator-resident; never writes application or design-system code.
 
 ## Implementation tier
 
@@ -52,6 +56,8 @@ A story flows through the tiers in this order:
 5. **qa-engineer** validates the implementation against the tests and the brief
 6. **docs-writer** updates documentation if platform behaviour changed
 7. **tech-lead** final sign-off; story closes
+
+For **frontend product-surface** work the loop is shorter and gate-free: **experience-architect** designs the surface and opens the GitHub issue directly to the frontend agent (no product-planner middleman); the agent builds and opens a PR; experience-architect reviews/validates it from the user's perspective and the CTO reviews craft — together they decide the PR, approving via the `johnkennII` GitHub identity.
 
 ## Multi-agent etiquette
 

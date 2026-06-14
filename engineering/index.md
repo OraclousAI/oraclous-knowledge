@@ -19,7 +19,7 @@ This hub anchors the engineering documentation that governs how the Oraclous Pla
 
 ## Team
 
-* [Agent Team Roster](https://oraclous.atlassian.net/wiki/spaces/OP/pages/589848) — the eleven role-bounded agents and one human tech lead
+* [Agent Team Roster](https://oraclous.atlassian.net/wiki/spaces/OP/pages/589848) — the twelve role-bounded agents (incl. the Design tier — `experience-architect`) and one human tech lead
 
 ## How these pages relate
 
