@@ -82,7 +82,7 @@ protocol: `oraclous-frontend/CLAUDE.md` §3.7 (FE side) + the experience-archite
 1. EA **readies one** increment (assign + `ready`) → FE's turn; EA idle.
 2. FE builds, **opens one PR**, then **goes idle** — it does NOT pick up another issue.
 3. EA **reviews on the running app** → **requests changes** (this is how FE is notified of improvements; baton back to FE, who revises the **same PR** then idles again) **or** **approves via `johnkennII` and merges automatically** — a *confirmed* PR (EA-approved + CI green + mergeable) is merged without asking; there is no merge-confirmation step.
-4. Maintainer tests it live → EA **readies the next** increment. Repeat.
+4. **On merge, EA immediately readies the next** increment (assign + `ready`) so the FE never idles waiting. The maintainer tests merged increments live **in parallel** — that is **not** a gate on readying the next. Repeat.
 
 Blocked increments (#108←G1, #127←G2) are never readied until their Contract lands. There is always exactly
 one increment in flight; nothing is queued ahead.
