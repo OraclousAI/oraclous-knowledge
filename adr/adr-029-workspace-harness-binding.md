@@ -4,9 +4,9 @@
 
 | | |
 | --- | --- |
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-06-16 |
-| Deciders | solution-architect (drafted), Reza (directed: "drive G2 now") — **pending Reza/CTO acceptance** |
+| Deciders | solution-architect (drafted), Reza (directed "drive G2 now"; accepted the drafted shape with both defaults) |
 | Driving epic | Agents & harness (`oraclous-frontend` [#121](https://github.com/OraclousAI/oraclous-frontend/issues/121)) · increment 6 [#127](https://github.com/OraclousAI/oraclous-frontend/issues/127) · Contract G2 [`oraclous-backend#340`](https://github.com/OraclousAI/oraclous-backend/issues/340) |
 | Builds on | [ADR-002](https://oraclous.atlassian.net/wiki/spaces/OP/pages/557058) (OHM as the canonical, portable manifest), [ADR-006](adr-006-organisation-as-outermost-tenancy-unit.md) (organisation as the outermost tenancy unit), [ADR-018](adr-018-edge-authentication-trusted-gateway.md) (trusted gateway), [ADR-019](adr-019-r6-gateway-datastore-and-integration-key-authz-floor.md) (org-scoping authz floor; cross-org ReBAC deferred) |
 

@@ -22,6 +22,7 @@ Each contract below corresponds to a `Contract` issue in Jira. The Jira issue tr
 | Org-role claim + `X-Principal-Org-Role` (R7-SEC S2) | — (sole-worker; #217) | Done & live (GW-17) | See §S2-ROLE |
 | Enriched graph schema (KGS recipe enrichment, #269) | — (epic #269; #270/#271/#274/#275, perf #272) | Live (KGS smoke) | See §GRAPH |
 | BYOM spend estimate (`GET /v1/harnesses/spend`) | — | Live | See §SPEND |
+| Workspace↔harness binding (G2) | — ([oraclous-backend#340](https://github.com/OraclousAI/oraclous-backend/issues/340); FE [#127](https://github.com/OraclousAI/oraclous-frontend/issues/127)) | AGREED ([ADR-029](../adr/adr-029-workspace-harness-binding.md)); BE impl open, FE #127 consumes | See §G2 |
 
 > ⚠ **Index integrity (31 May 2026, solution-architect).** Of the three rows, only the Gateway error envelope has a real `Contract`-type Jira issue: [**ORA-56**](https://oraclous.atlassian.net/browse/ORA-56), backfilled 31 May 2026. The keys previously shown for the other two rows were **wrong** — "ORA-12" is the R0.5 0d substrate-test-harness story and "ORA-19" is the deferred B1 isolation story; neither the Auth-token-claims nor the OHM-manifest-envelope shape has a Contract issue yet (the same applies to the `(ORA-12)`/`(ORA-19)` keys in the §1/§2 headers below). Backfilling those two is **pending** — the 31 May coordinator decision limited this pass to the gateway envelope. Until then, treat §1/§2 as shape-of-record without a tracking Contract.
 
@@ -220,3 +221,27 @@ Request: `GET /v1/harnesses/spend?since=<ISO8601>` — `since` is **optional**; 
 ```
 
 Mirrors the `harness-runtime-service` `SpendResponse`/`ModelSpendOut` schema and the gateway OpenAPI `SpendResponse`/`ModelSpendOut` components (`openapi/v1.yaml`). The operation is `x-stability: provisional`.
+
+## §G2 — Workspace↔harness binding ([ADR-029](../adr/adr-029-workspace-harness-binding.md))
+
+The relation tying an OHM agent (a `kind:harness` capability) to a workspace (a knowledge graph). Per ADR-029 it is a **many-to-many curation edge owned by the capability registry** — a `harness_graph_binding` join row, **not** an OHM manifest field and **not** a graph-substrate association. It is a **curation/visibility** association only — **not** an authorization grant and **not** an execution route (the agent's data access is unchanged; binding never grants new access). **Org-scoping floor:** a binding is permitted only when the harness and the graph share `owner_organization_id`; a cross-org attach is rejected. Deleting either object cascade-deletes its bindings.
+
+The **frontend** (`oraclous-frontend#127`) consumes these gateway endpoints; the binding data lives in and is served by the **capability registry** (the gateway routes the `/agents` sub-paths of `graphs/` to it). FE labels them "workspace"/"agent"; the routes use the real objects `graphs`/`capabilities`.
+
+```jsonc
+// GET /api/v1/graphs/{graph_id}/agents — harnesses bound to a workspace
+// 200
+[ { "harness_id": "cap_...", "name": "Triage agent", "kind": "harness", "summary": "…" } ]
+
+// POST /api/v1/graphs/{graph_id}/agents   body: { "harness_id": "cap_..." }
+//   201 created · 200 if already bound (idempotent) · 409 not-same-org · 404 either object absent/not visible
+
+// DELETE /api/v1/graphs/{graph_id}/agents/{harness_id}
+//   204 · 404 if not bound
+
+// GET /api/v1/capabilities/{harness_id}/graphs — workspaces a harness serves (agent detail)
+// 200
+[ { "graph_id": "g_...", "name": "Acme support KB" } ]
+```
+
+Defaults set at acceptance: reverse-lookup is the nested path above (not a `?graph_id=` query form); members get the **read** view of a workspace's agents (mirrors capability visibility); attach/detach require org write access (mirrors capability management). **Enforcement (Contract not Done until this exists):** the gateway exposes the four endpoints, backed by a `harness_graph_binding` migration in the capability registry with the same-org guard + cascade-on-delete; mirrored in the gateway OpenAPI (`openapi/v1.yaml`). Tracked: `oraclous-backend#340` (the implementing issue) + FE `#127`.
