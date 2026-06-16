@@ -38,15 +38,17 @@ This hub indexes every Architecture Decision Record for the Oraclous Platform. E
 | ADR-025 | [SQL Database Connector: Egress and Credential Posture (epic #294 / #307)](adr-025-sql-connector-egress-and-credential-posture.md) | Accepted | 2026-06-12 |
 | ADR-026 | [Federated Cross-Graph Query: an Aggregator over Already-Accessible Graphs (epic #312 / #330)](adr-026-federated-cross-graph-query.md) | Accepted | 2026-06-12 |
 | ADR-027 | [Agent Memory: a Complete Ebbinghaus Store with a Fail-Soft Harness Write Path and Tool-Based Recall (epic #312 / #332)](adr-027-agent-memory-ebbinghaus-store.md) | Accepted | 2026-06-12 |
+| ADR-028 | [Recipe Draft → Promote Lifecycle (a stored recipe is a draft until promoted)](adr-028-recipe-draft-promote-lifecycle.md) | Accepted | 2026-06-14 |
+| ADR-029 | [Workspace↔Harness Binding (a curation edge in the capability registry, not a manifest field) (epic #121 / FE #127 / Contract G2)](adr-029-workspace-harness-binding.md) | Accepted | 2026-06-16 |
 
-> **ADR-022** is **ported from the legacy `develop` branch @ `84152635de05c105765cfe6b631bb5ba81f2f4aa` (TASK-237)** and kept at its **original legacy number** for traceability to the binding spec. It is the binding ingestion specification for the R3.5 knowledge-graph-service (service #1). The next NEW number is **ADR-028** (ADR-023 through ADR-027 taken 2026-06-12; 022 is the ported legacy ADR).
+> **ADR-022** is **ported from the legacy `develop` branch @ `84152635de05c105765cfe6b631bb5ba81f2f4aa` (TASK-237)** and kept at its **original legacy number** for traceability to the binding spec. It is the binding ingestion specification for the R3.5 knowledge-graph-service (service #1). The next NEW number is **ADR-030** (ADR-023 through ADR-027 taken 2026-06-12; ADR-028/029 taken since; 022 is the ported legacy ADR).
 
 ## ADR conventions
 
 * **One decision per ADR.** If a decision is compound, it gets split into multiple ADRs that may reference each other.
 * **Status lifecycle:** `Proposed` → `Accepted` → optionally `Superseded by ADR-NNN`. Rejected ADRs are kept (as `Rejected`) for the historical record.
 * **No silent supersession.** When a new ADR overrides an existing one, the new ADR names it explicitly and the old ADR's status is updated.
-* **Numbering is monotonic.** ADR-028 is the next number for NEW decisions (ADR-023 through ADR-027 taken on 2026-06-12); numbers are not reused even if an ADR is rejected. (ADR-022 is a **ported legacy ADR** kept at its original number for traceability.)
+* **Numbering is monotonic.** ADR-030 is the next number for NEW decisions (ADR-023 through ADR-027 taken on 2026-06-12; ADR-028/029 taken since); numbers are not reused even if an ADR is rejected. (ADR-022 is a **ported legacy ADR** kept at its original number for traceability.)
 
 ## When to write an ADR
 
