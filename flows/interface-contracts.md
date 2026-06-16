@@ -224,24 +224,26 @@ Mirrors the `harness-runtime-service` `SpendResponse`/`ModelSpendOut` schema and
 
 ## §G2 — Workspace↔harness binding ([ADR-029](../adr/adr-029-workspace-harness-binding.md))
 
-The relation tying an OHM agent (a `kind:harness` capability) to a workspace (a knowledge graph). Per ADR-029 it is a **many-to-many curation edge owned by the capability registry** — a `harness_graph_binding` join row, **not** an OHM manifest field and **not** a graph-substrate association. It is a **curation/visibility** association only — **not** an authorization grant and **not** an execution route (the agent's data access is unchanged; binding never grants new access). **Org-scoping floor:** a binding is permitted only when the harness and the graph share `owner_organization_id`; a cross-org attach is rejected. Deleting either object cascade-deletes its bindings.
+The relation tying an OHM agent (a `kind:harness` capability) to a workspace (a knowledge graph). Per ADR-029 it is a **many-to-many curation edge owned by the capability registry** — a `harness_graph_binding` join row, **not** an OHM manifest field and **not** a graph-substrate association. It is a **curation/visibility** association only — **not** an authorization grant and **not** an execution route (the agent's data access is unchanged; binding never grants new access).
 
-The **frontend** (`oraclous-frontend#127`) consumes these gateway endpoints; the binding data lives in and is served by the **capability registry** (the gateway routes the `/agents` sub-paths of `graphs/` to it). FE labels them "workspace"/"agent"; the routes use the real objects `graphs`/`capabilities`.
+> **rev2 (2026-06-17, post pre-build audit):** endpoints moved off `/api/v1/graphs/{id}/agents` (which the static-prefix gateway routes to knowledge-graph-service, not the registry) to a new **`/api/v1/agent-bindings`** registry prefix (one new route-table entry → `CAPABILITY_REGISTRY_URL`). Org-scoping is **visibility-based, verified both sides**: harness via the registry's caller-org-OR-`PLATFORM_ORG` lookup (so shared/platform agents are bindable); graph via a KGS membership call (`GET /internal/v1/graphs`, ADR-018 forward-and-trust) — an object not visible to the caller → **404** (no `409`). Cascade is **asymmetric**: harness-delete hard-cascades (in-service FK); graph-delete is **tolerate-and-lazily-ignore** (no cross-service cascade exists; dangling rows are skipped on read, safe because the edge is curation-only).
+
+The **frontend** (`oraclous-frontend#127`) consumes these gateway endpoints; the binding data lives in and is served by the **capability registry**. FE labels them "workspace"/"agent"; the routes use the real objects.
 
 ```jsonc
-// GET /api/v1/graphs/{graph_id}/agents — harnesses bound to a workspace
+// GET /api/v1/agent-bindings?graph_id={id} — agents bound to a workspace (live graphs only)
 // 200
 [ { "harness_id": "cap_...", "name": "Triage agent", "kind": "harness", "summary": "…" } ]
 
-// POST /api/v1/graphs/{graph_id}/agents   body: { "harness_id": "cap_..." }
-//   201 created · 200 if already bound (idempotent) · 409 not-same-org · 404 either object absent/not visible
-
-// DELETE /api/v1/graphs/{graph_id}/agents/{harness_id}
-//   204 · 404 if not bound
-
-// GET /api/v1/capabilities/{harness_id}/graphs — workspaces a harness serves (agent detail)
+// GET /api/v1/agent-bindings?harness_id={id} — workspaces a harness serves (agent detail; live graphs only)
 // 200
 [ { "graph_id": "g_...", "name": "Acme support KB" } ]
+
+// POST /api/v1/agent-bindings   body: { "harness_id": "cap_...", "graph_id": "g_..." }
+//   201 created · 200 if already bound (idempotent) · 404 either object absent/not visible to caller's org
+
+// DELETE /api/v1/agent-bindings?harness_id={id}&graph_id={id}
+//   204 · 404 if not bound
 ```
 
-Defaults set at acceptance: reverse-lookup is the nested path above (not a `?graph_id=` query form); members get the **read** view of a workspace's agents (mirrors capability visibility); attach/detach require org write access (mirrors capability management). **Enforcement (Contract not Done until this exists):** the gateway exposes the four endpoints, backed by a `harness_graph_binding` migration in the capability registry with the same-org guard + cascade-on-delete; mirrored in the gateway OpenAPI (`openapi/v1.yaml`). Tracked: `oraclous-backend#340` (the implementing issue) + FE `#127`.
+Decisions pinned at acceptance: a shared `PLATFORM_ORG` agent **can** bind to a tenant workspace; members get the **read** view; attach/detach require org write access. **Enforcement (Contract not Done until this exists):** the gateway exposes the four endpoints (one new `/api/v1/agent-bindings` route-table entry), backed by a `harness_graph_binding` migration in the capability registry (harness FK `ON DELETE CASCADE` + `UNIQUE(harness_capability_id, graph_id)` + `created_by`), the KGS membership check on attach, and graphs-resolved-on-read filtering; mirrored in the gateway OpenAPI (`openapi/v1.yaml`). Tracked: `oraclous-backend#340` (the implementing issue) + FE `#127`.
