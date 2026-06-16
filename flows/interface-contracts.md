@@ -240,10 +240,12 @@ The **frontend** (`oraclous-frontend#127`) consumes these gateway endpoints; the
 [ { "graph_id": "g_...", "name": "Acme support KB" } ]
 
 // POST /api/v1/agent-bindings   body: { "harness_id": "cap_...", "graph_id": "g_..." }
-//   201 created · 200 if already bound (idempotent) · 404 either object absent/not visible to caller's org
+//   201 created · 200 if already bound (idempotent); body: { "created": bool }
+//   404 either object absent/not visible to caller's org
+//   503 if the graph service is unreachable (attach verifies graph membership; fail-closed, retryable)
 
 // DELETE /api/v1/agent-bindings?harness_id={id}&graph_id={id}
 //   204 · 404 if not bound
 ```
 
-Decisions pinned at acceptance: a shared `PLATFORM_ORG` agent **can** bind to a tenant workspace; members get the **read** view; attach/detach require org write access. **Enforcement (Contract not Done until this exists):** the gateway exposes the four endpoints (one new `/api/v1/agent-bindings` route-table entry), backed by a `harness_graph_binding` migration in the capability registry (harness FK `ON DELETE CASCADE` + `UNIQUE(harness_capability_id, graph_id)` + `created_by`), the KGS membership check on attach, and graphs-resolved-on-read filtering; mirrored in the gateway OpenAPI (`openapi/v1.yaml`). Tracked: `oraclous-backend#340` (the implementing issue) + FE `#127`.
+Decisions pinned at acceptance: a shared `PLATFORM_ORG` agent **can** bind to a tenant workspace; members get the **read** view; attach/detach require org write access. **As shipped (`oraclous-backend#350`):** POST returns a small `{ "created": bool }` body alongside the 201/200 status (so the FE reads created-vs-already-bound without inspecting status); the graph-membership check is a network call to KGS, so an unreachable graph service is a fail-closed **503** (retryable), not a guess; a `GET ?graph_id=` for a graph not visible to the caller returns `[]` (the leak-free list mask). **Enforcement (live):** the gateway exposes the four endpoints (the `/api/v1/agent-bindings` route-table entry), backed by the `harness_graph_binding` migration in the capability registry (harness FK `ON DELETE CASCADE` + `UNIQUE(harness_capability_id, graph_id)` + `created_by`), the KGS membership check on attach, and graphs-resolved-on-read filtering; mirrored in the gateway OpenAPI (`openapi/v1.yaml`). Tracked: `oraclous-backend#340` (merged) + FE `#127`.
