@@ -4,11 +4,13 @@
 
 | | |
 | --- | --- |
-| Status | Accepted |
+| Status | Accepted — **Realized 2026-06-17** (epic [#353](https://github.com/OraclousAI/oraclous-backend/issues/353) closed) |
 | Date | 2026-06-17 |
 | Deciders | solution-architect (drafted), Reza (greenlit the realize epic, 2026-06-17) |
 | Driving epic | Realise RLS backstop ([`oraclous-backend#353`](https://github.com/OraclousAI/oraclous-backend/issues/353)) · grade-A remediation WP-5 Option A |
 | Builds on | [ADR-006](adr-006-organisation-as-outermost-tenancy-unit.md) (org as tenancy), [ADR-012](adr-012-substrate-tenancy-enforcement-seam-and-rls-backstop-preconditions.md) (the seam + RLS preconditions — this ADR *realizes* its §2), [ADR-013](adr-013-fail-closed-authority-placement-at-the-substrate-rebac-seam.md) |
+
+> **✅ Realized 2026-06-17 (epic #353 closed).** All 7 backend services now connect at runtime as the NOSUPERUSER/NOBYPASSRLS `oraclous_app` role with `ENABLE`+`FORCE ROW LEVEL SECURITY` + an org-isolation policy on every org-scoped table — **27 forced-RLS tables**, proven by data-layer isolation tests + live smoke. PRs #367 (credential-broker + foundation), #368 (auth), #369 (shared `oraclous_substrate` GUC/role seam: `build_rls_engine`/`org_scope`/`install_org_guc_guard`/`provision_app_role`), #370 (knowledge-graph), #371+#372 (execution-engine + request-path fix), #373 (capability-registry + harness-runtime), #374+#375 (application-gateway + dep fix). Cross-org *producers* (auth credential-store, engine reaper/Beat, gateway `get_by_prefix`/`get_by_id`) run on a separate owner engine (the §3 carve); every other request-path op binds the org via `org_scope`. Two CI-blind bug classes surfaced (request-path empty-GUC fail-close; missing per-service pyproject dep masked by the workspace venv) — now covered by real-path isolation tests + the `check_service_dep_imports` / `check_rls_request_binding` guardrails. **Prod must override the dev `oraclous_app` password** with a managed credential.
 
 ## Context
 
