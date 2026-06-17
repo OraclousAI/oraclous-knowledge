@@ -40,7 +40,7 @@ This hub indexes every Architecture Decision Record for the Oraclous Platform. E
 | ADR-027 | [Agent Memory: a Complete Ebbinghaus Store with a Fail-Soft Harness Write Path and Tool-Based Recall (epic #312 / #332)](adr-027-agent-memory-ebbinghaus-store.md) | Accepted | 2026-06-12 |
 | ADR-028 | [Recipe Draft → Promote Lifecycle (a stored recipe is a draft until promoted)](adr-028-recipe-draft-promote-lifecycle.md) | Accepted | 2026-06-14 |
 | ADR-029 | [Workspace↔Harness Binding (a curation edge in the capability registry, not a manifest field) (epic #121 / FE #127 / Contract G2)](adr-029-workspace-harness-binding.md) | Accepted | 2026-06-16 |
-| ADR-030 | [Realize the Postgres RLS Backstop (per-service policies + async GUC seam + non-bypassing role) (grade-A WP-5 / epic oraclous-backend#353)](adr-030-realize-postgres-rls-backstop.md) | Proposed | 2026-06-17 |
+| ADR-030 | [Realize the Postgres RLS Backstop (per-service policies + async GUC seam + non-bypassing role) (grade-A WP-5 / epic oraclous-backend#353)](adr-030-realize-postgres-rls-backstop.md) | Accepted | 2026-06-17 |
 
 > **ADR-022** is **ported from the legacy `develop` branch @ `84152635de05c105765cfe6b631bb5ba81f2f4aa` (TASK-237)** and kept at its **original legacy number** for traceability to the binding spec. It is the binding ingestion specification for the R3.5 knowledge-graph-service (service #1). The next NEW number is **ADR-031** (ADR-023 through ADR-027 taken 2026-06-12; ADR-028/029/030 taken since; 022 is the ported legacy ADR).
 

@@ -4,9 +4,9 @@
 
 | | |
 | --- | --- |
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-06-17 |
-| Deciders | solution-architect (drafted) — **pending Reza acceptance** (a multi-service security investment; greenlights epic `oraclous-backend#353`) |
+| Deciders | solution-architect (drafted), Reza (greenlit the realize epic, 2026-06-17) |
 | Driving epic | Realise RLS backstop ([`oraclous-backend#353`](https://github.com/OraclousAI/oraclous-backend/issues/353)) · grade-A remediation WP-5 Option A |
 | Builds on | [ADR-006](adr-006-organisation-as-outermost-tenancy-unit.md) (org as tenancy), [ADR-012](adr-012-substrate-tenancy-enforcement-seam-and-rls-backstop-preconditions.md) (the seam + RLS preconditions — this ADR *realizes* its §2), [ADR-013](adr-013-fail-closed-authority-placement-at-the-substrate-rebac-seam.md) |
 
