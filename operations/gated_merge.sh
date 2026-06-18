@@ -33,7 +33,7 @@ required_checks_for() {
         "Gate 2: no-token-in-storage" \
         "Gate 3: axe-core AA" \
         "Gate 4: bundle-budget" \
-        "Gate 5: no-dangerouslySetInnerHTML" ;;  # quality job + 5 ORAA-216 invariant gates (all on main, green)
+        "Gate 5: no-dangerouslySetInnerHTML / set:html" ;;  # quality job + 5 ORAA-216 invariant gates (all on main, green)
     knowledge) ;;  # no CI workflow — pre-push hook + review cover it
   esac
 }
