@@ -7,6 +7,8 @@ title: "PR Conventions"
 
 This page defines the structure, sizing, and review expectations for pull requests in both repositories. It complements the Git Workflow page (which covers branching and commits) by focusing on the _review experience_.
 
+> **⚠️ PR-BUNDLING LAW (non-negotiable).** **Never ship a one-commit-per-PR stream.** "One commit per concern" means **multiple commits inside ONE PR** — NOT one PR per commit. Bundle related concerns into a single PR: CI (~6 min) + non-author review + redeploy run **once per PR**, so opening a separate PR for each commit multiplies that cost and wastes wall-clock. An issue with N sub-tasks ships as **one PR with N commits, never N PRs** (e.g. a `mypy + OTel + Celery` issue = one PR / three commits, not three PRs). Default to **fewer, bigger PRs**; the only exception is changes in different repos, which can't share a PR. (This sits above the line-count target below — reviewability is served by one cohesive PR with well-separated commits, not by fragmenting one issue into many tiny PRs.)
+
 ## PR sizing
 
 PRs should be small enough to review carefully in one sitting. Concretely:
