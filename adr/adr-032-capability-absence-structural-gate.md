@@ -8,9 +8,9 @@ title: "ADR-032 — Capability-Absence as a Structural Gate"
 
 | Field | Value |
 | --- | --- |
-| Status | Proposed |
-| Date | 2026-06-19 |
-| Approved by | pending (Reza / CTO) |
+| Status | Accepted |
+| Date | 2026-06-19 (accepted 2026-06-20) |
+| Approved by | Reza Jahankohan |
 | Supersedes | None |
 | Superseded by | None |
 | Driving artifact | [Team-of-Agents North-Star Lock](../product/team-of-agents-north-star-lock.md) — §2 "The CAPABILITY-ABSENCE GATE primitive" + §6 acceptance items 4 / 4b + §8 ADR #2 |

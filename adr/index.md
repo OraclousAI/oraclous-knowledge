@@ -41,11 +41,11 @@ This hub indexes every Architecture Decision Record for the Oraclous Platform. E
 | ADR-028 | [Recipe Draft → Promote Lifecycle (a stored recipe is a draft until promoted)](adr-028-recipe-draft-promote-lifecycle.md) | Accepted | 2026-06-14 |
 | ADR-029 | [Workspace↔Harness Binding (a curation edge in the capability registry, not a manifest field) (epic #121 / FE #127 / Contract G2)](adr-029-workspace-harness-binding.md) | Accepted | 2026-06-16 |
 | ADR-030 | [Realize the Postgres RLS Backstop (per-service policies + async GUC seam + non-bypassing role) (grade-A WP-5 / epic oraclous-backend#353)](adr-030-realize-postgres-rls-backstop.md) | Accepted | 2026-06-17 |
-| ADR-031 | [OHM v1.1 Team Manifest (Team Harness) (R7 product-loop / epic oraclous-backend#382)](adr-031-ohm-v1.1-team-manifest.md) | Proposed | 2026-06-19 |
-| ADR-032 | [Capability-Absence as a Structural Gate (R7 product-loop / epic oraclous-backend#382)](adr-032-capability-absence-structural-gate.md) | Proposed | 2026-06-19 |
-| ADR-033 | [Orchestrator Capabilities Status (ADR-005 L77) and Original-Primitive Retirement (R7 product-loop / epic oraclous-backend#382)](adr-033-orchestrator-capabilities-status-and-retirement.md) | Proposed | 2026-06-19 |
+| ADR-031 | [OHM v1.1 Team Manifest (Team Harness) (R7 product-loop / epic oraclous-backend#382)](adr-031-ohm-v1.1-team-manifest.md) | Accepted | 2026-06-19 |
+| ADR-032 | [Capability-Absence as a Structural Gate (R7 product-loop / epic oraclous-backend#382)](adr-032-capability-absence-structural-gate.md) | Accepted | 2026-06-19 |
+| ADR-033 | [Orchestrator Capabilities Status (ADR-005 L77) and Original-Primitive Retirement (R7 product-loop / epic oraclous-backend#382)](adr-033-orchestrator-capabilities-status-and-retirement.md) | Accepted | 2026-06-19 |
 
-> **ADR-022** is **ported from the legacy `develop` branch @ `84152635de05c105765cfe6b631bb5ba81f2f4aa` (TASK-237)** and kept at its **original legacy number** for traceability to the binding spec. It is the binding ingestion specification for the R3.5 knowledge-graph-service (service #1). The next NEW number is **ADR-034** (ADR-031/032/033 are the R7 product-loop foundation ADRs, Proposed 2026-06-19; 022 is the ported legacy ADR).
+> **ADR-022** is **ported from the legacy `develop` branch @ `84152635de05c105765cfe6b631bb5ba81f2f4aa` (TASK-237)** and kept at its **original legacy number** for traceability to the binding spec. It is the binding ingestion specification for the R3.5 knowledge-graph-service (service #1). The next NEW number is **ADR-034** (ADR-031/032/033 are the R7 product-loop foundation ADRs, Accepted 2026-06-20; 022 is the ported legacy ADR).
 
 ## ADR conventions
 
