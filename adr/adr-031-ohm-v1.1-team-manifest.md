@@ -8,9 +8,9 @@ title: "ADR-031 — OHM v1.1 Team Manifest (Team Harness)"
 
 | Field | Value |
 | --- | --- |
-| Status | Proposed |
-| Date | 2026-06-19 |
-| Approved by | pending (Reza / CTO) |
+| Status | Accepted |
+| Date | 2026-06-19 (accepted 2026-06-20) |
+| Approved by | Reza Jahankohan |
 | Supersedes | None |
 | Superseded by | None |
 | Driving artifact | [Team-of-Agents — North-Star Lock & Acceptance Test](../product/team-of-agents-north-star-lock.md) |

@@ -8,9 +8,9 @@ title: "ADR-033 — Orchestrator Capabilities Status (ADR-005 L77) and Original-
 
 | Field | Value |
 | --- | --- |
-| Status | Proposed |
-| Date | 2026-06-19 |
-| Approved by | pending (Reza / CTO) |
+| Status | Accepted |
+| Date | 2026-06-19 (accepted 2026-06-20) |
+| Approved by | Reza Jahankohan |
 | Supersedes | None (status/governance ADR; does not supersede ADR-005, it closes an un-ADR'd promise inside it) |
 | Superseded by | None |
 | Driving artifact | [Team-of-Agents North-Star Lock](../product/team-of-agents-north-star-lock.md) (§8 item 8) |
