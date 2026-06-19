@@ -2,7 +2,7 @@
 
 Two external enforcement **mechanisms** (not rules) live in `operations/`:
 
-- `fleet_keeper.py` — intake & anti-stall automation for the PaperClip board (documented below).
+- `fleet_keeper.py` — intake & anti-stall automation for the GitHub Issues board (documented below).
 - `gated_merge.sh` — the **only sanctioned merge path** for the repos. See "Merge gating" below.
 
 ## Merge gating — `gated_merge.sh`
@@ -32,8 +32,8 @@ CI workflow, so its status-check gate is skipped (the pre-push hook covers quali
 # Fleet-keeper — intake & anti-stall automation (ORAA-250)
 
 `operations/fleet_keeper.py` is an **external enforcement mechanism** (not a rule) that keeps the
-OraclousAI PaperClip board moving without a human acting as load-balancer. It hits the local
-PaperClip API (`http://127.0.0.1:3100/api`, local-trusted, no auth) on a short interval.
+OraclousAI GitHub Issues board moving without a human acting as load-balancer. It drives the board
+through the `gh` CLI on a short interval.
 
 This file documents what it does, why, and how to run/schedule it. The script's own docstring is
 the authoritative behaviour reference.
@@ -42,10 +42,10 @@ the authoritative behaviour reference.
 
 The fleet repeatedly **dead-ended** and required manual intervention:
 
-- **Ready work stranded ownerless.** A `backlog` issue with no `assigneeAgentId` is invisible to
-  every agent's heartbeat (heartbeats pick up *assigned* work), so it sat until a human assigned it.
-- **Stale blocks.** An issue stayed `blocked` after all its blockers closed, because nothing
-  re-evaluated and unblocked it. Agents then woke against it and burned failing runs.
+- **Ready work stranded ownerless.** An open issue with no assignee is invisible to every agent
+  (agents pick up *assigned* work), so it sat until a human assigned it.
+- **Stale blocks.** An issue stayed blocked after all its blockers closed, because nothing
+  re-evaluated and unblocked it. Agents then picked it up and burned failing runs.
 
 Both are state-correction problems. The keeper applies the two **idempotent** corrections every
 cycle; once corrected, an issue stops matching, so the job is safe to run on a tight schedule.
@@ -54,34 +54,29 @@ cycle; once corrected, an issue stops matching, so the job is safe to run on a t
 
 | Action | Mode | Rule |
 |---|---|---|
-| **AUTO-UNBLOCK** | applied | `blocked` issue whose every `blockedBy[]` is done/cancelled, not destructive, not `[needs-human]`, no unverifiable prose dependency → **`todo`**. **Fail-closed.** |
-| **AUTO-ASSIGN** | applied | ready UNassigned issue (`backlog`, active goal, not parked) → assign role-matched agent **and set `todo`** (so it self-starts). |
-| **PROMOTE** | applied | already-ASSIGNED ready issue stuck in `backlog` (active goal, not parked) → **`todo`**. Assigning alone leaves it asleep in backlog. |
-| **WAKE (backup)** | applied | a `todo`/`in_progress` issue assigned to an IDLE agent that *still* hasn't started after 30 min → `paperclipai heartbeat run --agent-id <id> --source assignment` as a safety net (deduped, idle agents only). Rarely needed once status is `todo`. |
-| **FLAG-STALL** | digest-only | `in_review`/`in_progress` idle > 4h → surfaced for the CTO/human. |
+| **AUTO-UNBLOCK** | applied | a blocked issue whose every blocking issue is closed, not destructive, not `needs-human`, no unverifiable prose dependency → remove the `blocked` label. **Fail-closed.** |
+| **AUTO-ASSIGN** | applied | ready UNassigned issue (open, active milestone, not parked) → assign the role-matched agent **and add the `ready` label** (so it gets picked up). |
+| **PROMOTE** | applied | already-ASSIGNED ready issue not yet marked ready (active milestone, not parked) → add the `ready` label. Assigning alone leaves it unqueued. |
+| **FLAG-STALL** | digest-only | an in-review/in-progress issue idle > 4h → surfaced for the CTO/human. |
 
 ### Guards (ORAA-4 §13.3, fail-closed)
 
-- **Never auto-unblocks** an issue whose title matches `delete|remove|drop|migration|archival|retire|salvage|irreversible|highest-risk`, or any `[needs-human]` issue — these require explicit human sign-off.
+- **Never auto-unblocks** an issue whose title matches `delete|remove|drop|migration|archival|retire|salvage|irreversible|highest-risk`, or any `needs-human` issue — these require explicit human sign-off.
 - **Never auto-unblocks** when structural blockers are clear but the description carries an
   unverifiable prose dependency (`blocked by`, `hard-sequenced after`, `salvage before`, …).
 - **Never auto-assigns** a parked/deferred issue (`[deferred]`, `[platform]`, `[gov]`, `investigate`, …).
 
 The named regression this guard exists for: **ORAA-78** (destructive R2 story) was once false-unblocked
-because its prose dependency on ORAA-77 wasn't in structured `blockedByIssueIds`.
+because its prose dependency on ORAA-77 wasn't in a structured blocking-issue reference.
 
 ## Data-model notes (why the code looks the way it does)
 
-- Blocker relations (`blockedBy[]`, with live per-blocker `status`) appear **only on the single-issue
-  GET** (`/api/issues/{id}`), *not* on the company issue list — so unblock logic fetches each blocked
-  issue individually.
-- **`backlog` does NOT wake an agent; `todo` does.** `backlog` is the holding column; **`todo`** is the ready/queued status that fires `wakeOnDemand` and starts a run. Assigning an issue while it stays `backlog` leaves it asleep — readying = moving to `todo`. (This was the real dead-end.)
-- The heartbeat is **event-driven, not a periodic poller** (multi-hour gaps in `heartbeat-runs` when
-  idle); a **`todo` transition** is what creates the wake event. The CLI `paperclipai heartbeat run
-  --agent-id <id> --source assignment` also creates one (the WAKE backup uses it); the spawned run is
-  decoupled from the CLI streamer (short `--timeout-ms` is fine). The npx-cache bin path rotates, so
-  `paperclip_bin()` resolves it dynamically — and beware multiple installs at different versions
-  (grep the one `GET /api/health` names).
+- Blocking relations (the issues a given issue is blocked by, with each blocker's open/closed state)
+  are read per issue via the `gh` CLI / GitHub API, so unblock logic fetches each blocked issue
+  individually.
+- **An unassigned issue is invisible to the fleet.** Assignment plus the `ready` label is what queues
+  an issue for an agent to pick up; an open, unlabelled issue sits in the backlog. Readying = assigning
+  and labelling `ready`. (This was the real dead-end.)
 
 ## Running it
 
