@@ -8,9 +8,9 @@ title: "ADR-034 — Adoption-First: import an existing agent setup to a runnable
 
 | Field | Value |
 | --- | --- |
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-06-20 |
-| Approved by | pending (Reza / CTO) |
+| Approved by | Reza Jahankohan |
 | Supersedes | None |
 | Superseded by | None |
 | Driving artifact | [Team-of-Agents — North-Star Lock & Acceptance Test](../product/team-of-agents-north-star-lock.md) — §2 **R1** (Import, don't re-author) + **R4** (import-driven assembly), §6 acceptance items 1 / 2 / 3 + O8, §7 delta **A-NEW-1**, §8 ADR list **#1 ("the keystone — highest priority")** |
