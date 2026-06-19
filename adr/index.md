@@ -44,9 +44,9 @@ This hub indexes every Architecture Decision Record for the Oraclous Platform. E
 | ADR-031 | [OHM v1.1 Team Manifest (Team Harness) (R7 product-loop / epic oraclous-backend#382)](adr-031-ohm-v1.1-team-manifest.md) | Accepted | 2026-06-19 |
 | ADR-032 | [Capability-Absence as a Structural Gate (R7 product-loop / epic oraclous-backend#382)](adr-032-capability-absence-structural-gate.md) | Accepted | 2026-06-19 |
 | ADR-033 | [Orchestrator Capabilities Status (ADR-005 L77) and Original-Primitive Retirement (R7 product-loop / epic oraclous-backend#382)](adr-033-orchestrator-capabilities-status-and-retirement.md) | Accepted | 2026-06-19 |
-| ADR-034 | [Adoption-First: import an existing agent setup to a runnable OHM v1.1 Team Harness without re-authoring (R7 product-loop / epic oraclous-backend#383)](adr-034-adoption-first-import.md) | Proposed | 2026-06-20 |
+| ADR-034 | [Adoption-First: import an existing agent setup to a runnable OHM v1.1 Team Harness without re-authoring (R7 product-loop / epic oraclous-backend#383)](adr-034-adoption-first-import.md) | Accepted | 2026-06-20 |
 
-> **ADR-022** is **ported from the legacy `develop` branch @ `84152635de05c105765cfe6b631bb5ba81f2f4aa` (TASK-237)** and kept at its **original legacy number** for traceability to the binding spec. It is the binding ingestion specification for the R3.5 knowledge-graph-service (service #1). The next NEW number is **ADR-035** (ADR-031/032/033 are the R7 product-loop foundation ADRs, Accepted; ADR-034 Adoption-First, Proposed 2026-06-20; 022 is the ported legacy ADR).
+> **ADR-022** is **ported from the legacy `develop` branch @ `84152635de05c105765cfe6b631bb5ba81f2f4aa` (TASK-237)** and kept at its **original legacy number** for traceability to the binding spec. It is the binding ingestion specification for the R3.5 knowledge-graph-service (service #1). The next NEW number is **ADR-035** (ADR-031/032/033 are the R7 product-loop foundation ADRs, Accepted; ADR-034 Adoption-First, Accepted 2026-06-20; 022 is the ported legacy ADR).
 
 ## ADR conventions
 
