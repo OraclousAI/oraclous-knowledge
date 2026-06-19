@@ -112,7 +112,7 @@ Treat cross-harness boards and consciousness drift-detection as RETIRED rather t
 * [ADR-003 — Platform-as-Code, Actors-as-Harnesses](adr-003-platform-as-code-actors-as-harnesses.md) — orchestrators are `core` capabilities, never platform code; a team is a descriptor interpreted by the runtime.
 * **ADR-031 — Team budget envelope** *(forthcoming; lock §8 item 5 / design item D3)* — re-opens the per-harness budget anti-decision *only* as a single team-POOLED envelope (single-tenant-opt-in); the cascading-per-agent shape stays retired here.
 * [Team-of-Agents North-Star Lock](../product/team-of-agents-north-star-lock.md) — §8 item 8 (this ADR's driving artifact); the retired-vs-deferred ledger realizes its §12 item 4 / design §12 item 4.
-* [Team-of-Agents Capability Design](../../oraclous-backend/docs/team-of-agents-capability-design.md) — §5 B1 (the three orchestrators + fan-in barrier), §11 item 7 (the status/retirement note), §12 item 4 (retire-vs-defer open decision), §10 (R7 build sequence / epic E3).
+* [Team-of-Agents Capability Design](../product/team-of-agents-capability-design.md) — §5 B1 (the three orchestrators + fan-in barrier), §11 item 7 (the status/retirement note), §12 item 4 (retire-vs-defer open decision), §10 (R7 build sequence / epic E3).
 * Team-of-agents architecture audit, run `wf_693afa65-500` — the cross-corpus review that surfaced the un-ADR'd L77 promise and the three-way vision/docs/code divergence.
 
 ## Revision history

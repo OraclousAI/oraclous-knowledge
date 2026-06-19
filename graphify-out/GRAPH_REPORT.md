@@ -1,7 +1,7 @@
 # Graph Report - /Users/reza/workspace/OraclousAI/oraclous-knowledge  (2026-06-20)
 
 ## Corpus Check
-- 2 files · ~336,823 words
+- 2 files · ~344,212 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -248,10 +248,10 @@ _Questions this graph is uniquely positioned to answer:_
   _Edge tagged AMBIGUOUS (relation: supersedes) - confidence is low._
 - **Why does `Test Strategy` connect `Community 2` to `Community 10`, `Community 7`, `Community 15`?**
   _High betweenness centrality (0.049) - this node is a cross-community bridge._
-- **Why does `Provenance-is-primary philosophy` connect `Community 4` to `Community 9`?**
-  _High betweenness centrality (0.043) - this node is a cross-community bridge._
+- **Why does `Cross-cutting agreement protocol` connect `Community 7` to `Community 2`?**
+  _High betweenness centrality (0.046) - this node is a cross-community bridge._
 - **Why does `Testing Approach (Frontend)` connect `Community 10` to `Community 2`?**
-  _High betweenness centrality (0.042) - this node is a cross-community bridge._
+  _High betweenness centrality (0.043) - this node is a cross-community bridge._
 - **What connects `Run a `gh` CLI command and return stdout (JSON parsed when the output is JSON).`, `All open issues with the fields we need.`, `Move an issue to the ready/queued state: drop `blocked`/`backlog`, add `ready`.` to the rest of the system?**
   _444 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
