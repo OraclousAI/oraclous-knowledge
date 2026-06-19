@@ -1,37 +1,33 @@
 #!/usr/bin/env python3
-"""fleet-keeper — external intake/anti-stall enforcement for the OraclousAI PaperClip fleet.
+"""fleet-keeper — external intake/anti-stall enforcement for the OraclousAI board.
 
 ORAA-250 (enforcement program: mechanisms, not rules). Runs on a short interval against the
-local PaperClip API and keeps the board moving so a human is not the load-balancer.
+GitHub Issues board (via the `gh` CLI) and keeps work moving so a human is not the load-balancer.
 
 Why this exists
 ---------------
-The fleet repeatedly dead-ended: ready work sat unassigned (no agent owns it -> heartbeat has
-nothing to pick), and blocked issues stayed blocked after their blockers closed. A human had to
-hand-assign and hand-trigger. This script mechanizes the two safe, idempotent corrections.
+The board repeatedly dead-ended: ready work sat unassigned (no agent owns it -> nothing to pick),
+and blocked issues stayed blocked after their blockers closed. A human had to hand-assign and
+hand-label. This script mechanizes the two safe, idempotent corrections.
 
-What it does (verified against the real PaperClip data model, 2026-06-04)
-------------------------------------------------------------------------
-KEY: `backlog` is the HOLDING column and does NOT wake an agent; `todo` is the ready/queued status
-that fires the agent's `wakeOnDemand` and starts a run. Readying work = moving it to `todo`. (This
-was the real dead-end: assigning while leaving status `backlog` left work asleep.)
+What it does
+------------
+KEY: the `backlog` label is the HOLDING state and does NOT queue work; the `ready` label is the
+queued state that signals an agent to pick the issue up and start. Readying work = moving it to
+`ready`. (This was the real dead-end: assigning while leaving the `backlog` label left work asleep.)
 
 APPLIED (idempotent -> safe for a recurring job; once corrected they stop matching):
-  1) AUTO-UNBLOCK  a `blocked` issue whose every `blockedBy[]` (read from the SINGLE-issue GET;
-                   the list endpoint omits it) is done/cancelled, that is NOT destructive and
-                   NOT `[needs-human]` -> set status `todo`. Fail-closed: any live blocker, or any
-                   prose dependency we cannot verify, leaves it blocked + flagged.
+  1) AUTO-UNBLOCK  a `blocked` issue whose every blocker (tracked via `blocked-by:` references in
+                   the issue body) is closed, that is NOT destructive and NOT `[needs-human]` ->
+                   remove `blocked`, add `ready`. Fail-closed: any live blocker, or any prose
+                   dependency we cannot verify, leaves it blocked + flagged.
   2) AUTO-ASSIGN   a ready, UNassigned issue (`backlog`, ACTIVE goal, NOT parked) -> assign the
-                   role-matched agent AND set `todo`, so it self-starts and never strands ownerless.
+                   role-matched agent AND set `ready`, so it self-starts and never strands ownerless.
   3) PROMOTE       an already-ASSIGNED ready issue stuck in `backlog` (ACTIVE goal, not parked)
-                   -> `todo`, so it self-starts. (Assigning alone leaves it in backlog = asleep.)
-
-  4) WAKE backup   a `todo`/`in_progress` issue assigned to an IDLE agent that still hasn't started
-                   after WAKE_MIN -> `paperclipai heartbeat run --agent-id <id> --source assignment`
-                   as a safety net (deduped, idle agents only). Rarely needed once status is `todo`.
+                   -> `ready`, so it self-starts. (Assigning alone leaves it in backlog = asleep.)
 
 DIGEST-ONLY (reported, never mutated):
-  5) FLAG-STALL    in_review/in_progress idle > STALL_HOURS -> surfaced for the CTO/human.
+  4) FLAG-STALL    an open in-review/in-progress issue idle > STALL_HOURS -> surfaced for CTO/human.
 
 Guards (ORAA-4 §13.3 fail-closed): destructive titles (delete/migration/archival/...) and
 `[needs-human]` issues are NEVER auto-unblocked; parked/deferred issues are NEVER auto-assigned.
@@ -43,59 +39,50 @@ Usage
 
 Exit code is 0 on success; the digest goes to stdout (captured by cron/launchd logs).
 """
-import glob, json, os, re, subprocess, sys, urllib.request
+import json, re, subprocess, sys
 from datetime import datetime, timezone
 
-API = "http://127.0.0.1:3100/api"
-COMPANY_ID = "19cdd0be-92a9-4599-a591-d578da8ab2c5"   # OraclousAI (prefix ORAA)
+REPO = "OraclousAI/oraclous-backend"
 
-# Only the highest-unfinished release + standing parallel tracks are workable.
+# Only the highest-unfinished release + standing parallel tracks are workable, keyed by milestone.
 ACTIVE_GOALS = {
-    "0e34e971-52ee-4003-96aa-5aef472f577f",  # R3 — Knowledge Graph Decomposition
-    "6a4b4608-04db-47ea-bf48-d0ffabee5bbc",  # RF Phase A — Frontend Foundation
-    "09a7702a-315d-4120-a7ad-18a8a00de373",  # Coordination / Platform
+    "R3 — Knowledge Graph Decomposition",
+    "RF Phase A — Frontend Foundation",
+    "Coordination / Platform",
 }
 STALL_HOURS = 4.0
-WAKE_MIN = 30.0
 DESTRUCTIVE = re.compile(r"\b(delete|remove|drop|migration|archival|archive|retire|salvage|irreversible|highest-risk)\b", re.I)
 PARKED = re.compile(r"\[(platform/deferred|deferred|platform|gov|investigate)\]|investigate|relocate/quarantine", re.I)
-PROSE_DEP = re.compile(r"\b(blocked by|hard-sequenced after|salvage before|depends on|after ORAA-\d+)\b", re.I)
+PROSE_DEP = re.compile(r"\b(blocked by|hard-sequenced after|salvage before|depends on|after #\d+)\b", re.I)
+BLOCKED_BY = re.compile(r"blocked-by:\s*#(\d+)", re.I)
 APPLY = "--apply" in sys.argv
 
 
-def api(method, path, body=None):
-    data = json.dumps(body).encode() if body is not None else None
-    req = urllib.request.Request(API + path, data=data, method=method,
-                                 headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=20) as r:
-        return json.load(r)
-
-
-def listy(x):
-    return x if isinstance(x, list) else x.get("data", [])
-
-
-def paperclip_bin():
-    """Resolve the installed paperclipai entrypoint (npx cache path has a rotating hash)."""
-    cands = sorted(glob.glob(os.path.expanduser("~/.npm/_npx/*/node_modules/paperclipai/dist/index.js")),
-                   key=lambda p: os.path.getmtime(p), reverse=True)
-    return cands[0] if cands else None
-
-
-def trigger_heartbeat(agent_id):
-    """Fire one agent heartbeat (source=assignment) to start its assigned work, fire-and-forget.
-    The spawned run is decoupled from this CLI streamer, so a short --timeout-ms is fine."""
-    binp = paperclip_bin()
-    if not binp:
-        return "paperclipai bin not found"
+def gh(*args):
+    """Run a `gh` CLI command and return stdout (JSON parsed when the output is JSON)."""
+    out = subprocess.run(["gh", *args], capture_output=True, text=True, check=True).stdout.strip()
+    if not out:
+        return None
     try:
-        subprocess.Popen(
-            ["node", binp, "heartbeat", "run", "--agent-id", agent_id,
-             "--source", "assignment", "--trigger", "system", "--timeout-ms", "2000"],
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
-        return "triggered"
-    except Exception as e:
-        return f"trigger-failed: {e}"
+        return json.loads(out)
+    except json.JSONDecodeError:
+        return out
+
+
+def list_issues():
+    """All open issues with the fields we need."""
+    fields = "number,title,labels,assignees,milestone,updatedAt,body,state"
+    return gh("issue", "list", "--repo", REPO, "--state", "open",
+              "--limit", "500", "--json", fields) or []
+
+
+def labels_of(i):
+    return {label["name"] for label in i.get("labels", [])}
+
+
+def milestone_of(i):
+    m = i.get("milestone")
+    return m.get("title") if m else None
 
 
 def hours_since(ts):
@@ -120,109 +107,93 @@ def role_for(title):
     return None
 
 
+def set_ready(number, add_assignee=None):
+    """Move an issue to the ready/queued state: drop `blocked`/`backlog`, add `ready`."""
+    args = ["issue", "edit", str(number), "--repo", REPO,
+            "--remove-label", "blocked", "--remove-label", "backlog", "--add-label", "ready"]
+    if add_assignee:
+        args += ["--add-assignee", add_assignee]
+    gh(*args)
+
+
 def main():
-    issues = listy(api("GET", f"/companies/{COMPANY_ID}/issues"))
-    agents = listy(api("GET", f"/companies/{COMPANY_ID}/agent-configurations"))
-    by_ident = {i.get("identifier"): i for i in issues}
-    name_to_agent = {a.get("name"): a for a in agents}
-    be_agents = [a for a in agents if (a.get("name") or "").startswith("backend-implementer")]
-    running = {a["id"] for a in agents if a.get("status") == "running"}
-    agent_status = {a["id"]: a.get("status") for a in agents}
-    agent_name = {a["id"]: a.get("name") for a in agents}
-    out = {"unblock": [], "assign": [], "promote": [], "wake": [], "stall": [], "skip": []}
+    issues = list_issues()
+    by_number = {i["number"]: i for i in issues}
+    out = {"unblock": [], "assign": [], "promote": [], "stall": [], "skip": []}
 
-    # 1) AUTO-UNBLOCK — requires the single-issue blockedBy[]
-    for i in [x for x in issues if x.get("status") == "blocked"]:
-        ident, title = i.get("identifier"), i.get("title") or ""
+    # 1) AUTO-UNBLOCK — read blockers from the issue body's `blocked-by: #N` references.
+    for i in [x for x in issues if "blocked" in labels_of(x)]:
+        num, title = i["number"], i.get("title") or ""
         if "[needs-human]" in title.lower() or DESTRUCTIVE.search(title):
-            out["skip"].append((ident, "blocked: human/destructive-gated (correct)"))
+            out["skip"].append((num, "blocked: human/destructive-gated (correct)"))
             continue
-        try:
-            full = api("GET", f"/issues/{i['id']}")
-            full = full.get("data", full) if isinstance(full, dict) else full
-        except Exception as e:
-            out["skip"].append((ident, f"fetch-fail {e}"))
+        body = i.get("body") or ""
+        blockers = [int(n) for n in BLOCKED_BY.findall(body)]
+        if not blockers:
+            out["skip"].append((num, "no structural blockers found; verify"))
             continue
-        blockers = full.get("blockedBy") or []
-        desc = full.get("description") or ""
-        if blockers and all(b.get("status") in ("done", "cancelled") for b in blockers):
-            if PROSE_DEP.search(desc):
-                out["skip"].append((ident, "structural blockers clear BUT prose-dep present -> fail-closed"))
+        # A blocker is clear if it is not present in the open-issue set (i.e. closed).
+        live = [b for b in blockers if b in by_number]
+        if not live:
+            if PROSE_DEP.search(body):
+                out["skip"].append((num, "structural blockers clear BUT prose-dep present -> fail-closed"))
             else:
-                out["unblock"].append((ident, title[:55]))
+                out["unblock"].append((num, title[:55]))
         else:
-            live = [b.get("identifier") for b in blockers if b.get("status") not in ("done", "cancelled")]
-            out["skip"].append((ident, f"live blockers: {live or '(none structural; verify)'}"))
+            out["skip"].append((num, f"live blockers: {live}"))
 
-    # 2) AUTO-ASSIGN + 3) WAKE + 4) STALL
+    # 2) AUTO-ASSIGN + 3) PROMOTE + 4) STALL
     for i in issues:
-        st, gid, title = i.get("status"), i.get("goalId"), i.get("title") or ""
-        assignee = i.get("assigneeAgentId")
-        # backlog = holding (does NOT wake an agent); todo = ready/queued -> fires wakeOnDemand.
-        # So readying work means moving it to `todo`: assign unassigned -> todo, or promote an
-        # already-assigned backlog issue -> todo. Parked/deferred work is left in backlog.
-        if st == "backlog" and gid in ACTIVE_GOALS:
+        num, title = i["number"], i.get("title") or ""
+        labels = labels_of(i)
+        gid = milestone_of(i)
+        assignees = i.get("assignees", [])
+        # backlog = holding (does NOT queue work); ready = queued -> picked up and started.
+        # So readying work means moving it to `ready`: assign unassigned -> ready, or promote an
+        # already-assigned backlog issue -> ready. Parked/deferred work is left in backlog.
+        if "backlog" in labels and gid in ACTIVE_GOALS:
             if PARKED.search(title):
-                out["skip"].append((i["identifier"], "backlog parked/deferred -> left in backlog"))
-            elif not assignee:
+                out["skip"].append((num, "backlog parked/deferred -> left in backlog"))
+            elif not assignees:
                 role = role_for(title)
-                tgt = None
-                if role == "backend-implementer" and be_agents:
-                    tgt = ([a for a in be_agents if a["id"] not in running] or be_agents)[0]
-                elif role and role in name_to_agent:
-                    tgt = name_to_agent[role]
-                out["assign"].append((i["identifier"], role or "?", (tgt or {}).get("name", "NO-MATCH"), title[:42]))
+                out["assign"].append((num, role or "?", role or "NO-MATCH", title[:42]))
             else:
-                out["promote"].append((i["identifier"], agent_name.get(assignee, "?"), title[:46]))
-        if st in ("todo", "in_progress") and assignee and not i.get("activeRun") and not PARKED.search(title):
-            h = hours_since(i.get("lastActivityAt") or i.get("updatedAt"))
-            if h is not None and h * 60 > WAKE_MIN and gid in ACTIVE_GOALS:
-                out["wake"].append((i["identifier"], st, assignee, f"idle {h:.1f}h, assigned, no active run"))
-        if st in ("in_review", "in_progress"):
-            h = hours_since(i.get("lastActivityAt") or i.get("updatedAt"))
+                who = assignees[0].get("login", "?")
+                out["promote"].append((num, who, title[:46]))
+        if {"in-review", "in-progress"} & labels:
+            h = hours_since(i.get("updatedAt"))
             if h is not None and h > STALL_HOURS:
-                out["stall"].append((i["identifier"], f"{st} idle {h:.1f}h"))
+                state = "in-review" if "in-review" in labels else "in-progress"
+                out["stall"].append((num, f"{state} idle {h:.1f}h"))
 
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
-    print(f"=== fleet-keeper {'APPLY' if APPLY else 'DRY-RUN'} | {COMPANY_ID[:8]} | {stamp} ===")
+    print(f"=== fleet-keeper {'APPLY' if APPLY else 'DRY-RUN'} | {REPO} | {stamp} ===")
 
-    print(f"-- AUTO-UNBLOCK -> todo ({len(out['unblock'])}) --")
-    for ident, t in out["unblock"]:
-        print(f"   {ident}  {t}")
+    print(f"-- AUTO-UNBLOCK -> ready ({len(out['unblock'])}) --")
+    for num, t in out["unblock"]:
+        print(f"   #{num}  {t}")
         if APPLY:
-            api("PATCH", f"/issues/{by_ident[ident]['id']}", {"status": "todo"})
+            set_ready(num)
 
-    print(f"-- AUTO-ASSIGN -> todo ({len(out['assign'])}) --")
-    for ident, role, who, t in out["assign"]:
-        print(f"   {ident}  role={role} -> {who}  {t}")
+    print(f"-- AUTO-ASSIGN -> ready ({len(out['assign'])}) --")
+    for num, role, who, t in out["assign"]:
+        print(f"   #{num}  role={role} -> {who}  {t}")
         if APPLY and who not in ("NO-MATCH", None):
-            api("PATCH", f"/issues/{by_ident[ident]['id']}",
-                {"assigneeAgentId": name_to_agent[who]["id"], "status": "todo"})
+            set_ready(num, add_assignee=who)
 
-    print(f"-- PROMOTE backlog->todo (assigned, ready) ({len(out['promote'])}) --")
-    for ident, who, t in out["promote"]:
-        print(f"   {ident}  agent={who}  {t}")
+    print(f"-- PROMOTE backlog->ready (assigned, ready) ({len(out['promote'])}) --")
+    for num, who, t in out["promote"]:
+        print(f"   #{num}  agent={who}  {t}")
         if APPLY:
-            api("PATCH", f"/issues/{by_ident[ident]['id']}", {"status": "todo"})
-
-    print(f"-- WAKE backup (todo work idle > WAKE_MIN that didn't auto-start -> heartbeat run) ({len(out['wake'])}) --")
-    woken = set()
-    for ident, st, aid, why in out["wake"]:
-        nm = agent_name.get(aid, (aid or "?")[:8])
-        idle = agent_status.get(aid) == "idle"
-        tag = "[idle -> trigger]" if idle else f"[agent {agent_status.get(aid)}; skip]"
-        print(f"   {ident}  {st}  agent={nm}  {why}  {tag}")
-        if APPLY and idle and aid not in woken:
-            woken.add(aid)
-            print(f"      -> heartbeat run {nm}: {trigger_heartbeat(aid)}")
+            set_ready(num)
 
     print(f"-- FLAG-STALL (digest-only; for CTO/human) ({len(out['stall'])}) --")
-    for ident, why in out["stall"]:
-        print(f"   {ident}  {why}")
+    for num, why in out["stall"]:
+        print(f"   #{num}  {why}")
 
     print(f"-- SKIPPED (guarded/parked) ({len(out['skip'])}) --")
-    for ident, why in out["skip"]:
-        print(f"   {ident}  {why}")
+    for num, why in out["skip"]:
+        print(f"   #{num}  {why}")
 
     print("=== done ===")
 
