@@ -1,6 +1,6 @@
 ---
 title: "Revised Release Plan: Gateway-from-R5 + FE/BE Vertical Slices"
-status: "Draft — pending board approval on ORAA-28"
+status: "Draft — pending approval on ORAA-28"
 author: "product-planner"
 date: "2026-06-01"
 ---
@@ -9,7 +9,7 @@ date: "2026-06-01"
 
 > **SUPERSEDED by [R3.5 — Make every service real](r3.5-make-every-service-real.md) (2026-06-04).** This gateway-from-R5 vertical-slice plan is discarded. R2/R3 shipped hollow; the platform is being rebuilt real, per service, in the graph-first sequence (1) ingest → (2) retrieve → (3) identity/org → (4) credential-broker → (5) capability-registry (then salvage-delete `oraclous-core-service`) → (6) gateway. Content below is retained for reference only.
 
-> **Status:** Draft — see [ORAA-28](/ORAA/issues/ORAA-28) for board approval.  
+> **Status:** Draft — see [ORAA-28](/ORAA/issues/ORAA-28) for approval.  
 > This page supersedes the per-release FE notes in r5–r8 once approved.
 
 ---
@@ -125,9 +125,9 @@ date: "2026-06-01"
 
 ---
 
-## 4. Paperclip Model: Goals & Projects
+## 4. Goals & Projects
 
-| Release | Paperclip Goal | Status |
+| Release | Goal | Status |
 |---------|---------------|--------|
 | R0.5 | R0.5 — Organisation Tenancy & Metering Substrate | achieved |
 | R1 | R1 — Auth & Credential Extensions | achieved |

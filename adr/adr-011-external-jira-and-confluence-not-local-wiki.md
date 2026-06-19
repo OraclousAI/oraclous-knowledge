@@ -3,7 +3,7 @@ confluence_id: "393443"
 title: "ADR-011 — External Jira and Confluence (Not Local Wiki)"
 ---
 
-**Superseded by ADR-014** — Repo-canonical knowledge base; Confluence as mirror; PaperClip as master board. This page is now a mirror of `adr/ADR-011-*.md` in [oraclous-knowledge](https://github.com/OraclousAI/oraclous-knowledge). See [ADR-014](https://oraclous.atlassian.net/wiki/spaces/OP/pages/589826) for the decision that supersedes this one.
+**Superseded by ADR-014** — Repo-canonical knowledge base; Confluence as mirror; work tracked as GitHub Issues + PRs. This page is now a mirror of `adr/ADR-011-*.md` in [oraclous-knowledge](https://github.com/OraclousAI/oraclous-knowledge). See [ADR-014](https://oraclous.atlassian.net/wiki/spaces/OP/pages/589826) for the decision that supersedes this one.
 
 # ADR-011 — External Jira and Confluence (Not Local Wiki)
 
@@ -15,7 +15,7 @@ title: "ADR-011 — External Jira and Confluence (Not Local Wiki)"
 | Date | 27 May 2026 |
 | Approved by | tech-lead (Reza Jahankohan) |
 | Supersedes | None (founding ADR) |
-| Superseded by | [ADR-014 — Repo-canonical knowledge base; Confluence as mirror; PaperClip as master board](https://oraclous.atlassian.net/wiki/spaces/OP/pages/589826) (merged 2026-05-31, commit `76dd833b`) |
+| Superseded by | [ADR-014 — Repo-canonical knowledge base; Confluence as mirror; work tracked as GitHub Issues + PRs](https://oraclous.atlassian.net/wiki/spaces/OP/pages/589826) (merged 2026-05-31, commit `76dd833b`) |
 | Driving artifact | 03. Engineering (workflow conventions for the agent team) |
 
 ## Context
