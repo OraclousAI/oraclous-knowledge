@@ -6,6 +6,8 @@ title: "R7 — Phase 7: Compiler harness and seed manifests"
 # R7 — Phase 7: Compiler harness and seed manifests
 
 > **SUPERSEDED by [R3.5 — Make every service real](r3.5-make-every-service-real.md) (2026-06-04).** This phase is discarded as a standalone release; any still-needed surface folds into the R3.5 per-service sequence. R2/R3 shipped hollow and are being rebuilt real, per service, before any post-gateway work resumes. Content below is retained for reference only.
+>
+> **⚠️ RE-PLANNED (2026-06-19) — this surface was orphaned, not delivered.** R3.5 rebuilt the six *services* but did NOT rebuild the compiler harness; the re-planned sequence (R4→R5→R6→R7-SEC) jumped to security and skipped it. The compiler harness + seed manifests are restored — together with the team-of-agents runtime they always presumed — in **[R7 (re-planned) — The Product Loop Closes](r7-the-product-loop-team-of-agents.md)**. Scope and acceptance for that work are governed by `product/team-of-agents-north-star-lock.md`.
 
 | Release ID | R7 |
 | --- | --- |
