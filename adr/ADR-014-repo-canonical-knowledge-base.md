@@ -1,9 +1,9 @@
 ---
 confluence_id: "4685826"
-title: "ADR-014 — Repo-canonical knowledge base; Confluence as mirror; PaperClip as master board"
+title: "ADR-014 — Repo-canonical knowledge base; Confluence as mirror; GitHub Issues as master board"
 ---
 
-# ADR-014 — Repo-canonical knowledge base; Confluence as mirror; PaperClip as master board
+# ADR-014 — Repo-canonical knowledge base; Confluence as mirror; GitHub Issues as master board
 
 This page is a **mirror** of `adr/ADR-014-repo-canonical-knowledge-base.md` in [oraclous-knowledge](https://github.com/OraclousAI/oraclous-knowledge). The repo is canonical; edits made here may be overwritten by the next mirror sync.
 
@@ -27,7 +27,7 @@ Three things have changed since that decision, and together they invert its conc
 
 1. **The agents are now git-native operators, not Confluence-native ones.** The team works through repository sessions whose primary medium is files, branches, diffs, and PRs. Confluence's rich stored format — the very thing ADR-011 valued — is now an _impedance_: it is not diffable, not reviewable as a unit of change, not blame-able, and not reachable by CI. Documentation drift is invisible until someone reads the page; there is no mechanical gate that can fail a build when a doc contradicts code.
 2. **The off-the-shelf-tooling argument has flipped.** ADR-011 rejected a local knowledge base because standing one up would cost founding budget. A GitHub repository (`oraclous-knowledge`) costs effectively nothing to stand up, inherits the review, history, access-control, and automation the team _already runs_ for code, and requires no new convention beyond Markdown — which every agent already authors fluently. The "custom rendering / custom convention" cost ADR-011 feared does not materialise with a plain Markdown repo plus GitHub's native rendering.
-3. **Ticketing has already moved.** This decision is being recorded in **PaperClip** (ORAA-7 / ORAA-9), not in Jira. The agent team's master board, assignment model, heartbeat execution, and run audit trail are PaperClip-native today. Jira `ORA` is no longer the system of record for task tracking; continuing to name it canonical in an accepted ADR is a documented-reality drift.
+3. **Ticketing has already moved.** This decision is being recorded as a GitHub issue (ORAA-7 / ORAA-9), not in Jira. The agent team's master board, assignment model, and run audit trail are GitHub-native today: work is tracked as GitHub Issues + PRs, agents pick up issues by assignee/label, and the `gh` CLI drives the board. Jira `ORA` is no longer the system of record for task tracking; continuing to name it canonical in an accepted ADR is a documented-reality drift.
 
 ADR-011 anticipated exactly this moment. Its implementation notes state: _"If the team eventually migrates away from Atlassian, the migration is an explicit ADR-level decision with an explicit plan, not a silent transition. The structured artifacts … are deliberately authored to survive a migration: their content is portable Markdown / YAML / HTML."_ This ADR is that explicit decision. The portability ADR-011 designed for is what makes the migration cheap: the Confluence corpus is being lifted page-for-page into the repo, not rewritten.
 
@@ -45,9 +45,9 @@ The GitHub repository `git@github.com:OraclousAI/oraclous-knowledge.git` is the 
 
 The Confluence space `OP` is demoted from canonical to **read-only mirror**. It is a _derivative_ of the repo, regenerated from repo content; it is never edited directly, and edits made in Confluence are not authoritative and may be overwritten by the next sync. The sync is **strictly one-way**: repo → Confluence, never Confluence → repo. A `_mirror/confluence-map.yaml` (`pageId ↔ repo path`) is the durable mapping that drives the sync. Confluence remains valuable as a browse/read surface for humans and externally-granted collaborators who should not be given repo access.
 
-### 3. PaperClip is the master board for task tracking
+### 3. GitHub Issues is the master board for task tracking
 
-PaperClip is the canonical system of record for issues, assignments, dependencies, approvals, and the run audit trail. It replaces Jira `ORA` as the master board. Cross-references in documentation use PaperClip issue links (`/<prefix>/issues/<id>`).
+GitHub Issues + PRs are the canonical system of record for issues, assignments, dependencies, approvals, and the run audit trail. Agents pick up issues by assignee/label and the `gh` CLI drives the board. It replaces Jira `ORA` as the master board. Cross-references in documentation use GitHub issue links (`OraclousAI/<repo>#<number>`).
 
 ### 4. docs-writer is the sole writer; everyone else is read-only + delegate
 
@@ -63,7 +63,7 @@ After a PR merges to the canonical repo, the mirror is updated repo → Confluen
 
 ### A. Keep ADR-011 as-is (Confluence canonical, Jira canonical)
 
-Status quo. **Rejected.** It is already counter-factual: ticketing runs in PaperClip today, and the agent team operates git-native. Leaving an accepted ADR naming Jira/Confluence canonical institutionalises drift between the recorded decision and the lived workflow — precisely the silent-disagreement failure the architecture-coherence discipline exists to prevent.
+Status quo. **Rejected.** It is already counter-factual: ticketing runs as GitHub Issues + PRs today, and the agent team operates git-native. Leaving an accepted ADR naming Jira/Confluence canonical institutionalises drift between the recorded decision and the lived workflow — precisely the silent-disagreement failure the architecture-coherence discipline exists to prevent.
 
 ### B. Repo-canonical, but drop Confluence entirely
 
@@ -86,7 +86,7 @@ Drop the docs-writer bottleneck; let each role commit its own docs. **Rejected.*
 * **No new tooling debt.** Markdown + GitHub reuses the team's existing competencies and infrastructure; the "custom convention / custom rendering" cost ADR-011 feared does not arise.
 * **Governance is enforceable in-band.** Sole-writer + CODEOWNERS + branch protection (ORAA-10) makes "who may change the knowledge base" a mechanically enforced property, not a convention.
 * **The read surface is preserved.** External collaborators keep a no-repo-access Confluence view via the one-way mirror.
-* **Recorded reality matches lived reality.** PaperClip-as-master-board is what the team already does; this ADR stops the accepted-ADR-vs-practice drift.
+* **Recorded reality matches lived reality.** GitHub-Issues-as-master-board is what the team already does; this ADR stops the accepted-ADR-vs-practice drift.
 
 ### Negative
 
@@ -94,7 +94,7 @@ Drop the docs-writer bottleneck; let each role commit its own docs. **Rejected.*
 * **A mirror process must be built and maintained.** Until it exists, Confluence is stale (labelled, per §5). The sync is real ongoing work owned by docs-writer/devops; it is a standing cost, not a one-time migration cost.
 * **The Atlassian MCP write tooling becomes read-only in practice.** Agents that authored via `updateConfluencePage` now author via repo PRs (through docs-writer). Confluence MCP writes are reserved for the mirror process.
 * **docs-writer is a serialization point** for knowledge-base commits. Accepted (alternative D); authoring stays parallel, only commits serialize.
-* **Cross-references churn.** Existing `oraclous.atlassian.net/wiki/...` and Jira `ORA-…` links across the corpus point at the now-derivative systems. They remain resolvable (mirror + Jira read-only) but new references should target the repo and PaperClip; a follow-up pass to re-point high-traffic links may be warranted.
+* **Cross-references churn.** Existing `oraclous.atlassian.net/wiki/...` and Jira `ORA-…` links across the corpus point at the now-derivative systems. They remain resolvable (mirror + Jira read-only) but new references should target the repo and GitHub Issues; a follow-up pass to re-point high-traffic links may be warranted.
 * **External read-access now depends on the mirror being current.** A collaborator reading only Confluence sees the repo state as of the last sync, not HEAD. The labelling in §5 makes this explicit rather than misleading.
 
 ## Implementation notes

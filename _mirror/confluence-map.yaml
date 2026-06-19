@@ -102,7 +102,7 @@ pages:
     title: "ADR-013 — Fail-Closed Authority Placement at the Substrate ReBAC Seam"
     repo_path: "adr/adr-013-fail-closed-authority-placement-at-the-substrate-rebac-seam.md"
   - confluence_id: "4685826"
-    title: "ADR-014 — Repo-canonical knowledge base; Confluence as mirror; PaperClip as master board"
+    title: "ADR-014 — Repo-canonical knowledge base; Confluence as mirror; GitHub Issues as master board"
     repo_path: "adr/ADR-014-repo-canonical-knowledge-base.md"
 
   # 03. Engineering

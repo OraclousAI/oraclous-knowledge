@@ -89,27 +89,27 @@
       "file_type": "rationale",
       "source_file": "/Users/reza/workspace/OraclousAI/oraclous-knowledge/operations/fleet_keeper.py",
       "source_location": "L62",
-      "id": "fleet_keeper_rationale_62",
       "community": 14,
-      "norm_label": "run a `gh` cli command and return stdout (json parsed when the output is json)."
+      "norm_label": "run a `gh` cli command and return stdout (json parsed when the output is json).",
+      "id": "fleet_keeper_rationale_62"
     },
     {
       "label": "All open issues with the fields we need.",
       "file_type": "rationale",
       "source_file": "/Users/reza/workspace/OraclousAI/oraclous-knowledge/operations/fleet_keeper.py",
       "source_location": "L73",
-      "id": "fleet_keeper_rationale_73",
       "community": 14,
-      "norm_label": "all open issues with the fields we need."
+      "norm_label": "all open issues with the fields we need.",
+      "id": "fleet_keeper_rationale_73"
     },
     {
       "label": "Move an issue to the ready/queued state: drop `blocked`/`backlog`, add `ready`.",
       "file_type": "rationale",
       "source_file": "/Users/reza/workspace/OraclousAI/oraclous-knowledge/operations/fleet_keeper.py",
       "source_location": "L111",
-      "id": "fleet_keeper_rationale_111",
       "community": 14,
-      "norm_label": "move an issue to the ready/queued state: drop `blocked`/`backlog`, add `ready`."
+      "norm_label": "move an issue to the ready/queued state: drop `blocked`/`backlog`, add `ready`.",
+      "id": "fleet_keeper_rationale_111"
     },
     {
       "label": "build_kb_index.py",

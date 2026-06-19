@@ -148,7 +148,7 @@ Scheduled agents are the closest Oraclous gets to _autonomous_ agents. They wake
 
 ### Heartbeat semantics
 
-The Paperclip pattern of "heartbeat agents" — agents that wake on a regular interval to check state and act if needed — is implemented as a scheduled harness with a frequent cron (every few minutes, every hour) and a short orchestration prose ("on wake, read the board, do up to N actions, sleep"). Nothing in the platform special-cases heartbeat agents; they are just a particular shape of scheduled harness.
+The "heartbeat agent" pattern — agents that wake on a regular interval to check state and act if needed — is implemented as a scheduled harness with a frequent cron (every few minutes, every hour) and a short orchestration prose ("on wake, read the board, do up to N actions, sleep"). Nothing in the platform special-cases heartbeat agents; they are just a particular shape of scheduled harness.
 
 ---
 

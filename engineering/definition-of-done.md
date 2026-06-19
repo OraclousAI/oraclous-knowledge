@@ -18,7 +18,7 @@ For R3.5, a **SERVICE** is Done only when **all 8 gates** pass. **"Merged PR + g
 3. **It runs** — `docker compose up <svc>` reaches healthy; `GET /health` returns 200.
 4. **Real endpoints** — every endpoint returns a real, persistence-backed response (no stub/501), verified by the integration suite against **real substrate via testcontainers**.
 5. **End-to-end smoke vs real substrate** — a checked-in `services/<svc>/tests/smoke/smoke.sh` exercises the actual feature top-to-bottom against the running stack (e.g. ingest a file → see real nodes in Neo4j → read them back). It runs in CI as the docker-required **`r3_5_gate`** job (modelled on the existing `r2-gate`) and is documented in the service README.
-6. **Reza personally tests it and signs off** — the CTO hands Reza the running stack + the smoke runbook; the PaperClip issue carries **`needs-human`** until Reza runs/accepts the smoke himself. **No service is R3.5-Done while `needs-human` is set.**
+6. **Reza personally tests it and signs off** — the CTO hands Reza the running stack + the smoke runbook; the GitHub issue carries the **`needs-human`** label until Reza runs/accepts the smoke himself. **No service is R3.5-Done while `needs-human` is set.**
 
 Gates 1–5 are mechanical (CI-enforceable); gate 6 is the hard human gate. A smoke test that hits a stub/mock instead of real substrate does not count. Closing the service's R3.5 issue while `needs-human` is set is forbidden.
 
