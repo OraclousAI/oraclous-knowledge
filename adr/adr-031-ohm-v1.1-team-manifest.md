@@ -191,7 +191,7 @@ Adopt the original design's "blackboard = Neo4j" assumption as the universal tru
 ## References
 
 - [Team-of-Agents — North-Star Lock & Acceptance Test](../product/team-of-agents-north-star-lock.md) — the driving artifact (§2 R1–R6, §5 sufficiency, §6 acceptance items 1–4/8–9, §7 deltas A-NEW-2/A-NEW-3, §8 ADR list item 1)
-- [Team-of-Agents Capability Design](../../oraclous-backend/docs/team-of-agents-capability-design.md) — §2 design principles, §5 A1 (the shape this ADR ratifies), §8 the concrete v1.1 example
+- [Team-of-Agents Capability Design](../product/team-of-agents-capability-design.md) — §2 design principles, §5 A1 (the shape this ADR ratifies), §8 the concrete v1.1 example
 - [ADR-002 — OHM as Canonical Manifest Format](adr-002-ohm-as-canonical-manifest-format.md) — the canonical-manifest decision this ADR *extends* (resolution semantics, atomic signing, versioning rules)
 - [ADR-003 — Platform-as-Code, Actors-as-Harnesses](adr-003-platform-as-code-actors-as-harnesses.md) — actors-as-descriptors; the team form realizes its composition path
 - [ADR-005 — Workflow Concept Retirement; Harness as Replacement](adr-005-workflow-concept-retirement-harness-as-replacement.md) — the team is the harness-as-composition this ADR implied (L77 orchestrators); the pooled budget re-opens its per-harness budget framing for the team case

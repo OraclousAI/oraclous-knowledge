@@ -6,7 +6,7 @@ title: "R7 (re-planned) — The Product Loop Closes: Team-of-Agents Runtime + Co
 
 > **Status:** Planned → Briefed (pending tech-lead sign-off) · **Re-plans** the orphaned original [R7 — Compiler harness and seed manifests](r7-phase-7-compiler-harness-and-seed-manifests.md), which was marked "superseded by R3.5" but **never rebuilt** — the R3.5 pivot re-planned R4/R5/R6 and jumped to security ("R7-SEC" = the re-planned R8 security pass), skipping the compiler entirely. This release restores it, **plus** the team-of-agents runtime the compiler always presumed but that was never separately scoped.
 >
-> **Authority:** `product/team-of-agents-north-star-lock.md` (THE LOCK) governs scope and acceptance. Capability detail: `oraclous-backend/docs/team-of-agents-capability-design.md`. Walkthroughs: `…/team-of-agents-use-case-playbooks.md`. Enforced by the `use-case-guardian` persona.
+> **Authority:** `product/team-of-agents-north-star-lock.md` (THE LOCK) governs scope and acceptance. Capability detail: `product/team-of-agents-capability-design.md`. Walkthroughs: `…/team-of-agents-use-case-playbooks.md`. Enforced by the `use-case-guardian` persona.
 >
 > **Release-ID note (for tech-lead):** "R7-SEC" already occupies the R7 label for the security track. This product-loop release needs a non-colliding ID (R7-PL, R9, or similar) — flagged as an open naming decision; content is ID-independent.
 
