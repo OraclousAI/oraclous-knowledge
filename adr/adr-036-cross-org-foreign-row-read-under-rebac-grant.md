@@ -4,8 +4,9 @@
 
 | | |
 | --- | --- |
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-06-20 |
+| Accepted by | Reza (2026-06-20) |
 | Deciders | solution-architect (drafted), security-architect (adversarial review), Reza (directed: "ReBAC foreign-row read — a granted foreign graph returns the owner's rows", and chose "ADR + Contract first, then build") |
 | Driving epic | E7-SEC ReBAC · issue [#446](https://github.com/OraclousAI/oraclous-backend/issues/446) (the gate, merged #459) |
 | Builds on | [ADR-004](adr-004-federation-via-rebac-traversal.md) (federation via ReBAC) · [ADR-026](adr-026-federated-cross-graph-query.md) (federated query as aggregator) · [ADR-030](adr-030-realize-postgres-rls-backstop.md) (RLS backstop) · #446/#459 (ReBAC enforcement — the admission gate) |

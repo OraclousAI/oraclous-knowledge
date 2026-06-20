@@ -1,7 +1,7 @@
 ---
 title: "Contract G2 — owner-org on the ReBAC AccessDecision (cross-org foreign-row read)"
 owner: solution-architect
-status: proposed
+status: accepted
 consumes: federated retrieval (KRS) — a granted foreign graph returns the OWNER org's rows
 backend-issue: oraclous-backend (to be filed — implements ADR-036)
 governs: ADR-036
