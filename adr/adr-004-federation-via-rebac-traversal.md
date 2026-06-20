@@ -89,3 +89,4 @@ Ship v1 with single-organisation only, decide federation later. Considered serio
 | Date | Change |
 | --- | --- |
 | 27 May 2026 | Initial publication in uniform ADR template. |
+| 20 Jun 2026 | Extended by [ADR-036](adr-036-cross-org-foreign-row-read-under-rebac-grant.md): the "federation is a pattern of ReBAC relations" principle now also covers cross-org **graph foreign-row reads** under a fail-closed, owner-issued ReBAC `read` grant (a new grant pattern alongside `has_federation_agreement`). No change to this ADR's decisions. |
