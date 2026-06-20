@@ -4,9 +4,9 @@
 
 | Field | Value |
 | --- | --- |
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-06-21 |
-| Approved by | (pending — CTO accepts per ADR-010 / §6; security-architect reviewed via the adversarial design pass) |
+| Approved by | Reza (2026-06-21) — CTO accept per §22; security-architect reviewed via the adversarial design pass |
 | Supersedes | None |
 | Superseded by | None |
 | Driving epic | E4 — Evaluation + named gate batteries + run-tree + progress · issue [#385](https://github.com/OraclousAI/oraclous-backend/issues/385); this ADR is the contract issue [#468](https://github.com/OraclousAI/oraclous-backend/issues/468), which **blocks** the four impl issues #469 (`core/evaluate`), #470 (named battery), #471 (run-tree), #472 (progress/O4) |
