@@ -8,9 +8,9 @@ title: "ADR-035 — Coordination Control & Media: the team runtime spine (orches
 
 | Field | Value |
 | --- | --- |
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-06-20 |
-| Approved by | pending (Reza/CTO) |
+| Approved by | Reza Jahankohan |
 | Supersedes | None |
 | Superseded by | None |
 | Driving artifact | [Team-of-Agents — North-Star Lock & Acceptance Test](../product/team-of-agents-north-star-lock.md) — §2 makes acceptance **item 1 RUNNABLE** (the imported DAG must actually *run* a team), §6 acceptance items 4 / 4b / 16, §4 CUT list, §8 ADR list **#2 (Coordination-control & media)** |
