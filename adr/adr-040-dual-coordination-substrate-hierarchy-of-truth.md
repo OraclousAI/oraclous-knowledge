@@ -6,7 +6,7 @@
 | --- | --- |
 | Status | Accepted |
 | Date | 2026-06-24 |
-| Deciders | solution-architect (drafted in the backend session at Reza's direction — the coordinator-session rule relaxed for this ADR); **Accepted by the CTO + use-case-guardian review** (PR oraclous-knowledge#75 merged 2026-06-24) |
+| Deciders | solution-architect (drafted at Reza's direction — the coordinator-session rule relaxed for this ADR); **accepted by Reza (CTO) — 2026-06-24**, on the johnkennII CTO + use-case-guardian PR review (PR oraclous-knowledge#75) |
 | Driving epic | [#387](https://github.com/OraclousAI/oraclous-backend/issues/387) (E6) · ADR issue [#511](https://github.com/OraclousAI/oraclous-backend/issues/511) |
 | Builds on | ADR-031 (OHM v1.1 team manifest — the `precedence` field) · ADR-035 (coordination control & media — the `blackboard` medium) · ADR-034 (adoption-first import) · ADR-032 (capability-absence) |
 | Amends | **ADR-027** (agent-memory store — scope hardcoding + `CONTRADICTS` canonicity) · **ADR-022** (recipe-primitive ingestion — recipe target) |
