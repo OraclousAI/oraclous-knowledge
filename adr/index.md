@@ -50,15 +50,16 @@ This hub indexes every Architecture Decision Record for the Oraclous Platform. E
 | ADR-037 | [Flow-Level Evaluation, Named Gate Batteries, and Run-Tree Correlation — the E4 contract for core/evaluate + named batteries + trace_id/parent_execution_id + the re-dispatch policy boundary (R7 E4 / epic oraclous-backend#385, issue #468)](adr-037-flow-level-evaluation-named-batteries-run-tree.md) | Accepted | 2026-06-21 |
 | ADR-038 | [Tool & Data Adoption Primitives (E5) — script-as-scheduled-ingestion + library-as-tool-group + connector/MCP adoption as first-class registry citizens bound to the deny-by-default capability ceiling; the E5 chain-starter (R7 E5 / epic oraclous-backend#386, issue #484)](adr-038-tool-data-adoption-primitives.md) | Accepted | 2026-06-21 |
 | ADR-039 | [Batteries-Included Registry + O1 Secret Onboarding (E5) — the curated credential-ready tool set (web-research battery + starter connectors + scheduler + delivery sink) seeded via plugin_sync, and the paste-once per-org secret-onboarding contract with no auth-prompt wall (R7 E5 / epic oraclous-backend#386, issue #485)](adr-039-batteries-included-registry-o1-secret-onboarding.md) | Accepted | 2026-06-21 |
+| ADR-040 | [Dual Coordination Substrate + Hierarchy-of-Truth Adoption (E6) — file-native git-markdown vs graph-adopt as peer blackboard substrates (the source decides), the adopted precedence/Hierarchy-of-Truth with the derived CONTRADICTS index disposable and graph-as-truth a mode not the default, and the source-format deliver-back sink contract; amends ADR-027/ADR-022 (R7 E6 / epic oraclous-backend#387, issue #511)](adr-040-dual-coordination-substrate-hierarchy-of-truth.md) | Proposed | 2026-06-24 |
 
-> **ADR-022** is **ported from the legacy `develop` branch @ `84152635de05c105765cfe6b631bb5ba81f2f4aa` (TASK-237)** and kept at its **original legacy number** for traceability to the binding spec. It is the binding ingestion specification for the R3.5 knowledge-graph-service (service #1). The next NEW number is **ADR-040** (ADR-031–039 Accepted; ADR-039 E5 Batteries-Included Registry + O1, Accepted 2026-06-21; 022 is the ported legacy ADR).
+> **ADR-022** is **ported from the legacy `develop` branch @ `84152635de05c105765cfe6b631bb5ba81f2f4aa` (TASK-237)** and kept at its **original legacy number** for traceability to the binding spec. It is the binding ingestion specification for the R3.5 knowledge-graph-service (service #1). The next NEW number is **ADR-041** (ADR-031–040 taken; ADR-040 E6 Dual Coordination Substrate + Hierarchy-of-Truth, Proposed 2026-06-24; 022 is the ported legacy ADR).
 
 ## ADR conventions
 
 * **One decision per ADR.** If a decision is compound, it gets split into multiple ADRs that may reference each other.
 * **Status lifecycle:** `Proposed` → `Accepted` → optionally `Superseded by ADR-NNN`. Rejected ADRs are kept (as `Rejected`) for the historical record.
 * **No silent supersession.** When a new ADR overrides an existing one, the new ADR names it explicitly and the old ADR's status is updated.
-* **Numbering is monotonic.** ADR-040 is the next number for NEW decisions (ADR-031–039 taken; ADR-039 E5 batteries-included registry + O1, Accepted); numbers are not reused even if an ADR is rejected. (ADR-022 is a **ported legacy ADR** kept at its original number for traceability.)
+* **Numbering is monotonic.** ADR-041 is the next number for NEW decisions (ADR-031–040 taken; ADR-040 E6 dual coordination substrate + Hierarchy-of-Truth, Proposed); numbers are not reused even if an ADR is rejected. (ADR-022 is a **ported legacy ADR** kept at its original number for traceability.)
 
 ## When to write an ADR
 
