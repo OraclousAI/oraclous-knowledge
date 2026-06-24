@@ -6,6 +6,7 @@
 | --- | --- |
 | Status | Accepted |
 | Date | 2026-06-24 |
+| Amended | **2026-06-24 — Decision 7 (Deployment substrate modes — CLOUD-FIRST), accepted by Reza (CTO).** Resolves the local-vs-served deployment-mode dimension left open by Decisions 1–6. |
 | Deciders | solution-architect (drafted at Reza's direction — the coordinator-session rule relaxed for this ADR); **accepted by Reza (CTO) — 2026-06-24**, on the johnkennII CTO + use-case-guardian PR review (PR oraclous-knowledge#75) |
 | Driving epic | [#387](https://github.com/OraclousAI/oraclous-backend/issues/387) (E6) · ADR issue [#511](https://github.com/OraclousAI/oraclous-backend/issues/511) |
 | Builds on | ADR-031 (OHM v1.1 team manifest — the `precedence` field) · ADR-035 (coordination control & media — the `blackboard` medium) · ADR-034 (adoption-first import) · ADR-032 (capability-absence) |
@@ -40,6 +41,11 @@ R5 requires two first-class substrates (**the source decides**), an **adopted** 
 
 6. **Deliver-back lands in the source format — the generic O7 sink contract (decided here; idempotent-refresh hardened in E9).** Team outputs land in the format the user used: editable `.md`/`production/` written into the user's **git tree** (book) with defined branch/commit/PR semantics and **idempotency keys** (a recurring refresh writes a **clean delta**, not a clobbered tree); a **served surface** (bitcoin). The generic delivery-sink contract — *whose* creds, overwrite-vs-append, the idempotency key — is decided here; the docify/agent-pack form (EURail) and the idempotent-refresh hardening reuse this sink under E5/E8/E9.
 
+7. **Deployment substrate modes — CLOUD-FIRST (amendment, 2026-06-24; Reza).** Decisions 1–6 establish the two substrates as peers and "the source decides," but left the deployment-mode dimension unresolved (the e2e for file-native "in place" actually wrote to a *server* tmp tree — which is a copy, not "in place"). This amendment fixes it. **The product is cloud-first; the graph is the primary substrate.** "The source decides" (Decision 1) is refined *by deployment mode*:
+   - **Served / multi-tenant (cloud — the default).** There is no "in place" file tree on a multi-tenant server, so a **file-shaped source is INGESTED to the graph**: its content becomes graph nodes (`:Memory`/recipe-typed), the source's precedence is preserved as **source-tier provenance** so Decisions 2–3 still hold (the graph stays *derived, not canonical*); agents **retrieve from the graph**; outputs are **delivered back** in source format via the Decision-6 sink (git branch/commit/PR · served surface · report-delta) — **never** a server-hosted live file tree. A graph-shaped source is **adopted in place** (Decision 1.ii). I.e. *if there is a file, feed it to the graph; never move files to a server.*
+   - **Local single-tenant GO.** "File-native in place" (Decision 1.i) applies literally — the runtime runs on the user's own machine, where the files already are. This mode is **implemented and PARKED** (kept as-is, not extended); **local file import/export is deferred**.
+   This resolves the previously-unowned tension between "the source decides" and "a true Oraclous is graph-based": on the cloud the file→graph transition is the rule, with file-native confined to local-GO. Mechanically: the **importer (ADR-034) remaps a team's file tools (`Read`/`Grep`/`Glob` → `core/knowledge-retriever` + `core/find-similar`; `Write`/`Edit` → `core/graph-ingest`) onto the already-seeded graph capabilities** for the cloud substrate; the file-sandbox connectors remain the local-GO / bounded-exec (`Bash`) fallback. A **per-run default `graph_id`** binds the team's tools to its graph. Precedence enforcement (Decision 2) therefore runs over the **graph blackboard read**, not a file tree.
+
 ## Boundaries (out of scope — opt-in per Lock §4 CUT, or owned elsewhere)
 
 - **D2** partial-failure compensation / idempotency quarantine for side-effecting serving — opt-in (distinct from O7's delivery-sink idempotency, which is in scope).
@@ -63,6 +69,7 @@ R5 requires two first-class substrates (**the source decides**), an **adopted** 
 - **Test invariant:** the two substrates pass the same dry-run validation, and **deleting the derived index must lose nothing canonical** (file-native) / **no second graph is created** (graph-adopt).
 - **ADR-035 status note:** the `blackboard` medium is now realized by **two peer substrates** (file-native | graph-adopt) instead of the single graph-resident assumption; the rest of the media taxonomy is unchanged.
 - ADR-027 and ADR-022 carry an "Amended by ADR-040" note for the scope / `CONTRADICTS`-canonicity and recipe-target changes respectively.
+- **Decision 7 (cloud-first) re-orders the E6 build:** the **graph path leads** — the importer file→graph remap (#509) + a per-run default `graph_id`, the graph-adopt blackboard (#513), and a batch "ingest user content → graph" flow (#522) are the cloud content-in/substrate; deliver-back (#515) is the cloud "land in the user's source format" path (so a server-hosted live file tree is **not** the served substrate). **Precedence (#514) enforces over the graph blackboard read** (provenance-tiered nodes), not a file tree. The **file-native working-tree slice (#512/#518) is DONE for local-GO and PARKED**; **local file import/export (#523) is deferred.** The graph primitives are already seeded (`core/graph-ingest`, `core/knowledge-retriever`, `core/find-similar`, `core/recall-memory`, `core/federated-search`) — the cloud substrate is wiring, not new capability.
 
 ## References
 
