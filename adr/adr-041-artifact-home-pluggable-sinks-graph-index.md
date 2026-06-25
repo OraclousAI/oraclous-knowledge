@@ -4,9 +4,9 @@
 
 | | |
 | --- | --- |
-| Status | **Proposed** — drafted at Reza's direction; awaiting Reza (CTO) acceptance |
+| Status | **Accepted** |
 | Date | 2026-06-25 |
-| Deciders | Drafted by the CTO (johnkennII) at Reza's direction, capturing Reza's architecture; **acceptance is Reza's** (Proposed → Accepted pending his explicit go). johnkennII reviewed the PR; it does not accept the decision. |
+| Deciders | Drafted by the CTO (johnkennII) at Reza's direction, capturing Reza's architecture; **accepted by Reza (CTO) — 2026-06-25** (on the johnkennII CTO review, PR oraclous-knowledge#78). johnkennII reviewed the PR; it does not accept the decision. |
 | Driving epic | [#387](https://github.com/OraclousAI/oraclous-backend/issues/387) (E6) — the use-case proofs (book deliver, DoefinGPT served-surface [#543](https://github.com/OraclousAI/oraclous-backend/issues/543)) lean on this |
 | Builds on | ADR-040 (cloud-first / graph-primary substrate) · ADR-038 (tool/data adoption primitives) · ADR-039 (batteries-included registry — the sink capabilities) · ADR-034 (adoption-first import) · the importer file→graph mapping ([#509](https://github.com/OraclousAI/oraclous-backend/issues/509)) |
 | Extends | **ADR-040** — generalizes graph-primary from *knowledge/inputs* to *artifacts/outputs*: a team's outputs are first-class graph citizens, and deliver-back is one pluggable sink, not the default |
