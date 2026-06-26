@@ -1,7 +1,7 @@
-# Graph Report - /private/tmp/claude-501/-Users-reza-workspace-OraclousAI-oraclous-backend/4a02db10-2aed-4711-8530-c9e99a5d3358/scratchpad/kb-wt-adr043  (2026-06-26)
+# Graph Report - /private/tmp/claude-501/-Users-reza-workspace-OraclousAI-oraclous-backend/4a02db10-2aed-4711-8530-c9e99a5d3358/scratchpad/kb-wt-adr043b  (2026-06-26)
 
 ## Corpus Check
-- 2 files · ~364,006 words
+- 2 files · ~364,005 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -247,11 +247,11 @@ _Questions this graph is uniquely positioned to answer:_
 - **What is the exact relationship between `auth-service (single identity authority)` and `ADR-017 Identity/Org Service Split (superseded by as-built)`?**
   _Edge tagged AMBIGUOUS (relation: supersedes) - confidence is low._
 - **Why does `Test Strategy` connect `Community 2` to `Community 10`, `Community 7`, `Community 15`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
-- **Why does `Cross-cutting agreement protocol` connect `Community 7` to `Community 2`?**
-  _High betweenness centrality (0.041) - this node is a cross-community bridge._
-- **Why does `Provenance-is-primary philosophy` connect `Community 4` to `Community 9`?**
-  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+  _High betweenness centrality (0.061) - this node is a cross-community bridge._
+- **Why does `Testing Approach (Frontend)` connect `Community 10` to `Community 2`?**
+  _High betweenness centrality (0.054) - this node is a cross-community bridge._
+- **Why does `Provenance` connect `Community 9` to `Community 4`?**
+  _High betweenness centrality (0.048) - this node is a cross-community bridge._
 - **What connects `Run a `gh` CLI command and return stdout (JSON parsed when the output is JSON).`, `All open issues with the fields we need.`, `Move an issue to the ready/queued state: drop `blocked`/`backlog`, add `ready`.` to the rest of the system?**
   _444 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**

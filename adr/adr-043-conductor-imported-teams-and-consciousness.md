@@ -4,7 +4,7 @@
 
 | | |
 | --- | --- |
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-06-26 |
 | Deciders | Reza (directed the capability + the "self-consciousness / continuous learning" requirement, and accepts this ADR); CTO (drove the research + the design); solution-architect (shepherds the build) |
 | Driving issue | [#552](https://github.com/OraclousAI/oraclous-backend/issues/552) (E3+E6 keystone) |
