@@ -2,17 +2,24 @@
 
 > **Status:** LOCKED (the requirement, not the implementation) · **Authority basis:** the zero-headache sufficiency-lock review (run `wf_bb701ec2-9e2`, 3 per-use-case stress-tests → convergence synthesis → adversarial verify + completeness critic, corrections applied) on top of the team-of-agents architecture audit (`wf_693afa65-500`) and the R7 reconciliation. · **Enforced by:** the `use-case-guardian` persona/agent — every ADR, design change, and PR is checked against §6 below.
 >
-> This is the **stable anchor** that the three north-star use cases can never silently drift away from again. It sits above `team-of-agents-capability-design.md` (the capability spec) and `team-of-agents-use-case-playbooks.md` (the walkthroughs): where this file and either of those diverge, **this file wins** and the other is updated.
+> This is the **stable anchor** that the platform's **two co-equal on-ramps** — DESCRIBE→team (the compiler, cloud-first) and BRING→team (import, local) — can never silently drift away from again. The three north-star use cases are the IMPORT on-ramp's acceptance test (and its import-fidelity demo); the compiler on-ramp is exercised by its own acceptance (§6 C1–C2). It sits above `team-of-agents-capability-design.md` (the capability spec) and `team-of-agents-use-case-playbooks.md` (the walkthroughs): where this file and either of those diverge, **this file wins** and the other is updated.
 
 ---
 
-## 0. The one requirement
+## 0. The one requirement — two first-class on-ramps to the same GO
 
-> **Bring the team you already have, press GO, and it runs — no re-authoring, no "but first you must…", no extra requirements.**
+> **Get a team that runs — either by DESCRIBING the objective in English (Oraclous builds the team) or by BRINGING the team you already have (Oraclous adopts it) — then press GO and it runs. Either way: no re-authoring, no "but first you must…", no extra requirements.**
 
-The three north-star use cases are the **acceptance test**, not examples. They all *already exist* as Claude Code agent setups; the product must adopt them, not make the user rebuild them.
+The product has **two co-equal on-ramps** to the one outcome (a runnable, validated Team Harness you press GO on). Neither is the "main" one; both are first-class and each is separately tested:
 
-| Use case | What the user brings today |
+| On-ramp | The user starts with | The primitive | Where it's locked |
+|---|---|---|---|
+| **DESCRIBE → team** (the compiler / planner) | a prose objective and **nothing to import** — no `.claude/agents` dir | **cloud-first**: Oraclous *synthesizes* the team from the objective (plan → survey capabilities → draft the OHM manifest → validate), then refine in NL | §2 R0 (Compile); §6 items C1–C2; ADR-047 |
+| **BRING → team** (the importer / adoption) | an existing Claude Code agent setup that **already works** | **local**: Oraclous *adopts* it as-is — imports the agents/skills/charters/orchestrator → OHM, with zero re-authoring | §2 R1–R6; §6 items 1–16; ADR-034/045 + the R2–R6 ADRs |
+
+**The use cases are the acceptance test for the IMPORT on-ramp — and they earn that role precisely because they already exist.** The three north-star use cases all *already exist* as working Claude Code agent setups (table below); for the BRING on-ramp they are **a real acceptance test, not examples** — the product must adopt them as-is, never make the user rebuild them, and they double as the proof of **import-fidelity** (what came out runs the same as what went in). They are **not the whole north-star**: the DESCRIBE on-ramp serves the user who has nothing to import, and it is exercised by its **own** acceptance (§6 C1–C2, anchored on the EURail-as-prose equivalence oracle), not by these three import artifacts. Import rigor is undiminished; the compiler is added beside it.
+
+| Use case (the IMPORT-on-ramp acceptance test) | What the user brings today |
 |---|---|
 | **EURail assessment** | one `eurail-report` SKILL.md orchestrator + 23 module prompts + a Python merge spine + a 909-record ledger + seeded-refresh mode + a report-editor 10-gate + docify + agent-pack + a KGB backfill |
 | **bitcoin-gpt / doefin-gpt** | 17 `.claude/agents` across 4 standing teams + ~30 skills + 25 stateful Python data loaders + a 21-module analysis library + a half-built harness + 2 MCP servers + a graphify world-model graph |
@@ -24,9 +31,20 @@ Each prior round (the original architecture, the R7 plan, and even the first cut
 
 ---
 
-## 2. The six headache-elimination requirements (R1–R6)
+## 2. The on-ramp requirements — R0 (COMPILE) + R1–R6 (IMPORT)
 
-Each is now a **mandatory, first-class requirement**, not an aside. The *binding cases* column is corrected per the adversarial pass — a requirement is real if it blocks **at least one** case; it is not claimed universal where it isn't.
+Two co-equal on-ramp requirement sets. **R0 (COMPILE)** is the DESCRIBE→team on-ramp (the cloud-first primitive); **R1–R6** are the IMPORT→team on-ramp's headache-elimination requirements (the local primitive). Each requirement is **mandatory and first-class**, not an aside. The *binding cases* column is corrected per the adversarial pass — an IMPORT requirement is real if it blocks **at least one** of the three import use cases; it is not claimed universal where it isn't. R0 binds the **from-scratch / no-existing-team** user (the case the three import artifacts do *not* exercise) and is anchored on ADR-047.
+
+### R0 — COMPILE, don't make-them-author *(binds: the from-scratch / no-existing-team user; equivalence-anchored on EURail)*
+A first-class **prose on-ramp** turns an English objective into a runnable team **with nothing to import** — co-equal with R1's importer, not a footnote. The user states an `objective` (plus optional `inputs` / `constraints` / `success_criteria`) and Oraclous *synthesizes* the team. Six first-class properties (ADR-047):
+
+- **(a) The goal→manifest contract.** Prose objective → a single schema-valid OHM v1.1 `kind:team` manifest (populated `members[]` / `orchestration` / `task_board` / `budget` / `governance`) **plus** the per-role `sub_harnesses` — without which a team loads but cannot run. **Zero manual OHM authoring**, exactly as R1 promises for import.
+- **(b) Capability-survey as the structural source.** A capability-surveyor surveys the **live registry + the seed capability inventory** to produce the **typed catalog** the drafter may draw `members[].tools` from — and **only** from. The survey is not prompt-shrinking convenience; under capability-absence it is the *allowed set*.
+- **(c) ONE validator, shared with the importer's dry-run.** The drafted manifest passes the **exact same** `assemble_team()` / `ImportReport` / `would_block` / `render_report()` dry-run the importer uses (R1/O8) — schema-validates, acyclic runnable DAG, every `tools[]` resolves, capability-absence holds. **One validator, two on-ramps** — the prose front door cannot drift from the import front door, and there is no second validator.
+- **(d) Capability-absence holds at COMPILE time.** Each drafted `member.tools` is the immutable hard ceiling (the §2 capability-absence gate, R0's twin of R1's import ceiling). A sub-goal needing an unsurveyed capability **fails closed with a gap report** — a blocking flag → `GO: BLOCKED` — **never a hallucinated tool** (the field's #1 failure mode, structurally impossible here).
+- **(e) NL refine as a typed structural delta.** "add a fact-checker" / "make research parallel" / "the editor is human" is parsed into a typed patch (`add_member` / `set_fan_out` / `change_kind` / `add_depends_on`) over the *existing* manifest, re-run through the **same** validator, preserving every untouched member/edge byte-identical — never a blank re-draft.
+- **(f) An eval-set for a non-deterministic generator.** NL→team is non-deterministic, so it ships an eval stack: deterministic plan guardrails (the shared validator) → the **EURail-ledger equivalence oracle** (the same objective *in prose* reproduces the 909-record ledger about as well as the *imported* EURail team, passing the 10-gate) → a reference-objective LLM-judge (split plan-adequacy / run-outcome, sample-N, K-of-N ship-bar).
+> *Honesty note:* R0 is exercised by the **from-scratch user**, the case the three import artifacts do **not** cover — which is exactly why the compiler needs its own acceptance (§6 C1–C2) and its own equivalence oracle, rather than riding on the import use cases. The compiler is **itself a Team Harness** (planner / capability-surveyor / manifest-drafter / reviewer) on the shipped runtime, reachable through the gateway today — no new platform code, no new gateway routing.
 
 ### R1 — IMPORT, don't re-author *(binds: all three)*
 A first-class **one-command importer** ingests an existing `.claude/agents/*.md` directory (frontmatter `name/description/model/tools/skills` + body), `.claude/skills/*` coordinators, `teams/<n>/charter.md`, **and** a single skill-as-orchestrator (EURail's shape) → runnable Role-Agent sub-harnesses + the Team Harness, **with zero manual OHM authoring.** Skills referenced in frontmatter are auto-resolved and inlined. "Port almost verbatim" is a tool the product runs, never hand-work. *This is the top-priority deliverable; if step one fails, nothing else matters.*
@@ -100,13 +118,15 @@ None of the three needs these on the minimal path; keep them as **opt-in**, neve
 
 ## 5. Sufficiency verdict
 
-**With R1–R6 + the capability-absence gate + O1–O8, the design is NECESSARY and SUFFICIENT for all three. As originally written (without them) it is INSUFFICIENT — it fails every case on step one.** Coverage confirmed: EURail (skill-import, seeded-refresh, web battery, merge/10-gate, docify+pack, vertical-compose-by-reference); bitcoin (agents-importer, loader+library adoption, graph-adopt, standing mode, cost tiers, served surface); book (43-artifact importer, capability-absence + blocking-gate-node, file-native bible + Hierarchy-of-Truth, single-tenant GO, schedule+notification import, deliver-back-as-files, DAG-from-showrunner).
+**Sufficiency is judged per on-ramp.** For the **IMPORT** on-ramp: **with R1–R6 + the capability-absence gate + O1–O8, the design is NECESSARY and SUFFICIENT for all three import use cases. As originally written (without them) it is INSUFFICIENT — it fails every case on step one.** Coverage confirmed: EURail (skill-import, seeded-refresh, web battery, merge/10-gate, docify+pack, vertical-compose-by-reference); bitcoin (agents-importer, loader+library adoption, graph-adopt, standing mode, cost tiers, served surface); book (43-artifact importer, capability-absence + blocking-gate-node, file-native bible + Hierarchy-of-Truth, single-tenant GO, schedule+notification import, deliver-back-as-files, DAG-from-showrunner).
+
+For the **COMPILE** on-ramp: **with R0 (the goal→manifest contract + capability-survey + the SHARED dry-run validator + compile-time capability-absence + NL-delta refine + the eval-set, ADR-047), the from-scratch / no-existing-team user is SUFFICIENTLY served — the case none of the three import artifacts exercise.** Without R0 that user has **no path** (an English objective and nothing to import dead-ends). The two on-ramps converge on one validator and one runtime, so the import sufficiency above carries forward to a *compiled* team unchanged once it passes the shared dry-run.
 
 ---
 
 ## 6. THE NORTH-STAR ACCEPTANCE TEST (the guardian's enforceable contract)
 
-Falsifiable "press-GO" assertions. **Each item is enforced by the case(s) that exercise it; no case may regress an item it exercises. Items a case doesn't exercise are not vacuously asserted against it.** Any PR/ADR/design change that regresses a bound item **fails the guardian gate.**
+Falsifiable "press-GO" assertions across **both on-ramps**. Items 1–16 + O1–O8 are the **IMPORT** on-ramp's contract (bound by the three import use cases); items **C1–C2** are the **COMPILE** on-ramp's contract (bound by the from-scratch / no-existing-team user, equivalence-anchored on EURail). **Each item is enforced by the case(s) that exercise it; no case may regress an item it exercises. Items a case doesn't exercise are not vacuously asserted against it.** Any PR/ADR/design change that regresses a bound item — on either on-ramp — **fails the guardian gate.**
 
 | # | Assertion | Binds |
 |---|---|---|
@@ -127,13 +147,15 @@ Falsifiable "press-GO" assertions. **Each item is enforced by the case(s) that e
 | 14 | Pressing GO on **any multi-member/standing fleet** surfaces model-tier economics + a projected recurring cost **up front**, and applies a cheaper default for routine scheduled scans | bitcoin hardest; any standing fleet |
 | 15 | HITL-SLA, cross-org isolation, A2A recursion, mandatory plan-approval, and full trace correlation are **all opt-in** — a single-owner autonomous team is never taxed by machinery it doesn't use | all |
 | 16 | A deterministic multi-check quality gate (EURail's report-editor 10-gate; the book QA Lock) runs as a **named evaluator battery**, not "maps onto C1" hand-wave | EURail; book |
+| **C1** | A **prose objective with no existing `.claude/agents` dir** compiles to a **runnable, validated Team Harness** (schema-valid OHM v1.1 + `sub_harnesses`) that passes the **SAME** `assemble_team()`/`ImportReport` dry-run as the importer (item 1's validator), and runs through the gateway — **zero manual OHM authoring**, exactly as import | compiler (from-scratch user) |
+| **C2** | At compile time **capability-absence holds**: the drafter draws `members[].tools` **only** from the surveyor's catalog; a sub-goal needing an unsurveyed capability yields a **fail-closed gap report (`GO: BLOCKED`), never a hallucinated tool** — and a NL refine (`add_member`/`set_fan_out`/`change_kind`) re-validates through the same gate, preserving the rest. Equivalence-anchored: EURail's objective *in prose* reproduces the 909-record ledger about as well as the *imported* EURail team (the 10-gate oracle) | compiler (from-scratch user); EURail-as-prose equivalence |
 | O1–O8 | The operational requirements in §3 each pass their acceptance check | per §3 |
 
 ---
 
 ## 7. Design deltas (fold into `team-of-agents-capability-design.md`)
 
-**Phase A:** **A-NEW-1** the Importer (R1) as the top-priority platform capability (frontmatter→member mapping: `model`→tier, `tools`→capability ceiling, `skills`→inlined sub-harness refs, body→subgoal/role; skill-orchestrator + charter adapters). **A-NEW-2** capability-absence in the OHM v1.1 schema (the `tools` line is an *authoritative ceiling*, not advisory). **A-NEW-3** Hierarchy-of-Truth/precedence as an importer-populated manifest field (graph-as-truth becomes a *mode*).
+**Phase A — TWO co-equal on-ramps:** **A-NEW-0** the Harness Compiler / Planner (R0, ADR-047) as a co-equal top-priority platform capability beside the Importer — the **prose** front door (planner / capability-surveyor / manifest-drafter / reviewer, itself a Team Harness; prose→OHM v1.1 team + `sub_harnesses`; the surveyor's catalog is the sole source for `members[].tools`; NL-refine as a typed delta; compile-and-run default / approval opt-in). **A-NEW-1** the Importer (R1) as the co-equal top-priority **import** front door (frontmatter→member mapping: `model`→tier, `tools`→capability ceiling, `skills`→inlined sub-harness refs, body→subgoal/role; skill-orchestrator + charter adapters). **Both front doors share one validator** (`assemble_team()`/`ImportReport` — the Importer's assembler *extended* with a prose-in path, never duplicated). **A-NEW-2** capability-absence in the OHM v1.1 schema (the `tools` line is an *authoritative ceiling*, not advisory) — enforced for **both** import and compile output. **A-NEW-3** Hierarchy-of-Truth/precedence as an importer-populated manifest field (graph-as-truth becomes a *mode*).
 **Phase B:** **B-NEW-1** import-driven DAG assembly (R4) — demote B2/B4 to opt-in. **B-NEW-2** adopt the `## Handoff` convention as B5's envelope source.
 **Phase C:** **C-NEW-1** dual substrate (file-native + graph-adopt) — C4 never forces a second graph. **C-NEW-2** library-as-tool-group + merge/VERIFY + the **named 10-gate evaluator battery** (not "maps onto C1"). **C-NEW-3** C5 becomes a real seeded-refresh cross-run lifecycle.
 **Phase D:** **D-NEW-1** single-tenant local GO (governance opt-in) — demote D2/D4-SLA/D5-cross-org to opt-in, keep the capability-absence gate + blocking-gate-node + write-scope isolation. **D-NEW-2** standing-team lifecycle. **D-NEW-3** model-tier cost defaults + O2 pre-flight/cap. **D-NEW-4** batteries-included registry (R3). **D-NEW-5** deliver-back modes (R5). **D-NEW-6..** the operational O1/O3–O8 (secrets, partial-failure contract, status surface, edit-running-team, local↔cloud parity, delivery-sink auth, import dry-run).
@@ -143,13 +165,16 @@ Falsifiable "press-GO" assertions. **Each item is enforced by the case(s) that e
 
 ## 8. ADRs to open (the lock's binding decisions)
 
-1. **ADR — Adoption-First: import `.claude/agents`/skills/charters/skill-orchestrator → Team Harness without re-authoring** (R1+R4). **The keystone — highest priority.**
-2. **ADR — Capability-Absence as a Structural Gate** (the gate primitive + the blocking-gate-node) — tool-omission is a hard ceiling no path can escalate.
+The lock binds **both on-ramps**. ADR #0 below is the COMPILE on-ramp (R0); ADRs #1–#8 are the IMPORT on-ramp (R1–R6) + cross-cutting gates. Both converge on the *same* `assemble_team()`/`ImportReport` dry-run validator — one validator, two on-ramps.
+
+0. **ADR-047 — Harness Compiler / Planner: the prose on-ramp** (R0) — **co-equal keystone with #1.** An English objective compiles to a runnable OHM v1.1 Team Harness (planner / capability-surveyor / manifest-drafter / reviewer, itself a Team Harness), passing the **SAME** dry-run validator as the importer, capability-absence-bounded at compile time, NL-refine as a typed structural delta; compile-and-run by default with plan-approval opt-in (per §4); the three-layer eval-set incl. the EURail-as-prose equivalence oracle. *(Status: Proposed 2026-06-27; epic #391 / E10.)*
+1. **ADR — Adoption-First: import `.claude/agents`/skills/charters/skill-orchestrator → Team Harness without re-authoring** (R1+R4). **The keystone for the IMPORT on-ramp — highest import priority.** (ADR-034/045.)
+2. **ADR — Capability-Absence as a Structural Gate** (the gate primitive + the blocking-gate-node) — tool-omission is a hard ceiling no path can escalate. **Binds both on-ramps** — enforced at import *and* at compile time (#0).
 3. **ADR — Tool & Data Adoption Primitives** (R2) — script-as-scheduled-ingestion + library-as-tool-group + MCP/connector adoption, first-class alongside registry connectors.
 4. **ADR — Dual Coordination Substrate + Hierarchy-of-Truth Adoption** (R5) — **amends ADR-027 (:Memory) and ADR-022 (ingestion recipes)**: file-native and graph-adopt are peers; user precedence is adopted, not imposed.
 5. **ADR — Three Lifecycles: Bounded Run / Standing Team / Seeded Refresh** (R6) — recurring-budget accounting defined.
-6. **ADR — Single-Tenant Local GO; Governance Opt-In** (R6a) — the heaviest amendment: **subordinates ADR-006/008/012/030** (org-everywhere, operator separation, RLS) to a trivial-local-identity default in solo mode; governance invariants remain mandatory in served/multi-tenant mode.
-7. **ADR — Batteries-Included Registry + Operational Contract** (R3 + O1–O8) — pre-registered web battery/connectors/scheduler/sink + secrets, cost pre-flight/cap, partial-failure contract, status surface, edit-loop, local↔cloud parity, delivery-sink, dry-run.
-8. **Status/retirement note on `ADR-005 L77`** — track sequential/parallel/conditional; record retired-vs-deferred original primitives.
+6. **ADR — Single-Tenant Local GO; Governance Opt-In** (R6a) — the heaviest amendment: **subordinates ADR-006/008/012/030** (org-everywhere, operator separation, RLS) to a trivial-local-identity default in solo mode; governance invariants remain mandatory in served/multi-tenant mode. **Both on-ramps' compiled/imported teams run under this default.**
+7. **ADR — Batteries-Included Registry + Operational Contract** (R3 + O1–O8) — pre-registered web battery/connectors/scheduler/sink + secrets, cost pre-flight/cap, partial-failure contract, status surface, edit-loop, local↔cloud parity, delivery-sink, dry-run. **The compiler's capability-survey (#0) plans against this same registry + the seed capability inventory.**
+8. **Status/retirement note on `ADR-005 L77`** — track sequential/parallel/conditional; record retired-vs-deferred original primitives. **ADR-047 also fills the un-ratified ADR-005 P1 (upfront planning / decomposition) pillar.**
 
-These ADRs + the Importer + the 16-item acceptance test are **the lock**. The implementation track is **"R7: the product loop closes"** = team runtime (design Phase A–D, corrected) + the compiler harness (original R7) + batteries + **the adoption/import front door** — one release, sequenced as epics that each move at least one acceptance item from red to green.
+These ADRs + **both front doors (the Importer AND the Harness Compiler)** + the acceptance test (16 import items + O1–O8 **and** the compiler items C1–C2) are **the lock**. The implementation track is **"R7: the product loop closes"** = team runtime (design Phase A–D, corrected) + **the compiler harness (R0 / ADR-047 / E10) and the adoption/import front door (R1 / E2) as co-equal on-ramps** + batteries — one release, sequenced as epics that each move at least one acceptance item (on either on-ramp) from red to green.
