@@ -8,7 +8,7 @@ title: "ADR-044 — User-Configurable Per-Member Budget & Iteration Governance (
 
 | Field | Value |
 | --- | --- |
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-06-27 |
 | Approved by | Pending (Reza / CTO) |
 | Supersedes | None |

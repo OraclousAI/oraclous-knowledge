@@ -8,7 +8,7 @@ title: "ADR-045 — Prose-showrunner → DAG import adapter: derive depends_on +
 
 | Field | Value |
 | --- | --- |
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-06-27 |
 | Approved by | Pending Reza/CTO |
 | Supersedes | None |

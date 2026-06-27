@@ -8,7 +8,7 @@ title: "ADR-046 — Human-gate rejection → revision → re-invoke: wiring ADR-
 
 | Field | Value |
 | --- | --- |
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-06-27 |
 | Approved by | — (pending Reza/CTO) |
 | Supersedes | None |
