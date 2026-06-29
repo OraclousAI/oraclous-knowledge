@@ -10,7 +10,7 @@ title: "ADR-045 — Prose-showrunner → DAG import adapter: derive depends_on +
 | --- | --- |
 | Status | Accepted |
 | Date | 2026-06-27 |
-| Approved by | Pending Reza/CTO |
+| Approved by | Reza Jahankohan |
 | Supersedes | None |
 | Superseded by | None |
 | Driving artifact | The #440 book-GO end-to-end (the third north-star use case — book studio — pressed GO). [Team-of-Agents — North-Star Lock](../product/team-of-agents-north-star-lock.md) §6 acceptance item 3 ("the inter-member DAG is derived from the source"); [ADR-034](adr-034-adoption-first-import.md) §6 (DAG-from-source) — its stated-but-unshipped prose-showrunner branch. Parent issue: oraclous-backend #407 (skill-resolution / charter / single-skill-orchestrator adapter). |

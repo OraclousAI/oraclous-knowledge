@@ -23,9 +23,9 @@ title: "ADR-044 — Three-Layer Team Budget Governance (per-agent safety cap · 
 
 | Field | Value |
 | --- | --- |
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-06-27 |
-| Approved by | Pending Reza |
+| Approved by | Reza Jahankohan |
 | Supersedes | None (re-baselines the original ADR-044 draft in place) |
 | Superseded by | None |
 | Driving artifact | The #440 book-GO end-to-end run (the from-scratch team-of-agents GO) + Reza's 2026-06-27 budget-model confirmation |
