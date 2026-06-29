@@ -8,9 +8,9 @@ title: "ADR-047 — Harness Compiler / Planner: the prose on-ramp — an English
 
 | Field | Value |
 | --- | --- |
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-06-27 |
-| Approved by | Pending Reza/CTO |
+| Approved by | Reza Jahankohan |
 | Supersedes | None — fills the un-ADR'd **P1 (upfront planning / decomposition)** pillar that [ADR-005](adr-005-workflow-concept-retirement.md) promised and never ratified |
 | Superseded by | None |
 | Driving artifact | The platform's **co-equal prose on-ramp** is missing: today the only planned front door is *import an existing `.claude/agents` team* (E2). A user who states an objective in English and has nothing to import has **no path**. Epic: [oraclous-backend #391](https://github.com/OraclousAI/oraclous-backend/issues/391) (E10 — Compiler harness `describe→team` + seed defaults + eval-set). Design: [Team-of-Agents Capability Design](../../oraclous-backend/docs/team-of-agents-capability-design.md) §3 (the stack, PLANNER at top), §7 (lifecycle starting at OBJECTIVE), §11 (ADR list item #3 "Harness Compiler / Planner"), §12 (open founder decisions, esp. #2 planner autonomy). |

@@ -10,7 +10,7 @@ title: "ADR-046 — Human-gate rejection → revision → re-invoke: wiring ADR-
 | --- | --- |
 | Status | Accepted |
 | Date | 2026-06-27 |
-| Approved by | — (pending Reza/CTO) |
+| Approved by | Reza Jahankohan |
 | Supersedes | None |
 | Superseded by | None |
 | Driving artifact | The #440 book-GO end-to-end run (the studio Team Harness, 7-gate A–G human sequence) — the first run on which a human gate actually paused, and the first on which a reviewer pressed *reject* and discovered the run was over with nowhere to put the feedback. Parent: the team-run completion / re-route line ([ADR-042](adr-042-team-run-completion-non-abort.md) completion, [ADR-043](adr-043-conductor-recalibration-reroute.md) recalibration / #553). |

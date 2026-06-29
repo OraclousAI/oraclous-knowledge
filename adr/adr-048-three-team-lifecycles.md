@@ -8,9 +8,9 @@ title: "ADR-048 — Three Team Lifecycles: Bounded Run / Standing Team / Seeded 
 
 | Field | Value |
 | --- | --- |
-| Status | Proposed |
+| Status | Accepted |
 | Date | 2026-06-27 |
-| Approved by | Pending Reza/CTO |
+| Approved by | Reza Jahankohan |
 | Supersedes | None |
 | Superseded by | None |
 | Driving artifact | The platform runs a team **once** and forgets it. There is no notion of a team that *persists* across scheduled fires, no cross-run *refresh*, and no closed-loop *consumption* of the evaluation verdict — so two of the three north-star use cases (bitcoin-gpt standing teams; EURail `--refresh-from`) have **no path**. Epic: [oraclous-backend #389](https://github.com/OraclousAI/oraclous-backend/issues/389) (E8 — the team lifecycles). Lock mandate: [Team-of-Agents — North-Star Lock](../product/team-of-agents-north-star-lock.md) §8 ADR #5 ("Three Lifecycles") + §6 items 12/13/14 + R6(b). Design: [Team-of-Agents Capability Design](../../oraclous-backend/docs/team-of-agents-capability-design.md) Phase C (C5 seeded-refresh) + Phase D (D-NEW-2 standing-team lifecycle, D-NEW-3 cost defaults/pre-flight). |
