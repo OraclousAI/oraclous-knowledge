@@ -604,7 +604,7 @@ Per the DS brand book (`Oraclous AI - Design System/README.md`) and the shipped 
 7. WCAG AA floor from the first increment: semantic structure, focus order, names/roles;
    drawers keep the `useDrawerA11y` focus trap; tables stay `role="table"`.
 
-> Discrepancy to resolve (docs-writer): FE `CLAUDE.md` §3.4 says "six non-negotiables"; the DS
+> Discrepancy (reconcile in the first phase PR that touches FE `CLAUDE.md` — no handoff): FE `CLAUDE.md` §3.4 says "six non-negotiables"; the DS
 > `SKILL.md` ("Hard rules to never break") + `docs/handoff/frontend-catchup-roadmap.md` ("The 7
 > non-negotiables") enumerate **seven**. Seven is the source of truth until reconciled.
 
@@ -692,12 +692,12 @@ plan, not open tickets.
 Minor/flagged, not Contracts yet: no SSE/streaming anywhere (polling is the design — revisit only
 if chat UX demands it); named batteries have no standalone trigger endpoint (by design — read-side
 only); `/api/v1/ontology`-suggest and `/api/v1/communities`-kinds routers are not in the gateway
-route table (KGS-side; flag to solution-architect with C-1); webhook/docify sink connectors beyond
-github/drafts are the ADR-041 future path (#541 MCP-imported sinks); several live, console-consumed
-route groups (orgs/members/invitations, communities, roundtables, activity/usage) are **absent from
-the published `openapi/v1.yaml`** — a docs-contract gap for docs-writer/solution-architect, not a
-capability gap (the 2026-07-03 API sweep enumerated 93 features; the spec + Figma board are drawn
-from the live routes).
+route table (KGS-side; rides with C-1 when it files); webhook/docify sink connectors beyond
+github/drafts are the ADR-041 future path (#541 MCP-imported sinks). The `openapi/v1.yaml`
+docs-contract gap the 2026-07-03 API sweep surfaced (56 live operations undocumented — team runs,
+schedules, orgs/invitations, credentials CRUD, communities, artifacts, assignments, activity/usage)
+is **fixed, not flagged**: `oraclous-backend#632` publishes all of them, code-verified,
+contract-tests green.
 
 Register these in `flows/interface-contracts.md` when filed. G1 (OAuth connect) and G2 (agent
 bindings) from the June-18 register are **shipped** — the register in the inventory is updated.
