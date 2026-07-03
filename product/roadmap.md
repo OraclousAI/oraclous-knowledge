@@ -24,10 +24,13 @@ schedules, artifacts, evaluation (inventory §7). None of it has UI. The active 
 | **2 — the team loop** | 8 team review (roster + validator strip) · 9 NL refine rail · 10 readiness checklist + 409 deep-link · 11 pre-flight & GO · 12 **Describe door** (**← C-1**; Import door **parked** with #523, cloud-first) | phase 1 components; DS delta tranche 2 (member-card/stage-rail/op-diff) before inc 8 |
 | **3 — standing & substrate** | 13 nav v2 (Teams + Approvals + Members→People) · 14 schedules (org-level now; folds into Team detail when C-1 lands) + home health · 15 artifacts tab + bindings-panel relabel + batch ingest + memories · 16 results/verdict/refresh-delta · 17 "connect your sinks" (unblocked — ADR-041 sink-tool model; folds in #505) | phases 1–2 |
 
-## Backend-gap Contracts — reconciled 2026-07-03 (file the three; worked in parallel)
+## Backend-gap Contracts — reconciled 2026-07-03; filed JUST-IN-TIME (Reza)
 
 Cloud-first is ratified (ADR-040 Decision 7; #523). Deliver-back is BUILT (#515/#542/#544,
 ADR-041) — the old C-6 is withdrawn. Full reconciliation: journey spec v2 §8.
+**No backend work before the FE pipeline reaches the consuming increment** (Reza, 2026-07-03):
+C-5 files as Phase 1 nears inc 7; C-1 as Phase 2 nears inc 12; C-2's USD portion only if inc 11
+wants dollars. Until then these are a tracked plan, not open tickets.
 
 | # | What | Blocks | Owner |
 | --- | --- | --- | --- |
@@ -44,16 +47,18 @@ Tools (`#98`) · Connections (`#103`, G1 shipped) · Recipes (`#109`) · Nav-IA 
 Agents & harness (`#121`, G2 shipped as `/api/v1/agent-bindings`). Residual unbuilt increments
 from these epics stay valid and can interleave with phase 3 — never ahead of phases 0–2.
 
-## Serial delivery — one increment at a time (unchanged)
+## Delivery — one PR per PHASE (Reza, 2026-07-03; supersedes the per-increment baton here)
 
-**No parallelization.** One FE agent, one increment, one PR; experience-architect (johnkennII)
-reviews on the running app; the CTO reviews craft; GitHub signals are the baton and whoever is
-not acting stays idle. Full protocol: `oraclous-frontend/CLAUDE.md` §3.7 + the
-experience-architect persona §5.
+**One FE agent, one phase in flight, ONE PR per phase** (one commit per increment inside — the
+PR-BUNDLING LAW applied to FE). No per-increment review rounds, no craft-nit iterations, no human
+CI babysitting before a phase is shippable; the automated FE invariant checks run machine-side.
 
-1. EA **readies one** increment (assign `Jahankohan` + `ready`) → FE's turn; EA idle.
-2. FE builds, **opens one PR**, then idles — never picks up a second issue.
-3. EA reviews **on the running app** → request changes (baton back) or approve via `johnkennII`
-   and merge (CI green + mergeable merges without asking).
-4. On merge, EA immediately readies the next. Contract-blocked increments (7 ← C-5, 12 ← C-1)
-   are never readied until their Contract lands; the Import door stays parked with #523.
+1. EA readies a **phase**: opens/assigns its increment issues together (each with its live-app
+   test recipe) → FE builds the whole phase, opens **one PR**, then idles.
+2. Review is **one pass, two questions**: on the spec's track? and **operating, not a mock** —
+   driven on the running console against the real gateway (real endpoints, real runs, zero
+   fabricated data). experience-architect approves via `johnkennII`; the CTO's pass folds into
+   the same gate.
+3. Merge → **Reza tests the shipped phase live** → EA readies the next phase.
+4. Contract-gated increments inside a phase (7 ← C-5, 12 ← C-1) trigger their just-in-time
+   Contract as the phase readies; the Import door stays parked with #523.
