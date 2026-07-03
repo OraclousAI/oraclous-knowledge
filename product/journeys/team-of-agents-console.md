@@ -166,9 +166,13 @@ Teams        NEW    Team list → Team detail (roster, validation, refine, runs,
 Runs                Org-wide runs (team runs ⛔C-5 + jobs) → Run detail (member grid, tree, verdict)
 Approvals    NEW    The gate inbox: paused runs + human-task assignments + admin approvals
 Library             Agents · Tools · Recipes        (was "Build")
-Knowledge           Workspaces → Workspace detail (+ NEW Artifacts tab) · Explore
+Knowledge           Workspaces → Workspace detail (ingest doors, documents, artifacts, resolution
+                    inbox, memories) · Explore (search · graph map · time travel) · Chat (published agents)
 Connections         (unchanged — already first-class)
-Admin               People (was Members) · Billing · Developer · Settings
+Serve        NEW    Published agents + integration keys · Webhook triggers + MCP access
+                    (promotes the built Developer pages out of Admin — the "agent as a product" story, J11)
+Admin               People (was Members) · Usage & spend (was Billing — estimates of the org's own
+                    provider costs; usage counts are never rendered as currency, ADR-009) · Settings
 ```
 
 Rules: **Teams is the first item after Home** — it is the product. "Runs" remains the org-wide
@@ -552,7 +556,34 @@ steward's flows survive intact; the framing and two additions change.
 
 Everything else (ingest, ontology, communities, resolution HITL, recipes template→dry-run→promote,
 search, explorer, federated) is built and stays — see the June-18 journeys for their increment
-detail; they remain the reference for those surfaces.
+detail; they remain the reference for those surfaces. Exposure additions surfaced by the 2026-07-03
+API sweep: the communities/analytics browse and the memories manager are live endpoints with no UI
+(inventory §7) — they extend increment 15's scope.
+
+---
+
+### J11 — Publish & serve (your agent as a product)
+
+**Narrative.** A built team/agent becomes something other people use: published under a public
+name, consumed by external systems with scoped keys, connected over MCP, triggered by signed
+webhooks, and chatted with in-console. The FE pages exist (Developer + chat); this journey
+re-homes them as the first-class **Serve** story (Figma diagram 08) rather than Admin leaves.
+
+| # | Step | Endpoint |
+| --- | --- | --- |
+| 1 | Publish under a public name (admin); name collision surfaces inline (409 slug-taken) | `POST /v1/agents` · manage `GET /v1/agents`, `GET /v1/agents/{slug}/details` |
+| 2 | Mint an integration key — bound to one agent or to capabilities; **secret shown once** | `POST /v1/integration-keys` (+ rotate: old secret dies; revoke: terminal) |
+| 3 | External consumer: read metadata + invoke synchronously with the key | `GET /v1/agents/{slug}` · `POST /v1/agents/{slug}/invoke` (key bearer) |
+| 4 | Connect via MCP (key-only auth — a member JWT is 403); console shows the connection snippet | `POST /v1/mcp` |
+| 5 | Webhook trigger: subscription with a display-once HMAC secret; signed inbound events start runs | `POST/GET/DELETE /v1/webhook-subscriptions` · `POST /v1/webhooks/{id}` (public, signed) |
+| 6 | Member chat: private threads bound to a published agent; synchronous turns; thumbs feedback | `/v1/chat/threads*`, `…/messages`, `…/feedback` |
+| 7 | Unpublish — warns that live integrations break (tombstone) | `DELETE /v1/agents/{slug}` (admin) |
+
+**States.** *Empty:* nothing published → "Publish a team to give it an audience" with the one
+prerequisite listed. *Secrets:* one-time display with an explicit "I saved it" confirm; never
+retrievable. *Chat error:* a turn that fails keeps the thread intact with a retryable notice.
+**Design constraints:** key/secret handling follows the Connections secret rules (send-only);
+admin-gated actions hidden below admin role (recognition, not error-on-click).
 
 ---
 
@@ -646,7 +677,11 @@ The first draft of this register was corrected by a full reconciliation pass (AD
   composition (J8 s6), leaning on **open #505** for the `needs_credential` prompt — an FE story,
   not a backend Contract.
 
-**Contracts to file (all genuinely untracked today):**
+**Contracts — filed just-in-time, not up-front (Reza, 2026-07-03).** No backend work starts
+before the FE pipeline actually approaches the consuming increment: **C-5** files when Phase 1
+nears increment 7; **C-1** when Phase 2 nears increment 12; **C-2**'s USD portion only if/when
+increment 11 wants dollars (token caps carry it meanwhile). Until then these rows are a tracked
+plan, not open tickets.
 
 | # | Missing capability | Consuming journey/step | User-facing requirement (the shape is solution-architect's) |
 | --- | --- | --- | --- |
@@ -658,17 +693,32 @@ Minor/flagged, not Contracts yet: no SSE/streaming anywhere (polling is the desi
 if chat UX demands it); named batteries have no standalone trigger endpoint (by design — read-side
 only); `/api/v1/ontology`-suggest and `/api/v1/communities`-kinds routers are not in the gateway
 route table (KGS-side; flag to solution-architect with C-1); webhook/docify sink connectors beyond
-github/drafts are the ADR-041 future path (#541 MCP-imported sinks).
+github/drafts are the ADR-041 future path (#541 MCP-imported sinks); several live, console-consumed
+route groups (orgs/members/invitations, communities, roundtables, activity/usage) are **absent from
+the published `openapi/v1.yaml`** — a docs-contract gap for docs-writer/solution-architect, not a
+capability gap (the 2026-07-03 API sweep enumerated 93 features; the spec + Figma board are drawn
+from the live routes).
 
 Register these in `flows/interface-contracts.md` when filed. G1 (OAuth connect) and G2 (agent
 bindings) from the June-18 register are **shipped** — the register in the inventory is updated.
 
 ---
 
-## 9. Build order (vertical increments, one issue each)
+## 9. Build order (increments grouped into phase-sized deliveries)
 
-Each increment runs on the live app and states its test. Strictly serial per the build↔review
-baton (FE `CLAUDE.md` §3.7). Phases group increments; land order within a phase is fixed.
+**Delivery model (Reza, 2026-07-03 — replaces the per-increment baton for this spec):**
+- **One PR per phase.** The increments below remain the tracked issues (each carries its
+  live-app test recipe), but a phase ships as **ONE PR with one commit per increment** — never a
+  stream of tiny PRs "delivering nothing". A phase is the smallest unit Reza looks at.
+- **Review is one pass per phase PR, two questions only:** (1) are we on the spec's track, and
+  (2) is it **operating, not a mock** — driven on the running console against the real gateway
+  (real endpoints, real runs, zero fabricated data; the FUCK_CLAUDE_FUCK_PAPERCLIP no-fake rule
+  applies to the FE too). No interleaved review iterations, no craft-nit rounds, no human CI
+  babysitting before a phase is shippable; the automated FE invariant checks run machine-side as
+  usual.
+- **Reza tests the shipped phase live**, then the next phase readies.
+
+Each increment still runs on the live app and states its test; land order within a phase is fixed.
 
 **Phase 0 — plumbing (no visible UI):**
 1. `api-client`: `teamRuns` namespace (`create/get/status/tree/advance/rerun`), `schedules`
@@ -713,15 +763,18 @@ baton (FE `CLAUDE.md` §3.7). Phases group increments; land order within a phase
     signed and ready.
 
 **Phase 3 — standing & substrate:**
-13. Nav v2: insert **Teams** + **Approvals**, regroup Library/Knowledge, relabel Members →
-    People (§4). *Test: all old routes redirect; persona trees correct; axe clean.*
+13. Nav v2: insert **Teams** + **Approvals** + the **Serve** group (re-homing the built
+    Developer/chat pages, J11), regroup Library/Knowledge, relabel Members → People and
+    Billing → Usage & spend (§4). *Test: all old routes redirect; persona trees correct; axe
+    clean.*
 14. Schedules surface + Home health column (J9) — built **org-level** against the live
     `/v1/engine/schedules*` routes now; its placement folds into Team detail when C-1 lands
     (Team detail requires draft persistence). *Test: create daily schedule with pre-flight
     shown; fire-now produces a listed run.*
-15. Artifacts tab + agents-using-this-workspace relabel + batch ingest + memories exposure
-    (J10) — extends the existing GraphDetailPage bindings panel, does not add a new one. *Test:
-    a seeded run's artifacts list and open; batch ingest of a 3-file folder shows 3 jobs.*
+15. Artifacts tab + agents-using-this-workspace relabel + batch ingest + memories exposure +
+    communities/analytics browse (J10) — extends the existing GraphDetailPage bindings panel,
+    does not add a new one. *Test: a seeded run's artifacts list and open; batch ingest of a
+    3-file folder shows 3 jobs; the analytics card renders node/edge counts.*
 16. Results tab: verdict card + refresh-delta chips (J8). *Test: a seeded-refresh run renders
     the 5-way delta.*
 17. "Connect your sinks" (J8 s6) — **unblocked backend-side** (ADR-041 sink-tool model): bind a
