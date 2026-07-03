@@ -20,6 +20,14 @@ calls); the frontend talks to nothing else (FE invariant §1.1).
 
 **FE coverage legend:** ✅ built · 🟡 partial / browse-only · ⛔ absent (capability exists, no UI) · 🚧 backend gap.
 
+> **Refresh 2026-07-03 (experience-architect).** §7 added: the team-of-agents runtime surface
+> (team runs, gates, schedules, cost pre-flight, artifacts, seeded refresh) shipped through the
+> gateway since mid-June — none of it has UI yet. The old gap register (G1/G2) is closed — both
+> shipped (`/oauth/{p}/connect*` + `/api/v1/agent-bindings`) — and replaced by C-1/C-2/C-5.
+> The consuming spec is `journeys/team-of-agents-console.md` (journey spec v2). §1–§6 coverage
+> marks reflect the shipped Tools/Connections/Recipes/Nav epics where noted; verify per-row
+> against the running console when a journey picks the row up.
+
 ---
 
 ## 1. Tools & capabilities (capability-registry) — `/api/v1/{tools,capabilities,instances,executions}`
@@ -108,13 +116,61 @@ missing is (a) a gateway bridge so a connected provider's token is resolvable as
 | Durable orchestration | `/v1/engine/*` | Execution-engine flows above the harness | 🟡 Jobs |
 | Billing / metering | (per org) | Cost/usage | ✅ Billing |
 
+## 7. Teams, runs, schedules, evaluation, budgets (execution-engine + harness-runtime + KGS) — `/v1/engine/*`, `/v1/harnesses/*`, `/v1/artifacts`
+
+The team-of-agents runtime (the locked product — north-star lock §0): two on-ramps (compile /
+import) converge on one validator, then one governed team run. Shipped through the gateway since
+mid-June (#576–#604); **no FE coverage anywhere in this section.** Full request/response detail:
+`journeys/team-of-agents-console.md` §5.
+
+| Capability | Gateway endpoint(s) | What it lets a user do | FE coverage |
+| --- | --- | --- | --- |
+| **Start a team run (GO)** | `POST /v1/engine/team-runs` (202) — `{manifest, sub_harnesses, gate_decisions, graph_id, workspace_root?, inputs?, seed_from_run_id?}` | Run a whole team as one governed unit; seed fan-out inputs; seeded refresh | ⛔ |
+| Read a team run | `GET /v1/engine/team-runs/{id}` — state, `results{role}`, `member_status{role}` (succeeded/failed/blocked/skipped/budget_skipped/partial + transient `re_task`), `paused_at`, `verdict`, `refresh_delta` (`re_confirmed` underscore key), `partial`, `revision_rounds` | Full run readout incl. evaluation verdict + refresh delta | ⛔ |
+| Light status | `GET /v1/engine/team-runs/{id}/status` — `{healthy, state, progress 0-100, last_outcome, cost{tokens, usd\|null}}` | "Is my team healthy / what did it cost" at a glance (lock O4) | ⛔ |
+| Run tree | `GET /v1/engine/team-runs/{id}/tree` | Root + child executions (drill into member provenance via `/v1/harnesses/executions/{id}`) | ⛔ |
+| **Advance a human gate** | `POST /v1/engine/team-runs/{id}/advance` — `{gate_decisions:{role:{decision: approve\|revise\|reject, feedback, edited_payload}}}` | Resolve a PAUSED blocking gate; revise re-runs the producer sub-tree; `max_revisions` fail-closes to REJECTED | ⛔ |
+| Re-run failed members | `POST /v1/engine/team-runs/{id}/rerun` | Re-drive FAILED+BLOCKED only, keep SUCCEEDED (409 if nothing failed) | ⛔ |
+| Terminal/degraded states | **team-run** `state`: QUEUED · RUNNING · SUCCEEDED · PAUSED · REJECTED · FAILED · COST_BUDGET (degrade surfaces as SUCCEEDED + `partial` member entries; human-needed incl. verdict escalation = PAUSED). Single-harness **jobs** keep their own set incl. PARTIAL/ESCALATED/TIMED_OUT/CANCELLED | Degrade-not-crash (labeled partial, lock O3); pooled-budget halt with `budget_skipped` members | ⛔ |
+| **Validate a draft team** (the shared validator) | `Manifest Validate` capability → `POST /api/v1/instances/{id}/execute` (sync 201, ExecutionOut envelope) → `output_data:{would_block, blocking[], report}` | Deterministic, keyless dry-run gate — same validator for compiled and imported teams | ⛔ |
+| **NL refine as typed delta** | op-drafter (tiny team run) + `Manifest Refine` capability → `POST /api/v1/instances/{id}/execute` (sync 201) → `output_data:{would_block, applied, blocking[], manifest\|null}` | "Add a fact-checker" as a typed op; preserve-the-rest; unsurveyed tool → rejected (`applied=false`), manifest untouched | ⛔ |
+| Schedules (standing teams) | `POST/GET/DELETE /v1/engine/schedules`, `POST …/{id}/fire-now`, `GET …/{id}/runs`, `GET …/{id}/team-runs` | Cron/event-fired teams with a bound graph + per-period budget (lock R6b) | ⛔ |
+| **Cost pre-flight** | `POST /v1/engine/schedules/preflight` — "~$X/day at this cadence" + `unpriced_members` | Projected recurring bill BEFORE GO (lock O2) | ⛔ |
+| Run artifacts | `GET /v1/artifacts?graph_id=…&q=&source_type=`, `GET /v1/artifacts/{id}` | Deliverables a run landed on the team's graph, verbatim content | ⛔ |
+| Single-harness runs (existing) | `POST /v1/harnesses/execute`, `…/{id}/resume`, `GET /v1/harnesses/executions*`, `/v1/engine/jobs*` | The single-agent runtime under the team layer | ✅ (agents/runs pages) |
+| Human task board (harness HITL) | `GET /v1/harnesses/assignments`, `POST …/{id}/claim\|complete` | Claim/complete escalated human tasks | ⛔ |
+| BYOM spend (retrospective) | `GET /v1/harnesses/spend?since=` | Estimated provider spend from token sums (ADR-009) | ✅ Billing |
+| Retrieval-quality eval | `POST /v1/graph/{id}/evaluate` (RAGAS-style, #331) | Judge a Q/A against a graph | ⛔ |
+| Batch ingest | `POST /api/v1/graphs/{id}/batch-ingest` (202/job-per-item) | Folder/repo ingestion (#522) | ⛔ |
+| **Deliver-back sinks** | sink = a member tool: `core/github-sink@1` (instance-configured `repo`, PAT via broker, clean-delta branch/PR, idempotent NO_OP re-deliver) · `send-to-drafts` (draft-only) — ADR-041, #515/#542/#544 | Run outputs land in the user's own git tree / drafts queue, one-shot and scheduled | ⛔ |
+| Graph memories | `/api/v1/graphs/{id}/memories*` (add/search/context/update/delete/consolidate) | Facts in/out of the substrate | ⛔ |
+
+**Frontend contract notes (edge behavior):** org comes from the JWT — never send org headers;
+202+poll for run-producing operations (team-runs, advance, rerun, fire-now, ingest) while the
+registry execute seam (validator/refine), harness execute, and schedule create are synchronous
+201 with the result inline (no SSE/WebSocket anywhere; chat is synchronous); uniform error envelope
+`{error:{code,message,requestId,retryable,details?,needs_credential?}}` — 409 `CREDENTIALS_REQUIRED`
+carries `needs_credential:{requirement_id,provider}`, 422 carries loc/type detail rows, 405 carries
+a curated hint + `Allow`; gateway-native lists paginate `?limit=&offset=` (default 100, max 200,
+bare arrays); admin-gated ops: publish agent, integration keys, webhook subscriptions, MCP
+import/approve.
+
 ---
 
-## Backend-gap register (capabilities a journey will need that the gateway does not expose yet)
+## Backend-gap register — reconciled against ADRs + the issue board (2026-07-03)
+
+Cloud-first is ratified (ADR-040 Decision 7; #523 parks local import/export; #388 demotes local
+GO) — it explains what was parked deliberately vs genuinely missing. Full reconciliation:
+journey spec v2 §8.
 
 | # | Gap | Consuming journey | Status |
 | --- | --- | --- | --- |
-| G1 | OAuth-connect bridge: a provider token captured at login → resolvable as a broker tool credential | Connections / OAuth-connect | Contract to file (solution-architect) |
-| G2 | Workspace↔harness binding (define a harness for a workspace) | Workspace harness | Needs an ADR (solution-architect) |
+| **C-1 (re-scoped)** | **On-ramp ergonomics + draft persistence:** (a) the compiler-team manifest is only constructible via `packages/ohm build_compiler_team()` — nothing serves/seeds it to a browser (the compiler itself runs through `POST /v1/engine/team-runs`, ADR-047 "no new gateway routing"); (b) interactive drafts have no save/list/version home (#601 persists only *scheduled* teams); (c) re-import merge (lock O5) unticketed | J1/J3 (J2 s5) | Contract to file (solution-architect) |
+| **C-2 (re-scoped)** | **USD-surfacing harness:** `TeamRunCost.usd` null by documented design; `max_usd_total` recorded-but-inert (`manifest.py:326`, pool USD axis never incremented). Optional: run-level pre-flight. Schedule pre-flight is **BUILT** (#603) | J5/J6/J9 | Contract to file (solution-architect) |
+| **C-5** | **Team-run list endpoint** (org-scoped, state-filterable, paginated) — only `GET …/{id}` + per-schedule lists exist (#472 was per-run) | J6 runs list · J7 approvals inbox | Contract to file (solution-architect) |
+| ~~C-6~~ | Delivery sink write-back | J8 | **WITHDRAWN — built** (#515/#542/#544, ADR-041): sink = a member tool (`core/github-sink@1` clean-delta/idempotent; `send-to-drafts`); residue = FE "connect your sinks" story, leaning on open **#505** |
+| ~~import door~~ | Local bundle import endpoint | J2 | **Parked by decision** (ADR-040 D7 / #523) — not a gap; un-parks when local re-opens |
+| ~~G1~~ | OAuth-connect bridge | Connections | **Shipped** (`POST /oauth/{p}/connect` + `…/connect/complete`; Connections page built) |
+| ~~G2~~ | Workspace↔harness binding | Agents | **Shipped** (`/api/v1/agent-bindings`, consumed by GraphDetailPage) |
 
 These become GitHub `Contract` issues for `solution-architect` when their journey is scheduled.
