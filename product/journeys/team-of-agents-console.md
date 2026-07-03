@@ -21,7 +21,14 @@ legacy-divergence: >
   no evaluation, no cost pre-flight (FE audit 2026-07-03: 0 hits for team/compiler/ImportReport/eval).
   This spec re-centers the console on the locked product. The graph surfaces survive as the team's
   knowledge substrate; the single-agent builder survives as a Library surface.
-backend-gaps: C-1 (on-ramp assembly + team persistence + re-import merge), C-2 (USD pricing / run-level pre-flight), C-5 (team-run list), C-6 (delivery sink) — see §8
+backend-gaps: >
+  Reconciled against ADRs + the issue board 2026-07-03 (§8): C-1 re-scoped to on-ramp ergonomics +
+  draft persistence + re-import merge (the compiler IS gateway-reachable by ADR-047 design; local
+  bundle import is PARKED by the cloud-first decision ADR-040 D7 / #523); C-2 re-scoped to the
+  USD-surfacing harness + optional run-level pre-flight (schedule pre-flight is BUILT, #603);
+  C-5 unchanged (team-run list, genuinely untracked); C-6 WITHDRAWN as a backend gap —
+  deliver-back is BUILT (ADR-041 sink-tool model, #515/#542/#544) and the residue is an FE
+  "connect your sinks" story leaning on open #505.
 ---
 
 # Journey spec v2 — the Team-of-Agents console
@@ -61,6 +68,12 @@ team validated locally imports here unchanged (J2), and promotion adds governanc
 behavior. Plan-approval note: **compile-and-run is the default; a blocking plan-approval hold is
 opt-in** (lock §4 / item 15) — landing in J3 review is the natural flow, never a required gate.
 
+**Cloud-first sequencing (ADR-040 Decision 7, accepted 2026-06-24; #523).** The two on-ramps stay
+co-equal in the *requirement* (the lock), but delivery is **cloud-first**: the DESCRIBE door leads;
+the local-bundle IMPORT door is parked behind the cloud loop ("the first use case should be
+cloud-based, no local things; work around local later" — #523). J2 remains the signed design for
+that door; its build increments sequence after the Describe door and un-park with #523.
+
 ---
 
 ## 1. What changed in the backend (why the console is stale)
@@ -84,9 +97,12 @@ Since the June-18 spec set, the backend shipped the whole team loop through the 
 | Run artifacts (deliverables, verbatim content) | `GET /v1/artifacts?graph_id=…` · `GET /v1/artifacts/{id}` |
 | Batch ingest (folder/repo) | `POST /api/v1/graphs/{id}/batch-ingest` |
 
-The two on-ramps' **assembly** step (prose → compiler-team manifest; `.claude/agents` dir →
-ImportReport) is today a `packages/ohm` library call with **no gateway endpoint** — the keystone
-gap Contract **C-1** (§8). Everything after assembly is live.
+On-ramp reachability, reconciled (2026-07-03): the compiler is **gateway-reachable by design** —
+it is itself a `kind:team` harness POSTed to `/v1/engine/team-runs` (ADR-047: "no new gateway
+routing"), and the validator/refine gates are registry tools. What's genuinely missing is the
+**ergonomics**: a discoverable/seeded compiler-team manifest (today only `packages/ohm` can build
+it), draft persistence, and re-import merge — the re-scoped **C-1** (§8). Local bundle import is
+**parked** by the cloud-first decision (ADR-040 D7 / #523). Everything after assembly is live.
 
 ---
 
@@ -189,7 +205,7 @@ deterministic and keyless); credentials bind later (J4).
 | # | Step | Endpoint |
 | --- | --- | --- |
 | 1 | Enter objective (+ optional inputs/constraints/success criteria) in the "Describe it" door | — (form) |
-| 2 | Compile: assemble + run the compiler team (planner → capability-surveyor → drafter → reviewer) | ⛔C-1 `POST /v1/xa…` shape TBD by solution-architect; today `build_compiler_team()` is library-only, then `POST /v1/engine/team-runs` (202) |
+| 2 | Compile: run the compiler team (planner → capability-surveyor → drafter → reviewer) — the compiler is itself a team harness, `POST /v1/engine/team-runs` (202), no new route (ADR-047) | ⛔C-1(a) for the manifest source: the FE needs a discoverable/seeded compiler-team manifest (today only `packages/ohm build_compiler_team()` constructs it — nothing serves or seeds it) |
 | 3 | Show compile progress (the compiler is itself a team run — reuse J6's status component) | `GET /v1/engine/team-runs/{id}/status` |
 | 4 | Extract the drafted team (reviewer output carries `{members:[…]}`) into the Team review surface (J3) | `GET /v1/engine/team-runs/{id}` |
 | 5 | Validate the draft — the SAME validator as import | `POST /api/v1/instances/{manifest-validate}/execute` (sync 201) → `{id, status:"SUCCESS", output_data:{would_block, blocking[], report}}` — the verdict lives under `output_data` |
@@ -230,7 +246,7 @@ ADR-034/045.)
 
 | # | Step | Endpoint |
 | --- | --- | --- |
-| 1 | Choose the "Import it" door; upload the bundle (zip/tar of `.claude/agents/*`, `.claude/skills/*`, `teams/*/charter.md`) or point at a repo | ⛔C-1 (today `import_setup()` is library-only) |
+| 1 | Choose the "Import it" door; upload the bundle (zip/tar of `.claude/agents/*`, `.claude/skills/*`, `teams/*/charter.md`) or point at a repo | ⛔ parked — cloud-first decision (ADR-040 D7 / #523); this door builds after the Describe door and un-parks with #523 (`import_setup()` exists library-side) |
 | 2 | Render the **ImportReport** — the dry-run the lock demands (O8) before any cost/side-effect | ⛔C-1 returns `ImportReport`: `shape · member_count · human_gate_count · stages[][] · schedules{role:cron} · resolved_skills / unresolved_skills · precedence[] · blocking[] · would_block` + the substrate verdict (file-native / graph) derived from the source |
 | 3 | Resolve what blocked: unresolved skills, missing tools (each blocking line links its fix) | J4/J10 surfaces |
 | 4 | Accept → land in J3's roster review (same surface as J1 — one validator, one review) | — |
@@ -349,7 +365,7 @@ differentiator; treat it as a first-class moment, not a confirm dialog.
 
 | # | Step | Endpoint |
 | --- | --- | --- |
-| 1 | Cost pre-flight: "~$X/day at this cadence" + per-member tiers + `unpriced_members` called out honestly | `POST /v1/engine/schedules/preflight` (#603). ⛔C-2 for run-level (non-scheduled) USD projection |
+| 1 | Cost pre-flight: `fleet_usd_per_day` + `cadence_fires_per_day` + `per_member[]` (each `priced`, `usd_per_fire`, `usd_per_day`) + `unpriced_members` called out honestly — never a fabricated $0 | `POST /v1/engine/schedules/preflight` (#603, BUILT). ⛔C-2(b) for a run-level (non-scheduled) projection — optional; token caps carry the one-shot case meanwhile |
 | 2 | Bind the substrate **the source decided** (lock R5): a file-native team binds `workspace_root` (its git tree, read/written in place; the workspace graph is a derived index) — a graph team picks/creates a workspace, **adopting an existing one rather than forcing a second** (graph-adopt of an external graphify graph is C-1 scope) | `GET/POST /api/v1/graphs` + `workspace_root` on GO |
 | 3 | Seed inputs (fan-out `over` lists) when the manifest declares them | `inputs:{…}` on GO (#599) |
 | 4 | Optional: seed from a prior run (refresh mode) | `seed_from_run_id` on GO (#602) |
@@ -457,9 +473,13 @@ blank the admin items); failed source shows "Could not check" + retry.
 ### J8 — Results, artifacts & delivery
 
 **Narrative.** The run's output lands where the user keeps results: artifacts on the team's
-workspace, and — once the delivery sink lands (⛔C-6) — back into the user's own tree/target in
-the source format (lock item 10/O7; today only the read-side artifact surface is backed).
-Verdicts explain quality. Serving continues via published agents.
+workspace, and back into the user's own target in the source format (lock item 10/O7 — **built**:
+#515/#542/#544, Reza-signed). Per ADR-041, deliver-back is not a separate feature: **a sink is a
+member whose tools bind a sink connector** (`core/github-sink@1` today — clean-delta branch/PR,
+idempotent NO_OP re-delivers; `send-to-drafts` for draft-only email), with the target (repo) on
+the connector *instance configuration* and the credential (PAT) via the broker. The FE work is a
+"connect your sinks" composition over existing endpoints, not a wait on backend. Verdicts explain
+quality. Serving continues via published agents.
 
 **Steps → capabilities.**
 
@@ -470,7 +490,7 @@ Verdicts explain quality. Serving continues via published agents.
 | 3 | Refresh delta (seeded-refresh runs): added / removed / changed / unchanged / re-confirmed (machine key: `re_confirmed`, underscore — hyphenate only in display copy) | `TeamRunOut.refresh_delta` (#602) |
 | 4 | Graph results: documents, memories, search over what the team wrote | J10 surfaces |
 | 5 | Serve it: publish an agent over the workspace, mint a scoped integration key, chat | `/v1/agents*`, `/v1/integration-keys*`, `/v1/chat/*` (all built) |
-| 6 | Configure the **delivery sink**: where outputs land (git branch/PR into the user's tree · webhook/email · docify pack), with whose credentials, and overwrite/append semantics; a recurring refresh writes a clean delta, never a clobbered tree (lock O7/R5) | ⛔C-6 |
+| 6 | **Connect your sinks**: bind a sink member (e.g. `core/github-sink@1`), configure its instance (`repo`, `base_branch`) and its credential (PAT via broker); re-delivers are idempotent (NO_OP), a recurring refresh writes a clean delta — never a clobbered tree (lock O7/R5, BUILT) | `POST /api/v1/instances` + `…/configure-credentials` + the roster (J3); missing credential surfaces as 409 `needs_credential` → J4 s5 (open FE story #505) |
 
 **Surface.** A Results tab on the run: artifacts table (name · type · source · open), verdict
 card, refresh-delta chips. Artifact viewer = read-only drawer with verbatim content. The delta
@@ -603,19 +623,42 @@ fail-closed at draft time; the labeled-partial delivery contract.
 
 ---
 
-## 8. Backend-gap Contracts (file to solution-architect; never work around)
+## 8. Backend-gap Contracts — reconciled against ADRs + the issue board (2026-07-03)
+
+The first draft of this register was corrected by a full reconciliation pass (ADR-040/041/044/047/
+048, issues #472–#604). The **cloud-first pivot is ratified** — ADR-040 Decision 7 (accepted
+2026-06-24), encoded in #523 ("local import/export — PARKED per Reza's cloud-first decision") and
+#388 (local GO demoted) — and explains what was parked deliberately vs genuinely missing.
+
+**Already BUILT (no Contract — the earlier draft overstated these):**
+- *Compiler reachability*: the compiler runs through `POST /v1/engine/team-runs` as a team harness
+  — ADR-047's explicit posture ("no new gateway routing"); validate/refine are the
+  `core/manifest-validate@1` / `core/manifest-refine@1` registry tools. E10 #593/#594/#595/#596
+  all CLOSED (#597 eval-set + #440 book-GO remain open, both `needs-human` acceptance items).
+- *Standing-team persistence*: the schedule row durably persists `manifest_inline`/`manifest_ref`
+  + `graph_id` + `recurring_cost_tokens` (#601).
+- *Schedule cost pre-flight*: `POST /v1/engine/schedules/preflight` with per-member
+  `priced`/`usd_per_fire`/`usd_per_day` + `unpriced_members` (#603; rates from the harness
+  `billing/rates.py`).
+- *Deliver-back (was "C-6" — withdrawn)*: #515/#542/#544 CLOSED, ADR-041 Accepted. A sink is a
+  member tool (`core/github-sink@1`: configured `repo`, PAT via broker, clean-delta branch/PR,
+  idempotent NO_OP; `send-to-drafts` for draft-only). The residue is the FE "connect your sinks"
+  composition (J8 s6), leaning on **open #505** for the `needs_credential` prompt — an FE story,
+  not a backend Contract.
+
+**Contracts to file (all genuinely untracked today):**
 
 | # | Missing capability | Consuming journey/step | User-facing requirement (the shape is solution-architect's) |
 | --- | --- | --- | --- |
-| **C-1** | **On-ramp assembly + team persistence via the gateway.** `build_compiler_team()`, `import_setup()` / `assemble_and_report()` are `packages/ohm` library calls; a browser cannot compile from prose or import a bundle, and a drafted team has no save/list/version home. | J1 s2 · J2 s1–2, s5 · J3 s1 · J10 | From the console: (a) submit an objective → the compiler-team run starts; (b) upload/point-at a setup → an `ImportReport` + draft team; (c) drafts persist per org (save, list, re-open, version — also enables team-level attribution on workspaces); (d) **re-import onto an existing team merges** — upstream changes + in-platform edits both survive, conflicts surfaced, never a silent clobber (lock O5); (e) scope grows to R2 adoption (loaders → schedules, library-as-tool-group) and graph-adopt of an external graphify graph (lock R5). One validator seam stays shared (#593). |
-| **C-2** | **USD pricing + run-level cost pre-flight.** `cost.usd` is null; `OHMBudget.max_usd_total` is recorded-but-inert; pre-flight exists only schedule-shaped (#603). | J5 s1 · J6 s2 · J9 s2 | Before GO on any run: a projected cost (or an honest per-member "unpriced"); after: real `usd` on status; a USD cap that actually halts. |
-| **C-5** | **Team-run list endpoint** (org-scoped, filterable by state, paginated). Only `GET …/team-runs/{id}` + per-schedule lists exist. | J6 s1 · J7 s1 (Approvals needs "all PAUSED") | Runs page lists team runs; Approvals lists paused ones. |
-| **C-6** | **Delivery sink (write-back) via the gateway.** Outputs today are read from the workspace (`/v1/artifacts`); there is no gateway path that lands results back in the user's own target (git branch/PR, webhook/email, docify pack) with explicit credentials and overwrite/append semantics. | J8 s6 (lock O7 / R5 deliver-back / item 10) | Configure per-team where outputs land, with whose credentials, and how (append/overwrite/PR); a recurring refresh writes a clean delta into the target. |
+| **C-1 (re-scoped)** | **On-ramp ergonomics + draft persistence.** (a) The compiler-team manifest is constructible only by `packages/ohm build_compiler_team()` — nothing serves or seeds it, so a browser cannot obtain it; (b) an interactive draft (compile → refine → …) has no save/list/re-open/version home (`apply_refine()` is stateless; #601 covers only *scheduled* teams); (c) re-import merge onto an existing team (lock O5) is unticketed (adjacent to parked #523). | J1 s2 · J3 s1 · J2 s5 | (a) The console can fetch/instantiate the compiler team (seeded or served); (b) drafts persist per org — also enables team-level attribution on workspaces; (c) re-import merges: upstream changes + in-platform edits both survive, conflicts surfaced, never a silent clobber. One validator seam stays shared (#593). |
+| **C-2 (re-scoped)** | **USD-surfacing harness.** `TeamRunCost.usd` is null by documented design and `OHMBudget.max_usd_total` is recorded-but-inert (`manifest.py:326` — the pool's USD axis is never incremented); both hang off the same missing USD-surfacing work. Optional (b): a run-level (non-schedule) pre-flight projection. | J5 s1/s5 · J6 s2 · J9 s2 | Real `usd` on run status; a USD cap that actually halts; (optional) "~$ for this run" before a one-shot GO. |
+| **C-5 (unchanged)** | **Team-run list endpoint** (org-scoped, state-filterable, paginated). Only `GET …/team-runs/{id}` + per-schedule lists exist; #472 built the per-run O4 status, not a list. | J6 s1 · J7 s1 (Approvals needs "all PAUSED") | Runs page lists team runs; Approvals lists paused ones. |
 
 Minor/flagged, not Contracts yet: no SSE/streaming anywhere (polling is the design — revisit only
 if chat UX demands it); named batteries have no standalone trigger endpoint (by design — read-side
 only); `/api/v1/ontology`-suggest and `/api/v1/communities`-kinds routers are not in the gateway
-route table (KGS-side; flag to solution-architect with C-1).
+route table (KGS-side; flag to solution-architect with C-1); webhook/docify sink connectors beyond
+github/drafts are the ADR-041 future path (#541 MCP-imported sinks).
 
 Register these in `flows/interface-contracts.md` when filed. G1 (OAuth connect) and G2 (agent
 bindings) from the June-18 register are **shipped** — the register in the inventory is updated.
@@ -664,8 +707,10 @@ baton (FE `CLAUDE.md` §3.7). Phases group increments; land order within a phase
     reason; 409 from any call lands on Connections with the provider pre-selected.*
 11. Pre-flight & GO sheet (J5). *Test: GO on a seeded draft creates a run (202) and routes to J6;
     unpriced members show token caps, not fake USD.*
-12. On-ramp doors (J1 s1, J2 s1–2) — behind **C-1**. *Test: prose objective → compiler progress →
-    roster review; import bundle → ImportReport screen matching §J2.*
+12. On-ramp doors, **Describe first** (J1 s1) — behind **C-1(a/b)**. *Test: prose objective →
+    compiler progress → roster review.* The Import door (J2 s1–2) is **parked** with #523
+    (cloud-first, ADR-040 D7) and un-parks when Reza re-opens local import — its design stays
+    signed and ready.
 
 **Phase 3 — standing & substrate:**
 13. Nav v2: insert **Teams** + **Approvals**, regroup Library/Knowledge, relabel Members →
@@ -679,7 +724,10 @@ baton (FE `CLAUDE.md` §3.7). Phases group increments; land order within a phase
     a seeded run's artifacts list and open; batch ingest of a 3-file folder shows 3 jobs.*
 16. Results tab: verdict card + refresh-delta chips (J8). *Test: a seeded-refresh run renders
     the 5-way delta.*
-17. Delivery-sink configuration (J8 s6) — ⛔C-6, lands when the Contract ships.
+17. "Connect your sinks" (J8 s6) — **unblocked backend-side** (ADR-041 sink-tool model): bind a
+    sink member + configure its instance (repo) + credential (PAT via broker); folds in the open
+    #505 `needs_credential` prompt story. *Test: a team with `core/github-sink@1` configured
+    delivers a clean-delta PR; re-deliver is NO_OP.*
 
 DS re-grounding deltas (§6) file in two tranches: chips/verdict/cost-row before increment 3;
 member-card/stage-rail/tool-chip/op-diff before increment 8. Dashboard refresh (team health

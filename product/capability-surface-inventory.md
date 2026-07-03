@@ -142,6 +142,7 @@ mid-June (#576–#604); **no FE coverage anywhere in this section.** Full reques
 | BYOM spend (retrospective) | `GET /v1/harnesses/spend?since=` | Estimated provider spend from token sums (ADR-009) | ✅ Billing |
 | Retrieval-quality eval | `POST /v1/graph/{id}/evaluate` (RAGAS-style, #331) | Judge a Q/A against a graph | ⛔ |
 | Batch ingest | `POST /api/v1/graphs/{id}/batch-ingest` (202/job-per-item) | Folder/repo ingestion (#522) | ⛔ |
+| **Deliver-back sinks** | sink = a member tool: `core/github-sink@1` (instance-configured `repo`, PAT via broker, clean-delta branch/PR, idempotent NO_OP re-deliver) · `send-to-drafts` (draft-only) — ADR-041, #515/#542/#544 | Run outputs land in the user's own git tree / drafts queue, one-shot and scheduled | ⛔ |
 | Graph memories | `/api/v1/graphs/{id}/memories*` (add/search/context/update/delete/consolidate) | Facts in/out of the substrate | ⛔ |
 
 **Frontend contract notes (edge behavior):** org comes from the JWT — never send org headers;
@@ -156,14 +157,19 @@ import/approve.
 
 ---
 
-## Backend-gap register (capabilities a journey will need that the gateway does not expose yet)
+## Backend-gap register — reconciled against ADRs + the issue board (2026-07-03)
+
+Cloud-first is ratified (ADR-040 Decision 7; #523 parks local import/export; #388 demotes local
+GO) — it explains what was parked deliberately vs genuinely missing. Full reconciliation:
+journey spec v2 §8.
 
 | # | Gap | Consuming journey | Status |
 | --- | --- | --- | --- |
-| **C-1** | **On-ramp assembly + team persistence:** `build_compiler_team()` (prose→compiler team) and `import_setup()`/`assemble_and_report()` (bundle→ImportReport) are `packages/ohm` library calls — no gateway endpoint; drafted teams have no save/list/version home | Journey spec v2 J1/J2/J3 | Contract to file (solution-architect) — the keystone |
-| **C-2** | **USD pricing + run-level cost pre-flight:** `cost.usd` null; `OHMBudget.max_usd_total` recorded-but-inert; pre-flight exists only schedule-shaped (#603) | J5/J6/J9 | Contract to file (solution-architect) |
-| **C-5** | **Team-run list endpoint** (org-scoped, state-filterable, paginated) — only `GET …/{id}` + per-schedule lists exist | J6 runs list · J7 approvals inbox | Contract to file (solution-architect) |
-| **C-6** | **Delivery sink (write-back):** no gateway path lands run outputs back in the user's own target (git branch/PR, webhook/email, docify pack) with explicit creds + overwrite/append semantics (lock O7/R5) | J8 delivery step | Contract to file (solution-architect) |
+| **C-1 (re-scoped)** | **On-ramp ergonomics + draft persistence:** (a) the compiler-team manifest is only constructible via `packages/ohm build_compiler_team()` — nothing serves/seeds it to a browser (the compiler itself runs through `POST /v1/engine/team-runs`, ADR-047 "no new gateway routing"); (b) interactive drafts have no save/list/version home (#601 persists only *scheduled* teams); (c) re-import merge (lock O5) unticketed | J1/J3 (J2 s5) | Contract to file (solution-architect) |
+| **C-2 (re-scoped)** | **USD-surfacing harness:** `TeamRunCost.usd` null by documented design; `max_usd_total` recorded-but-inert (`manifest.py:326`, pool USD axis never incremented). Optional: run-level pre-flight. Schedule pre-flight is **BUILT** (#603) | J5/J6/J9 | Contract to file (solution-architect) |
+| **C-5** | **Team-run list endpoint** (org-scoped, state-filterable, paginated) — only `GET …/{id}` + per-schedule lists exist (#472 was per-run) | J6 runs list · J7 approvals inbox | Contract to file (solution-architect) |
+| ~~C-6~~ | Delivery sink write-back | J8 | **WITHDRAWN — built** (#515/#542/#544, ADR-041): sink = a member tool (`core/github-sink@1` clean-delta/idempotent; `send-to-drafts`); residue = FE "connect your sinks" story, leaning on open **#505** |
+| ~~import door~~ | Local bundle import endpoint | J2 | **Parked by decision** (ADR-040 D7 / #523) — not a gap; un-parks when local re-opens |
 | ~~G1~~ | OAuth-connect bridge | Connections | **Shipped** (`POST /oauth/{p}/connect` + `…/connect/complete`; Connections page built) |
 | ~~G2~~ | Workspace↔harness binding | Agents | **Shipped** (`/api/v1/agent-bindings`, consumed by GraphDetailPage) |
 
