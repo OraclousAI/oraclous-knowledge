@@ -23,6 +23,7 @@ Each contract below corresponds to a `Contract` issue in Jira. The Jira issue tr
 | Enriched graph schema (KGS recipe enrichment, #269) | — (epic #269; #270/#271/#274/#275, perf #272) | Live (KGS smoke) | See §GRAPH |
 | BYOM spend estimate (`GET /v1/harnesses/spend`) | — | Live | See §SPEND |
 | Workspace↔harness binding (G2) | — ([oraclous-backend#340](https://github.com/OraclousAI/oraclous-backend/issues/340); FE [#127](https://github.com/OraclousAI/oraclous-frontend/issues/127)) | AGREED ([ADR-029](../adr/adr-029-workspace-harness-binding.md)); BE impl open, FE #127 consumes | See §G2 |
+| Team-run task input | — ([oraclous-backend#674](https://github.com/OraclousAI/oraclous-backend/issues/674)) | AGREED (2026-07-30); BE half in #674, FE Run-dialog field open | See §TASK |
 
 > ⚠ **Index integrity (31 May 2026, solution-architect).** Of the three rows, only the Gateway error envelope has a real `Contract`-type Jira issue: [**ORA-56**](https://oraclous.atlassian.net/browse/ORA-56), backfilled 31 May 2026. The keys previously shown for the other two rows were **wrong** — "ORA-12" is the R0.5 0d substrate-test-harness story and "ORA-19" is the deferred B1 isolation story; neither the Auth-token-claims nor the OHM-manifest-envelope shape has a Contract issue yet (the same applies to the `(ORA-12)`/`(ORA-19)` keys in the §1/§2 headers below). Backfilling those two is **pending** — the 31 May coordinator decision limited this pass to the gateway envelope. Until then, treat §1/§2 as shape-of-record without a tracking Contract.
 
@@ -249,3 +250,33 @@ The **frontend** (`oraclous-frontend#127`) consumes these gateway endpoints; the
 ```
 
 Decisions pinned at acceptance: a shared `PLATFORM_ORG` agent **can** bind to a tenant workspace; members get the **read** view; attach/detach require org write access. **As shipped (`oraclous-backend#350`):** POST returns a small `{ "created": bool }` body alongside the 201/200 status (so the FE reads created-vs-already-bound without inspecting status); the graph-membership check is a network call to KGS, so an unreachable graph service is a fail-closed **503** (retryable), not a guess; a `GET ?graph_id=` for a graph not visible to the caller returns `[]` (the leak-free list mask). **Enforcement (live):** the gateway exposes the four endpoints (the `/api/v1/agent-bindings` route-table entry), backed by the `harness_graph_binding` migration in the capability registry (harness FK `ON DELETE CASCADE` + `UNIQUE(harness_capability_id, graph_id)` + `created_by`), the KGS membership check on attach, and graphs-resolved-on-read filtering; mirrored in the gateway OpenAPI (`openapi/v1.yaml`). Tracked: `oraclous-backend#340` (merged) + FE `#127`.
+
+## §TASK — Team-run task input ([oraclous-backend#674](https://github.com/OraclousAI/oraclous-backend/issues/674))
+
+The per-run task a user hands a **standing** compiled team ("review THIS pull request") — distinct from the compile-time "Inputs · Constraints · Success criteria" fields, which fold into the planner's brief and bake into the manifest. Evidence for the gap: UC-D7 run `9ddf00f3` — with no way to pass a target, the Fetcher **chose its own** public PR, its receipts passed the grounding grade, and the team confidently reviewed the wrong thing. The grounding gate proves a tool ran; only a delivered task proves it ran **on what the user meant**.
+
+**OHM (declaration, additive v1.1 team block).** A team manifest MAY declare:
+
+```jsonc
+// OHMManifest.task_input (kind == "team"; absent → no run-time task, today's behaviour)
+{ "required": true,                      // fail-closed: refuse to run without a task
+  "description": "The pull-request URL to review",   // the Run dialog's label/help text
+  "key": "task" }                        // the TeamRunCreate.inputs key it rides in (default "task")
+```
+
+**API (gateway → engine, existing endpoint).** The task rides the **existing** `TeamRunCreate.inputs` object as a string under the declared key (default `"task"`) — no new top-level field, same reserved-key pattern as `_refresh_seed` (#602):
+
+```jsonc
+// POST /v1/engine/team-runs
+{ "manifest": { ... , "task_input": { "required": true, "description": "…" } },
+  "sub_harnesses": { ... },
+  "inputs": { "task": "https://github.com/acme/repo/pull/1" } }
+```
+
+**Engine (delivery).** `render_member_input` includes the task **verbatim** in **every** member's rendered input, as a `Task:` block between the objective and the inbound hand-offs. No member has to guess the target; fan-out/refresh consumption of `inputs` is unchanged.
+
+**Fail-closed.** `task_input.required` + a missing/empty/non-string task → **422 at create** naming the missing input (the run is never enqueued, no tokens). A team with no `task_input` block accepts and ignores a stray `inputs.task` (back-compat).
+
+**Frontend.** The console Run dialog renders a task field when the manifest declares `task_input` (blocking when `required`), labeled from `description`; naming keeps "Task for this run" visually distinct from the compile-time New-team "Inputs" so users don't bake a one-shot target into a standing team.
+
+Out of scope (separate contracts): the PR-open **event trigger** (UC-D7's real invocation mode) and typed/multi-field run inputs — `task_input` is deliberately a single string until a use case demands structure.
