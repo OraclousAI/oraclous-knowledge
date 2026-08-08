@@ -23,6 +23,7 @@ Each contract below corresponds to a `Contract` issue in Jira. The Jira issue tr
 | Enriched graph schema (KGS recipe enrichment, #269) | — (epic #269; #270/#271/#274/#275, perf #272) | Live (KGS smoke) | See §GRAPH |
 | BYOM spend estimate (`GET /v1/harnesses/spend`) | — | Live | See §SPEND |
 | Workspace↔harness binding (G2) | — ([oraclous-backend#340](https://github.com/OraclousAI/oraclous-backend/issues/340); FE [#127](https://github.com/OraclousAI/oraclous-frontend/issues/127)) | AGREED ([ADR-029](../adr/adr-029-workspace-harness-binding.md)); BE impl open, FE #127 consumes | See §G2 |
+| Resolvable citation on a knowledge record | — ([oraclous-backend#735](https://github.com/OraclousAI/oraclous-backend/issues/735); FE [#194](https://github.com/OraclousAI/oraclous-frontend/issues/194)) | AGREED, unimplemented — blocks the UC-D1 first slice; evidence [oraclous-backend#734](https://github.com/OraclousAI/oraclous-backend/issues/734) | See §CITE |
 
 > ⚠ **Index integrity (31 May 2026, solution-architect).** Of the three rows, only the Gateway error envelope has a real `Contract`-type Jira issue: [**ORA-56**](https://oraclous.atlassian.net/browse/ORA-56), backfilled 31 May 2026. The keys previously shown for the other two rows were **wrong** — "ORA-12" is the R0.5 0d substrate-test-harness story and "ORA-19" is the deferred B1 isolation story; neither the Auth-token-claims nor the OHM-manifest-envelope shape has a Contract issue yet (the same applies to the `(ORA-12)`/`(ORA-19)` keys in the §1/§2 headers below). Backfilling those two is **pending** — the 31 May coordinator decision limited this pass to the gateway envelope. Until then, treat §1/§2 as shape-of-record without a tracking Contract.
 
@@ -249,3 +250,116 @@ The **frontend** (`oraclous-frontend#127`) consumes these gateway endpoints; the
 ```
 
 Decisions pinned at acceptance: a shared `PLATFORM_ORG` agent **can** bind to a tenant workspace; members get the **read** view; attach/detach require org write access. **As shipped (`oraclous-backend#350`):** POST returns a small `{ "created": bool }` body alongside the 201/200 status (so the FE reads created-vs-already-bound without inspecting status); the graph-membership check is a network call to KGS, so an unreachable graph service is a fail-closed **503** (retryable), not a guess; a `GET ?graph_id=` for a graph not visible to the caller returns `[]` (the leak-free list mask). **Enforcement (live):** the gateway exposes the four endpoints (the `/api/v1/agent-bindings` route-table entry), backed by the `harness_graph_binding` migration in the capability registry (harness FK `ON DELETE CASCADE` + `UNIQUE(harness_capability_id, graph_id)` + `created_by`), the KGS membership check on attach, and graphs-resolved-on-read filtering; mirrored in the gateway OpenAPI (`openapi/v1.yaml`). Tracked: `oraclous-backend#340` (merged) + FE `#127`.
+
+## §CITE — Resolvable citation on a knowledge record (UC-D1 / UC-E1)
+
+Owner: solution-architect. Status: **AGREED, unimplemented** — no side has built it. Driving evidence: the UC-D1 proof of concept, [`oraclous-backend#734`](https://github.com/OraclousAI/oraclous-backend/issues/734), filed against §5.3 capability 6. Tracking Contract: [`oraclous-backend#735`](https://github.com/OraclousAI/oraclous-backend/issues/735); frontend consumer: [`oraclous-frontend#194`](https://github.com/OraclousAI/oraclous-frontend/issues/194); follow-on knowledge-record Contract: [`oraclous-backend#741`](https://github.com/OraclousAI/oraclous-backend/issues/741).
+
+### Why this crosses the repo boundary
+
+The console renders the citation and the user clicks it, so the shape is consumed by both repos and may not be defined inside either (`oraclous-backend/CLAUDE.md` §12). It is also a **gate**, not decoration: UC-E1 makes the `citation-checker` a blocking role that "refuses to ship a sentence whose citation does not resolve". A gate cannot run against free-form prose.
+
+### What exists today, and why it cannot carry a citation
+
+| Layer | Today | Why it fails |
+| --- | --- | --- |
+| Ingest | `IngestTextRequest = {content, filename, source_type, recipe_id, valid_from, valid_to, event_time}` | No field for source identity. The GitHub connector returns `{path, content}` and discards the repo, the blob `sha`, and the `html_url` the GitHub API already gave it. |
+| Storage | The node carries `ingestion_source = "README.md"` and `created_by = "multi_tenant_pipeline"` | One untyped string in free-form `properties`. It does not resolve, and it names no system, no revision, and no person. |
+| Retrieval | `NodeResultModel = {id, type, properties}` | No typed citation field anywhere in the retriever or the gateway. |
+| Answer | The model wrote `(source: partner-agreement.md)` plus an invented `source_tool_call_id=call_...` | Model prose. The platform never issued that id. Nothing typed, nothing clickable, nothing a gate can check. |
+
+### The typed record
+
+```jsonc
+// Citation — the resolvable source identity of one knowledge record.
+{
+  "citation_id": "cit_9f2a4c81…",          // platform-computed, deterministic; the ONLY handle an answer may cite
+  "source_system": "github",                // a REGISTERED connector slug; "upload" for a direct file upload
+  "source_id": "OraclousAI/oraclous-backend:README.md",  // identity WITHIN that system, stable across revisions
+  "revision": "e3b0c44298fc1c14…",         // the version read; never null outbound
+  "revision_kind": "blob_sha",              // commit | blob_sha | version_id | etag | edited_at | block | content_hash
+  "url": "https://github.com/OraclousAI/oraclous-backend/blob/e3b0c44/README.md",  // absolute and openable
+  "title": "README.md",                     // display label ONLY — never identity
+  "locator": { "kind": "chunk", "value": "7" },   // where inside the document; null = whole document
+  "author": { "display_name": "Parham Davari", "source_handle": "parhamdavari" },  // the SOURCE's author; null if the system exposes none
+  "retrieved_at": "2026-08-08T09:14:22Z",   // as-of: when this revision was read from the source
+  "permission_ref": null                     // the source's own permission handle; CARRIED now, UNENFORCED until capability 27
+}
+```
+
+`locator.kind` ∈ `chunk | lines | page | heading | row | block`. `author.email` is optional and omitted unless the source exposes it.
+
+**`citation_id` is the whole security mechanism.** It is deterministic:
+
+```
+citation_id = "cit_" + sha256(source_system ‖ 0x00 ‖ source_id ‖ 0x00 ‖ revision ‖ 0x00 ‖ locator.kind ‖ 0x00 ‖ locator.value)[:32]
+```
+
+Determinism buys three things at once: re-ingesting the same revision yields the same id (idempotent refresh); a **new revision yields a different id**, which is what makes supersession computable without a supersession table; and an id the model invents does not exist in the run's served set, so it fails the gate.
+
+**`source_system` is a registered slug, not a frozen enum.** UC-E1 acceptance 6 requires a sixth, unplanned source type to be connectable without re-modelling existing records. A closed enum would break that. The constraint is that the value must name a **registered connector**, plus the reserved value `upload`.
+
+**Why `permission_ref` is in the shape now but enforced later.** Per-user permission mirroring (capability 27) is out of the first slice, but the source's permission handle is only obtainable *at read time from the connector*. Omitting the field would force a full re-ingest of every record when capability 27 lands. The field is cheap now and expensive to backfill.
+
+### Where it lives in the retrieval envelope
+
+One typed sibling field, following the `FederatedNodeResultModel` precedent (`source_graph_id` is a sibling, not a `properties` key):
+
+```jsonc
+// NodeResultModel and FederatedNodeResultModel each gain ONE field
+{ "id": "...", "type": "Chunk", "properties": { … }, "citation": Citation | null }
+```
+
+`citation: null` means the record has no source identity — ingested before this Contract, or ingested without a `source`. It is **never a partly-filled object**: a half-citation is indistinguishable from a real one at a glance, and the gate must be able to say "this record cannot be cited" without inspecting five fields.
+
+**One citation per node, on lexical nodes only.** A `Chunk`/`Document` node has exactly one source, so `citation` is singular. A derived or extracted entity node carries `citation: null` in v1, and an answer must cite the lexical hit rather than the entity. Multi-provenance ("one claim, two provenances" — the UC-E1 deduplicator) belongs to the follow-on knowledge-record Contract, not here.
+
+### How it is carried through ingest
+
+`IngestTextRequest`, `BatchIngestItem`, and `InternalIngestRequest` each gain one optional field:
+
+```jsonc
+"source": {                      // SourceRef — the inbound half
+  "source_system": "github",
+  "source_id": "OraclousAI/oraclous-backend:README.md",
+  "revision": "e3b0c44298fc1c14…",   // optional inbound
+  "revision_kind": "blob_sha",        // optional inbound
+  "url": "https://github.com/…/blob/e3b0c44/README.md",
+  "title": "README.md",
+  "author": { "display_name": "…", "source_handle": "…" },
+  "permission_ref": null
+}
+```
+
+The platform computes `citation_id`, `retrieved_at`, and `locator` server-side. When `revision` is absent inbound, the platform sets it to the SHA-256 of the ingested content with `revision_kind: "content_hash"` — so `revision` is **never null outbound**, and a source with no version concept still supersedes correctly on content change.
+
+**Who fills it: the connector, and only the connector.** The connector is the one party holding the source-native identity — the GitHub API response the platform already receives carries `sha` and `html_url`, and today the connector throws both away. The ingest caller passes `source` through **unmodified** and never synthesizes one. When `source` is absent, the platform stamps a `source_system: "upload"` citation whose `source_id` is the ingest job id and whose `url` is the platform's own document URL. That is honest: an uploaded file's original *is* the platform copy.
+
+**`citation` is server-stamped and unforgeable.** A caller- or LLM-supplied `citation` (or any `source_*` key) inside `properties` is **stripped**, exactly as `organisation_id` and `ingestion_source` are stripped today (`knowledge-graph-service/multi_tenant.py`, threat T1). `ingestion_source` is retained for backward compatibility and becomes derived from `citation.title`.
+
+**In the agent loop.** The knowledge-retriever connector returns each hit with its `citation`, and the run records the set of `citation_id`s it served. This is a **reserved result key** the platform sets and the model cannot — the same mechanism as `data_absent` (#580).
+
+### What "resolves" means, mechanically
+
+The `citation-checker` FAILS a draft when any of these holds:
+
+| # | Rule | Kills |
+| --- | --- | --- |
+| 1 | An asserted fact carries no `citation_id`. | `(source: partner-agreement.md)` — prose is not a citation. |
+| 2 | A cited `citation_id` is not in the set the platform served to that run. | The invented `source_tool_call_id=call_...`, and every hallucinated source. |
+| 3 | `source_system`, `source_id`, or `revision` is null or empty on the resolved citation. | A bare filename with no system and no version. |
+| 4 | `url` is null while the citation's connector declares a web surface. | A record whose source is reachable but whose link was never captured. |
+
+Otherwise it PASSES.
+
+**Deliberately NOT in the check: fetching the `url` to confirm the document still exists.** That is freshness and deletion propagation (§5.3 capability 8, UC-E1 acceptance 3), a separate mechanism on its own cadence. Folding it in here would make an in-loop gate network-bound and rate-limited, and would conflate "this citation is well-formed and was really served" with "the source has not changed since". Both are needed; they are not the same gate.
+
+Checked against the recorded PoC output, every citation the platform produces today fails at rule 1.
+
+### Author is in; label and confidence are not
+
+**`author` is in this Contract.** It is a property of the source record, it arrives on the same connector call that yields the content, and it is unrecoverable later. UC-D1 acceptance 3 ("a decision made six months ago is retrievable with its rationale and **its author**") depends on it. `created_by = "multi_tenant_pipeline"` is the pipeline, not a person, and is not a substitute.
+
+**`label` (DIRECT / INFERRED / ABSENCE / ASSUMPTION), `confidence`, and `supersedes` are NOT.** They are properties of a claim the platform *derived*, not of a source document; an ingested chunk is DIRECT by construction, so the label carries no information until a claim record exists separately from a source chunk. That object is the Claim Registry and the UC-E2 evidence ledger. Freezing the shape before the object exists would be guessing.
+
+This Contract is therefore the **source half** of the use-case glossary's knowledge record (§1.7): the claim, the source, the label, the confidence, the as-of date, the supersession pointer. It delivers the source, the as-of date (`retrieved_at`), and the supersession *mechanism* (a revision-derived `citation_id`). The claim, the label, and the confidence are the follow-on Contract, which consumes `Citation` unchanged as its `source` field.
