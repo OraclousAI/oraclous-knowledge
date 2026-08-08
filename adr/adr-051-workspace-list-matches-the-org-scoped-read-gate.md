@@ -53,4 +53,6 @@ UC-D1 and UC-E1 both describe a root workspace that **every employee** queries, 
 
 * ADR-018 (org-scoped trust) · ADR-026 §1 (no-new-access aggregator)
 * `oraclous-backend#734` (UC-D1 PoC) · §5.3 capabilities 27 and 39
+* Implementation of decisions 2 and 3: [`oraclous-backend#736`](https://github.com/OraclousAI/oraclous-backend/issues/736)
+* The prerequisite decision named in decision 5: [`oraclous-backend#737`](https://github.com/OraclousAI/oraclous-backend/issues/737)
 * [Interface Contracts §CITE](../flows/interface-contracts.md) — the citation's `permission_ref` is the seam capability 27 fills
