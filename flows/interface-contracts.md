@@ -23,7 +23,7 @@ Each contract below corresponds to a `Contract` issue in Jira. The Jira issue tr
 | Enriched graph schema (KGS recipe enrichment, #269) | — (epic #269; #270/#271/#274/#275, perf #272) | Live (KGS smoke) | See §GRAPH |
 | BYOM spend estimate (`GET /v1/harnesses/spend`) | — | Live | See §SPEND |
 | Workspace↔harness binding (G2) | — ([oraclous-backend#340](https://github.com/OraclousAI/oraclous-backend/issues/340); FE [#127](https://github.com/OraclousAI/oraclous-frontend/issues/127)) | AGREED ([ADR-029](../adr/adr-029-workspace-harness-binding.md)); BE impl open, FE #127 consumes | See §G2 |
-| Resolvable citation on any tool result | — ([oraclous-backend#735](https://github.com/OraclousAI/oraclous-backend/issues/735); FE [#194](https://github.com/OraclousAI/oraclous-frontend/issues/194)) | AGREED at **rev2** (2026-08-09), unimplemented — blocks the UC-D1 first slice; evidence [oraclous-backend#734](https://github.com/OraclousAI/oraclous-backend/issues/734) | See §CITE |
+| Resolvable citation on any tool result | — ([oraclous-backend#735](https://github.com/OraclousAI/oraclous-backend/issues/735); FE [#194](https://github.com/OraclousAI/oraclous-frontend/issues/194)) | AGREED at **rev3** (2026-08-09), unimplemented — blocks the UC-D1 first slice; evidence [oraclous-backend#734](https://github.com/OraclousAI/oraclous-backend/issues/734) | See §CITE |
 
 > ⚠ **Index integrity (31 May 2026, solution-architect).** Of the three rows, only the Gateway error envelope has a real `Contract`-type Jira issue: [**ORA-56**](https://oraclous.atlassian.net/browse/ORA-56), backfilled 31 May 2026. The keys previously shown for the other two rows were **wrong** — "ORA-12" is the R0.5 0d substrate-test-harness story and "ORA-19" is the deferred B1 isolation story; neither the Auth-token-claims nor the OHM-manifest-envelope shape has a Contract issue yet (the same applies to the `(ORA-12)`/`(ORA-19)` keys in the §1/§2 headers below). Backfilling those two is **pending** — the 31 May coordinator decision limited this pass to the gateway envelope. Until then, treat §1/§2 as shape-of-record without a tracking Contract.
 
@@ -261,7 +261,12 @@ Owner: solution-architect. Status: **AGREED, unimplemented** — no side has bui
 > 2. **A citation is produced by code, never by a model.** The platform mints it and hands it to the model. The model may only *reference* an id the platform issued. This was implicit in rev1 and is now a stated rule, because it is the property the whole design exists to guarantee.
 > 3. **Precision is enforced when a tool is connected, not when an answer is written.** rev1 blocked an answer whose citation lacked a document id or a link. That punishes the user for a third-party tool's limitation at the worst possible moment. The check moves to connect time (§CITE-QUAL), where the admin can act on it by choosing a better tool. The answer-time gate keeps only the two anti-fabrication rules, which cost a third party nothing because the platform mints the id itself.
 >
-> Rev2 amends how UC-E1's `citation-checker` clause ("refuses to ship a sentence whose citation does not resolve") is read, under use-case §5.4 rule 4. **Stated reason:** an intermediate tool's limitation must degrade the citation's precision, never block the product. The strictness the clause asks for is preserved in full against fabrication, which is the threat it was written for.
+> **rev3 (2026-08-09, Reza).** Two simplifications on top of rev2, both narrowing v1.
+>
+> 4. **No locator in v1.** A citation points at a **document version**, not at a chunk, a line range or a page. Sub-document precision is a later release. This deletes the `locator` field and, with it, the rev2 debate about whether it belonged in the identity hash — there is nothing left to churn.
+> 5. **A tool that cannot cite its sources is not permitted, rather than permitted-with-a-warning.** rev2 graded a `weak` tool and warned the admin. rev3 refuses it at connect time. **Stated reason:** reliable alternatives exist for every source class we care about, so tolerating a tool that cannot describe its own output buys nothing and costs the guarantee. See §CITE-QUAL for the two limits this rule needs to stay sane.
+>
+> Rev2 amended how UC-E1's `citation-checker` clause ("refuses to ship a sentence whose citation does not resolve") is read, under use-case §5.4 rule 4. **Stated reason:** an intermediate tool's limitation must degrade the citation's precision, never block the product. The strictness the clause asks for is preserved in full against fabrication, which is the threat it was written for. **rev3 narrows that amendment**: the tolerance now applies only to a *missing version*, because a tool with no document identity at all is refused before it can ever be used.
 
 ### Why this crosses the repo boundary
 
@@ -294,16 +299,17 @@ This is the finding that drove the Contract. In the PoC a real model, on a real 
   "revision_kind": "blob_sha",              // commit | blob_sha | version_id | etag | edited_at | block | content_hash
   "url": "https://github.com/OraclousAI/oraclous-backend/blob/e3b0c44/README.md",  // absolute and openable
   "title": "README.md",                     // display label ONLY — never identity
-  "locator": { "kind": "chunk", "value": "7" },   // where inside the document; null = whole document
   "author": { "display_name": "Parham Davari", "source_handle": "parhamdavari" },  // the SOURCE's author; null if the system exposes none
   "retrieved_at": "2026-08-08T09:14:22Z",   // as-of: when this revision was read from the source
   "permission_ref": null                     // the source's own permission handle; CARRIED now, UNENFORCED until capability 27
 }
 ```
 
-`locator.kind` ∈ `chunk | lines | page | heading | row | block`. `author.email` is optional and omitted unless the source exposes it.
+`author.email` is optional and omitted unless the source exposes it.
 
-**`citation_id` is the whole security mechanism.** It is deterministic, and it is keyed on the **document revision only** — the locator is deliberately excluded:
+**A citation resolves to a document version, not to a place inside it (rev3).** There is no `locator` in v1 — no chunk index, no line range, no page, no heading anchor. Sub-document precision is a later release, and adding it later is additive: a new optional field, no change to identity.
+
+**`citation_id` is the whole security mechanism.** It is deterministic, and it is keyed on exactly the three fields that identify a document version:
 
 ```
 citation_id = "cit_" + sha256(source_system ‖ 0x00 ‖ source_id ‖ 0x00 ‖ revision)[:32]
@@ -311,7 +317,7 @@ citation_id = "cit_" + sha256(source_system ‖ 0x00 ‖ source_id ‖ 0x00 ‖ 
 
 Determinism buys three things at once: re-reading the same revision yields the same id (an idempotent refresh); a **new revision yields a different id**, which is what makes supersession computable without a supersession table; and an id the model invents is not in the run's served set, so it fails the gate.
 
-**Why the locator is not in the hash (rev2).** Folding the chunk index into the identity would make every id churn whenever chunking strategy changes, even though no source document changed — and any citation already stored in a published answer or an evidence ledger would stop resolving. The locator stays a field on the record, and an answer that needs sentence-level precision references it as a suffix (`cit_9f2a4c81#chunk7`) which does **not** participate in identity. The forgery check is unaffected: the model still cannot produce a `source_id`/`revision` pair it was never handed.
+Because identity is document-level, **re-chunking a document never changes its `citation_id`** — a citation already stored in a published answer or an evidence ledger keeps resolving. When sub-document precision arrives it must stay outside this hash for the same reason.
 
 **`source_system` is a registered slug, not a frozen enum.** UC-E1 acceptance 6 requires a sixth, unplanned source type to be connectable without re-modelling existing records. A closed enum would break that. The constraint is that the value must name a **registered connector**, plus the reserved value `upload`.
 
@@ -361,7 +367,9 @@ The last row is why rev2 widened the scope. An agent citing a web page it just r
 }
 ```
 
-The platform computes `citation_id`, `retrieved_at`, and `locator` server-side. When `revision` is absent inbound, the platform sets it to the SHA-256 of the ingested content with `revision_kind: "content_hash"` — so `revision` is **never null outbound**, and a source with no version concept still supersedes correctly on content change.
+The platform computes `citation_id` and `retrieved_at` server-side. When `revision` is absent inbound, the platform sets it to the SHA-256 of the ingested content with `revision_kind: "content_hash"` — so `revision` is **never null outbound**, and a source with no version concept still supersedes correctly on content change.
+
+**One consequence of dropping the locator.** Every chunk of one ingested document now shares a single `citation_id`, because they share a document version. That is correct for v1: a citation answers "which document, at which version", and the reader opens it. It is also why sub-document precision, when it arrives, is an additional field and never a change to identity.
 
 **Who fills it: the connector, and only the connector.** The connector is the one party holding the source-native identity — the GitHub API response the platform already receives carries `sha` and `html_url`, and today the connector throws both away. The ingest caller passes `source` through **unmodified** and never synthesizes one.
 
@@ -386,29 +394,35 @@ Otherwise it PASSES.
 
 **Where the checker runs: in the platform, not as a model.** UC-E1 draws `citation-checker` as a team member, and a harness member may still review citation *quality* as an ordinary reviewer. The **guarantee**, however, is code at the run boundary. A gate implemented as a model instruction is a gate that can be talked out of, which is precisely the failure this Contract addresses.
 
-**What rev1 had as rules 3 and 4 is not gone — it moved.** Requiring a document id, a version, and a link is right, but enforcing it mid-answer punishes the user for a tool limitation at the moment nothing can be done about it. It is enforced at §CITE-QUAL instead, when a tool is connected and an admin can still choose a different one. A citation that carries less than the full identity still ships, and the console shows exactly what is known and what is not.
+**What rev1 had as rules 3 and 4 is not gone — it moved.** Requiring a document id, a version, and a link is right, but enforcing it mid-answer punishes the user for a tool limitation at the moment nothing can be done about it. It is enforced at §CITE-QUAL instead, when a tool is connected and an admin can still choose a different one. Under rev3 a tool with no document identity is refused there outright, so by the time an answer is written the only thing that can still be missing is the **version** — and a missing version degrades the citation rather than failing the answer. The console shows exactly what is known and what is not.
 
 **Deliberately NOT in the check: fetching the `url` to confirm the document still exists.** That is freshness and deletion propagation (§5.3 capability 8, UC-E1 acceptance 3), a separate mechanism on its own cadence. Folding it in would make an in-loop gate network-bound and rate-limited, and would conflate "well-formed and really served" with "unchanged at the source". Both are needed; they are not the same gate.
 
 Checked against the recorded PoC output, every citation the platform produces today fails at rule 1.
 
-### §CITE-QUAL — citation quality is checked when a tool is connected (rev2)
+### §CITE-QUAL — a tool that cannot cite its sources is refused at connect time (rev3)
 
-Our own connectors always carry full identity, because we write them: GitHub gives a repo, a path and a commit; Drive gives a file id and a revision; a REST or SQL read gives an addressable record. **The uncertainty is confined to tools we did not write** — an imported MCP server returns whatever shape its author chose. One Notion MCP returns a page id, a URL and an edit timestamp. Another returns a title and a wall of text.
+Our own connectors always carry document identity, because we write them: GitHub gives a repo, a path and a commit; Drive gives a file id and a revision; a REST or SQL read gives an addressable record. **The uncertainty is confined to tools we did not write** — an imported MCP server returns whatever shape its author chose. One Notion MCP returns a page id, a URL and an edit timestamp. Another returns a title and a wall of text.
 
-That is a **procurement problem, not an answer-time problem**. The admin who connects the tool is the person who can fix it, and the moment they connect it is the moment they can still pick something else.
+That is a **procurement problem, not an answer-time problem**. The admin connecting the tool is the person who can fix it, and connect time is the moment they can still pick something else.
 
-So each connected tool carries a recorded **citation grade**, determined at connect or import time:
+Each **content-returning** tool is graded at connect or import time:
 
 | Grade | Meaning | Consequence |
 | --- | --- | --- |
-| `exact` | document identity **and** a version **and** an openable link | nothing to say |
-| `document` | document identity and a link, no version | usable; "as of" falls back to read time |
-| `weak` | the connection is known, the document is not | the admin is warned at connect time, in the console, with the reason |
+| `exact` | document identity, a version, and an openable link | permitted |
+| `document` | document identity and a link, no version | permitted; "as of" falls back to read time |
+| `weak` | the connection is known, the document is not | **refused** — the tool cannot be connected, and the admin is told why |
 
-Three points are deliberately left to the implementing brief rather than fixed here, because they are mechanism and not shape. How the grade is determined — reading the tool's declared output schema, a probe call, or both. Whether a `weak` grade merely warns or can be made to block, per workspace. Where the grade is stored on the tool instance.
+**A `weak` tool is refused, not warned (rev3).** Reliable alternatives exist for every source class in the portfolio, so tolerating a tool that cannot describe its own output buys nothing and costs the guarantee. A warning that an admin can click past is a guarantee with a hole in it.
 
-**The default is warn, never block.** A tool that cannot describe its own sources is a tool worth replacing, and saying so plainly at connect time is more useful than failing an answer three weeks later.
+This rule needs two limits, or it refuses things it was never aimed at.
+
+**Limit 1 — it applies only to tools that return assertable content.** Most of the catalogue returns a *status*, not content: open a pull request, send a message, write a file, deliver a report. Those have no source to cite and are never graded. A tool declares which kind it is; only the content-returning kind is gated. Getting this wrong would refuse half the registry, so it is a first-class part of the rule rather than a footnote.
+
+**Limit 2 — first-party sources must pass our own gate before it is switched on.** An uploaded file currently grades `weak`, because no route serves an uploaded document back (see the `upload` note above). Under rev3 that would refuse our own upload path, which is absurd. Serving an uploaded document back is therefore a **prerequisite** for enabling the refusal, not a follow-up to it.
+
+Two points stay with the implementing brief, because they are mechanism and not shape. **How the grade is determined** — reading a declared output schema is cheap but many MCP servers declare nothing useful, while a probe call is reliable but needs a credential and may cost money; a hybrid is likely right and should be argued rather than assumed. **Where the grade is stored** — the tool instance in the capability registry is the obvious home, and it should be confirmed against the existing configure flow rather than given a new table by reflex.
 
 ### Author is in; label and confidence are not
 
