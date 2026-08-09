@@ -309,6 +309,8 @@ This is the finding that drove the Contract. In the PoC a real model, on a real 
 
 **A citation resolves to a document version, not to a place inside it (rev3).** There is no `locator` in v1 — no chunk index, no line range, no page, no heading anchor. Sub-document precision is a later release, and adding it later is additive: a new optional field, no change to identity.
 
+**`revision` is never null, on any path.** This is a global rule, not an ingest-only one, and it holds even for a `document`-grade source that exposes no version of its own. The platform always holds the content at the moment it mints, so it can always fall back to the SHA-256 of that content with `revision_kind: "content_hash"`. **`revision_kind` is what tells the two apart** — a source-native version (`commit`, `blob_sha`, `version_id`, `etag`, `edited_at`, `block`) versus our own fallback. The JSON Schema therefore makes `revision` **required and non-nullable**, which keeps both the identity hash and the supersession rule total: a page that changes between two reads yields a new hash, so a new `citation_id`, so a correctly superseding record. The cost is accepted openly — a trivial change to a web page, such as a rotating footer, counts as a new revision.
+
 **`citation_id` is the whole security mechanism.** It is deterministic, and it is keyed on exactly the three fields that identify a document version:
 
 ```
@@ -347,6 +349,10 @@ A citation is minted **once, in platform code, at the tool-execution boundary** 
 | **Live web / MCP tool** | `core/web-research` search, or an imported MCP tool | whatever the tool's response carries; see §CITE-QUAL |
 
 The last row is why rev2 widened the scope. An agent citing a web page it just read is the same guarantee problem as an agent citing an ingested file, and rev1 covered only the second.
+
+**One minting function, shared by all three rows.** It lives in `packages/citation/` and takes a `SourceRef`; it is not an ingest helper that the other paths borrow. Rows two and three have no stored record to stamp, so a minting function shaped around ingest would have to be rewritten for them.
+
+**Rows two and three depend on one declaration that rev3 introduced for a different reason.** §CITE-QUAL requires each tool to declare whether it returns *assertable content* or only a *status*, so that action tools are never graded. The same declaration answers "which tool results must be minted for". It is authored once and consumed twice, and the minting work for rows two and three therefore sequences after it.
 
 **The model is never in this path.** It receives citations as a reserved result key it cannot write, exactly as it receives `data_absent` (#580). Its only power is to reference an id.
 
