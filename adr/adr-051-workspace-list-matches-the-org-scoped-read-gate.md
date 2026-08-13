@@ -30,7 +30,11 @@ UC-D1 and UC-E1 both describe a root workspace that **every employee** queries, 
 
 1. **Org-scoped read is correct for workspace content, and stands.** It is the ADR-018 floor, and it is what UC-D1/UC-E1 require of a root workspace. This ADR does not widen it.
 
-2. **The listing gate must equal the read gate.** `GET /api/v1/graphs` returns the caller organisation's graphs (the existing `list_for_org` set), each row carrying an ownership marker so the console can separate "mine" from "the organisation's". `GET /api/v1/graphs/{id}/documents` becomes org-scoped for **read**, matching search. This grants no data access that an org member does not already have; it removes a discovery gap, not a control.
+2. **The listing gate must equal the read gate.** `GET /api/v1/graphs` returns the caller organisation's graphs (the existing `list_for_org` set), each row carrying an ownership marker so the console can separate "mine" from "the organisation's". `GET /api/v1/graphs/{id}/documents` becomes org-scoped for **read**, matching search. This grants no access to workspace **content** that an org member does not already have; it removes a discovery gap, not a control.
+
+   **The content claim is exact; it does not extend to all metadata.** Verified against source on [`oraclous-backend#765`](https://github.com/OraclousAI/oraclous-backend/pull/765): `POST /v1/search/{semantic,fulltext,hybrid}` consults no graph table and no owner gate at all — its only scope is the caller's organisation — and `GET /v1/graph/{graph_id}/subgraph` returns full node property bags on the same org-only scope. So verbatim chunk text and filenames were already reachable by any org member holding the UUID, more completely than this ADR originally claimed. **Three classes of metadata are not returnable by any search path, and the widened read gate does disclose them:** the `error_message` on a FAILED ingest (a bare `str(exc)`, so it can carry a content excerpt, a path or a host, and a failed ingest writes no chunks at all); the [`#728`](https://github.com/OraclousAI/oraclous-backend/issues/728) artifact provenance columns (`producer_kind`, `team_run_id`, `member_role`, `execution_id`, `team_id`, `ordinal`, `content_hash`), which live only in Postgres and are never stamped into Neo4j; and the **original source bytes**, since `get_artifact` serves the decoded source while search serves extracted chunk text — identical for a text ingest, different for a PDF or any binary upload.
+
+   **Accepted as non-material, and recorded rather than left implied.** The disclosure is intra-organisation, and decision 4 already records that every member reads every graph's content in full — "which teammate produced this artifact" is a smaller disclosure than the document body those members can already open. The correction still had to be made, because the original sentence is the one someone will quote to a customer, and an unqualified "grants no data access" is a claim this ADR cannot support.
 
 3. **Mutation stays owner/admin-scoped and is not widened.** Rename, delete, ingest, and configure keep their current gate. Read and manage are separate gates; today they are accidentally fused into one owner check, and separating them is the substance of this ADR.
 
@@ -50,11 +54,13 @@ UC-D1 and UC-E1 both describe a root workspace that **every employee** queries, 
 * Document listing and search agree, so a member never sees `404` on a graph they can search.
 * Federation (ADR-026) is unchanged — it already aggregates exactly this set.
 * Until per-workspace membership lands, **no workspace is private**. Any use case needing isolated content is blocked on that decision, and this must be stated to any customer before a restricted workspace is promised.
+* When describing this change to a customer, say it grants no access to workspace **content**, and stop there. The three metadata classes named in decision 2 are new disclosure to an org member, accepted as non-material, and the unqualified form of the sentence overstates what this ADR can support.
 
 ## See also
 
 * ADR-018 (org-scoped trust) · ADR-026 §1 (no-new-access aggregator)
 * `oraclous-backend#734` (UC-D1 PoC) · §5.3 capabilities 27 and 39
 * Implementation of decisions 2 and 3: [`oraclous-backend#736`](https://github.com/OraclousAI/oraclous-backend/issues/736)
+* The status bump and the decision-2 qualification: [`oraclous-backend#769`](https://github.com/OraclousAI/oraclous-backend/issues/769), off the `security-architect` review on PR #765
 * The prerequisite decision named in decision 5: [`oraclous-backend#737`](https://github.com/OraclousAI/oraclous-backend/issues/737)
 * [Interface Contracts §CITE](../flows/interface-contracts.md) — the citation's `permission_ref` is the seam capability 27 fills
