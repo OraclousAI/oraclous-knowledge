@@ -4,11 +4,13 @@
 
 | | |
 | --- | --- |
-| Status | Proposed |
-| Date | 2026-08-08 |
-| Deciders | solution-architect (drafted) — CTO accepts |
+| Status | Accepted — **Realized 2026-08-10** (issue [#736](https://github.com/OraclousAI/oraclous-backend/issues/736) closed) |
+| Date | 2026-08-08 (accepted 2026-08-13) |
+| Deciders | solution-architect (drafted), Reza (accepted 2026-08-13) |
 | Driving evidence | UC-D1 proof of concept, [oraclous-backend#734](https://github.com/OraclousAI/oraclous-backend/issues/734), §5.3 capability 27 |
 | Builds on | [ADR-018](adr-018-edge-authentication-trusted-gateway.md) (org-scoped trust) · [ADR-026](adr-026-federated-cross-graph-query.md) §1 (federation composes the single-graph gate) |
+
+> **✅ Realized 2026-08-10 ([`oraclous-backend#736`](https://github.com/OraclousAI/oraclous-backend/issues/736) closed).** Decisions 2 and 3 shipped in PR [#765](https://github.com/OraclousAI/oraclous-backend/pull/765) (`393ae5ae`), against the tests merged in #764. `GraphService._owned_or_404` had twelve call sites mixing reads with writes, so relaxing it in place would have widened ingest and the ontology write — a decision-3 violation. There are now **two gates, each named for its job**: `_owned_or_404` is **unchanged** and still owner-scoped (create, rename, delete, ingest submit, SQL ingest, ontology write, community detect, summarise, resolution decisions, cross-org grant); the new `_readable_or_404` is organisation-scoped (graph list, graph detail, documents, artifacts list, artifact content, ingest-job status, ontology read, analytics reads). The widening is **additive** — new methods taken up only by read call sites, no write call site touched — so a write path can only lose its owner gate by someone deliberately rewriting that line. **Boundary ruled on #736 before implementation:** the read gate covers *every* pure read in the service, graph detail included, not only the two endpoints this ADR names. A half-applied version is worse than the old behaviour, because the console would render a workspace row the member cannot open; and it grants nothing new, since `GET /v1/artifacts/{id}` serves the same content the member can already retrieve through the org-scoped `POST /v1/search/*` with only the UUID. **Decision 1 is unchanged and still not implemented:** no per-workspace member set exists, so every graph in an organisation remains readable by every member.
 
 ## Context
 
