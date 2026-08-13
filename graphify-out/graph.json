@@ -15309,6 +15309,90 @@
       "norm_label": "\u00a7cite-qual \u2014 a tool that cannot cite its sources is refused at connect time",
       "id": "interface_contracts_cite_qual_connect_time_refusal",
       "rationale": "Source quality is a procurement problem, not an answer-time problem: the admin connecting the tool is the person who can fix it, and connect time is when they can still pick something else."
+    },
+    {
+      "label": "ADR-051 Workspace Listing Matches the Org-Scoped Read Gate; the Access Ladder Is Not Yet Implemented",
+      "file_type": "document",
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 1,
+      "norm_label": "adr-051 workspace listing matches the org-scoped read gate; the access ladder is not yet implemented",
+      "id": "adr051_workspace_listing_gate",
+      "rationale": "Accepted 2026-08-13, realized 2026-08-10 (oraclous-backend#736, PR #765). Workspace management was owner-scoped while workspace content was org-scoped, so the same user on the same graph id got three different answers: an empty list, a 404 on documents, and a 200 with full content from search."
+    },
+    {
+      "label": "The listing gate must equal the read gate (org-scoped read, ownership marker on each row)",
+      "file_type": "rationale",
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 1,
+      "norm_label": "the listing gate must equal the read gate (org-scoped read, ownership marker on each row)",
+      "id": "adr051_listing_equals_read_gate",
+      "rationale": "The narrow list protected nothing, because the data was already readable to any org member holding the UUID. It removed a discovery gap, not a control, and it hid the workspace from the people meant to use it. As built, the widening is additive: `_owned_or_404` is untouched and a new `_readable_or_404` carries the org-scoped reads."
+    },
+    {
+      "label": "The no-new-access claim holds for content and not for all metadata (three classes)",
+      "file_type": "rationale",
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 1,
+      "norm_label": "the no-new-access claim holds for content and not for all metadata (three classes)",
+      "id": "adr051_content_claim_not_metadata",
+      "rationale": "Verified against source on PR #765. Search consults no graph table and no owner gate, so chunk text and filenames were already org-reachable. Three classes are not returnable by any search path and ARE newly disclosed: the `error_message` on a failed ingest (a bare `str(exc)`, so it can carry a content excerpt, a path or a host); the #728 artifact provenance columns, which live only in Postgres; and the original source bytes, which differ from extracted chunk text for a PDF or any binary upload. Accepted as non-material because the disclosure is intra-organisation \u2014 but recorded, because the unqualified sentence is the one someone will quote to a customer."
+    },
+    {
+      "label": "Mutation stays owner/admin-scoped and is not widened",
+      "file_type": "rationale",
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 1,
+      "norm_label": "mutation stays owner/admin-scoped and is not widened",
+      "id": "adr051_mutation_stays_owner_scoped",
+      "rationale": "Read and manage are separate gates that were accidentally fused into one owner check. Separating them is the substance of this ADR. No write call site moved, so a write path can only lose its owner gate by someone deliberately rewriting that line."
+    },
+    {
+      "label": "Recorded plainly: no workspace is private \u2014 the access ladder is not implemented for graph content",
+      "file_type": "rationale",
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 1,
+      "norm_label": "recorded plainly: no workspace is private \u2014 the access ladder is not implemented for graph content",
+      "id": "adr051_no_access_ladder_for_content",
+      "rationale": "`KnowledgeGraph` carries an owner `user_id` and nothing else, so every graph in an organisation is readable by every member. L0 (private) and L1 (workspace-scoped) do not exist for graph content; everything is effectively L2. This ADR does not create that condition, it makes it visible \u2014 a team that believed a private workspace existed was already wrong."
+    },
+    {
+      "label": "Per-workspace membership is a prerequisite for restricted material, not a refinement",
+      "file_type": "rationale",
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 1,
+      "norm_label": "per-workspace membership is a prerequisite for restricted material, not a refinement",
+      "id": "adr051_membership_is_prerequisite",
+      "rationale": "Any workspace holding restricted content cannot be built on today's model. Per-user permission mirroring from source systems is a second, separate layer on top of it. Both are out of the UC-D1 first slice and tracked as their own decision."
     }
   ],
   "links": [
@@ -37463,6 +37547,114 @@
       "_tgt": "section_2_conceptual_model_provenance",
       "source": "interface_contracts_cite_provenance_not_fidelity",
       "target": "section_2_conceptual_model_provenance"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr051_workspace_listing_gate",
+      "_tgt": "adr051_listing_equals_read_gate",
+      "source": "adr051_workspace_listing_gate",
+      "target": "adr051_listing_equals_read_gate"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr051_workspace_listing_gate",
+      "_tgt": "adr051_mutation_stays_owner_scoped",
+      "source": "adr051_workspace_listing_gate",
+      "target": "adr051_mutation_stays_owner_scoped"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr051_workspace_listing_gate",
+      "_tgt": "adr051_no_access_ladder_for_content",
+      "source": "adr051_workspace_listing_gate",
+      "target": "adr051_no_access_ladder_for_content"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr051_workspace_listing_gate",
+      "_tgt": "adr051_membership_is_prerequisite",
+      "source": "adr051_workspace_listing_gate",
+      "target": "adr051_membership_is_prerequisite"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr051_listing_equals_read_gate",
+      "_tgt": "adr051_content_claim_not_metadata",
+      "source": "adr051_listing_equals_read_gate",
+      "target": "adr051_content_claim_not_metadata"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr051_no_access_ladder_for_content",
+      "_tgt": "adr051_membership_is_prerequisite",
+      "source": "adr051_no_access_ladder_for_content",
+      "target": "adr051_membership_is_prerequisite"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adrindex_adr_registry",
+      "_tgt": "adr051_workspace_listing_gate",
+      "source": "adrindex_adr_registry",
+      "target": "adr051_workspace_listing_gate"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr051_workspace_listing_gate",
+      "_tgt": "adr006_organisation_tenancy",
+      "source": "adr051_workspace_listing_gate",
+      "target": "adr006_organisation_tenancy"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "adr051_workspace_listing_gate",
+      "_tgt": "adr012_access_seam",
+      "source": "adr051_workspace_listing_gate",
+      "target": "adr012_access_seam"
     }
   ],
   "hyperedges": [
@@ -37479,6 +37671,19 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "flows/interface-contracts.md"
+    },
+    {
+      "id": "adr051_two_gates",
+      "label": "ADR-051's two gates (org-scoped read, owner-scoped mutation, no private workspace)",
+      "nodes": [
+        "adr051_listing_equals_read_gate",
+        "adr051_mutation_stays_owner_scoped",
+        "adr051_no_access_ladder_for_content"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "adr/adr-051-workspace-list-matches-the-org-scoped-read-gate.md"
     }
   ]
 }
