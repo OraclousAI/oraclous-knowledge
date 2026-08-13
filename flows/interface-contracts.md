@@ -23,6 +23,7 @@ Each contract below corresponds to a `Contract` issue in Jira. The Jira issue tr
 | Enriched graph schema (KGS recipe enrichment, #269) | — (epic #269; #270/#271/#274/#275, perf #272) | Live (KGS smoke) | See §GRAPH |
 | BYOM spend estimate (`GET /v1/harnesses/spend`) | — | Live | See §SPEND |
 | Workspace↔harness binding (G2) | — ([oraclous-backend#340](https://github.com/OraclousAI/oraclous-backend/issues/340); FE [#127](https://github.com/OraclousAI/oraclous-frontend/issues/127)) | AGREED ([ADR-029](../adr/adr-029-workspace-harness-binding.md)); BE impl open, FE #127 consumes | See §G2 |
+| Resolvable citation on any tool result | — ([oraclous-backend#735](https://github.com/OraclousAI/oraclous-backend/issues/735); FE [#194](https://github.com/OraclousAI/oraclous-frontend/issues/194)) | AGREED at **rev5** (2026-08-13); the data path, the run's served set, and the answer-time gate have all shipped ([#742](https://github.com/OraclousAI/oraclous-backend/issues/742), [#743](https://github.com/OraclousAI/oraclous-backend/issues/743), [#782](https://github.com/OraclousAI/oraclous-backend/issues/782)); evidence [oraclous-backend#734](https://github.com/OraclousAI/oraclous-backend/issues/734) | See §CITE |
 
 > ⚠ **Index integrity (31 May 2026, solution-architect).** Of the three rows, only the Gateway error envelope has a real `Contract`-type Jira issue: [**ORA-56**](https://oraclous.atlassian.net/browse/ORA-56), backfilled 31 May 2026. The keys previously shown for the other two rows were **wrong** — "ORA-12" is the R0.5 0d substrate-test-harness story and "ORA-19" is the deferred B1 isolation story; neither the Auth-token-claims nor the OHM-manifest-envelope shape has a Contract issue yet (the same applies to the `(ORA-12)`/`(ORA-19)` keys in the §1/§2 headers below). Backfilling those two is **pending** — the 31 May coordinator decision limited this pass to the gateway envelope. Until then, treat §1/§2 as shape-of-record without a tracking Contract.
 
@@ -249,3 +250,273 @@ The **frontend** (`oraclous-frontend#127`) consumes these gateway endpoints; the
 ```
 
 Decisions pinned at acceptance: a shared `PLATFORM_ORG` agent **can** bind to a tenant workspace; members get the **read** view; attach/detach require org write access. **As shipped (`oraclous-backend#350`):** POST returns a small `{ "created": bool }` body alongside the 201/200 status (so the FE reads created-vs-already-bound without inspecting status); the graph-membership check is a network call to KGS, so an unreachable graph service is a fail-closed **503** (retryable), not a guess; a `GET ?graph_id=` for a graph not visible to the caller returns `[]` (the leak-free list mask). **Enforcement (live):** the gateway exposes the four endpoints (the `/api/v1/agent-bindings` route-table entry), backed by the `harness_graph_binding` migration in the capability registry (harness FK `ON DELETE CASCADE` + `UNIQUE(harness_capability_id, graph_id)` + `created_by`), the KGS membership check on attach, and graphs-resolved-on-read filtering; mirrored in the gateway OpenAPI (`openapi/v1.yaml`). Tracked: `oraclous-backend#340` (merged) + FE `#127`.
+
+## §CITE — Resolvable citation on any tool result (UC-D1 / UC-E1)
+
+Owner: solution-architect. Status: **AGREED at rev5, shipped on the backend** — the minting path ([`#742`](https://github.com/OraclousAI/oraclous-backend/issues/742)), the run's served set ([`#743`](https://github.com/OraclousAI/oraclous-backend/issues/743)), and the answer-time gate with its correction loop ([`#782`](https://github.com/OraclousAI/oraclous-backend/issues/782)) are live at the run boundary and proven on the deployed stack against a live model. The frontend consumer is open. Driving evidence: the UC-D1 proof of concept, [`oraclous-backend#734`](https://github.com/OraclousAI/oraclous-backend/issues/734), filed against §5.3 capability 6. Tracking Contract: [`oraclous-backend#735`](https://github.com/OraclousAI/oraclous-backend/issues/735); frontend consumer: [`oraclous-frontend#194`](https://github.com/OraclousAI/oraclous-frontend/issues/194); follow-on knowledge-record Contract: [`oraclous-backend#741`](https://github.com/OraclousAI/oraclous-backend/issues/741).
+
+> **rev2 (2026-08-09, Reza).** Three decisions, taken after rev1 was recorded and before any code was written.
+>
+> 1. **Scope is every tool result an agent may assert from, not only the knowledge base.** rev1 covered the ingest→storage→retrieval path. Live web research (`core/web-research`), MCP-imported tools, and connector reads now mint citations on the same shape. A citation is minted at the **tool-execution boundary**, which subsumes the ingest path rather than replacing it.
+> 2. **A citation is produced by code, never by a model.** The platform mints it and hands it to the model. The model may only *reference* an id the platform issued. This was implicit in rev1 and is now a stated rule, because it is the property the whole design exists to guarantee.
+> 3. **Precision is enforced when a tool is connected, not when an answer is written.** rev1 blocked an answer whose citation lacked a document id or a link. That punishes the user for a third-party tool's limitation at the worst possible moment. The check moves to connect time (§CITE-QUAL), where the admin can act on it by choosing a better tool. The answer-time gate keeps only the two anti-fabrication rules, which cost a third party nothing because the platform mints the id itself.
+>
+> **rev3 (2026-08-09, Reza).** Two simplifications on top of rev2, both narrowing v1.
+>
+> 4. **No locator in v1.** A citation points at a **document version**, not at a chunk, a line range or a page. Sub-document precision is a later release. This deletes the `locator` field and, with it, the rev2 debate about whether it belonged in the identity hash — there is nothing left to churn.
+> 5. **A tool that cannot cite its sources is not permitted, rather than permitted-with-a-warning.** rev2 graded a `weak` tool and warned the admin. rev3 refuses it at connect time. **Stated reason:** reliable alternatives exist for every source class we care about, so tolerating a tool that cannot describe its own output buys nothing and costs the guarantee. See §CITE-QUAL for the two limits this rule needs to stay sane.
+>
+> Rev2 amended how UC-E1's `citation-checker` clause ("refuses to ship a sentence whose citation does not resolve") is read, under use-case §5.4 rule 4. **Stated reason:** an intermediate tool's limitation must degrade the citation's precision, never block the product. The strictness the clause asks for is preserved in full against fabrication, which is the threat it was written for. **rev3 narrows that amendment**: the tolerance now applies only to a *missing version*, because a tool with no document identity at all is refused before it can ever be used.
+>
+> **rev4 (2026-08-12, Reza).** Five decisions, all downstream of one sentence: **the model is not a source of truth.** We give it sources; it reasons over them on our behalf. rev1–rev3 never said this outright, and several questions that stayed open turned out to be that omission wearing different hats.
+>
+> 6. **A model does not cite itself in conversation.** An answer carries citations for external sources only; sentences the model reasoned out carry none, because it is evident the agent is speaking. **Stated reason:** a model citation is not evidence. Minting one for every uncited sentence adds volume to the record without adding truth, and teaches a reader to skim past citations rather than trust them.
+> 7. **Content the agent itself wrote is marked as agent-generated.** A file an agent writes into a workspace carries `source_system: "agent"`, never `"upload"`. **Stated reason:** an agent can otherwise write a file, retrieve it, and cite it — passing every rule while showing the reader something that looks like external evidence and is the agent quoting itself. A human uploading a real document is a different act and keeps `"upload"`; the distinction is who authored the content, so it needs its own value.
+> 8. **Rule 1 is deleted and replaced.** rev2's rule 1 ("an asserted fact carries no `citation_id`") is not implementable in platform code: separating an asserted fact from reasoning is a judgment call, and this Contract forbids a model-implemented gate. It is replaced by the narrower rule in §"What 'resolves' means". **Stated reason:** the first implementation approximated it as "the run served sources and the answer cited none", which fails an honest decline — a member that searches, reads what came back, and reports that it has no answer. That member is behaving correctly. Refusing to hallucinate is the product working, and a gate that punishes it is worse than no gate.
+> 9. **A violation is returned to the model, not to the user.** A blocked answer is fed back to the member with a specific, actionable message naming what is wrong and what to do, and the member answers again. **Stated reason:** the member is the only party that can fix the defect, and it can only act on an error that says what to change. Retries are bounded by the run's existing iteration budget.
+> 10. **A run returns citation records, not bare ids.** The set a run served is exposed as the citation objects themselves. **Stated reason:** a list of opaque ids forces the console into one lookup per source before it can draw a link — a second round trip over data the run already held, on the surface where latency is most visible.
+>
+> **rev5 (2026-08-12 / 2026-08-13, Reza).** Three decisions taken *while the gate was being built*. Each one closes a defect that only a live run on the deployed stack exposed.
+>
+> 11. **`source_tool_call_id` is not a rule 1 marker** ([`oraclous-backend#788`](https://github.com/OraclousAI/oraclous-backend/issues/788), ruled 2026-08-12). rev4's marker list was `source:`, `sources:`, `source_tool_call_id`; the third is removed. `source:` and `sources:` stay. **Stated reason:** [`#642`](https://github.com/OraclousAI/oraclous-backend/issues/642)'s `validate_grounding` already resolves every declared `source_tool_call_id` against an `ok` tool step in the member's own trace, failing closed on a missing, null, unresolvable, or errored id. Rule 1 watching the same token with a prose pattern laid a **guess over a working proof**, and the guess won — see "Two mechanisms, one token" below.
+> 12. **Terminal precedence splits by rule, not by mechanism** ([`oraclous-backend#792`](https://github.com/OraclousAI/oraclous-backend/issues/792), ruled 2026-08-13). Neither the gate nor the data-absence degrade blanket-outranks the other; what wins follows what the blocking rule actually caught. Recorded in full under "What a violation does".
+> 13. **A correction must name a remedy the member can perform.** When a run served nothing, rule 1's message no longer tells the member to cite an id it was never given. **Stated reason:** on the deployed stack a live member spent all 25 of its iterations being corrected toward an impossible instruction. That is the [`#692`](https://github.com/OraclousAI/oraclous-backend/issues/692)/[`#693`](https://github.com/OraclousAI/oraclous-backend/issues/693) failure again — an error a member can only retry blindly. The correction strings are Contract text, so both variants are recorded here.
+
+### Why this crosses the repo boundary
+
+The console renders the citation and the user clicks it, so the shape is consumed by both repos and may not be defined inside either (`oraclous-backend/CLAUDE.md` §12). It is also a **gate**, not decoration: UC-E1 makes the `citation-checker` a blocking role. A gate cannot run against free-form prose.
+
+### The rule the whole Contract exists to enforce
+
+**The platform mints every citation in code. A model can reference one; it can never author one.**
+
+This is the finding that drove the Contract. In the PoC a real model, on a real question, emitted `(source: partner-agreement.md)` — a bare filename — alongside `source_tool_call_id=call_...`, an id the platform never issued. The answer was correct and the provenance was fiction, and nothing in the system could tell the two apart. Every mechanism below is downstream of closing that gap.
+
+### What exists today, and why it cannot carry a citation
+
+| Layer | Today | Why it fails |
+| --- | --- | --- |
+| Ingest | `IngestTextRequest = {content, filename, source_type, recipe_id, valid_from, valid_to, event_time}` | No field for source identity. The GitHub connector returns `{path, content}` and discards the repo, the blob `sha`, and the `html_url` the GitHub API already gave it. |
+| Storage | The node carries `ingestion_source = "README.md"` and `created_by = "multi_tenant_pipeline"` | One untyped string in free-form `properties`. It does not resolve, and it names no system, no revision, and no person. |
+| Retrieval | `NodeResultModel = {id, type, properties}` | No typed citation field anywhere in the retriever or the gateway. |
+| Answer | The model wrote `(source: partner-agreement.md)` plus an invented `source_tool_call_id=call_...` | Model prose. The platform never issued that id. Nothing typed, nothing clickable, nothing a gate can check. |
+
+### The typed record
+
+```jsonc
+// Citation — the resolvable source identity of one knowledge record.
+{
+  "citation_id": "cit_9f2a4c81…",          // platform-computed, deterministic; the ONLY handle an answer may cite
+  "source_system": "github",                // a REGISTERED connector slug; "upload" for a direct file upload
+  "source_id": "OraclousAI/oraclous-backend:README.md",  // identity WITHIN that system, stable across revisions
+  "revision": "e3b0c44298fc1c14…",         // the version read; never null outbound
+  "revision_kind": "blob_sha",              // commit | blob_sha | version_id | etag | edited_at | block | content_hash
+  "url": "https://github.com/OraclousAI/oraclous-backend/blob/e3b0c44/README.md",  // absolute and openable
+  "title": "README.md",                     // display label ONLY — never identity
+  "author": { "display_name": "Parham Davari", "source_handle": "parhamdavari" },  // the SOURCE's author; null if the system exposes none
+  "retrieved_at": "2026-08-08T09:14:22Z",   // as-of: when this revision was read from the source
+  "permission_ref": null                     // the source's own permission handle; CARRIED now, UNENFORCED until capability 27
+}
+```
+
+`author.email` is optional and omitted unless the source exposes it.
+
+**A citation resolves to a document version, not to a place inside it (rev3).** There is no `locator` in v1 — no chunk index, no line range, no page, no heading anchor. Sub-document precision is a later release, and adding it later is additive: a new optional field, no change to identity.
+
+**`revision` is never null, on any path.** This is a global rule, not an ingest-only one, and it holds even for a `document`-grade source that exposes no version of its own. The platform always holds the content at the moment it mints, so it can always fall back to the SHA-256 of that content with `revision_kind: "content_hash"`. **`revision_kind` is what tells the two apart** — a source-native version (`commit`, `blob_sha`, `version_id`, `etag`, `edited_at`, `block`) versus our own fallback. The JSON Schema therefore makes `revision` **required and non-nullable**, which keeps both the identity hash and the supersession rule total: a page that changes between two reads yields a new hash, so a new `citation_id`, so a correctly superseding record. The cost is accepted openly — a trivial change to a web page, such as a rotating footer, counts as a new revision.
+
+**`citation_id` is the whole security mechanism.** It is deterministic, and it is keyed on exactly the three fields that identify a document version:
+
+```
+citation_id = "cit_" + sha256(source_system ‖ 0x00 ‖ source_id ‖ 0x00 ‖ revision)[:32]
+```
+
+Determinism buys three things at once: re-reading the same revision yields the same id (an idempotent refresh); a **new revision yields a different id**, which is what makes supersession computable without a supersession table; and an id the model invents is not in the run's served set, so it fails the gate.
+
+Because identity is document-level, **re-chunking a document never changes its `citation_id`** — a citation already stored in a published answer or an evidence ledger keeps resolving. When sub-document precision arrives it must stay outside this hash for the same reason.
+
+**`source_system` is a registered slug, not a frozen enum.** UC-E1 acceptance 6 requires a sixth, unplanned source type to be connectable without re-modelling existing records. A closed enum would break that. The constraint is that the value must name a **registered connector**, plus two reserved values: `upload` for a file a person uploaded directly, and `agent` for content a harness member wrote itself (rev4).
+
+**Why `permission_ref` is in the shape now but enforced later.** Per-user permission mirroring (capability 27) is out of the first slice, but the source's permission handle is only obtainable *at read time from the connector*. Omitting the field would force a full re-ingest of every record when capability 27 lands. The field is cheap now and expensive to backfill.
+
+### Where it lives in the retrieval envelope
+
+One typed sibling field, following the `FederatedNodeResultModel` precedent (`source_graph_id` is a sibling, not a `properties` key):
+
+```jsonc
+// NodeResultModel and FederatedNodeResultModel each gain ONE field
+{ "id": "...", "type": "Chunk", "properties": { … }, "citation": Citation | null }
+```
+
+`citation: null` means the record has no source identity — ingested before this Contract, or ingested without a `source`. It is **never a partly-filled object**: a half-citation is indistinguishable from a real one at a glance, and the gate must be able to say "this record cannot be cited" without inspecting five fields.
+
+**One citation per node, on lexical nodes only.** A `Chunk`/`Document` node has exactly one source, so `citation` is singular. A derived or extracted entity node carries `citation: null` in v1, and an answer must cite the lexical hit rather than the entity. Multi-provenance ("one claim, two provenances" — the UC-E1 deduplicator) belongs to the follow-on knowledge-record Contract, not here.
+
+### Where it lives in the run's response (rev4)
+
+A retrieval hit carries its citation on the envelope. A **run** additionally reports the set of citations it served, as the records themselves:
+
+```jsonc
+// the run's response gains one field
+"citations": [
+  {
+    "citation_id": "cit_9f2a4c81…",
+    "source_system": "github",
+    "title": "partner-agreement.md",
+    "url": "https://github.com/OraclousAI/…/blob/e3b0c44/partner-agreement.md"
+  }
+]
+```
+
+**Records, not ids.** A list of opaque ids would force the console into one lookup per source before it can render a link, over data the run already held. This follows the shape the wider industry settled on: a citation is structured data returned beside the answer and computed by the platform, never a marker the model writes into prose. Whatever marker a member writes (`[1]`, or any wrapper chosen later) is a display concern that maps onto these records; the records are the source of truth.
+
+**Which fields are required here is a shape question for the implementing Contract issue** ([`oraclous-backend#785`](https://github.com/OraclousAI/oraclous-backend/issues/785)), together with whether the record is resolved by the loop or at read time. The four shown above are the minimum a console needs to render a link, and `url` may be null — an `upload` or `agent` citation has nothing to open.
+
+### Where a citation is minted (rev4)
+
+A citation is minted **once, in platform code, at the tool-execution boundary** — the point where a tool result comes back into the runtime. There are four paths into that boundary, and they share one minting function:
+
+| Path | Example | What the tool supplies |
+| --- | --- | --- |
+| **Connector read → ingest → retrieval** | a GitHub file lands in a workspace and is later searched | full source identity; the citation is stamped at ingest and returned on the retrieval hit |
+| **Connector read used directly in a run** | an agent reads a Drive file mid-run and asserts from it | full source identity, minted on the tool result; never stored |
+| **Live web / MCP tool** | `core/web-research` search, or an imported MCP tool | whatever the tool's response carries; see §CITE-QUAL |
+| **Agent-written content (rev4)** | a member writes a summary into its workspace and a later member retrieves it | no external source at all — `source_system: "agent"`, `source_id` the ingest job id, `revision` the content hash, `url: null` |
+
+The third row is why rev2 widened the scope. An agent citing a web page it just read is the same guarantee problem as an agent citing an ingested file, and rev1 covered only the second.
+
+**The fourth row is the only one with no external source, and it exists to be legible rather than resolvable.** Its `url` is null by construction: there is nothing outside the platform to open. Its value is that a reader can tell at a glance that a cited passage was written by an agent rather than read from the world — which the previous behaviour, minting it as `"upload"`, actively concealed.
+
+**One minting function, shared by all four rows.** It lives in `packages/citation/` and takes a `SourceRef`; it is not an ingest helper that the other paths borrow. Rows two and three have no stored record to stamp, so a minting function shaped around ingest would have to be rewritten for them.
+
+**Rows two and three depend on one declaration that rev3 introduced for a different reason.** §CITE-QUAL requires each tool to declare whether it returns *assertable content* or only a *status*, so that action tools are never graded. The same declaration answers "which tool results must be minted for". It is authored once and consumed twice, and the minting work for rows two and three therefore sequences after it.
+
+**The model is never in this path.** It receives citations as a reserved result key it cannot write, exactly as it receives `data_absent` (#580). Its only power is to reference an id.
+
+### How a citation is carried through ingest
+
+`IngestTextRequest`, `BatchIngestItem`, and `InternalIngestRequest` each gain one optional field:
+
+```jsonc
+"source": {                      // SourceRef — the inbound half
+  "source_system": "github",
+  "source_id": "OraclousAI/oraclous-backend:README.md",
+  "revision": "e3b0c44298fc1c14…",   // optional inbound
+  "revision_kind": "blob_sha",        // optional inbound
+  "url": "https://github.com/…/blob/e3b0c44/README.md",
+  "title": "README.md",
+  "author": { "display_name": "…", "source_handle": "…" },
+  "permission_ref": null
+}
+```
+
+The platform computes `citation_id` and `retrieved_at` server-side. When `revision` is absent inbound, the platform sets it to the SHA-256 of the ingested content with `revision_kind: "content_hash"` — so `revision` is **never null outbound**, and a source with no version concept still supersedes correctly on content change.
+
+**One consequence of dropping the locator.** Every chunk of one ingested document now shares a single `citation_id`, because they share a document version. That is correct for v1: a citation answers "which document, at which version", and the reader opens it. It is also why sub-document precision, when it arrives, is an additional field and never a change to identity.
+
+**Who fills it: the connector, and only the connector.** The connector is the one party holding the source-native identity — the GitHub API response the platform already receives carries `sha` and `html_url`, and today the connector throws both away. The ingest caller passes `source` through **unmodified** and never synthesizes one.
+
+**The `upload` path, corrected (rev2).** rev1 said an absent `source` yields an `upload` citation whose `url` is "the platform's own document URL". **That URL does not exist.** Verified during briefing: `GET /api/v1/graphs/{id}/documents` and `GET .../jobs/{job_id}` return ingest-job metadata only, and `GET .../documents/{job_id}` is not a route. So an uploaded file is currently the one source the platform itself cannot resolve, which is the same defect this Contract exists to fix — and the one case where we have no third party to blame.
+
+Until that route exists, an `upload` citation carries `source_id` = the ingest job id, `revision` = the content hash, and `url: null`. Serving an uploaded document back is tracked as its own work item; it is small, and it should not stay open long.
+
+**`citation` is server-stamped and unforgeable.** A caller- or LLM-supplied `citation` (or any `source_*` key) inside `properties` is **stripped**, exactly as `organisation_id` and `ingestion_source` are stripped today (`knowledge-graph-service/multi_tenant.py`, threat T1). `ingestion_source` is retained for backward compatibility and becomes derived from `citation.title`.
+
+**In the agent loop.** The knowledge-retriever connector returns each hit with its `citation`, and the run records the set of `citation_id`s it served. This is a **reserved result key** the platform sets and the model cannot — the same mechanism as `data_absent` (#580).
+
+### What "resolves" means, mechanically (rev4, markers narrowed in rev5)
+
+Two rules, both blocking, both evaluated **in platform code** at the end of a run. Neither depends on anything a third-party tool chooses to send, because the platform mints the id itself.
+
+| # | Rule | Kills |
+| --- | --- | --- |
+| 1 | An answer **names a source in prose** while carrying no `citation_id` for it. The markers are **`source:` and `sources:`**, and nothing else (rev5). | `(source: partner-agreement.md)` — a fact pointing at a source the platform never issued. |
+| 2 | A cited `citation_id` is **not in the set the platform served** to that run. | Every hallucinated source: an id the model invented, or an id served to some other run. |
+
+Otherwise it PASSES.
+
+**The two rules are not the same kind of check, and the difference must not be blurred.**
+
+**Rule 2 verifies.** It tests membership of a set the platform minted, recorded, and served. The model never sees the derivation, so it cannot forge its way into that set. This is the guarantee the Contract exists to give.
+
+**Rule 1 does not verify anything.** `source:` / `sources:` is a prose heuristic: it guesses that a member is attributing a fact, and it cannot check any claim against anything. It is **a nudge inside a feedback loop, not a guarantee**, and it is defensible only on that footing — a blocked draft costs the member one iteration rather than costing the user an answer. Limit 2 below states the consequence directly: if the feedback loop is ever removed, this check stops being acceptable. Anyone reading rule 1 as a second guarantee has misread it.
+
+**Two mechanisms, one token (rev5).** `source_tool_call_id` was a rule 1 marker under rev4 and is not one now, because a real verifier already owns it. [`#642`](https://github.com/OraclousAI/oraclous-backend/issues/642)'s `validate_grounding` resolves every declared `source_tool_call_id` against an `ok` tool step in the member's own trace and fails closed on a missing, null, unresolvable, or errored id. The division has to be stated plainly, because it is the thing a future reader will get wrong:
+
+> **#642 answers "did this call really happen". §CITE answers "was this source really served". Two mechanisms, two questions, one token — and only one of them can verify it.**
+
+The cost of getting this wrong was not theoretical. The platform *orders* every tool-declaring member to emit that token (`GROUNDING_DIRECTIVE`), so on the deployed stack a live member was corrected four times and killed at `citation_unresolved` for obeying its own instructions, while #642 was satisfied throughout. Harness execution `15674e6f-73c1-4467-b6fa-a33177924330` is the record. A gate should be code that checks platform state, never a pattern that reads prose over a token something else already proves.
+
+**What this Contract guarantees, and where the guarantee stops.** §CITE guarantees **provenance**: the cited source exists, and it was really served to this run. It does **not** check **fidelity** — whether the cited source actually supports the sentence beside it. A model can put a served `cit_` id next to a wholly invented claim and pass both rules. That gap is deliberately outside this Contract, and it is the open question on [`oraclous-backend#789`](https://github.com/OraclousAI/oraclous-backend/issues/789).
+
+**An answer that cites nothing at all is not a violation.** The model is not a source of truth, so anything it says without a citation is its own reasoning, and reasoning needs no source. This covers the case the gate must never punish: a member that retrieves, reads what came back, and honestly reports that it has no answer. That is the product working. *Why* a member found nothing is a separate concern with a hundred causes — retrieval quality, an empty workspace, a poor query — and it is a retrieval problem, not a citation problem. This gate does not pretend to diagnose it.
+
+**Rule 1 replaces rev2's rule 1, which is deleted.** The old rule ("an asserted fact carries no `citation_id`") cannot be evaluated in code — separating an asserted fact from reasoning is a judgment call, and a gate implemented as a model instruction is a gate that can be talked out of. The replacement checks the one thing that is both mechanical and diagnostic: the member pointed at a source, so a citation was available to it, and it wrote prose instead.
+
+**Where the checker runs: in the platform, not as a model.** UC-E1 draws `citation-checker` as a team member, and a harness member may still review citation *quality* as an ordinary reviewer. The **guarantee**, however, is code at the run boundary.
+
+### What a violation does (rev4)
+
+**A blocked answer goes back to the member, not to the user.** The member receives a specific message naming the defect and the remedy, and produces another answer. Only a member that cannot satisfy the rules within the run's iteration budget fails the run.
+
+| Rule | Case | What the member is told |
+| --- | --- | --- |
+| 1 | the run served at least one citation | Your answer names a source in text but carries no citation. Cite the `citation_id` you were given for that source, or remove the claim. |
+| 1 | **the run served nothing** (rev5) | Your answer names a source in text but carries no citation. No citations were served to this run, so there is no `citation_id` for you to cite — remove the source attribution from your answer and state the claim on your own account, or drop the claim. |
+| 2 | — | You cited an id that was never served to this run. Cite only ids from the results you were given. |
+
+**Stated reason:** the member is the only party that can fix the defect, and an error it cannot act on is one it can only retry blindly — the failure [`oraclous-backend#692`](https://github.com/OraclousAI/oraclous-backend/issues/692) recorded, where a member was told "409" and simply repeated the failing call.
+
+**Why rule 1 has two messages (rev5).** The verdict is the same in both cases — pointing at a source the platform never issued is the defect whatever the run served, and a run that served nothing is exactly the run where a prose source is most likely to be invented. What differs is the **remedy**. rev4's single message names a remedy that does not exist on an empty served set, and a live member burned its entire iteration budget discovering that. A correction the member cannot perform is the #692 defect again, reached from a different direction.
+
+**Terminal precedence (rev5, [`oraclous-backend#792`](https://github.com/OraclousAI/oraclous-backend/issues/792)).** One line, for the case where the budget is spent, the last draft was blocked by this gate, *and* the run's retrieval reported data-absence ([`#580`](https://github.com/OraclousAI/oraclous-backend/issues/580)):
+
+> **Terminal precedence:** a rule 2 violation outranks every degrade; a rule 1-only block on a data-absent run degrades as `empty_retrieval` (ADR-021).
+
+Three branches follow from it. A block **including a rule 2 violation** ends `ESCALATED` / `citation_unresolved`, whatever the retrieval reported — a forged citation is WRONG data, which is this Contract's core threat, and shipping it as a flagged PARTIAL is the outcome the Contract rejected. A **rule 1-only** block on a data-absent run ends `PARTIAL` / `empty_retrieval`: a `Sources:` line on a nothing-served run is the accepted Limit 2 misfire landing on MISSING data, and Limit 2 priced that misfire at one iteration, never at a hard failure of the honest decline rev4 exists to protect. A **rule 1-only** block on a run whose retrieval *did* return data is unchanged — `ESCALATED` / `citation_unresolved`, because the member had sources to cite and spent the budget not citing them.
+
+**Both obvious answers are wrong, which is why the clause splits by rule.** "The gate always wins" hard-fails the protected member over a single word: the same data-absent decline flips outcome on whether it wrote `Sources:`. "Empty retrieval always wins" is worse — a member that kept forging ids until the cap would ship its forged-id answer to the user as PARTIAL output. Each of those positions is right about one rule and wrong about the other.
+
+**Two limits the implementing brief must set.**
+
+**Limit 1 — retries are finite.** A member that cannot satisfy the gate must not loop. The run's existing iteration budget is the bound, and what a run that exhausts it reports is the terminal-precedence clause above.
+
+**Limit 2 — rule 1's detection will misfire, and that is tolerable only because of the feedback loop.** "I edited `partner-agreement.md` for you" names a file and asserts no fact; a naive pattern blocks it. Under rev4 that costs the member one iteration rather than costing the user an answer, which is what makes a prose-shaped check acceptable here where a hard block would not be. **If the feedback loop is ever removed, this check stops being acceptable and must be re-derived.** The detection is narrowed as far as it can be, and the markers are named in the Contract (`source:`, `sources:` — rev5) rather than left to a regex written at implementation time. **Changing that list is the Contract's business, never the implementer's.**
+
+**What rev1 had as rules 3 and 4 is not gone — it moved.** Requiring a document id, a version, and a link is right, but enforcing it mid-answer punishes the user for a tool limitation at the moment nothing can be done about it. It is enforced at §CITE-QUAL instead, when a tool is connected and an admin can still choose a different one. Under rev3 a tool with no document identity is refused there outright, so by the time an answer is written the only thing that can still be missing is the **version** — and a missing version degrades the citation rather than failing the answer. The console shows exactly what is known and what is not.
+
+**Deliberately NOT in the check: fetching the `url` to confirm the document still exists.** That is freshness and deletion propagation (§5.3 capability 8, UC-E1 acceptance 3), a separate mechanism on its own cadence. Folding it in would make an in-loop gate network-bound and rate-limited, and would conflate "well-formed and really served" with "unchanged at the source". Both are needed; they are not the same gate.
+
+Checked against the recorded PoC output, the `(source: partner-agreement.md)` half of that run fails at rule 1 — a filename in prose, pointing at a source the platform never issued. Its invented `source_tool_call_id=call_...` is caught by [`#642`](https://github.com/OraclousAI/oraclous-backend/issues/642) rather than here (rev5), which is where it was always better caught: #642 can tell whether the call actually ran, and §CITE cannot. That was the state before any of this shipped. Since [`oraclous-backend#742`](https://github.com/OraclousAI/oraclous-backend/issues/742) a retrieval hit carries a real citation; since [`#743`](https://github.com/OraclousAI/oraclous-backend/issues/743) a run records what it served; and since [`#782`](https://github.com/OraclousAI/oraclous-backend/issues/782) the gate itself runs at the run boundary, so a member writing that same prose is corrected and re-answers.
+
+### §CITE-QUAL — a tool that cannot cite its sources is refused at connect time (rev3)
+
+Our own connectors always carry document identity, because we write them: GitHub gives a repo, a path and a commit; Drive gives a file id and a revision; a REST or SQL read gives an addressable record. **The uncertainty is confined to tools we did not write** — an imported MCP server returns whatever shape its author chose. One Notion MCP returns a page id, a URL and an edit timestamp. Another returns a title and a wall of text.
+
+That is a **procurement problem, not an answer-time problem**. The admin connecting the tool is the person who can fix it, and connect time is the moment they can still pick something else.
+
+Each **content-returning** tool is graded at connect or import time:
+
+| Grade | Meaning | Consequence |
+| --- | --- | --- |
+| `exact` | document identity, a version, and an openable link | permitted |
+| `document` | document identity and a link, no version | permitted; "as of" falls back to read time |
+| `weak` | the connection is known, the document is not | **refused** — the tool cannot be connected, and the admin is told why |
+
+**A `weak` tool is refused, not warned (rev3).** Reliable alternatives exist for every source class in the portfolio, so tolerating a tool that cannot describe its own output buys nothing and costs the guarantee. A warning that an admin can click past is a guarantee with a hole in it.
+
+This rule needs two limits, or it refuses things it was never aimed at.
+
+**Limit 1 — it applies only to tools that return assertable content.** Most of the catalogue returns a *status*, not content: open a pull request, send a message, write a file, deliver a report. Those have no source to cite and are never graded. A tool declares which kind it is; only the content-returning kind is gated. Getting this wrong would refuse half the registry, so it is a first-class part of the rule rather than a footnote.
+
+**Limit 2 — first-party sources must pass our own gate before it is switched on.** An uploaded file currently grades `weak`, because no route serves an uploaded document back (see the `upload` note above). Under rev3 that would refuse our own upload path, which is absurd. Serving an uploaded document back is therefore a **prerequisite** for enabling the refusal, not a follow-up to it.
+
+Two points stay with the implementing brief, because they are mechanism and not shape. **How the grade is determined** — reading a declared output schema is cheap but many MCP servers declare nothing useful, while a probe call is reliable but needs a credential and may cost money; a hybrid is likely right and should be argued rather than assumed. **Where the grade is stored** — the tool instance in the capability registry is the obvious home, and it should be confirmed against the existing configure flow rather than given a new table by reflex.
+
+### Author is in; label and confidence are not
+
+**`author` is in this Contract.** It is a property of the source record, it arrives on the same connector call that yields the content, and it is unrecoverable later. UC-D1 acceptance 3 ("a decision made six months ago is retrievable with its rationale and **its author**") depends on it. `created_by = "multi_tenant_pipeline"` is the pipeline, not a person, and is not a substitute.
+
+**`label` (DIRECT / INFERRED / ABSENCE / ASSUMPTION), `confidence`, and `supersedes` are NOT.** They are properties of a claim the platform *derived*, not of a source document; an ingested chunk is DIRECT by construction, so the label carries no information until a claim record exists separately from a source chunk. That object is the Claim Registry and the UC-E2 evidence ledger. Freezing the shape before the object exists would be guessing.
+
+This Contract is therefore the **source half** of the use-case glossary's knowledge record (§1.7): the claim, the source, the label, the confidence, the as-of date, the supersession pointer. It delivers the source, the as-of date (`retrieved_at`), and the supersession *mechanism* (a revision-derived `citation_id`). The claim, the label, and the confidence are the follow-on Contract, which consumes `Citation` unchanged as its `source` field.
