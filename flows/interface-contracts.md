@@ -23,7 +23,7 @@ Each contract below corresponds to a `Contract` issue in Jira. The Jira issue tr
 | Enriched graph schema (KGS recipe enrichment, #269) | — (epic #269; #270/#271/#274/#275, perf #272) | Live (KGS smoke) | See §GRAPH |
 | BYOM spend estimate (`GET /v1/harnesses/spend`) | — | Live | See §SPEND |
 | Workspace↔harness binding (G2) | — ([oraclous-backend#340](https://github.com/OraclousAI/oraclous-backend/issues/340); FE [#127](https://github.com/OraclousAI/oraclous-frontend/issues/127)) | AGREED ([ADR-029](../adr/adr-029-workspace-harness-binding.md)); BE impl open, FE #127 consumes | See §G2 |
-| Resolvable citation on any tool result | — ([oraclous-backend#735](https://github.com/OraclousAI/oraclous-backend/issues/735); FE [#194](https://github.com/OraclousAI/oraclous-frontend/issues/194)) | AGREED at **rev4** (2026-08-12), partly implemented — the data path and the run's served set have shipped; the answer-time gate has not; evidence [oraclous-backend#734](https://github.com/OraclousAI/oraclous-backend/issues/734) | See §CITE |
+| Resolvable citation on any tool result | — ([oraclous-backend#735](https://github.com/OraclousAI/oraclous-backend/issues/735); FE [#194](https://github.com/OraclousAI/oraclous-frontend/issues/194)) | AGREED at **rev5** (2026-08-13); the data path, the run's served set, and the answer-time gate have all shipped ([#742](https://github.com/OraclousAI/oraclous-backend/issues/742), [#743](https://github.com/OraclousAI/oraclous-backend/issues/743), [#782](https://github.com/OraclousAI/oraclous-backend/issues/782)); evidence [oraclous-backend#734](https://github.com/OraclousAI/oraclous-backend/issues/734) | See §CITE |
 
 > ⚠ **Index integrity (31 May 2026, solution-architect).** Of the three rows, only the Gateway error envelope has a real `Contract`-type Jira issue: [**ORA-56**](https://oraclous.atlassian.net/browse/ORA-56), backfilled 31 May 2026. The keys previously shown for the other two rows were **wrong** — "ORA-12" is the R0.5 0d substrate-test-harness story and "ORA-19" is the deferred B1 isolation story; neither the Auth-token-claims nor the OHM-manifest-envelope shape has a Contract issue yet (the same applies to the `(ORA-12)`/`(ORA-19)` keys in the §1/§2 headers below). Backfilling those two is **pending** — the 31 May coordinator decision limited this pass to the gateway envelope. Until then, treat §1/§2 as shape-of-record without a tracking Contract.
 
@@ -253,7 +253,7 @@ Decisions pinned at acceptance: a shared `PLATFORM_ORG` agent **can** bind to a 
 
 ## §CITE — Resolvable citation on any tool result (UC-D1 / UC-E1)
 
-Owner: solution-architect. Status: **AGREED, unimplemented** — no side has built it. Driving evidence: the UC-D1 proof of concept, [`oraclous-backend#734`](https://github.com/OraclousAI/oraclous-backend/issues/734), filed against §5.3 capability 6. Tracking Contract: [`oraclous-backend#735`](https://github.com/OraclousAI/oraclous-backend/issues/735); frontend consumer: [`oraclous-frontend#194`](https://github.com/OraclousAI/oraclous-frontend/issues/194); follow-on knowledge-record Contract: [`oraclous-backend#741`](https://github.com/OraclousAI/oraclous-backend/issues/741).
+Owner: solution-architect. Status: **AGREED at rev5, shipped on the backend** — the minting path ([`#742`](https://github.com/OraclousAI/oraclous-backend/issues/742)), the run's served set ([`#743`](https://github.com/OraclousAI/oraclous-backend/issues/743)), and the answer-time gate with its correction loop ([`#782`](https://github.com/OraclousAI/oraclous-backend/issues/782)) are live at the run boundary and proven on the deployed stack against a live model. The frontend consumer is open. Driving evidence: the UC-D1 proof of concept, [`oraclous-backend#734`](https://github.com/OraclousAI/oraclous-backend/issues/734), filed against §5.3 capability 6. Tracking Contract: [`oraclous-backend#735`](https://github.com/OraclousAI/oraclous-backend/issues/735); frontend consumer: [`oraclous-frontend#194`](https://github.com/OraclousAI/oraclous-frontend/issues/194); follow-on knowledge-record Contract: [`oraclous-backend#741`](https://github.com/OraclousAI/oraclous-backend/issues/741).
 
 > **rev2 (2026-08-09, Reza).** Three decisions, taken after rev1 was recorded and before any code was written.
 >
@@ -275,6 +275,12 @@ Owner: solution-architect. Status: **AGREED, unimplemented** — no side has bui
 > 8. **Rule 1 is deleted and replaced.** rev2's rule 1 ("an asserted fact carries no `citation_id`") is not implementable in platform code: separating an asserted fact from reasoning is a judgment call, and this Contract forbids a model-implemented gate. It is replaced by the narrower rule in §"What 'resolves' means". **Stated reason:** the first implementation approximated it as "the run served sources and the answer cited none", which fails an honest decline — a member that searches, reads what came back, and reports that it has no answer. That member is behaving correctly. Refusing to hallucinate is the product working, and a gate that punishes it is worse than no gate.
 > 9. **A violation is returned to the model, not to the user.** A blocked answer is fed back to the member with a specific, actionable message naming what is wrong and what to do, and the member answers again. **Stated reason:** the member is the only party that can fix the defect, and it can only act on an error that says what to change. Retries are bounded by the run's existing iteration budget.
 > 10. **A run returns citation records, not bare ids.** The set a run served is exposed as the citation objects themselves. **Stated reason:** a list of opaque ids forces the console into one lookup per source before it can draw a link — a second round trip over data the run already held, on the surface where latency is most visible.
+>
+> **rev5 (2026-08-12 / 2026-08-13, Reza).** Three decisions taken *while the gate was being built*. Each one closes a defect that only a live run on the deployed stack exposed.
+>
+> 11. **`source_tool_call_id` is not a rule 1 marker** ([`oraclous-backend#788`](https://github.com/OraclousAI/oraclous-backend/issues/788), ruled 2026-08-12). rev4's marker list was `source:`, `sources:`, `source_tool_call_id`; the third is removed. `source:` and `sources:` stay. **Stated reason:** [`#642`](https://github.com/OraclousAI/oraclous-backend/issues/642)'s `validate_grounding` already resolves every declared `source_tool_call_id` against an `ok` tool step in the member's own trace, failing closed on a missing, null, unresolvable, or errored id. Rule 1 watching the same token with a prose pattern laid a **guess over a working proof**, and the guess won — see "Two mechanisms, one token" below.
+> 12. **Terminal precedence splits by rule, not by mechanism** ([`oraclous-backend#792`](https://github.com/OraclousAI/oraclous-backend/issues/792), ruled 2026-08-13). Neither the gate nor the data-absence degrade blanket-outranks the other; what wins follows what the blocking rule actually caught. Recorded in full under "What a violation does".
+> 13. **A correction must name a remedy the member can perform.** When a run served nothing, rule 1's message no longer tells the member to cite an id it was never given. **Stated reason:** on the deployed stack a live member spent all 25 of its iterations being corrected toward an impossible instruction. That is the [`#692`](https://github.com/OraclousAI/oraclous-backend/issues/692)/[`#693`](https://github.com/OraclousAI/oraclous-backend/issues/693) failure again — an error a member can only retry blindly. The correction strings are Contract text, so both variants are recorded here.
 
 ### Why this crosses the repo boundary
 
@@ -418,16 +424,30 @@ Until that route exists, an `upload` citation carries `source_id` = the ingest j
 
 **In the agent loop.** The knowledge-retriever connector returns each hit with its `citation`, and the run records the set of `citation_id`s it served. This is a **reserved result key** the platform sets and the model cannot — the same mechanism as `data_absent` (#580).
 
-### What "resolves" means, mechanically (rev4)
+### What "resolves" means, mechanically (rev4, markers narrowed in rev5)
 
 Two rules, both blocking, both evaluated **in platform code** at the end of a run. Neither depends on anything a third-party tool chooses to send, because the platform mints the id itself.
 
 | # | Rule | Kills |
 | --- | --- | --- |
-| 1 | An answer **names a source in prose** while carrying no `citation_id` for it. | `(source: partner-agreement.md)` — a fact pointing at a source the platform never issued. |
-| 2 | A cited `citation_id` is **not in the set the platform served** to that run. | The invented `source_tool_call_id=call_...`, and every hallucinated source. |
+| 1 | An answer **names a source in prose** while carrying no `citation_id` for it. The markers are **`source:` and `sources:`**, and nothing else (rev5). | `(source: partner-agreement.md)` — a fact pointing at a source the platform never issued. |
+| 2 | A cited `citation_id` is **not in the set the platform served** to that run. | Every hallucinated source: an id the model invented, or an id served to some other run. |
 
 Otherwise it PASSES.
+
+**The two rules are not the same kind of check, and the difference must not be blurred.**
+
+**Rule 2 verifies.** It tests membership of a set the platform minted, recorded, and served. The model never sees the derivation, so it cannot forge its way into that set. This is the guarantee the Contract exists to give.
+
+**Rule 1 does not verify anything.** `source:` / `sources:` is a prose heuristic: it guesses that a member is attributing a fact, and it cannot check any claim against anything. It is **a nudge inside a feedback loop, not a guarantee**, and it is defensible only on that footing — a blocked draft costs the member one iteration rather than costing the user an answer. Limit 2 below states the consequence directly: if the feedback loop is ever removed, this check stops being acceptable. Anyone reading rule 1 as a second guarantee has misread it.
+
+**Two mechanisms, one token (rev5).** `source_tool_call_id` was a rule 1 marker under rev4 and is not one now, because a real verifier already owns it. [`#642`](https://github.com/OraclousAI/oraclous-backend/issues/642)'s `validate_grounding` resolves every declared `source_tool_call_id` against an `ok` tool step in the member's own trace and fails closed on a missing, null, unresolvable, or errored id. The division has to be stated plainly, because it is the thing a future reader will get wrong:
+
+> **#642 answers "did this call really happen". §CITE answers "was this source really served". Two mechanisms, two questions, one token — and only one of them can verify it.**
+
+The cost of getting this wrong was not theoretical. The platform *orders* every tool-declaring member to emit that token (`GROUNDING_DIRECTIVE`), so on the deployed stack a live member was corrected four times and killed at `citation_unresolved` for obeying its own instructions, while #642 was satisfied throughout. Harness execution `15674e6f-73c1-4467-b6fa-a33177924330` is the record. A gate should be code that checks platform state, never a pattern that reads prose over a token something else already proves.
+
+**What this Contract guarantees, and where the guarantee stops.** §CITE guarantees **provenance**: the cited source exists, and it was really served to this run. It does **not** check **fidelity** — whether the cited source actually supports the sentence beside it. A model can put a served `cit_` id next to a wholly invented claim and pass both rules. That gap is deliberately outside this Contract, and it is the open question on [`oraclous-backend#789`](https://github.com/OraclousAI/oraclous-backend/issues/789).
 
 **An answer that cites nothing at all is not a violation.** The model is not a source of truth, so anything it says without a citation is its own reasoning, and reasoning needs no source. This covers the case the gate must never punish: a member that retrieves, reads what came back, and honestly reports that it has no answer. That is the product working. *Why* a member found nothing is a separate concern with a hundred causes — retrieval quality, an empty workspace, a poor query — and it is a retrieval problem, not a citation problem. This gate does not pretend to diagnose it.
 
@@ -439,24 +459,35 @@ Otherwise it PASSES.
 
 **A blocked answer goes back to the member, not to the user.** The member receives a specific message naming the defect and the remedy, and produces another answer. Only a member that cannot satisfy the rules within the run's iteration budget fails the run.
 
-| Rule | What the member is told |
-| --- | --- |
-| 1 | Your answer names a source in text but carries no citation. Cite the `citation_id` you were given for that source, or remove the claim. |
-| 2 | You cited an id that was never served to this run. Cite only ids from the results you were given. |
+| Rule | Case | What the member is told |
+| --- | --- | --- |
+| 1 | the run served at least one citation | Your answer names a source in text but carries no citation. Cite the `citation_id` you were given for that source, or remove the claim. |
+| 1 | **the run served nothing** (rev5) | Your answer names a source in text but carries no citation. No citations were served to this run, so there is no `citation_id` for you to cite — remove the source attribution from your answer and state the claim on your own account, or drop the claim. |
+| 2 | — | You cited an id that was never served to this run. Cite only ids from the results you were given. |
 
 **Stated reason:** the member is the only party that can fix the defect, and an error it cannot act on is one it can only retry blindly — the failure [`oraclous-backend#692`](https://github.com/OraclousAI/oraclous-backend/issues/692) recorded, where a member was told "409" and simply repeated the failing call.
 
+**Why rule 1 has two messages (rev5).** The verdict is the same in both cases — pointing at a source the platform never issued is the defect whatever the run served, and a run that served nothing is exactly the run where a prose source is most likely to be invented. What differs is the **remedy**. rev4's single message names a remedy that does not exist on an empty served set, and a live member burned its entire iteration budget discovering that. A correction the member cannot perform is the #692 defect again, reached from a different direction.
+
+**Terminal precedence (rev5, [`oraclous-backend#792`](https://github.com/OraclousAI/oraclous-backend/issues/792)).** One line, for the case where the budget is spent, the last draft was blocked by this gate, *and* the run's retrieval reported data-absence ([`#580`](https://github.com/OraclousAI/oraclous-backend/issues/580)):
+
+> **Terminal precedence:** a rule 2 violation outranks every degrade; a rule 1-only block on a data-absent run degrades as `empty_retrieval` (ADR-021).
+
+Three branches follow from it. A block **including a rule 2 violation** ends `ESCALATED` / `citation_unresolved`, whatever the retrieval reported — a forged citation is WRONG data, which is this Contract's core threat, and shipping it as a flagged PARTIAL is the outcome the Contract rejected. A **rule 1-only** block on a data-absent run ends `PARTIAL` / `empty_retrieval`: a `Sources:` line on a nothing-served run is the accepted Limit 2 misfire landing on MISSING data, and Limit 2 priced that misfire at one iteration, never at a hard failure of the honest decline rev4 exists to protect. A **rule 1-only** block on a run whose retrieval *did* return data is unchanged — `ESCALATED` / `citation_unresolved`, because the member had sources to cite and spent the budget not citing them.
+
+**Both obvious answers are wrong, which is why the clause splits by rule.** "The gate always wins" hard-fails the protected member over a single word: the same data-absent decline flips outcome on whether it wrote `Sources:`. "Empty retrieval always wins" is worse — a member that kept forging ids until the cap would ship its forged-id answer to the user as PARTIAL output. Each of those positions is right about one rule and wrong about the other.
+
 **Two limits the implementing brief must set.**
 
-**Limit 1 — retries are finite.** A member that cannot satisfy the gate must not loop. The run's existing iteration budget is the bound; the brief states what a run that exhausts it reports.
+**Limit 1 — retries are finite.** A member that cannot satisfy the gate must not loop. The run's existing iteration budget is the bound, and what a run that exhausts it reports is the terminal-precedence clause above.
 
-**Limit 2 — rule 1's detection will misfire, and that is tolerable only because of the feedback loop.** "I edited `partner-agreement.md` for you" names a file and asserts no fact; a naive pattern blocks it. Under rev4 that costs the member one iteration rather than costing the user an answer, which is what makes a prose-shaped check acceptable here where a hard block would not be. **If the feedback loop is ever removed, this check stops being acceptable and must be re-derived.** The brief still narrows the detection as far as it can, and names the patterns explicitly rather than leaving them to a regex written at implementation time.
+**Limit 2 — rule 1's detection will misfire, and that is tolerable only because of the feedback loop.** "I edited `partner-agreement.md` for you" names a file and asserts no fact; a naive pattern blocks it. Under rev4 that costs the member one iteration rather than costing the user an answer, which is what makes a prose-shaped check acceptable here where a hard block would not be. **If the feedback loop is ever removed, this check stops being acceptable and must be re-derived.** The detection is narrowed as far as it can be, and the markers are named in the Contract (`source:`, `sources:` — rev5) rather than left to a regex written at implementation time. **Changing that list is the Contract's business, never the implementer's.**
 
 **What rev1 had as rules 3 and 4 is not gone — it moved.** Requiring a document id, a version, and a link is right, but enforcing it mid-answer punishes the user for a tool limitation at the moment nothing can be done about it. It is enforced at §CITE-QUAL instead, when a tool is connected and an admin can still choose a different one. Under rev3 a tool with no document identity is refused there outright, so by the time an answer is written the only thing that can still be missing is the **version** — and a missing version degrades the citation rather than failing the answer. The console shows exactly what is known and what is not.
 
 **Deliberately NOT in the check: fetching the `url` to confirm the document still exists.** That is freshness and deletion propagation (§5.3 capability 8, UC-E1 acceptance 3), a separate mechanism on its own cadence. Folding it in would make an in-loop gate network-bound and rate-limited, and would conflate "well-formed and really served" with "unchanged at the source". Both are needed; they are not the same gate.
 
-Checked against the recorded PoC output, every citation in that run fails at rule 1 — a filename in prose, pointing at a source the platform never issued. That was the state before any of this shipped; since [`oraclous-backend#742`](https://github.com/OraclousAI/oraclous-backend/issues/742) a retrieval hit carries a real citation, and since [`#743`](https://github.com/OraclousAI/oraclous-backend/issues/743) a run records what it served. What has not shipped is the gate itself, so nothing yet stops a member from writing that same prose.
+Checked against the recorded PoC output, the `(source: partner-agreement.md)` half of that run fails at rule 1 — a filename in prose, pointing at a source the platform never issued. Its invented `source_tool_call_id=call_...` is caught by [`#642`](https://github.com/OraclousAI/oraclous-backend/issues/642) rather than here (rev5), which is where it was always better caught: #642 can tell whether the call actually ran, and §CITE cannot. That was the state before any of this shipped. Since [`oraclous-backend#742`](https://github.com/OraclousAI/oraclous-backend/issues/742) a retrieval hit carries a real citation; since [`#743`](https://github.com/OraclousAI/oraclous-backend/issues/743) a run records what it served; and since [`#782`](https://github.com/OraclousAI/oraclous-backend/issues/782) the gate itself runs at the run boundary, so a member writing that same prose is corrected and re-answers.
 
 ### §CITE-QUAL — a tool that cannot cite its sources is refused at connect time (rev3)
 
