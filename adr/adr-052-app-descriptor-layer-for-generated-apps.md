@@ -20,6 +20,8 @@ Two ways to close that gap were on the table. Put the app's shape directly on th
 
 The same gap recurs for "an answer is a hypothesis, not a given" specifically: is that one app's private vocabulary, or something the platform understands generically for any run input, so that every future generated app doesn't reinvent it?
 
+**An app is never one fixed shape — it can be born two different ways, and the descriptor must fit both.** The validation desk is born *with* its team: the user's first message already states the job ("evaluate my startup idea"), so the app's form and the team are designed together before that team ever runs once. A CodeRabbit-style app is born *from* a team that already exists and already ran, for whatever the user originally asked it to do; only afterward does the user ask to keep that exact setup and run it again through a form. In the first case the descriptor is authored up front, alongside the team. In the second, it has to be built after the fact, by inspecting what that specific team already reads in and already produces out. Either way the descriptor is one app's own field-to-run-input mapping, tied to one team — never a shape shared across apps; only its authoring moment differs.
+
 ## Decision
 
 1. **A separate app-descriptor layer, not the OHM manifest, carries an app's input/output shape.** The descriptor declares the app's own fields and how each maps onto the underlying team run's declared `inputs` keys. `validate_input_keys` keeps checking against the run manifest's declared keys exactly as it does today — the descriptor is what produces a conforming `inputs` dict before that check runs, not a second manifest to teach the check about.
