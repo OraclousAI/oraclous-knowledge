@@ -30,6 +30,35 @@ The same gap recurs for "an answer is a hypothesis, not a given" specifically: i
 
 3. **The validation desk ships a one-off field now and migrates once the descriptor layer exists.** #845 blocked the validation desk's approve-starts-the-run step on this decision landing first; that cost is real and the desk does not need to carry it further. [#846](https://github.com/OraclousAI/oraclous-backend/issues/846) adds `answers[].hypothesis` as a field private to that one app, explicitly documented as temporary, with no change to `validate_input_keys`'s general contract. It migrates onto the descriptor layer once decisions 1 and 2 are implemented — tracked as a follow-up, not reopening this ADR.
 
+4. **The descriptor is a single YAML file with a fixed, versioned top-level structure — the same discipline OHM (ADR-002) already applies to team manifests.** Every app descriptor has the same sections; only the content inside them is app-specific. This keeps authoring and validation tooling uniform across every app, however different their forms are from each other.
+
+   ```yaml
+   app_descriptor_version: "1.0"
+   metadata:
+     id: validation-desk
+     name: "Validation Desk"
+     description: "Evaluates whether a startup idea is worth pursuing."
+   origin: authored          # "authored" (built with a new team) | "derived" (built from a team that already ran)
+   target:
+     team_id: <uuid>          # the team run this app wraps
+   inputs:
+     - key: idea
+       label: "What is your idea?"
+       type: string
+       maps_to: task            # the run's declared inputs key this field becomes
+     - key: answers
+       label: "Follow-up answers"
+       type: list
+       maps_to: answers
+       hypothesis_flaggable: true   # this field may carry decision 2's general flag
+   outputs:
+     - key: verdict
+       label: "Verdict"
+       from: result.verdict         # where in the run's output this is read from
+   ```
+
+   `origin` records which of the two authoring moments from the Context section produced this file. For `origin: derived`, a tool builds `target`, `inputs`, and `outputs` automatically by reading the target team's own manifest — its already-declared `inputs` keys and its output shape — and a human only supplies `metadata`. For `origin: authored`, a human writes `inputs` and `outputs` by hand, since no run exists yet to read them from.
+
 ## Consequences
 
 ### Positive
@@ -41,12 +70,12 @@ The same gap recurs for "an answer is a hypothesis, not a given" specifically: i
 
 ### Negative
 
-* Two things now describe an app end to end — the descriptor and the run manifest — instead of one. Whoever authors or generates an app must keep both consistent; the descriptor's schema and its resolution semantics still need to be designed (not specified by this ADR).
+* Two things now describe an app end to end — the descriptor and the run manifest — instead of one. Whoever authors or generates an app must keep both consistent; the descriptor's resolution semantics still need to be designed (decision 4 fixes the shape, not the resolution point).
 * #846 is deliberate debt: its field is known to be replaced. If the descriptor layer slips, that debt sits on the validation desk indefinitely — worth tracking, not blocking.
 
 ## Scope not decided here
 
-The descriptor layer's concrete schema, storage location, versioning story, and resolution point (build time vs. run-create time) are follow-up design work, not settled by this ADR. Likewise the exact runtime behavior a hypothesis-flagged input triggers inside a team run is out of scope here.
+Decision 4 fixes the descriptor's top-level YAML shape, but its storage location, versioning/deprecation rules beyond `app_descriptor_version`, the `derived`-origin auto-fill tool, and the resolution point (build time vs. run-create time) are follow-up design work, not settled by this ADR. Likewise the exact runtime behavior a hypothesis-flagged input triggers inside a team run is out of scope here.
 
 ## See also
 
