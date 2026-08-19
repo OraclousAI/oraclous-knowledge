@@ -18,7 +18,7 @@ Never read the whole tree or open many files speculatively. `oraclous-knowledge`
 
 | Section | Summary | Files |
 | --- | --- | --- |
-| [02. ADRs — Architecture Decision Records](adr/index.md) | This hub indexes every Architecture Decision Record for the Oraclous Platform. Each ADR captures a single material decision with its context, the decision itself, and the consequences. ADRs supersede the architecture document where they are newer and explicitly named as superseding; otherwise the architecture document is canonical. | 50 |
+| [02. ADRs — Architecture Decision Records](adr/index.md) | This hub indexes every Architecture Decision Record for the Oraclous Platform. Each ADR captures a single material decision with its context, the decision itself, and the consequences. ADRs supersede the architecture document where they are newer and explicitly named as superseding; otherwise the architecture document is canonical. | 51 |
 | [01. Architecture](architecture/index.md) | The architectural source of truth for the Oraclous platform. Everything in this section is the contract that implementation conforms to. | 16 |
 | [06. Compliance](compliance/index.md) | The compliance posture for cloud-hosted deployment of Oraclous. This section captures the formal control framework, the certifications we hold or pursue, and the customer-facing trust surface. | 7 |
 | [Contracts](contracts/index.md) | This directory mirrors the Interface Contracts page from flows/interface-contracts.md. All cross-repository API shapes are recorded there. | 1 |

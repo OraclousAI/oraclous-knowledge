@@ -4,9 +4,9 @@
 
 | | |
 | --- | --- |
-| Status | Proposed |
-| Date | 2026-08-18 |
-| Deciders | solution-architect (drafted), parhamdavari (ruled) |
+| Status | Accepted 2026-08-19 — **decision 3 realized** ([oraclous-backend#846](https://github.com/OraclousAI/oraclous-backend/issues/846) closed); decisions 1, 2 and 4 not yet built ([#845](https://github.com/OraclousAI/oraclous-backend/issues/845)) |
+| Date | 2026-08-18 (accepted 2026-08-19) |
+| Deciders | solution-architect (drafted), parhamdavari (ruled 2026-08-18, accepted 2026-08-19) |
 | Driving evidence | [oraclous-backend#845](https://github.com/OraclousAI/oraclous-backend/issues/845) (Contract), first consumer [oraclous-backend#846](https://github.com/OraclousAI/oraclous-backend/issues/846) |
 | Builds on | [ADR-002](adr-002-ohm-as-canonical-manifest-format.md) (OHM is the canonical run/harness manifest; this ADR does not amend it) |
 
