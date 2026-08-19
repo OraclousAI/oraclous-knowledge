@@ -1,0 +1,6 @@
+# graphify writes a dated backup of the curated graph beside it on every rebuild
+# (graphify-out/YYYY-MM-DD/). That is a local safety copy, not a record — no commit
+# has ever carried one, and one rebuild adds ~38k lines of it.
+graphify-out/20*/
+
+.DS_Store
