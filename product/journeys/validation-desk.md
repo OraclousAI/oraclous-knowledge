@@ -409,6 +409,8 @@ same severity as a broken screen.
    reader cannot ask what supports it — which is the one move this application is built to make, and
    §4 J6 demands it of every figure on the economics screen. The brief document's next-action block
    has no label field to render, so closing this needs the schema to change first, not the screen.
+   Proposed on `oraclous-frontend#224`, which owns that document's shape: let each term be either a
+   string, as today, or the labelled-claim object the economics inputs already use.
    Until then the cost is the least checkable number on the brief, and it sits on its most-read
    card.
 6. **Distinguish "nothing was written" from "something was written that we cannot read".** A run
