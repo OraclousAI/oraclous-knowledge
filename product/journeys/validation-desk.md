@@ -124,9 +124,11 @@ is the rule:
   user should do about it. It is the only place the state is described in words, and it is a live
   region, so a screen reader hears a phase change without focus moving.
 
-**A mark is a promise.** The mark vocabulary is a step number while the row waits for the user, a
-tick when the row is done, a filled dot while research runs, an empty circle for not started, and a
-cross for a step the run never finished. The user's two rows tick as soon as a run exists — the run
+**A mark is a promise.** The vocabulary is a step number while the row waits for the user, a tick
+when the row is done, a filled dot while research runs, an empty circle for not started, a cross for
+a step the run never finished — and, on the brief row only, a mark for a document that was written
+and could not be read (§6, rules 6 and 7). Six marks, and a row still being resolved keeps the one
+the reader saw a moment ago rather than guessing ahead of the answer. The user's two rows tick as soon as a run exists — the run
 existing is proof they did their part — and only the platform's rows depend on the outcome. A tick
 on Decision brief promises a document, so a run that ended without one does not get it. Every mark
 is decorative and is paired with the same meaning in words for a screen reader.
@@ -226,6 +228,19 @@ announced to a screen reader as they change.
 
 **Design for leaving.** Twenty to ninety minutes is an errand, not a wait. The primary message is
 that the user may close the tab, not that they should stay.
+
+> **Unresolved contradiction — the email.** Two shipped surfaces tell the reader *"we will email you
+> when the brief is ready"*: the status strip's running line and the waiting screen's lede. **The
+> platform sends no such message.** There is no run-completion notification behind the gateway —
+> which is the same fact §4 J3 and `oraclous-frontend#212` both rest on when they say a paused run
+> waits forever. So the application's most repeated promise is the one thing on it that nothing can
+> keep, and by rule 1 of §6 it should not be on the screen.
+>
+> This document does not resolve it, because the resolution is a product call and not a design one:
+> either the platform gains a completion notification, or the copy changes to what leaving actually
+> costs — that the run continues and the brief will be here on return. Tracked as
+> `oraclous-frontend#233`. Until it is ruled, treat the copy as **known-wrong and quoted, not
+> endorsed**: nothing new may be built on the assumption that the user is told anything.
 
 **The poll cadence is a design decision, not a detail.** The gateway's per-address limiter has
 already taken the console down at a fast beat with two tabs open. The status endpoint carries
@@ -380,9 +395,14 @@ same severity as a broken screen.
 Per the design-system brand book, restated for the desk. Anything not reachable from the tokens
 below is a design-system pull request, not a feature pull request.
 
-1. **Mint is live signal only.** On the desk it appears in exactly two places: the focus halo, and
-   the rule on a strip whose run delivered. It never carries text — at 1.7:1 on paper it cannot —
-   and it never fills a button.
+1. **Mint is live signal only — and this application reads that rule in two parts, deliberately.**
+   Mint (`--accent`) never fills a button and never carries text: at 1.7:1 on paper it cannot, and
+   any sentence set in it would fail §7.7 outright. Its one use here is the focus halo. **Live
+   signal is therefore carried by `--success`, a green dark enough to hold contrast**, in exactly
+   two places: the dot beside the waiting screen's heading while a run is live, and the left rule of
+   a status strip whose run delivered. A run that succeeded and left no brief keeps the neutral rule
+   — the colour is a claim about the outcome too. This split is a divergence from the brand book's
+   literal wording and is recorded here rather than left to be rediscovered per screen.
 2. **No emoji.** The desk's marks are a small typographic set, each one decorative and each one
    paired with the same meaning in words for a screen reader.
 3. **Banned words in all user-facing copy**, including "journey", "robust", "leverage",
@@ -392,9 +412,12 @@ below is a design-system pull request, not a feature pull request.
 5. **Two surfaces only, paper and ink. No third surface, no gradients — and on this application, no
    shadow anywhere.** The desk is built from rules and surfaces; a shadow would import a foreign
    object into it.
-6. **The `>|` lockup never appears alone, and on this application it does not appear at all** — the
-   desk names itself in words. Reduced motion is honoured globally and the desk has no blinking
-   element; every interactive state change transitions, because an instant change reads as broken.
+6. **The `>|` lockup never appears alone, and on this application it does not appear at all** — it
+   names itself in words instead. **Nothing blinks:** the console's stepped cursor is not used here,
+   and the one animated element is the live dot, which fades between full and 35% opacity while a
+   run is live. That dot is decorative, hidden from screen readers because the strip says the same
+   thing in words, and stopped entirely under reduced motion. Every interactive state change
+   transitions, because an instant change reads as broken.
 7. **WCAG AA is the floor from the first increment.** Seven type steps, eight spacing steps, two
    radii, nothing off-scale. Every text colour at 4.5:1 or better against every ground it appears
    on, in both themes, and no colour defined only inside a theme block. Nothing below 12.5px except
@@ -453,6 +476,7 @@ Neither is designed here. When #827 is ruled, both come back to this document as
 | Mid-run questions | Designed here, not built. A later stage must be able to read input that arrived after dispatch, and today a run's input is fixed at dispatch. |
 | Decision brief and the claim drawer | Built. A live demonstration needs a synthesising member that writes one (`oraclous-backend#853`). |
 | Economics | Built, and it degrades honestly while the calculator capability is absent. |
+| The "we will email you" promise | **Shipped and wrong.** Two surfaces say it; nothing sends it (§4, J4). `oraclous-frontend#233`. |
 
 ---
 
