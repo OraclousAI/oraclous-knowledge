@@ -33,7 +33,9 @@ on its own surfaces first: a screen that fabricates a state is a screen arguing 
 
 **Status of this document.** It is the design source for `apps/desk`. The prototype artefact remains
 the visual reference for layout and wording; where the two disagree, this document wins, because a
-prototype cannot be amended and this can. Section 3.3 is already one such amendment.
+prototype cannot be amended and this can. Three such amendments are already in here: the two under
+§2's table, and the rail's identity row in §3.3. Each is marked where it sits, because an unmarked
+change to a settled rule is indistinguishable from a mistake.
 
 ---
 
@@ -71,6 +73,18 @@ This is the spine of the application. Every screen reads from it, and nothing el
 | `intake` | The user | "Two steps from you, then we take over." |
 | `running` | The platform | One sentence with what is happening, plus an evidence feed that fills. |
 | `finished` | Nobody | What the run left behind, stated plainly — including when it left nothing. |
+
+**Two amendments to the epic's version of this table,** both made after it was written and both
+overriding it:
+
+- **`running` no longer shows time remaining.** The epic's row promised "one sentence with time
+  remaining". Nothing behind the screen can compute one — the engine reports zero until it reports
+  a hundred — so the sentence says what is happening instead, and §4 J4 forbids an estimated finish
+  time outright.
+- **`finished` no longer ticks the brief unconditionally.** The epic's row promised "a tick on the
+  brief". A tick is a promise that a document exists, and a run can succeed having written none, or
+  one that cannot be read. §3.2 and §6 rule 8 withhold it in both cases. This came out of the three
+  brief-recognition corrections, after the epic was written.
 
 **The phase is derived from the run's own state on every poll, never tracked separately.** There is
 no second copy to drift out of step with the engine. Three derivation rules carry real design intent
@@ -226,6 +240,14 @@ every row is real work the user can open and read while the run continues. Above
 counters derived from the feed alone — sources captured, distinct systems, workstreams producing —
 announced to a screen reader as they change.
 
+**The empty ledger has two honest states, and they are not the same sentence.** While the run is
+live, nothing captured yet is normal and the screen says so along with what is usual — that the first
+source tends to land around minute five. Once the run has ended that sentence becomes a promise about
+something that is never coming, so it is replaced by what an empty ledger at the end actually means:
+the team wrote no sources, or wrote them somewhere other than the workspace on this link. Neither
+version ever shows a fabricated count. This is the state a live demonstration is most likely to land
+on, so it is designed, not a fallback.
+
 **Design for leaving.** Twenty to ninety minutes is an errand, not a wait. The primary message is
 that the user may close the tab, not that they should stay.
 
@@ -283,7 +305,9 @@ Above the fold, in order: **the posture** — proceed, validate a prerequisite f
 as a single card with its test, cost, duration and pass/fail thresholds; and **what would change
 this**, each hypothesis linked to its experiment. Then five section cards — demand, competition,
 economics, risk, founder fit — at **six claims maximum per card**. A section needing more means the
-synthesis did not synthesise.
+synthesis did not synthesise. **The cap truncates visibly, never silently:** a card that dropped rows
+says how many were written and not shown. A reader who cannot see that rows were left out would read
+a truncated section as a complete one, which is the §6 failure in miniature.
 
 **Per-section evidence strength is one written line, never a meter, a bar or a score.** "Twelve
 sources, two primary. The pricing figures are the weakest part here." A number invites the user to
@@ -344,9 +368,10 @@ Six labels. Every claim on the brief and every input on the economics screen car
 | `directional` | Directional | It points a direction and cannot support a decision on its own. | **Chip.** It is a warning against acting on it. |
 | `unestablished` | Not established | We looked and could not settle it. Nothing below assumes an answer. | A normal claim row in section order (§4, J5). |
 
-**Two chips on the page, not six.** A badge on every sentence reads as a compliance form; three of
-the labels are the expected state and earn no chip at all. Only the two that change what the user
-should do next are chipped. The user learns two affordances in about ten seconds, and the page reads
+**Two chips on the page, not six.** A badge on every sentence reads as a compliance form. Only the
+two labels that change what the user should do next are chipped; three more are the expected state
+and earn no chip at all; and the sixth, `unestablished`, is neither, because it is not a treatment
+applied to a claim — it *is* the claim, written as a normal row in section order. The user learns two affordances in about ten seconds, and the page reads
 as judgement rather than paperwork.
 
 **Inside the drawer, and in the economics label column, every label is named in full with its
@@ -373,7 +398,12 @@ same severity as a broken screen.
    expired" message, ever, because naming one of two states we cannot tell apart is a fabrication.
 4. **A figure the source document does not carry is not shown** — not defaulted, not estimated, not
    rendered as a zero.
-5. **No currency figure anywhere** while the platform's spend ceiling cannot fire. Tokens only.
+5. **No currency figure for what the platform spends,** while its spend ceiling cannot fire. Run
+   ceilings are shown in tokens only, and the plan screen states no money figure at all. **This does
+   not bind what the run says the user's own experiment costs** — the cheapest next action quotes a
+   cost straight from the brief document, and the canonical example puts "£0" there. That figure is
+   the run's claim, carrying the run's labels and openable like any other; the rule above forbids
+   the desk *asserting* a figure, not quoting one.
 6. **Distinguish "nothing was written" from "something was written that we cannot read".** A run
    whose synthesis is one bracket wrong produced everything and needs one character fixed; telling
    that reader there is nothing is false in the expensive direction. The unreadable document is
@@ -398,16 +428,23 @@ below is a design-system pull request, not a feature pull request.
 1. **Mint is live signal only — and this application reads that rule in two parts, deliberately.**
    Mint (`--accent`) never fills a button and never carries text: at 1.7:1 on paper it cannot, and
    any sentence set in it would fail §7.7 outright. Its one use here is the focus halo. **Live
-   signal is therefore carried by `--success`, a green dark enough to hold contrast**, in exactly
-   two places: the dot beside the waiting screen's heading while a run is live, and the left rule of
-   a status strip whose run delivered. A run that succeeded and left no brief keeps the neutral rule
-   — the colour is a claim about the outcome too. This split is a divergence from the brand book's
-   literal wording and is recorded here rather than left to be rediscovered per screen.
+   signal is therefore carried by `--success`, a green dark enough to hold contrast** — 5.0:1 on
+   light paper, 4.4:1 on dark. It appears in three places: every rail mark that is done or working,
+   the dot beside the waiting screen's heading while a run is live, and the left rule of a status
+   strip whose run delivered. A run that succeeded and left no brief keeps the neutral rule — the
+   colour is a claim about the outcome too. **The rail marks clear a lower bar than text, and only
+   because of how they are built:** the glyph is hidden from screen readers and repeated in words
+   beside it, so it is a user-interface indicator at 3:1 rather than a sentence. A mark that ever
+   became the only carrier of its meaning would owe the full 4.5:1. This split is a divergence from
+   the brand book's literal wording and is recorded here rather than left to be rediscovered per
+   screen.
 2. **No emoji.** The desk's marks are a small typographic set, each one decorative and each one
    paired with the same meaning in words for a screen reader.
 3. **Banned words in all user-facing copy**, including "journey", "robust", "leverage",
-   "seamlessly", "intuitive", "empower" and "ecosystem". Budget an editing pass on anything derived
-   from research prose; the source material uses several of them heavily.
+   "seamlessly", "intuitive", "empower" and "ecosystem". *(Internal artefact naming is exempt —
+   which is what allows every spec in this directory, this one included, to be titled "Journey — ".
+   The ban is on what a user reads.)* Budget an editing pass on anything derived from research
+   prose; the source material uses several of them heavily.
 4. **Sentence case, second person, bare imperative. Numerals as digits.**
 5. **Two surfaces only, paper and ink. No third surface, no gradients — and on this application, no
    shadow anywhere.** The desk is built from rules and surfaces; a shadow would import a foreign
