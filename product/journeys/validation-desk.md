@@ -400,10 +400,17 @@ same severity as a broken screen.
    rendered as a zero.
 5. **No currency figure for what the platform spends,** while its spend ceiling cannot fire. Run
    ceilings are shown in tokens only, and the plan screen states no money figure at all. **This does
-   not bind what the run says the user's own experiment costs** — the cheapest next action quotes a
-   cost straight from the brief document, and the canonical example puts "£0" there. That figure is
-   the run's claim, carrying the run's labels and openable like any other; the rule above forbids
-   the desk *asserting* a figure, not quoting one.
+   not bind what the run says the user's own experiment costs** — the cheapest next action shows a
+   cost written by the run, reproduced verbatim, and the canonical example puts "£0" there. The rule
+   above forbids the desk *asserting* a figure, not reproducing one the run wrote.
+
+   **A known inconsistency, recorded rather than glossed.** That cost is plain text in a term-and-
+   value list. Unlike every claim on the same page it carries no label and opens nothing, so a
+   reader cannot ask what supports it — which is the one move this application is built to make, and
+   §4 J6 demands it of every figure on the economics screen. The brief document's next-action block
+   has no label field to render, so closing this needs the schema to change first, not the screen.
+   Until then the cost is the least checkable number on the brief, and it sits on its most-read
+   card.
 6. **Distinguish "nothing was written" from "something was written that we cannot read".** A run
    whose synthesis is one bracket wrong produced everything and needs one character fixed; telling
    that reader there is nothing is false in the expensive direction. The unreadable document is
@@ -429,15 +436,18 @@ below is a design-system pull request, not a feature pull request.
    Mint (`--accent`) never fills a button and never carries text: at 1.7:1 on paper it cannot, and
    any sentence set in it would fail §7.7 outright. Its one use here is the focus halo. **Live
    signal is therefore carried by `--success`, a green dark enough to hold contrast** — 5.0:1 on
-   light paper, 4.4:1 on dark. It appears in three places: every rail mark that is done or working,
+   light paper, 4.4:1 on dark. **It does two different jobs on this application, and they should not
+   be confused.** Three of its four uses are live signal: every rail mark that is done or working,
    the dot beside the waiting screen's heading while a run is live, and the left rule of a status
-   strip whose run delivered. A run that succeeded and left no brief keeps the neutral rule — the
-   colour is a claim about the outcome too. **The rail marks clear a lower bar than text, and only
-   because of how they are built:** the glyph is hidden from screen readers and repeated in words
-   beside it, so it is a user-interface indicator at 3:1 rather than a sentence. A mark that ever
-   became the only carrier of its meaning would owe the full 4.5:1. This split is a divergence from
-   the brand book's literal wording and is recorded here rather than left to be rediscovered per
-   screen.
+   strip whose run delivered. The fourth is not signal at all — it is the left rule of a *proceed*
+   verdict on the brief, one step of a four-tone scale running success, warning, error and neutral.
+   Nothing is live on that page; the run has ended and nothing on it will move again. **In every one
+   of the four, the words stay ink at full contrast and the colour is never the only carrier**: the
+   verdict is written out in an uppercase chip beside its rule, and each rail mark is hidden from
+   screen readers and repeated in words. That is also why the marks clear a user-interface
+   indicator's 3:1 rather than text's 4.5:1; a mark that ever became the sole carrier of its meaning
+   would owe the full ratio. This whole split is a divergence from the brand book's literal wording
+   and is recorded here rather than left to be rediscovered per screen.
 2. **No emoji.** The desk's marks are a small typographic set, each one decorative and each one
    paired with the same meaning in words for a screen reader.
 3. **Banned words in all user-facing copy**, including "journey", "robust", "leverage",
