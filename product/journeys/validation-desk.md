@@ -2,8 +2,8 @@
 title: "Journey — the Validation Desk: an idea in, an evidenced decision brief out"
 owner: experience-architect
 status: signed
-signed-by: experience-architect
-date: 2026-08-23
+signed-by: parhamdavari (maintainer), on review of oraclous-knowledge#99
+date: 2026-08-24
 surface: apps/desk (`@oraclous/desk`) — the showcase application
 grounds-in: >
   oraclous-frontend#208 (the epic) · the approved prototype artefact
@@ -251,18 +251,18 @@ on, so it is designed, not a fallback.
 **Design for leaving.** Twenty to ninety minutes is an errand, not a wait. The primary message is
 that the user may close the tab, not that they should stay.
 
-> **Unresolved contradiction — the email.** Two shipped surfaces tell the reader *"we will email you
-> when the brief is ready"*: the status strip's running line and the waiting screen's lede. **The
-> platform sends no such message.** There is no run-completion notification behind the gateway —
-> which is the same fact §4 J3 and `oraclous-frontend#212` both rest on when they say a paused run
-> waits forever. So the application's most repeated promise is the one thing on it that nothing can
-> keep, and by rule 1 of §6 it should not be on the screen.
->
-> This document does not resolve it, because the resolution is a product call and not a design one:
-> either the platform gains a completion notification, or the copy changes to what leaving actually
-> costs — that the run continues and the brief will be here on return. Tracked as
-> `oraclous-frontend#233`. Until it is ruled, treat the copy as **known-wrong and quoted, not
-> endorsed**: nothing new may be built on the assumption that the user is told anything.
+**The user is not told when it is done, and the screen must stop saying otherwise.** Two shipped
+surfaces tell the reader *"we will email you when the brief is ready"*. The platform sends no such
+message: there is no run-completion notification behind the gateway, which is the same fact §4 J3
+and `oraclous-frontend#212` both rest on when they say a paused run waits forever. So the
+application's most repeated promise was the one thing on it that nothing could keep, on the surface
+whose whole argument is that it does not say what it cannot support.
+
+**Ruled 2026-08-24: the copy changes, not the platform.** What makes leaving safe is true without
+any message — the run continues with the tab closed, and the brief is here on return. That is what
+the screens say. **No surface may promise the user that anything reaches them**, by email or
+otherwise, until the platform can actually send it; if it ever can, the sentence comes back because
+it is true, not because it reads well. The copy fix is `oraclous-frontend#233`.
 
 **The poll cadence is a design decision, not a detail.** The gateway's per-address limiter has
 already taken the console down at a fast beat with two tabs open. The status endpoint carries
@@ -513,7 +513,7 @@ Neither is designed here. When #827 is ruled, both come back to this document as
 
 ---
 
-## 10. Where each part stands (2026-08-23)
+## 10. Where each part stands (2026-08-24)
 
 | Part | State |
 | --- | --- |
@@ -525,7 +525,7 @@ Neither is designed here. When #827 is ruled, both come back to this document as
 | Mid-run questions | Designed here, not built. A later stage must be able to read input that arrived after dispatch, and today a run's input is fixed at dispatch. |
 | Decision brief and the claim drawer | Built. A live demonstration needs a synthesising member that writes one (`oraclous-backend#853`). |
 | Economics | Built, and it degrades honestly while the calculator capability is absent. |
-| The "we will email you" promise | **Shipped and wrong.** Two surfaces say it; nothing sends it (§4, J4). `oraclous-frontend#233`. |
+| The "we will email you" promise | **Ruled out 2026-08-24** (§4, J4). Two surfaces still say it; the copy fix is `oraclous-frontend#233`. |
 
 ---
 
