@@ -64,12 +64,16 @@ Owner: security-architect (dominant risk: sensitive-data leakage in error bodies
     "retryable": false,                  // server-authoritative: may a retry succeed?
     "details": [                          // ONLY for VALIDATION_FAILED
       { "field": "email", "issue": "INVALID_FORMAT" }  // closed sub-vocabulary; never the raw value
-    ]
+    ],
+    "needs_credential": {                 // ONLY for CREDENTIALS_REQUIRED
+      "requirement_id": "api_key",        // WHICH credential to onboard; machine tokens, never
+      "provider": "web_search"            // a value, a credential id, a URL, or a secret
+    }
   }
 }
 ```
 
-JSON Schema constraints: single top-level `error` object; `additionalProperties: false` at every level (so no `stack`/`cause`/`exception`/`trace` field can ever exist); `code` constrained to the enum below; `retryable` required boolean; `details` present only for `VALIDATION_FAILED`.
+JSON Schema constraints: single top-level `error` object; `additionalProperties: false` at every level (so no `stack`/`cause`/`exception`/`trace` field can ever exist); `code` constrained to the enum below; `retryable` required boolean; `details` present only for `VALIDATION_FAILED`; `needs_credential` present only for `CREDENTIALS_REQUIRED`.
 
 **retryable** is server-authoritative and decoupled from `code` so the FE never hardcodes which codes are retryable — it reads the boolean. Guidance: `true` for `RATE_LIMITED`/`SERVICE_UNAVAILABLE`/`GATEWAY_TIMEOUT`; `false` for all 4xx; `INTERNAL_ERROR` defaults `false` but the server MAY set `true` when it knows the fault is transient. The FE still honours request idempotency and any `Retry-After` header — `retryable` signals server-side transience, not a license to replay non-idempotent calls.
 
@@ -84,12 +88,19 @@ JSON Schema constraints: single top-level `error` object; `additionalProperties:
 | NOT_FOUND | 404 | false | resource absent, or hidden from a caller without read permission (existence-hiding) |
 | METHOD_NOT_ALLOWED | 405 | false | method not permitted on resource |
 | CONFLICT | 409 | false | state/version conflict |
+| CREDENTIALS_REQUIRED | 409 | false | a required credential is missing or needs authorisation; the optional `needs_credential` names the requirement + provider |
 | PAYLOAD_TOO_LARGE | 413 | false | body exceeds limit |
 | UNSUPPORTED_MEDIA_TYPE | 415 | false | content-type not supported |
 | RATE_LIMITED | 429 | true | throttle; retry hint via `Retry-After` header, not body |
 | INTERNAL_ERROR | 500 | false\* | unexpected fault; message always generic (\*server may set true when transient) |
 | SERVICE_UNAVAILABLE | 503 | true | dependency down / draining |
 | GATEWAY_TIMEOUT | 504 | true | upstream timeout |
+| MODEL_NOT_CONNECTED | 409 | false | the caller has connected no model and the path has no platform fallback to borrow (#866) |
+| IDEA_TOO_VAGUE | 422 | false | submitted text is below a deterministic length floor, checked before any model call (#866) |
+
+**Why the last two are codes and not a shared 4xx.** The gateway drains an upstream error body rather than relaying it (rule 8 below), so a refusal reaches the browser as a taxonomy code or not at all. `VALIDATION_FAILED` and `CREDENTIALS_REQUIRED` would collapse two refusals a user reads as different problems — "we could not tell what you are building" and "connect a model first" — into one, and the screen has to render a different next step for each. Adding a code is therefore a real cost paid for a real distinction, not a convenience; the bar for the next one is the same.
+
+**Upstream-named codes cross the edge only by allow-list.** A service behind the gateway may name its own code in the error body, but the gateway relays it ONLY when the value is on a narrow allow-list AND its taxonomy HTTP status equals the status it arrived on. Everything else falls back to the status-derived envelope. This is deliberately not "any taxonomy value": an upstream must never get to choose what the browser is told, and the relayed value is a bare token, never a structure that a message or URL could ride in on.
 
 **Existence-hiding rule:** prefer `404` over `403` when the caller has no read permission, so the error does not confirm existence; use `403` only when the caller can already enumerate the resource.
 
