@@ -3,14 +3,14 @@ title: "Journey — the Validation Desk: an idea in, an evidenced decision brief
 owner: experience-architect
 status: signed
 signed-by: parhamdavari (maintainer), on review of oraclous-knowledge#99
-date: 2026-08-24
+date: 2026-08-24 (signed) · 2026-08-27 (refreshed: §4 J2 and §10, see below)
 surface: apps/desk (`@oraclous/desk`) — the showcase application
 grounds-in: >
   oraclous-frontend#208 (the epic) · the approved prototype artefact
   (`bed97d4b-e98c-49b3-8a8c-b962d1ba00ed`, the reference for layout, copy and the state model) ·
   the sign-in design ruling on oraclous-frontend#216 · the built desk
-  (`apps/desk`, PRs #217/#219/#221/#222/#223/#225/#228/#230) and its per-issue specs under
-  `oraclous-frontend/docs/specs/` · oraclous-backend#827 (the corpus decision, unresolved)
+  (`apps/desk`, PRs #217/#219/#221/#222/#223/#225/#228/#230/#234/#237/#242) and its per-issue specs
+  under `oraclous-frontend/docs/specs/` · oraclous-backend#827 (the corpus decision, unresolved)
 legacy-divergence: >
   There is no legacy precursor. The old frontend has no equivalent surface, so this is authored
   design rather than a lift, and the epic plus the prototype have been standing in for this spec
@@ -20,7 +20,9 @@ backend-gaps: >
   reason two pieces of intake are excluded) · #828 (the four mid-run emissions a run does not make,
   which is why the waiting screen is a feed rather than a progress bar) · #825 (the currency ceiling
   cannot fire, so no money figure may appear) · #822 (the calculator capability the economics screen
-  reads) · #853 (a synthesising member that writes a readable decision brief).
+  reads) · #853 (a synthesising member that writes a readable decision brief). **Closed since this
+  document was first written:** #866, the intake endpoint that reads the idea back and asks the
+  three questions — §4 J2 was written when it did not exist and now describes what shipped.
 ---
 
 # Journey — the Validation Desk
@@ -193,12 +195,25 @@ One field. Nothing else: no optional fields collapsed underneath, no counter, an
 "1 of 3". A progress indicator is the single element that turns a first screen into a form to be
 endured, and the whole of intake is meant to cost ninety seconds.
 
-The designed shape of this screen has two more parts, and both are **held rather than faked**: the
+The screen has two more parts, and both are now **built on a real reading** rather than held: the
 idea read back to the user in their own frame with the inferred parts marked as inferred, and then
 at most three questions, each showing its consequence inline as soon as an option is chosen. Both
-need a service that reads the typed idea and answers; the platform has none yet. Anything on this
-screen claiming to have understood the idea would be the client writing prose and attributing it to
-a system that never read a word.
+need a service that reads the typed idea and answers, and the platform gained one — the intake
+endpoint from `oraclous-backend#866`, shipped as `oraclous-frontend#237` and `#242`.
+
+**What the design won by waiting is the rule that survived the build.** A restatement is only worth
+showing if something read the idea, so the desk never produces one it did not receive: no default,
+no placeholder, no local paraphrase, and no fallback to a fixed set of questions. Every way of
+failing — too short to read, no model connected, a slow read collected past its ceiling, a request
+that never arrived — lands in one state, and that state shows the idea exactly as it was typed and
+says plainly that nothing read it. Prose claiming to have understood an idea nothing read is the
+single thing this application cannot print, and it is why the endpoint exists rather than a
+client-side paraphrase — §6 rule 10, on the screen where breaking it would cost the most.
+
+**A slow read is a normal outcome, not an error.** A model answers in a few seconds; a slower one
+answers with an id to collect by, and the desk re-asks with that id until it answers. The collect
+has a ceiling for the reason every poll here has one (§4 J4), and reaching it is a state the user
+carries on from, not a dead end.
 
 Two failure modes drive that design and are the reason it stays on the roadmap rather than being
 dropped. Questions asked before the system knows anything produce generic answers and therefore a
@@ -251,8 +266,8 @@ on, so it is designed, not a fallback.
 **Design for leaving.** Twenty to ninety minutes is an errand, not a wait. The primary message is
 that the user may close the tab, not that they should stay.
 
-**The user is not told when it is done, and the screen must stop saying otherwise.** Two shipped
-surfaces tell the reader *"we will email you when the brief is ready"*. The platform sends no such
+**The user is not told when it is done, and the screens no longer say otherwise.** Two shipped
+surfaces told the reader *"we will email you when the brief is ready"*. The platform sends no such
 message: there is no run-completion notification behind the gateway, which is the same fact §4 J3
 and `oraclous-frontend#212` both rest on when they say a paused run waits forever. So the
 application's most repeated promise was the one thing on it that nothing could keep, on the surface
@@ -262,7 +277,8 @@ whose whole argument is that it does not say what it cannot support.
 any message — the run continues with the tab closed, and the brief is here on return. That is what
 the screens say. **No surface may promise the user that anything reaches them**, by email or
 otherwise, until the platform can actually send it; if it ever can, the sentence comes back because
-it is true, not because it reads well. The copy fix is `oraclous-frontend#233`.
+it is true, not because it reads well. The copy fix landed as `oraclous-frontend#234`, closing #233;
+the rule above outlives it and binds every surface added later.
 
 **The poll cadence is a design decision, not a detail.** The gateway's per-address limiter has
 already taken the console down at a fast beat with two tabs open. The status endpoint carries
@@ -513,19 +529,19 @@ Neither is designed here. When #827 is ruled, both come back to this document as
 
 ---
 
-## 10. Where each part stands (2026-08-24)
+## 10. Where each part stands (2026-08-27)
 
 | Part | State |
 | --- | --- |
 | Shell, three-phase model, rail, strip | Built. |
 | Session layer and sign-in | Built, including the rail's identity row. |
-| Describe — the one field | Built. The restatement and the three questions are held on a gateway endpoint that does not exist (§4, J2). |
+| Describe — the idea, the read-back and the questions | Built, on the intake endpoint (`oraclous-backend#866`). A read that fails shows the idea as typed and says nothing read it (§4, J2). |
 | Approve the plan | Built, without an expected duration or a source policy — neither is a field the platform carries (§4, J3). |
 | Research — the evidence feed | Built. The plan-as-contract section is blocked: the gateway returns no run manifest on any read. |
 | Mid-run questions | Designed here, not built. A later stage must be able to read input that arrived after dispatch, and today a run's input is fixed at dispatch. |
 | Decision brief and the claim drawer | Built. A live demonstration needs a synthesising member that writes one (`oraclous-backend#853`). |
 | Economics | Built, and it degrades honestly while the calculator capability is absent. |
-| The "we will email you" promise | **Ruled out 2026-08-24** (§4, J4). Two surfaces still say it; the copy fix is `oraclous-frontend#233`. |
+| The "we will email you" promise | **Ruled out 2026-08-24** and removed from both surfaces (`oraclous-frontend#234`). The rule in §4 J4 binds every later surface. |
 
 ---
 
