@@ -220,8 +220,12 @@ dropped. Questions asked before the system knows anything produce generic answer
 generic plan. And a user who does not know an answer will invent one, which the run then researches
 for half an hour as though it were ground truth — nothing downstream catches it, because the
 citation check tests sources, not premises. **"I don't know" is therefore a first-class answer on
-every question and visibly changes the plan**: anything answered that way enters the run as a
-hypothesis with an experiment attached, never as a premise.
+every question, and it visibly changes what the run is told**: anything answered that way enters
+the run as a hypothesis every member is told to test rather than build on, never as a premise, and
+inventing a value for it is forbidden. It does not change which workstreams run — the plan approved
+on J3 is the same plan either way — and no screen may imply that it does. A plan that reshapes
+itself on the answers is a real feature and would want its own issue against the engine, not a
+sentence here.
 
 ### J3 — Approve the plan
 
