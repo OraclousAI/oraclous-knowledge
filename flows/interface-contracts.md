@@ -24,6 +24,7 @@ Each contract below corresponds to a `Contract` issue in Jira. The Jira issue tr
 | BYOM spend estimate (`GET /v1/harnesses/spend`) | — | Live | See §SPEND |
 | Workspace↔harness binding (G2) | — ([oraclous-backend#340](https://github.com/OraclousAI/oraclous-backend/issues/340); FE [#127](https://github.com/OraclousAI/oraclous-frontend/issues/127)) | AGREED ([ADR-029](../adr/adr-029-workspace-harness-binding.md)); BE impl open, FE #127 consumes | See §G2 |
 | Resolvable citation on any tool result | — ([oraclous-backend#735](https://github.com/OraclousAI/oraclous-backend/issues/735); FE [#194](https://github.com/OraclousAI/oraclous-frontend/issues/194)) | AGREED at **rev6** (2026-08-14, [#776](https://github.com/OraclousAI/oraclous-backend/issues/776) names the §CITE-QUAL declaration `result_kind`); the data path, the run's served set, and the answer-time gate have all shipped ([#742](https://github.com/OraclousAI/oraclous-backend/issues/742), [#743](https://github.com/OraclousAI/oraclous-backend/issues/743), [#782](https://github.com/OraclousAI/oraclous-backend/issues/782)); evidence [oraclous-backend#734](https://github.com/OraclousAI/oraclous-backend/issues/734) | See §CITE |
+| The declared form of a deliverable | — ([oraclous-backend#870](https://github.com/OraclousAI/oraclous-backend/issues/870); implementing story [#730](https://github.com/OraclousAI/oraclous-backend/issues/730)) | AGREED (2026-09-04); neither repo has implemented it | See §DELIV |
 
 > ⚠ **Index integrity (31 May 2026, solution-architect).** Of the three rows, only the Gateway error envelope has a real `Contract`-type Jira issue: [**ORA-56**](https://oraclous.atlassian.net/browse/ORA-56), backfilled 31 May 2026. The keys previously shown for the other two rows were **wrong** — "ORA-12" is the R0.5 0d substrate-test-harness story and "ORA-19" is the deferred B1 isolation story; neither the Auth-token-claims nor the OHM-manifest-envelope shape has a Contract issue yet (the same applies to the `(ORA-12)`/`(ORA-19)` keys in the §1/§2 headers below). Backfilling those two is **pending** — the 31 May coordinator decision limited this pass to the gateway envelope. Until then, treat §1/§2 as shape-of-record without a tracking Contract.
 
@@ -559,3 +560,59 @@ Two points stay with the implementing brief, because they are mechanism and not 
 **`label` (DIRECT / INFERRED / ABSENCE / ASSUMPTION), `confidence`, and `supersedes` are NOT.** They are properties of a claim the platform *derived*, not of a source document; an ingested chunk is DIRECT by construction, so the label carries no information until a claim record exists separately from a source chunk. That object is the Claim Registry and the UC-E2 evidence ledger. Freezing the shape before the object exists would be guessing.
 
 This Contract is therefore the **source half** of the use-case glossary's knowledge record (§1.7): the claim, the source, the label, the confidence, the as-of date, the supersession pointer. It delivers the source, the as-of date (`retrieved_at`), and the supersession *mechanism* (a revision-derived `citation_id`). The claim, the label, and the confidence are the follow-on Contract, which consumes `Citation` unchanged as its `source` field.
+
+## §DELIV — The declared form of a deliverable (#730 / #870)
+
+Owner: solution-architect. Status: **AGREED (2026-09-04, Parham Davari)** — shape ruled, neither repo has implemented it. Tracking Contract: [`oraclous-backend#870`](https://github.com/OraclousAI/oraclous-backend/issues/870); implementing story: [`oraclous-backend#730`](https://github.com/OraclousAI/oraclous-backend/issues/730). Adjacent and deliberately separate: [`oraclous-backend#855`](https://github.com/OraclousAI/oraclous-backend/issues/855) (`requires_valid_json`, [`#853`](https://github.com/OraclousAI/oraclous-backend/issues/853)).
+
+### Why this crosses the repo boundary
+
+The console renders a chooser at team-definition time and shows the declared form on a finished run, so both repos consume the shape and neither may define it (`oraclous-backend/CLAUDE.md` §12). `OHMTaskInput` is the precedent: it became a Contract for the same reason, and is read by the same screen at the same moment.
+
+### What exists today
+
+`OHMManifest` carries `members`, `orchestration`, `task_board`, `budget` and `task_input`. Nothing expresses what the team is meant to **produce**. Two nearby member fields are not this one: `outputs_schema` names the required keys of an already-parsed hand-off payload, which is the shape of data passing between members; `requires_valid_json` says one member's output must parse. Neither says what form the user receives.
+
+No renderer exists anywhere in the capability layer — no PDF writer, no docx writer, no HTML artefact builder. That is what the ruling defers, and it is why the reserved values must be refused at definition time rather than accepted and quietly ignored.
+
+### The shape
+
+Two fields, not one.
+
+| Field | Lives on | Says |
+| --- | --- | --- |
+| `deliverable_format` | `OHMManifest` | the form of what the **user** receives |
+| `deliverable_format` | `OHMMember` | the form of what **that member** hands on |
+
+Both are optional. Accepted values: `markdown`, `text` (supported now); `pdf`, `docx`, `html` (declared, refused).
+
+### Decision 1 — both levels, because they answer different questions
+
+A member declares the form of what it hands on; the team declares the form of what the user receives. **Stated reason:** a team produces one deliverable for a person, and a member produces an intermediate for another member. Collapsing them into one field makes "the deliverable" mean whichever member happened to run last, which is a property of the graph rather than a choice anybody made.
+
+### Decision 2 — the team's form is stated, never inferred from its members
+
+The last member to finish does **not** decide, and neither does a named final member. **Stated reason:** inference makes the deliverable's form change when the team is edited for unrelated reasons. Add a proof-reader after the writer and the user silently starts receiving plain text instead of markdown, with no format setting touched and nothing in the diff that looks like a format change. An explicit field on the team costs one more value at definition time and removes that entire class of surprise.
+
+### Decision 3 — reserved values are declared, and refused at definition time
+
+`pdf`, `docx` and `html` are members of the accepted value set from day one, marked unavailable, and **refused when the team is defined** — never accepted and discovered at the end of a paid run.
+
+The refusal must distinguish *not built yet* from *unrecognised*. A message reading "not a valid value" sends the user hunting for a misspelling that is not there; "not supported yet" tells them the truth, which is that the renderer does not exist. **Stated reason:** the cheaper option — leaving the reserved names out of the set entirely, so they fail as unknown values — saves one list of names and pays for it by lying to the user about why. The console renders the unavailable values visibly rather than hiding them, so the chooser doubles as the roadmap.
+
+Failing at run's end was considered and rejected outright: it spends a full run and its model cost before refusing, and the work is unusable when it arrives.
+
+### Decision 4 — absence is back-compatible, and stays that way
+
+The field is optional. A team without it produces whatever the model typed, exactly as today. **Stated reason:** every stored team omits it, so any other reading breaks them all. Absence is specifically **not** read as `markdown`: that would silently change what a saved team produces, which nobody asked for and nobody would see happen.
+
+### Decision 5 — the boundary with `requires_valid_json` is stated, not merged
+
+`requires_valid_json` ([`#853`](https://github.com/OraclousAI/oraclous-backend/issues/853)) says a member's output must **parse**, so the next member can read it. `deliverable_format` says what **form** the text takes. Two settings, two audiences: one serves the next member, the other serves the person.
+
+**Stated reason:** [`#855`](https://github.com/OraclousAI/oraclous-backend/issues/855) raises "this member writes YAML" and "this member writes CSV" as a future requirement, and without a stated line the two would ship within one release as two fields both answering "what form is this text in" and disagreeing. If #855 later wants a typed format for a member's output, that is the member-level field above; it is not the team's deliverable, and it does not replace the parse requirement.
+
+### For the implementing brief
+
+The value set, which values are selectable now, and how an unavailable one is presented are all settled above — those were the three things the console needed. Two points stay with the brief because they are mechanism rather than shape: whether the member-level field is enforced or advisory before a renderer exists, and where the refusal is raised so a manifest arriving through the importer fails the same way as one built in the console.
+
