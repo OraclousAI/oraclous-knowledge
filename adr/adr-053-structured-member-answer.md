@@ -4,9 +4,9 @@
 
 | | |
 | --- | --- |
-| Status | **Proposed** 2026-09-12 — the three decisions below are RULED by the owner; the ADR itself is not Accepted until the CTO accepts it (CLAUDE.md §8) and this pull request merges. Not yet built (unblocks [oraclous-backend#900](https://github.com/OraclousAI/oraclous-backend/issues/900), [#898](https://github.com/OraclousAI/oraclous-backend/issues/898)) |
-| Date | 2026-09-12 (decisions ruled by the owner; ADR acceptance pending CTO) |
-| Deciders | parhamdavari (ruled 2026-09-12); drafted by `backend-implementer` under a one-document authorship waiver ([oraclous-backend#1050](https://github.com/OraclousAI/oraclous-backend/issues/1050)); CTO accepts (CLAUDE.md §8 — not waived) |
+| Status | **Accepted** 2026-09-13 — the three decisions were RULED by the owner on 2026-09-12; the CTO accepted this record on 2026-09-13 (CLAUDE.md §8). Not yet built (unblocks [oraclous-backend#900](https://github.com/OraclousAI/oraclous-backend/issues/900), [#898](https://github.com/OraclousAI/oraclous-backend/issues/898)) |
+| Date | 2026-09-12 (decisions ruled by the owner); accepted 2026-09-13 |
+| Deciders | parhamdavari (ruled 2026-09-12); drafted by `backend-implementer` under a one-document authorship waiver ([oraclous-backend#1050](https://github.com/OraclousAI/oraclous-backend/issues/1050)); accepted by the CTO 2026-09-13 (CLAUDE.md §8 — not waived) |
 | Driving evidence | [oraclous-backend#901](https://github.com/OraclousAI/oraclous-backend/issues/901) (the three questions, ruled) · [#1043](https://github.com/OraclousAI/oraclous-backend/issues/1043) (the live failure that forced them; run `d39fda19-cc7c-45ea-a0b7-ef49ca0ac944`) · [#1050](https://github.com/OraclousAI/oraclous-backend/issues/1050) (this handoff) |
 | Builds on | [ADR-002](adr-002-ohm-as-canonical-manifest-format.md) (OHM is the canonical manifest format) — adds one field to `OHMCapability`; does not otherwise amend OHM v1.0/v1.1 |
 
