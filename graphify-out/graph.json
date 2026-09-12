@@ -15476,7 +15476,7 @@
       "community": 1,
       "norm_label": "adr-053 a structured member answer is enforced mechanically",
       "id": "adr053_structured_member_answer",
-      "rationale": "Accepted 2026-09-12, not yet built. A team member satisfied a declared answer shape by writing keys into free text; the compiler's reviewer step proved this cannot hold, because REVIEWER_PROMPT requires two adjacent JSON objects and the greedy re.search(r\"\\{.*\\}\", ..., DOTALL) peel spans both, discarding a well-formed team. Confirmed on live text on openrouter/deepseek/deepseek-v4-flash, run d39fda19-cc7c-45ea-a0b7-ef49ca0ac944. The owner's principle: the shape a member returns must be mechanically controllable and not tied to model strength, because users bring cheap models."
+      "rationale": "Proposed 2026-09-12 (decisions ruled by the owner; CTO acceptance pending), not yet built. A team member satisfied a declared answer shape by writing keys into free text; the compiler's reviewer step proved this cannot hold, because REVIEWER_PROMPT requires two adjacent JSON objects and the greedy re.search(r\"\\{.*\\}\", ..., DOTALL) peel spans both, discarding a well-formed team. Confirmed on live text on openrouter/deepseek/deepseek-v4-flash, run d39fda19-cc7c-45ea-a0b7-ef49ca0ac944. The owner's principle: the shape a member returns must be mechanically controllable and not tied to model strength, because users bring cheap models."
     },
     {
       "label": "A per-run, per-org tool schema rides the manifest as OHMCapability.resolved_schema",
