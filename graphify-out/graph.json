@@ -15547,6 +15547,48 @@
       "norm_label": "unblocks oraclous-backend#900 and #898",
       "id": "adr053_unblocks_900_898",
       "rationale": "With all three surfaces ruled, oraclous-backend#900 (the [tests] PR encoding this shape) and #898 (the tool-hallucination audit item this closes) are unblocked. The immediate #1043 mitigation (a tolerant reader across the six sites sharing the greedy-peel defect) ships ahead of this ADR's implementation and is complementary, not superseded by it."
+    },
+    {
+      "label": "\u00a7RUN-GRAPH Team-run graph read (agreed 2026-09-18)",
+      "file_type": "document",
+      "source_file": "flows/interface-contracts.md",
+      "source_location": "\u00a7RUN-GRAPH",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 7,
+      "norm_label": "\u00a7run-graph team-run graph read (agreed 2026-09-18)",
+      "id": "interface_contracts_run_graph_read",
+      "rationale": "GET /v1/engine/team-runs/{id}/graph: members as nodes, depends_on as edges, each node with a closed status and, when it did not run, a closed skip reason. Ruled by the owner on oraclous-backend#1119; tracking Contract #1154. Cross-org is a 404 through the same read as /tree and /status."
+    },
+    {
+      "label": "Skip reasons are recorded when the run happens, never worked out at read time",
+      "file_type": "rationale",
+      "source_file": "flows/interface-contracts.md",
+      "source_location": "\u00a7RUN-GRAPH",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 7,
+      "norm_label": "skip reasons are recorded when the run happens, never worked out at read time",
+      "id": "interface_contracts_run_graph_skip_reason_recorded",
+      "rationale": "run_if evaluation fails closed, so a false condition, a missing source output and an evaluation error all leave the same bare 'skipped' afterwards. Only the runtime at the moment of the skip can tell them apart, so it saves condition_false / condition_source_missing / condition_error. Older runs read 'unrecorded', which is distinct from 'not skipped'."
+    },
+    {
+      "label": "The graph carries pointers, never payloads",
+      "file_type": "rationale",
+      "source_file": "flows/interface-contracts.md",
+      "source_location": "\u00a7RUN-GRAPH",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 7,
+      "norm_label": "the graph carries pointers, never payloads",
+      "id": "interface_contracts_run_graph_pointers_only",
+      "rationale": "Nodes list input_from and has_output only; outputs are read from the existing run read. So the graph exposes nothing that read does not already expose, and never returns a run_if condition's field, operator or compared value."
     }
   ],
   "links": [
@@ -38013,6 +38055,42 @@
       "_tgt": "adr002_ohm_canonical_manifest",
       "source": "adr053_structured_member_answer",
       "target": "adr002_ohm_canonical_manifest"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "flows/interface-contracts.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "interface_contracts_doc",
+      "_tgt": "interface_contracts_run_graph_read",
+      "source": "interface_contracts_doc",
+      "target": "interface_contracts_run_graph_read"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "flows/interface-contracts.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "interface_contracts_run_graph_read",
+      "_tgt": "interface_contracts_run_graph_skip_reason_recorded",
+      "source": "interface_contracts_run_graph_read",
+      "target": "interface_contracts_run_graph_skip_reason_recorded"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "flows/interface-contracts.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "interface_contracts_run_graph_read",
+      "_tgt": "interface_contracts_run_graph_pointers_only",
+      "source": "interface_contracts_run_graph_read",
+      "target": "interface_contracts_run_graph_pointers_only"
     }
   ],
   "hyperedges": [

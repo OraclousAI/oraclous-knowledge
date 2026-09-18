@@ -24,6 +24,7 @@ Each contract below corresponds to a `Contract` issue in Jira. The Jira issue tr
 | BYOM spend estimate (`GET /v1/harnesses/spend`) | — | Live | See §SPEND |
 | Workspace↔harness binding (G2) | — ([oraclous-backend#340](https://github.com/OraclousAI/oraclous-backend/issues/340); FE [#127](https://github.com/OraclousAI/oraclous-frontend/issues/127)) | AGREED ([ADR-029](../adr/adr-029-workspace-harness-binding.md)); BE impl open, FE #127 consumes | See §G2 |
 | Resolvable citation on any tool result | — ([oraclous-backend#735](https://github.com/OraclousAI/oraclous-backend/issues/735); FE [#194](https://github.com/OraclousAI/oraclous-frontend/issues/194)) | AGREED at **rev6** (2026-08-14, [#776](https://github.com/OraclousAI/oraclous-backend/issues/776) names the §CITE-QUAL declaration `result_kind`); the data path, the run's served set, and the answer-time gate have all shipped ([#742](https://github.com/OraclousAI/oraclous-backend/issues/742), [#743](https://github.com/OraclousAI/oraclous-backend/issues/743), [#782](https://github.com/OraclousAI/oraclous-backend/issues/782)); evidence [oraclous-backend#734](https://github.com/OraclousAI/oraclous-backend/issues/734) | See §CITE |
+| Team-run graph read (`GET /v1/engine/team-runs/{id}/graph`) | — ([oraclous-backend#1154](https://github.com/OraclousAI/oraclous-backend/issues/1154); parent [#1119](https://github.com/OraclousAI/oraclous-backend/issues/1119)) | AGREED (2026-09-18, ruled by the owner); BE impl open, FE consumer not yet filed | See §RUN-GRAPH |
 
 > ⚠ **Index integrity (31 May 2026, solution-architect).** Of the three rows, only the Gateway error envelope has a real `Contract`-type Jira issue: [**ORA-56**](https://oraclous.atlassian.net/browse/ORA-56), backfilled 31 May 2026. The keys previously shown for the other two rows were **wrong** — "ORA-12" is the R0.5 0d substrate-test-harness story and "ORA-19" is the deferred B1 isolation story; neither the Auth-token-claims nor the OHM-manifest-envelope shape has a Contract issue yet (the same applies to the `(ORA-12)`/`(ORA-19)` keys in the §1/§2 headers below). Backfilling those two is **pending** — the 31 May coordinator decision limited this pass to the gateway envelope. Until then, treat §1/§2 as shape-of-record without a tracking Contract.
 
@@ -559,3 +560,64 @@ Two points stay with the implementing brief, because they are mechanism and not 
 **`label` (DIRECT / INFERRED / ABSENCE / ASSUMPTION), `confidence`, and `supersedes` are NOT.** They are properties of a claim the platform *derived*, not of a source document; an ingested chunk is DIRECT by construction, so the label carries no information until a claim record exists separately from a source chunk. That object is the Claim Registry and the UC-E2 evidence ledger. Freezing the shape before the object exists would be guessing.
 
 This Contract is therefore the **source half** of the use-case glossary's knowledge record (§1.7): the claim, the source, the label, the confidence, the as-of date, the supersession pointer. It delivers the source, the as-of date (`retrieved_at`), and the supersession *mechanism* (a revision-derived `citation_id`). The claim, the label, and the confidence are the follow-on Contract, which consumes `Citation` unchanged as its `source` field.
+
+## §RUN-GRAPH — Team-run graph read (`GET /v1/engine/team-runs/{id}/graph`)
+
+Owner: solution-architect. Status: **AGREED** on 2026-09-18. The owner ruled the shape directly on [`oraclous-backend#1119`](https://github.com/OraclousAI/oraclous-backend/issues/1119); the tracking Contract is [`oraclous-backend#1154`](https://github.com/OraclousAI/oraclous-backend/issues/1154). The backend implementation is open. The frontend consumer is not filed yet.
+
+A read-only view of one team run as a graph: each member is a node, each `depends_on` entry is an edge, and each node says where that member stands and, if it did not run, why. It exists so a person can see which members ran, which were skipped, and which are waiting for an approval, without reading timing spans in the tracing tool. It is served by `execution-engine-service` and reached through the gateway, which already forwards everything under `/v1/engine`.
+
+Request: `GET /v1/engine/team-runs/{team_run_id}/graph`. No body, no query parameters. Org-scoped from the authenticated principal through the same read that `/tree` and `/status` use, so a run in another organisation is a **404**, never a 403.
+
+```jsonc
+// 200 — TeamRunGraphOut
+{
+  "team_run_id": "uuid",
+  "state": "QUEUED | RUNNING | PAUSED | SUCCEEDED | FAILED | REJECTED | COST_BUDGET",  // the run's state, same value /tree returns
+  "nodes": [
+    {
+      "role": "scout",                 // the member's role name
+      "kind": "agent" | "human",       // human = an approval step
+      "status": "succeeded",           // closed list below
+      "error_code": "llm_credential_rejected" | null,  // from member_error_codes; only when status is "failed"
+      "skip_reason": "condition_false" | null,         // closed list below; only when status is skipped / blocked / budget_skipped
+      "reason_role": "triage" | null,  // the member a skip points at
+      "input_from": ["triage"],        // depends_on roles that produced output, in depends_on order
+      "has_output": true,              // the output itself is read from GET /v1/engine/team-runs/{id}
+      "loop": 0 | null,                // index into the team's loops, or null
+      "fan_out": false                 // the member runs once per item; per-item status is not shown
+    }
+  ],
+  "edges": [ { "from": "triage", "to": "scout" } ]
+}
+```
+
+**Every key is always present.** A field with no value is `null` and an empty list is `[]`; a missing key never stands for "no value". This follows the `has_unverified_links` rule on the run read: an absent key would make "nothing to report" indistinguishable from "not checked".
+
+**Nodes.** One per member of the team definition saved on the run, in the order the team declares them. The saved snapshot is the only source; a draft edited after the run started never changes this view.
+
+**`status`, checked in this order:**
+
+1. `waiting_approval`: the run is `PAUSED` and this `kind: human` step is one it waits on (`paused_at`). The engine's internal verdict-escalation marker in `paused_at` is not a member and never becomes a node.
+2. `rejected`: the run is `REJECTED` and this approval step is the one a person rejected.
+3. The member's recorded status, passed through: `running`, `succeeded`, `partial`, `failed`, `blocked`, `skipped`, `budget_skipped`. A member queued to run again after a review or revision reads `pending`.
+4. No recorded status: `pending` while the run is `QUEUED`, `RUNNING` or `PAUSED`; `not_reached` once the run has finished.
+
+**`skip_reason`:**
+
+| value | when | `reason_role` |
+| --- | --- | --- |
+| `condition_false` | the member's `run_if` condition was evaluated and was false | the member whose output was tested |
+| `condition_source_missing` | the output the condition tests does not exist | the member whose output was tested |
+| `condition_error` | the condition could not be evaluated, so the member was skipped (fail-closed) | the member whose output was tested |
+| `unrecorded` | the member is `skipped` but no reason was saved (runs made before this change) | `null` |
+| `upstream_not_delivered` | the member is `blocked` because an earlier member failed or was blocked | the first such dependency, or `null` if none can be identified |
+| `budget_exhausted` | the member is `budget_skipped` because the team's spending limit was reached | `null` |
+
+The first three are **recorded by the runtime when the run happens**, never worked out at read time, because evaluation fails closed: today a false condition, a missing source and an evaluation error all look identical afterwards. The last two are derived from the status already stored. A reason saved against a member that is no longer `skipped` (after a re-run, a review, or a revision) is ignored.
+
+**Edges.** One per `depends_on` entry, `from` the member depended on `to` the member that waits for it. Duplicates are removed; a dependency naming a role that is not a member is dropped. Order: the target's declaration order, then its `depends_on` order. Edges inside a loop are not drawn, because loop routing is not expressed in `depends_on`; loop members are grouped by `loop` instead.
+
+**Never returned.** No member output, input or error text; the screen reads outputs from the existing run read, so this endpoint exposes nothing that read does not already expose. No contents of a `run_if` condition (field, operator, compared value). No member instructions, description or tools. If the saved team definition cannot be read, the response is `nodes: []` and `edges: []`, not a 500.
+
+**Known limits, tracked separately.** A condition that tests a loop member always reports `condition_source_missing`, because loop output is not available to it during the run ([`oraclous-backend#1155`](https://github.com/OraclousAI/oraclous-backend/issues/1155)). Nothing checks that a condition's tested member is one of the member's own dependencies ([`oraclous-backend#1156`](https://github.com/OraclousAI/oraclous-backend/issues/1156)). Live progress without polling is a separate question ([`oraclous-backend#1118`](https://github.com/OraclousAI/oraclous-backend/issues/1118)).
