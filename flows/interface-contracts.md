@@ -25,6 +25,7 @@ Each contract below corresponds to a `Contract` issue in Jira. The Jira issue tr
 | Workspace↔harness binding (G2) | — ([oraclous-backend#340](https://github.com/OraclousAI/oraclous-backend/issues/340); FE [#127](https://github.com/OraclousAI/oraclous-frontend/issues/127)) | AGREED ([ADR-029](../adr/adr-029-workspace-harness-binding.md)); BE impl open, FE #127 consumes | See §G2 |
 | Resolvable citation on any tool result | — ([oraclous-backend#735](https://github.com/OraclousAI/oraclous-backend/issues/735); FE [#194](https://github.com/OraclousAI/oraclous-frontend/issues/194)) | AGREED at **rev6** (2026-08-14, [#776](https://github.com/OraclousAI/oraclous-backend/issues/776) names the §CITE-QUAL declaration `result_kind`); the data path, the run's served set, and the answer-time gate have all shipped ([#742](https://github.com/OraclousAI/oraclous-backend/issues/742), [#743](https://github.com/OraclousAI/oraclous-backend/issues/743), [#782](https://github.com/OraclousAI/oraclous-backend/issues/782)); evidence [oraclous-backend#734](https://github.com/OraclousAI/oraclous-backend/issues/734) | See §CITE |
 | Team-run graph read (`GET /v1/engine/team-runs/{id}/graph`) | — ([oraclous-backend#1154](https://github.com/OraclousAI/oraclous-backend/issues/1154); parent [#1119](https://github.com/OraclousAI/oraclous-backend/issues/1119)) | AGREED (2026-09-18, ruled by the owner); BE impl open, FE consumer not yet filed | See §RUN-GRAPH |
+| Team-run source draft (which team + version a run came from; per-team succeeded versions; teams-with-a-success filter) | — ([oraclous-backend#1163](https://github.com/OraclousAI/oraclous-backend/issues/1163); FE [oraclous-frontend#318](https://github.com/OraclousAI/oraclous-frontend/issues/318)) | AGREED (2026-09-19, ruled per the owner's standing rule); BE impl open; scheduled-run carry split to [#1164](https://github.com/OraclousAI/oraclous-backend/issues/1164) | See §TEAM-RUN-SOURCE |
 
 > ⚠ **Index integrity (31 May 2026, solution-architect).** Of the three rows, only the Gateway error envelope has a real `Contract`-type Jira issue: [**ORA-56**](https://oraclous.atlassian.net/browse/ORA-56), backfilled 31 May 2026. The keys previously shown for the other two rows were **wrong** — "ORA-12" is the R0.5 0d substrate-test-harness story and "ORA-19" is the deferred B1 isolation story; neither the Auth-token-claims nor the OHM-manifest-envelope shape has a Contract issue yet (the same applies to the `(ORA-12)`/`(ORA-19)` keys in the §1/§2 headers below). Backfilling those two is **pending** — the 31 May coordinator decision limited this pass to the gateway envelope. Until then, treat §1/§2 as shape-of-record without a tracking Contract.
 
@@ -621,3 +622,103 @@ The first three are **recorded by the runtime when the run happens**, never work
 **Never returned.** No member output, input or error text; the screen reads outputs from the existing run read, so this endpoint exposes nothing that read does not already expose. No contents of a `run_if` condition (field, operator, compared value). No member instructions, description or tools. If the saved team definition cannot be read, the response is `nodes: []` and `edges: []`, not a 500.
 
 **Known limits, tracked separately.** A condition that tests a loop member always reports `condition_source_missing`, because loop output is not available to it during the run ([`oraclous-backend#1155`](https://github.com/OraclousAI/oraclous-backend/issues/1155)). Nothing checks that a condition's tested member is one of the member's own dependencies ([`oraclous-backend#1156`](https://github.com/OraclousAI/oraclous-backend/issues/1156)). Live progress without polling is a separate question ([`oraclous-backend#1118`](https://github.com/OraclousAI/oraclous-backend/issues/1118)).
+
+## §TEAM-RUN-SOURCE — Team-run source draft (`team_draft_id`/`team_draft_version`, per-team succeeded versions, teams-with-a-success filter)
+
+Owner: solution-architect. Status: **AGREED** on 2026-09-19. Open points were ruled per the owner's standing rule (open design calls take the standard option, the ruling records its cost, work proceeds). Tracking Contract: [`oraclous-backend#1163`](https://github.com/OraclousAI/oraclous-backend/issues/1163). Frontend twin: [`oraclous-frontend#318`](https://github.com/OraclousAI/oraclous-frontend/issues/318). The backend implementation is open. The scheduled-run leg is split into [`oraclous-backend#1164`](https://github.com/OraclousAI/oraclous-backend/issues/1164) (see below).
+
+A team run today stores a copy of the team document it ran (`manifest`) but nothing that names *which team draft, at which version* produced that copy. This section fixes that: a run can record the team draft and version it started from, and two reads are built on top of that fact — which versions of a team have a successful run, and which teams have at least one. It exists so the console can move "Save as app" onto the team page (gated on the team having a success) instead of a single run's page, and let a person pick which version becomes the app. Served by `execution-engine-service`, reached through the gateway under `/v1/engine`, which forwards this path unchanged.
+
+### Request fields and the pair rule
+
+`POST /v1/engine/team-runs` (`CreateTeamRunRequest`) accepts two new optional fields:
+
+```jsonc
+{
+  "team_draft_id": "uuid | null",      // which team draft this run is started from
+  "team_draft_version": "integer | null"  // >= 1; the version the caller loaded and is running
+}
+```
+
+Both are optional, but **never one without the other**: supplying just one is a 422 (see the error table below). Omitting both is the existing behaviour — the run carries no team, exactly as today.
+
+**Concurrency is checked, not assumed.** The console binds the model into the manifest client-side, so the manifest actually POSTed is exactly the version the console loaded. The server re-reads the live draft and requires `draft.version == team_draft_version`; a mismatch means the draft was edited after the console loaded it, and the run is refused rather than silently mislabeled. The server never re-derives the version itself — that would recreate the exact race this Contract exists to close.
+
+### Error shapes on create
+
+| Condition | Status | `error_type` / shape | `field` |
+| --- | --- | --- | --- |
+| Only one of the pair given | 422 | `team_draft_ref_incomplete` | the missing one |
+| Draft missing, deleted, or belongs to another organisation | 422 | `invalid_team_draft` | `team_draft_id` |
+| `draft.version != team_draft_version` (either direction) | 409 | `team_draft_version_conflict`, plain-string detail | — |
+| `team_draft_version < 1` | 422 | Pydantic validation | `team_draft_version` |
+| The team-drafts store is not wired | 503 | — | — |
+
+A foreign draft and a missing draft give the identical 422 — a team in another organisation is invisible, never distinguishable from "does not exist". This check runs first, before manifest validation or the registry/credential pre-flight, so a request that is going to be refused never causes a side effect. The gateway needs no change: the 409 already arrives as `CONFLICT` (the only other 409 on this endpoint, `CREDENTIALS_REQUIRED`, carries its own code), and the 422 already arrives as `VALIDATION_FAILED` with a `{field, issue}` detail. `INVALID_TEAM_DRAFT` is not added to the gateway's stable-issue-token allow-list.
+
+### Storage
+
+Two nullable columns on `engine_team_runs`: `team_draft_id UUID` and `team_draft_version INTEGER`, with a CHECK that both are null or both are set. **No foreign key** — the same choice already made for `app_id`, `schedule_id` and `seed_from_run_id` on this table, because a run must keep its recorded id even after the draft it points to is deleted. No backfill: a run made before this shipped carries no team and is never guessed at by name.
+
+### Run read
+
+`GET /v1/engine/team-runs/{id}` (`TeamRunOut`) gains `team_draft_id` and `team_draft_version`, both nullable and **always present** (null, never absent, when the run carries no team). A deleted draft's id is still returned on the run — the team page already has its own "this team doesn't exist" state for a missing id. The run *list* row is unchanged; adding the pair there is additive and can happen later if asked for.
+
+**Internal runs never carry a team.** The services that call run-creation internally (the Save-as-app form drafter, the refine op-drafter, the compiler, intake read-back, and running an app) never pass this pair, by construction — pinned by tests, not by convention alone.
+
+**A rerun keeps its team.** `POST .../rerun` re-drives the same row rather than creating a new one, so the pair is untouched — no special-case code, and covered by both a unit and an integration test.
+
+### Per-team succeeded versions
+
+```
+GET /v1/engine/team-drafts/{team_draft_id}/succeeded-versions?limit=50&offset=0
+```
+
+```jsonc
+// 200 — TeamDraftSucceededVersionsOut
+{
+  "team_draft_id": "uuid",
+  "versions": [
+    { "version": 3, "team_run_id": "uuid", "finished_at": "2026-09-19T12:00:00Z" }
+  ],
+  "total": 2   // count of distinct qualifying versions, not of runs
+}
+```
+
+- **Ordering:** newest version first.
+- **"Latest" rule:** each qualifying version reports only its own most-recent successful run (highest settle time, ties broken by run id descending) — older successful runs of the same version are not listed, because the console only ever needs the version to be re-derivable, not its full run history.
+- **`finished_at`** is backed by the SUCCEEDED run's `updated_at`, not a new column: while a run stays SUCCEEDED nothing else writes to that row, so `updated_at` already equals its settle time. The wire field name is chosen so a dedicated column can replace this later without changing the shape.
+- **Empty result is a normal 200** (`{"versions": [], "total": 0}`), never a 404 — "this team has no successful version yet" is an expected state, not an error.
+- **A team draft that does not exist in the caller's organisation (deleted or belonging to another org) is a 404** on this sub-resource, mirroring `GET /team-drafts/{id}` and `GET /apps/{id}/runs`.
+- `limit` defaults to 50, clamped to `[1, 200]`; `offset` defaults to 0.
+
+### Teams with at least one success
+
+```
+GET /v1/engine/team-drafts?has_succeeded_run=true|false
+```
+
+A filter on the existing team-draft list, not a new endpoint or a new response shape (`TeamDraftListOut` is unchanged). Omitting the parameter returns everything, exactly as today. Filtering server-side, rather than adding a per-row flag to the existing paged list, keeps pagination correct: a per-row flag would let a team's only success fall off a page the console never re-fetches.
+
+### What counts as a success
+
+`state == 'SUCCEEDED'`, exactly — the run's overall state, not any per-member status. This includes a run that has one or more degraded ("partial", `#587`) members and excludes `COST_BUDGET`. This is not a new definition: it is exactly today's existing Save-as-app gate (`app_service.py`, and the console's own run-page gate), carried over rather than reinvented.
+
+### Apps filled from the run
+
+When an app is created from a run that carries a team (`AppService.create_from_run`), the existing-but-unwritten `apps.source_team_draft_id` and `apps.source_draft_version` columns (in place since `#932`) are filled from the run's pair. Not exposed on the app read — that was not asked for, and can be added later without changing this Contract.
+
+### Cross-organisation behaviour, summarized
+
+| Read | Foreign/missing behaviour |
+| --- | --- |
+| Per-draft succeeded-versions | 404 |
+| Filtered team-draft list | the foreign draft is simply absent |
+| Create with a foreign `team_draft_id` | 422 `invalid_team_draft` |
+| Run read | the engine's existing 404 for a foreign run |
+
+Each matches how the engine already treats a foreign resource of that same kind — none of this introduces a new cross-org pattern.
+
+### Scheduled runs (split out)
+
+A schedule created from the team page should carry the same team/version pair into the runs it fires, closing the same name-matching problem the console's `SchedulesPanel.tsx` has today (it currently stores the team's *name* as the schedule's input text). That leg — `engine_schedules` columns, the same precondition at schedule-registration time, `ScheduleService._fire_team_run` passing the pair to `create_scheduled`, and `ScheduleOut` exposing it — is split into [`oraclous-backend#1164`](https://github.com/OraclousAI/oraclous-backend/issues/1164) to keep this PR within a reasonable size. Nothing in this section is blocked by it; until #1164 ships, a team whose only successful runs are scheduled ones shows a disabled "Save as app" button in the console, which the issue accepts explicitly.
