@@ -15589,6 +15589,48 @@
       "norm_label": "the graph carries pointers, never payloads",
       "id": "interface_contracts_run_graph_pointers_only",
       "rationale": "Nodes list input_from and has_output only; outputs are read from the existing run read. So the graph exposes nothing that read does not already expose, and never returns a run_if condition's field, operator or compared value."
+    },
+    {
+      "label": "\u00a7TEAM-RUN-SOURCE Team-run source draft (agreed 2026-09-19)",
+      "file_type": "document",
+      "source_file": "flows/interface-contracts.md",
+      "source_location": "\u00a7TEAM-RUN-SOURCE",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 7,
+      "norm_label": "\u00a7team-run-source team-run source draft (agreed 2026-09-19)",
+      "id": "interface_contracts_team_run_source_read",
+      "rationale": "A team run records team_draft_id/team_draft_version, checked as an optimistic-concurrency precondition (client sends the version it loaded, server rejects a stale one with 409). Adds GET /v1/engine/team-drafts/{id}/succeeded-versions (per-version latest success, empty is 200 not 404, foreign/missing draft is 404) and ?has_succeeded_run on the team-draft list. Ruled on oraclous-backend#1163; tracking Contract is the same issue; scheduled-run carry split to #1164."
+    },
+    {
+      "label": "The client's loaded version is checked, never re-derived server-side",
+      "file_type": "rationale",
+      "source_file": "flows/interface-contracts.md",
+      "source_location": "\u00a7TEAM-RUN-SOURCE",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 7,
+      "norm_label": "the client's loaded version is checked, never re-derived server-side",
+      "id": "interface_contracts_team_run_source_concurrency_check",
+      "rationale": "The console binds the model into the manifest client-side, so the version it sends is exactly the version it ran. The server re-reads the live draft and requires an exact version match, refusing with 409 team_draft_version_conflict on a mismatch instead of guessing which version actually ran. Re-deriving the version server-side would recreate the exact stale-tab race the Contract exists to close."
+    },
+    {
+      "label": "No foreign key, no backfill; a deleted team keeps its id on the run",
+      "file_type": "rationale",
+      "source_file": "flows/interface-contracts.md",
+      "source_location": "\u00a7TEAM-RUN-SOURCE",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 7,
+      "norm_label": "no foreign key, no backfill; a deleted team keeps its id on the run",
+      "id": "interface_contracts_team_run_source_no_fk_no_backfill",
+      "rationale": "team_draft_id/team_draft_version carry no foreign key, matching app_id/schedule_id/seed_from_run_id on the same table, so a deleted draft never strips its id from runs that already recorded it. Runs made before this shipped carry no team and are never guessed at by name; internal (non-console) callers never set the pair, and a rerun keeps it because it re-drives the same row."
     }
   ],
   "links": [
@@ -38091,6 +38133,42 @@
       "_tgt": "interface_contracts_run_graph_pointers_only",
       "source": "interface_contracts_run_graph_read",
       "target": "interface_contracts_run_graph_pointers_only"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "flows/interface-contracts.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "interface_contracts_doc",
+      "_tgt": "interface_contracts_team_run_source_read",
+      "source": "interface_contracts_doc",
+      "target": "interface_contracts_team_run_source_read"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "flows/interface-contracts.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "interface_contracts_team_run_source_read",
+      "_tgt": "interface_contracts_team_run_source_concurrency_check",
+      "source": "interface_contracts_team_run_source_read",
+      "target": "interface_contracts_team_run_source_concurrency_check"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "flows/interface-contracts.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "interface_contracts_team_run_source_read",
+      "_tgt": "interface_contracts_team_run_source_no_fk_no_backfill",
+      "source": "interface_contracts_team_run_source_read",
+      "target": "interface_contracts_team_run_source_no_fk_no_backfill"
     }
   ],
   "hyperedges": [
